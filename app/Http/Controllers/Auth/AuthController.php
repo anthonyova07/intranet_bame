@@ -2,8 +2,6 @@
 
 namespace Bame\Http\Controllers\Auth;
 
-use Auth;
-use Bame\Models\User;
 use Illuminate\Http\Request;
 use Bame\Models\Seguridad\Acceso;
 use Bame\Http\Requests\AuthRequest;
