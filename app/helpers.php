@@ -28,6 +28,9 @@ function can_not_do($permiso)
         $menus = session()->get('menus');
         $menus->each(function ($menu, $index) use ($permiso, &$can_access) {
             $can_access = $menu->submenus->contains('CODUNI', $permiso);
+            if ($can_access) {
+                return false;
+            }
         });
     }
 
