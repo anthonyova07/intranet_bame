@@ -4,6 +4,12 @@
 
 @section('page_title', 'Accesos de Usuarios')
 
+@if (can_not_do('seguridad_accesos'))
+    @section('contents')
+        @include('partials.access_denied')
+    @endsection
+@endif
+
 @section('contents')
 
     <div class="row">

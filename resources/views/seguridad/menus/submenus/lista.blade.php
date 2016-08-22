@@ -4,6 +4,12 @@
 
 @section('page_title', 'SubMenús')
 
+@if (can_not_do('seguridad_menus'))
+    @section('contents')
+        @include('partials.access_denied')
+    @endsection
+@endif
+
 @section('contents')
 
     <div class="row">

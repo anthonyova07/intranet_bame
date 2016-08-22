@@ -4,6 +4,12 @@
 
 @section('page_title', 'Generación de Encartes')
 
+@if (can_not_do('op_tdc_encartes'))
+    @section('contents')
+        @include('partials.access_denied')
+    @endsection
+@endif
+
 @section('contents')
 
     <div class="row">
