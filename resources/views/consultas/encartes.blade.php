@@ -2,7 +2,7 @@
 
 @section('title', 'Encartes')
 
-@section('page_title', 'Generación de Encartes!!!')
+@section('page_title', 'Generación de Encartes')
 
 @if (can_not_do('op_tdc_encartes'))
     @section('contents')
