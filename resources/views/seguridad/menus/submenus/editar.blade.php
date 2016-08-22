@@ -20,6 +20,11 @@
                             </select>
                             <span class="help-block">{{ $errors->first('menu') }}</span>
                         </div>
+                        <div class="form-group{{ $errors->first('coduni') ? ' has-error':'' }}">
+                            <label class="control-label">Código Único</label>
+                            <input type="text" class="form-control" name="coduni" placeholder="código_unico" value="{{ $submenu->CODUNI }}">
+                            <span class="help-block">{{ $errors->first('coduni') }}</span>
+                        </div>
                         <div class="form-group{{ $errors->first('descripcion') ? ' has-error':'' }}">
                             <label class="control-label">Descripción</label>
                             <input type="text" class="form-control" name="descripcion" placeholder="descripción" value="{{ $submenu->DESCRIPCION }}">

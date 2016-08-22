@@ -25,6 +25,7 @@ class SubMenuRequest extends Request
     {
         return [
             'menu' => 'required',
+            'coduni' => 'required|alpha_dash',
             'descripcion' => 'required',
             'caption' => 'required',
             'link' => 'required',

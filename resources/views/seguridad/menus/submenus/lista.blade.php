@@ -19,6 +19,7 @@
                             <th>Descripción</th>
                             <th>Título</th>
                             <th>Link</th>
+                            <th>Cód Único</th>
                             <th>Activo</th>
                             <th>Web</th>
                             <th></th>
@@ -30,6 +31,7 @@
                                 <td>{{ $submenu->DESCRIPCION }}</td>
                                 <td>{{ $submenu->CAPTION }}</td>
                                 <td>{{ $submenu->LINK }}</td>
+                                <td>{{ $submenu->CODUNI }}</td>
                                 <td>{{ $submenu->ESTATU == 'A' ? 'Si':'No' }}</td>
                                 <td>{{ $submenu->WEB == 'S' ? 'Si':'No' }}</td>
                                 <td align="center">

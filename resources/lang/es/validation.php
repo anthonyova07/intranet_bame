@@ -105,5 +105,6 @@ return [
       'descripcion' => 'Descripción',
       'caption' => 'Título',
       'link' => 'Link',
+      'coduni' => 'Código Único',
     ],
 ];

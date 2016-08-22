@@ -25,7 +25,11 @@ class SubMenuController extends Controller
 
     public function postSubMenuNuevo(SubMenuRequest $request, $menu)
     {
-        SubMenu::create($request->menu, $request->descripcion, $request->caption, $request->estatus, $request->web, $request->link);
+        if (SubMenu::exists_coduni($request->coduni)) {
+            return back()->with('error', 'El Código Único ya se encuentra registrado.');
+        }
+
+        SubMenu::create($request->menu, $request->descripcion, $request->caption, $request->estatus, $request->web, $request->link, $request->coduni);
 
         return redirect()->route('seguridad::menus::submenus::lista', ['menu' => $menu])->with('success', 'El submenú ha sido agregado correctamente.');
     }
@@ -37,13 +41,17 @@ class SubMenuController extends Controller
 
     public function postSubMenuEditar(SubMenuRequest $request, $menu, $codigo)
     {
+        if (SubMenu::exists_coduni($request->coduni, $codigo)) {
+            return back()->with('error', 'El Código Único ya se encuentra registrado.');
+        }
+
         $codigo_nuevo = $codigo;
 
         if ($menu != $request->menu) {
             $codigo_nuevo = SubMenu::getNewCode($request->menu);
         }
 
-        SubMenu::update($request->menu, $codigo_nuevo, $request->descripcion, $request->caption, $request->estatus, $request->web, $request->link, $menu, $codigo);
+        SubMenu::update($request->menu, $codigo_nuevo, $request->descripcion, $request->caption, $request->estatus, $request->web, $request->link, $request->coduni, $menu, $codigo);
 
         return redirect()->route('seguridad::menus::submenus::lista', ['menu' => $menu])->with('success', 'El submenú ha sido modificado correctamente.');
     }
