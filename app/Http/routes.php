@@ -1,13 +1,5 @@
 <?php
 
-App::singleton('con_ibs', function () {
-    return \Bame\Models\ConDB::getConDBIBS();
-});
-
-// App::singleton('con_itc', function () {
-//     return \Bame\Models\ConDB::getConDBITC();
-// });
-
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/test', function () {
