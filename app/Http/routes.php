@@ -12,9 +12,13 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout')->name('auth.logout');
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::group(['prefix' => 'consulta', 'as' => 'consulta::'], function () {
-        Route::get('encartes', 'ConsultaController@getEncarte')->name('encartes');
-        Route::post('encartes', 'ConsultaController@postEncarte');
+    Route::group(['prefix' => 'operaciones', 'as' => 'operaciones::'], function () {
+
+        Route::group(['prefix' => 'tdc', 'as' => 'tdc::'], function () {
+            Route::get('encartes', 'Operaciones\Tdc\EncarteController@getEncartes')->name('encartes');
+            Route::post('encartes', 'Operaciones\Tdc\EncarteController@postEncartes');
+        });
+
     });
 
     Route::group(['prefix' => 'seguridad', 'as' => 'seguridad::'], function () {

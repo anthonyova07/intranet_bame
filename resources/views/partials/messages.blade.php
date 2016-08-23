@@ -25,7 +25,7 @@
     <div class="col-xs-12">
         <div class="alert alert-warning alert-dismissible">
             <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
-            {{ session('error') }}
+            {{ session('warning') }}
         </div>
     </div>
 </div>

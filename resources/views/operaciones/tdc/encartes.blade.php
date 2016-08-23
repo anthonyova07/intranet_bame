@@ -16,7 +16,7 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="col-xs-4">
-                    <form method="post" action="{{ route('consulta::encartes') }}" id="form_encarte">
+                    <form method="post" action="{{ route('operaciones::tdc::encartes') }}" id="form_encarte">
                         <div class="form-group{{ $errors->first('identificacion') ? ' has-error':'' }}">
                             <label class="control-label">Identificación</label>
                             <input type="text" class="form-control" name="identificacion" placeholder="Cédula/Pasaporte" value="{{ old('identificacion') }}">
@@ -34,7 +34,7 @@
                         </div>
                         {{ csrf_field() }}
                         <button type="submit" class="btn btn-danger" id="btn_submit" data-loading-text="Generando encartes...">Generar PDFs <span class="badge" data-toggle="tooltip" data-placement="bottom" title="Encartes Pendientes">{{ $cantidad }}</span></button>
-                        <a href="http://192.168.0.100/intranet/pdfs/encartes/" target="__blank" class="btn btn-info pull-right">Ver encartes</a>
+                        {{-- <a href="http://192.168.0.100/intranet/pdfs/encartes/" target="__blank" class="btn btn-info pull-right">Ver encartes</a> --}}
                     </form>
                 </div>
             </div>
@@ -45,14 +45,6 @@
         $('#form_encarte').submit(function (event) {
             $('#btn_submit').button('loading');
         });
-
-        @if ($cantidad && session('masivo'))
-            $('#form_encarte').submit();
-        @endif
-
-        @if (!$cantidad && session('masivo'))
-            notificar('Encartes', 'Los Encartes han sido generados correctamente.');
-        @endif
     </script>
 
 @endsection

@@ -1,17 +1,15 @@
-<html lang="es">
+<page>
+    <html lang="es">
 
-    <head>
+        <head>
 
-        <meta charset="utf-8">
+            <meta charset="utf-8">
 
-        <title>Intranet BAME - @yield('title')</title>
+        </head>
 
-        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <body>
+            @yield('tables')
+        </body>
 
-    </head>
-
-    <body>
-        @yield('table')
-    </body>
-
-</html>
+    </html>
+</page>
