@@ -4,6 +4,7 @@ namespace Bame\Jobs\Operaciones\Tdc;
 
 use Bame\Jobs\Job;
 use Bame\Models\Operaciones\Tdc\Encarte;
+use Bame\Models\Notificaciones\Notificacion;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,14 +15,17 @@ class GenerarEncartes extends Job implements ShouldQueue
 
     protected $filtros;
 
+    protected $usuario;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($filtros)
+    public function __construct($filtros, $usuario)
     {
         $this->filtros = $filtros;
+        $this->usuario = $usuario;
     }
 
     /**
@@ -72,5 +76,9 @@ class GenerarEncartes extends Job implements ShouldQueue
         });
 
         Encarte::markCreditCards($tarjetas_procesadas);
+
+        $noti = new Notificacion($this->usuario);
+        $noti->create('Encartes', 'La generación de los encartes ha finalizado con éxito!');
+        $noti->save();
     }
 }

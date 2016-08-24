@@ -9,9 +9,18 @@ class Notificacion
 
     protected $notificaciones;
 
-    public function __construct()
+    protected $usuario;
+
+    public function __construct($usuario = null)
     {
-        $notificaciones = get_notifications(session('usuario'));
+        if ($usuario) {
+            $this->usuario = $usuario;
+        } else {
+            $this->usuario = session('usuario');
+        }
+
+        $notificaciones = get_notifications($usuario);
+
         if ($notificaciones) {
             $this->notificaciones = $notificaciones;
         }
@@ -32,10 +41,11 @@ class Notificacion
         });
     }
 
-    public function create($texto)
+    public function create($titulo, $texto)
     {
         $notificacion = new \stdClass;
         $notificacion->id = uniqid();
+        $notificacion->titulo = cap_str($titulo);
         $notificacion->texto = cap_str($texto);
         $notificacion->notificado = false;
         $notificacion->creado = (new DateTime)->format('Y-m-d H:i:s');
@@ -51,6 +61,6 @@ class Notificacion
 
     public function save()
     {
-        save_notifications(session('usuario'), $this->notificaciones);
+        save_notifications($this->usuario, $this->notificaciones);
     }
 }

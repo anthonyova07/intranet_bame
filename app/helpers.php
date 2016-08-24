@@ -7,7 +7,7 @@ function clear_str($str)
 
 function cap_str($str)
 {
-    return ucwords(clear_str($str));
+    return ucwords(clear_str(htmlentities($str)));
 }
 
 function remove_dashes($str) {
@@ -65,17 +65,18 @@ function get_notifications($usuario) {
 
     if (file_exists($archivo_json)) {
         return collect(json_decode(file_get_contents($archivo_json)));
-    } else {
-        file_put_contents($archivo_json, '');
     }
 
-    return false;
+    file_put_contents($archivo_json, collect());
+    return collect();
 }
 
 function save_notifications($usuario, $notifications) {
-    $usuario = str_replace('.', '_', $usuario);
-    $archivo_json = get_noti_path() . $usuario . '.json';
-    file_put_contents($archivo_json, json_encode($notifications));
+    if ($usuario) {
+        $usuario = str_replace('.', '_', $usuario);
+        $archivo_json = get_noti_path() . $usuario . '.json';
+        file_put_contents($archivo_json, json_encode($notifications));
+    }
 }
 
 function get_noti_path() {
