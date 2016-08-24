@@ -13,4 +13,5 @@
 <script src="{{ route('home') }}/js/sb-admin-2.js"></script>
 
 <!-- Custom JavaScript -->
+<script src="{{ route('home') }}/js/funciones.js"></script>
 <script src="{{ route('home') }}/js/bame.js"></script>

@@ -67,7 +67,6 @@ function get_notifications($usuario) {
         return collect(json_decode(file_get_contents($archivo_json)));
     }
 
-    file_put_contents($archivo_json, collect());
     return collect();
 }
 
@@ -75,7 +74,7 @@ function save_notifications($usuario, $notifications) {
     if ($usuario) {
         $usuario = str_replace('.', '_', $usuario);
         $archivo_json = get_noti_path() . $usuario . '.json';
-        file_put_contents($archivo_json, json_encode($notifications));
+        file_put_contents($archivo_json, $notifications);
     }
 }
 

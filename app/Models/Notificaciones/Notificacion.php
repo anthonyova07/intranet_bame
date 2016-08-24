@@ -19,7 +19,7 @@ class Notificacion
             $this->usuario = session('usuario');
         }
 
-        $notificaciones = get_notifications($usuario);
+        $notificaciones = get_notifications($this->usuario);
 
         if ($notificaciones) {
             $this->notificaciones = $notificaciones;
@@ -29,6 +29,10 @@ class Notificacion
     public function all()
     {
         return $this->notificaciones;
+    }
+
+    public function count() {
+        return $this->notificaciones->count();
     }
 
     public function notified($id)
@@ -48,7 +52,7 @@ class Notificacion
         $notificacion->titulo = cap_str($titulo);
         $notificacion->texto = cap_str($texto);
         $notificacion->notificado = false;
-        $notificacion->creado = (new DateTime)->format('Y-m-d H:i:s');
+        $notificacion->creado = (new DateTime)->format('d/m/Y H:i:s');
         $this->notificaciones->push($notificacion);
     }
 
