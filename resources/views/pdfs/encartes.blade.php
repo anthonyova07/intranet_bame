@@ -24,7 +24,7 @@
                     <td colspan="2">Nombres</td>
                     <td colspan="2"><b>: {{ $tarjeta->NOMBRE1 }} {{ $tarjeta->NOMBRE2 }}</b></td>
                     <td colspan="2" rowspan="9" align="right">
-                        <img src="{{ $tarjeta->FOTO }}" style="width: 160px; height: 160px;">
+                        <img src="{{ $tarjeta->FOTO }}" style="width: 150px; height: 150px;">
                         <br>
                         Autorizo al Banco Múltiple de las Américas S.A. a activar esta tarjeta de crédito al recibirla.
                         <br><br><br><br>
@@ -81,9 +81,8 @@
                     <td colspan="2" align="center" style="padding-left: 14px;">Firma</td>
                 </tr>
                 <tr>
-                    <td colspan="6" align="center" border="1" style="padding-bottom: -52px;padding-top: 4px;">
-                        Notifica PERDIDA O ROBO Y CONSULTA tus balances llamando a nuestro Centro de Contacto (809) 549-3141 Ext.: 1.
-
+                    <td colspan="6" align="left" border="1" style="padding-bottom: -52px;padding-top: 4px;">
+                        Notifica PERDIDA O ROBO Y CONSULTA tus balances llamando a nuestro Centro de Contacto (809)-549-3141 Ext.1 o (809)-200-0819 (Desde el interior sin cargos).
                         Realiza transacciones y consultas de balances a través de Bancamérica Online http://www.bancamerica.com.do
                     </td>
                 </tr>
@@ -137,7 +136,7 @@
                     <td colspan="2">Nombres</td>
                     <td colspan="2"><b>: {{ $tarjeta->NOMBRE1 }} {{ $tarjeta->NOMBRE2 }}</b></td>
                     <td colspan="2" rowspan="9" align="right">
-                        <img src="{{ $tarjeta->FOTO }}" style="width: 160px; height: 160px;">
+                        <img src="{{ $tarjeta->FOTO }}" style="width: 150px; height: 150px;">
                         <br>
                         Autorizo al Banco Múltiple de las Américas S.A. a activar esta tarjeta de crédito al recibirla.
                         <br><br><br><br>
@@ -176,11 +175,11 @@
                 </tr>
                 <tr>
                     <td colspan="2">Límite de Crédito RD$</td>
-                    <td colspan="2"><b>: {{ $tarjeta->CREDITO_RD }}</b></td>
+                    <td colspan="2"><b>: &nbsp;</b></td>
                 </tr>
                 <tr>
                     <td colspan="2">Límite de Crédito US$</td>
-                    <td colspan="2"><b>: {{ $tarjeta->CREDITO_US }}</b></td>
+                    <td colspan="2"><b>: &nbsp;</b></td>
                     <td colspan="2" align="right" rowspan="2">
                     </td>
                 </tr>
@@ -194,9 +193,8 @@
                     <td colspan="2" align="center" style="padding-left: 14px;">Firma</td>
                 </tr>
                 <tr>
-                    <td colspan="6" align="center" border="1" style="padding-bottom: -52px;padding-top: 4px;">
-                        Notifica PERDIDA O ROBO Y CONSULTA tus balances llamando a nuestro Centro de Contacto (809) 549-3141 Ext.: 1.
-
+                    <td colspan="6" align="left" border="1" style="padding-bottom: -52px;padding-top: 4px;">
+                        Notifica PERDIDA O ROBO Y CONSULTA tus balances llamando a nuestro Centro de Contacto (809)-549-3141 Ext.1 o (809)-200-0819 (Desde el interior sin cargos).
                         Realiza transacciones y consultas de balances a través de Bancamérica Online http://www.bancamerica.com.do
                     </td>
                 </tr>

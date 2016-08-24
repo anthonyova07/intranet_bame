@@ -53,7 +53,7 @@ function can_not_do($permiso)
 
 function generate_pdf($html, $archivo) {
     require_once base_path() . '\vendor\spipu\html2pdf\html2pdf.class.php';
-    $html2pdf = new \HTML2PDF('P', 'A4', 'es', true, 'UTF-8', [3, 9, 133, 2]);
+    $html2pdf = new \HTML2PDF('P', 'A4', 'es', true, 'UTF-8', [3, 6, 133, 2]);
     $html2pdf->setDefaultFont('Helvetica');
     $html2pdf->WriteHTML($html);
     $html2pdf->Output($archivo, 'F');
