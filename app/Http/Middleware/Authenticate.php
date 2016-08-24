@@ -18,7 +18,9 @@ class Authenticate
     public function handle($request, Closure $next, $guard = null)
     {
         if (!$request->session()->has('usuario')) {
-            $request->session()->put('url_anterior', url()->current());
+            if (!$request->ajax()) {
+                $request->session()->put('url_anterior', url()->current());
+            }
             return redirect()->route('auth.login');
         }
 

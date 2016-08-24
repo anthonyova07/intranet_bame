@@ -7,7 +7,7 @@ function clear_str($str)
 
 function cap_str($str)
 {
-    return ucwords(clear_str($str));
+    return ucwords(clear_str(htmlentities($str)));
 }
 
 function remove_dashes($str) {
@@ -57,4 +57,27 @@ function generate_pdf($html, $archivo) {
     $html2pdf->setDefaultFont('Helvetica');
     $html2pdf->WriteHTML($html);
     $html2pdf->Output($archivo, 'F');
+}
+
+function get_notifications($usuario) {
+    $usuario = str_replace('.', '_', $usuario);
+    $archivo_json = get_noti_path() . $usuario . '.json';
+
+    if (file_exists($archivo_json)) {
+        return collect(json_decode(file_get_contents($archivo_json)));
+    }
+
+    return collect();
+}
+
+function save_notifications($usuario, $notifications) {
+    if ($usuario) {
+        $usuario = str_replace('.', '_', $usuario);
+        $archivo_json = get_noti_path() . $usuario . '.json';
+        file_put_contents($archivo_json, $notifications);
+    }
+}
+
+function get_noti_path() {
+    return storage_path() . '\\app\\notifications\\';
 }

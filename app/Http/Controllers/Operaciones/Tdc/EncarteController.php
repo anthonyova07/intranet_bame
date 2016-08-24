@@ -38,7 +38,7 @@ class EncarteController extends Controller
             $encartes->filtros->put('todos_pendientes', true);
         }
 
-        $this->dispatch(new GenerarEncartes($encartes->filtros));
+        $this->dispatch(new GenerarEncartes($encartes->filtros, $request->session()->get('usuario')));
 
         return back()->with('success', 'Los encartes solicitados serán generados en la ruta especificada.')->with('info', 'El tiempo estimado dependerá de la cantidad de encartes (500 = 20 min aprox).');
     }
