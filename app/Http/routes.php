@@ -15,6 +15,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'notificaciones', 'notificaciones::'], function () {
         Route::get('todas', 'Notificaciones\NotificacionController@getTodas')->name('todas');
         Route::get('notificado/{id}', 'Notificaciones\NotificacionController@getNotificado')->name('notificado');
+        Route::get('eliminar/{id}', 'Notificaciones\NotificacionController@getEliminar')->name('eliminar');
     });
 
     Route::group(['prefix' => 'operaciones', 'as' => 'operaciones::'], function () {

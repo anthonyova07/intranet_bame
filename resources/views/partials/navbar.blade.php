@@ -150,18 +150,18 @@
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                 </a>
-                <ul class="dropdown-menu dropdown-alerts">
+                <ul class="dropdown-menu dropdown-alerts" title="Haga clic para eliminar notificación" data-toggle="tooltip" data-placement="left">
                     @if ($notificaciones)
                         @foreach ($notificaciones->sortByDesc('creado') as $notificacion)
-                            <li>
-                                <a href="#">
+                            <li id="{{ $notificacion->id }}">
+                                <a href="javascript:void(0)" onclick="eliminar_notificacion('{{ $notificacion->id }}')">
                                     <div>
                                         <i class="fa fa-comment fa-fw"></i> {{ $notificacion->texto }}
                                         <span class="pull-right text-muted small">{{ $notificacion->creado }}</span>
                                     </div>
                                 </a>
                             </li>
-                            <li class="divider"></li>
+                            <li class="divider" id="{{ $notificacion->id }}_divider"></li>
                         @endforeach
                     @endif
                     <li>

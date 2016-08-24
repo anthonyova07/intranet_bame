@@ -51,8 +51,8 @@ class Notificacion
         $notificacion->id = uniqid();
         $notificacion->titulo = cap_str($titulo);
         $notificacion->texto = cap_str($texto);
-        $notificacion->notificado = false;
         $notificacion->creado = (new DateTime)->format('d/m/Y H:i:s');
+        $notificacion->notificado = false;
         $this->notificaciones->push($notificacion);
     }
 
@@ -65,6 +65,6 @@ class Notificacion
 
     public function save()
     {
-        save_notifications($this->usuario, $this->notificaciones);
+        save_notifications($this->usuario, $this->notificaciones->take(-8)->values());
     }
 }

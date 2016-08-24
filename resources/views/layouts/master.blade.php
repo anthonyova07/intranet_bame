@@ -31,7 +31,12 @@
 
         </div>
         <!-- /#wrapper -->
-
+        @if (session()->has('usuario'))
+            <script>
+                verificar_notificaciones();
+                setInterval(verificar_notificaciones, 10000);
+            </script>
+        @endif
     </body>
 
 </html>

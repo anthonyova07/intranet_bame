@@ -26,4 +26,10 @@ class NotificacionController extends Controller
         $noti->notified($id);
         $noti->save();
     }
+
+    public function getEliminar($id) {
+        $noti = new Notificacion;
+        $noti->delete($id);
+        $noti->save();
+    }
 }

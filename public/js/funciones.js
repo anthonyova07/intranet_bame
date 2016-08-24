@@ -43,3 +43,13 @@ function verificar_notificaciones() {
         }
     });
 }
+
+function eliminar_notificacion(id) {
+    var ruta_base = $('body').attr('ruta');
+    $('#' + id).remove();
+    $('#' + id + '_divider').remove();
+
+    $.ajax({
+        url: ruta_base + '/notificaciones/eliminar/' + id
+    });
+}

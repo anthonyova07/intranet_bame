@@ -11,6 +11,4 @@ $(document).ready(function() {
         },
         "lengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]]
     });
-
-    setInterval(verificar_notificaciones, 10000);
 });
