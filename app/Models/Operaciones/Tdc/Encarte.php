@@ -144,10 +144,11 @@ class Encarte
     */
     public static function getAltPhone($campo, $cedula)
     {
-        $sql = 'SELECT ' . $campo . ' VALOR FROM BADCYFILES.CUMST WHERE CUSLN3 = :cedula';
+        $sql = 'SELECT ' . $campo . ' VALOR FROM BADCYFILES.CUMST WHERE CUSLN3 = :p1_cedula or CUSIDN = :p2_cedula';
         $stmt = app('con_ibs')->prepare($sql);
         $stmt->execute([
-            ':cedula' => $cedula,
+            ':p1_cedula' => $cedula,
+            ':p2_cedula' => $cedula,
         ]);
         $result = $stmt->fetch();
         return $result ? $result->VALOR : false;
