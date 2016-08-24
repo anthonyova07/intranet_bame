@@ -58,3 +58,26 @@ function generate_pdf($html, $archivo) {
     $html2pdf->WriteHTML($html);
     $html2pdf->Output($archivo, 'F');
 }
+
+function get_notifications($usuario) {
+    $usuario = str_replace('.', '_', $usuario);
+    $archivo_json = get_noti_path() . $usuario . '.json';
+
+    if (file_exists($archivo_json)) {
+        return collect(json_decode(file_get_contents($archivo_json)));
+    } else {
+        file_put_contents($archivo_json, '');
+    }
+
+    return false;
+}
+
+function save_notifications($usuario, $notifications) {
+    $usuario = str_replace('.', '_', $usuario);
+    $archivo_json = get_noti_path() . $usuario . '.json';
+    file_put_contents($archivo_json, json_encode($notifications));
+}
+
+function get_noti_path() {
+    return storage_path() . '\\app\\notifications\\';
+}
