@@ -51,9 +51,9 @@ $app->singleton('con_ibs', function () {
     return \Bame\Models\ConDB::getConDBIBS();
 });
 
-// $app->singleton('con_itc', function () {
-//     return \Bame\Models\ConDB::getConDBITC();
-// });
+$app->singleton('con_itc', function () {
+    return \Bame\Models\ConDB::getConDBITC();
+});
 
 /*
 |--------------------------------------------------------------------------

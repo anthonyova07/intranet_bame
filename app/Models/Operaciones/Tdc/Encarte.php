@@ -15,7 +15,7 @@ class Encarte
 
     public static function pendingCount()
     {
-        $stmt = app('con_ibs')->prepare('SELECT COUNT(*) CANTIDAD FROM IBSBLAOBJ.SADENTR00 WHERE STSEN_ENTR = \'\'');
+        $stmt = app('con_itc')->prepare('SELECT COUNT(*) CANTIDAD FROM SADENTR00 WHERE STSEN_ENTR = \'\'');
         $stmt->execute();
         $cantidad = $stmt->fetch()->CANTIDAD;
         return $cantidad ? $cantidad : 0;
@@ -47,11 +47,11 @@ class Encarte
 
     public static function all()
     {
-        $sql = 'SELECT ' . implode(', ', self::getFields()) . ' FROM IBSBLAOBJ.SADENTR00 WHERE NUMTA_ENTR <> 0' . self::$sql;
+        $sql = 'SELECT ' . implode(', ', self::getFields()) . ' FROM SADENTR00 WHERE NUMTA_ENTR <> 0' . self::$sql;
 
         self::$sql = '';
 
-        $stmt = app('con_ibs')->prepare($sql);
+        $stmt = app('con_itc')->prepare($sql);
         $stmt->execute();
         $result = collect($stmt->fetchAll());
 
@@ -175,8 +175,8 @@ class Encarte
     }
 
     public static function markCreditCards($tarjetas, $estatus = 'P') {
-        $sql = 'UPDATE IBSBLAOBJ.SADENTR00 SET STSEN_ENTR = \'' . $estatus . '\' WHERE NUMTA_ENTR IN (\'' . implode('\', \'', $tarjetas) . '\')';
-        return app('con_ibs')->prepare($sql)->execute();
+        $sql = 'UPDATE SADENTR00 SET STSEN_ENTR = \'' . $estatus . '\' WHERE NUMTA_ENTR IN (\'' . implode('\', \'', $tarjetas) . '\')';
+        return app('con_itc')->prepare($sql)->execute();
     }
 
     private static function getFields()
@@ -203,7 +203,7 @@ class Encarte
             'TRIM(CODT3_ENTR) CODCELULAR',
             'TRIM(CELUL_ENTR) TELCELULAR',
             'TRIM(COMEN_ENTR) COMENTARIO',
-            'TRIM((SELECT NOMBR_DESC FROM IBSBLAOBJ.SATDESC00 WHERE PREFI_DESC = \'SAT_TSOL\' AND CODIG_DESC = TIPSO_ENTR)) AS TIPO',
+            'TRIM((SELECT NOMBR_DESC FROM SATDESC00 WHERE PREFI_DESC = \'SAT_TSOL\' AND CODIG_DESC = TIPSO_ENTR)) AS TIPO',
             'TRIM((SELECT DESCR_BIN FROM ENVIA.ENCARTBIN WHERE NUMTA_BIN = SUBSTR(NUMTA_ENTR,1,6))) AS TIPOD'
         ];
     }
