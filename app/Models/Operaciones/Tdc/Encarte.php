@@ -2,6 +2,8 @@
 
 namespace Bame\Models\Operaciones\Tdc;
 
+use Bame\Models\Clientes\Cliente;
+
 class Encarte
 {
     public $filtros;
@@ -69,7 +71,7 @@ class Encarte
 
             $cedula_buscar = $tarjeta->CEDULA;
             $tarjeta->CEDULA = clear_str($tarjeta->CEDULA);
-            $tarjeta->CEDULA = (strlen(clear_str($tarjeta->CEDULA)) == 11) ? (substr($tarjeta->CEDULA, 0, 3) . '-' . substr($tarjeta->CEDULA, 3, 7) . '-' . substr($tarjeta->CEDULA, 10, 11)) : $tarjeta->CEDULA;
+            $tarjeta->CEDULA = format_identification($tarjeta->CEDULA);
 
             $tarjeta->NOMBRE1 = cap_str($tarjeta->NOMBRE1);
             $tarjeta->NOMBRE2 = cap_str($tarjeta->NOMBRE2);
@@ -126,7 +128,7 @@ class Encarte
             $tarjeta->TIPO = cap_str($tarjeta->TIPO);
             $tarjeta->TIPOD = cap_str($tarjeta->TIPOD);
 
-            $tarjeta->FOTO = self::getPhotoByIdentification($tarjeta->CEDULA);
+            $tarjeta->FOTO = Cliente::getPhotoByIdentification($tarjeta->CEDULA);
         });
 
         return $tarjetas;
@@ -157,21 +159,6 @@ class Encarte
     public static function getCreditCardNumbers($tarjetas)
     {
         return $tarjetas->pluck('TARJETA')->toArray();
-    }
-
-    public static function getPhotoByIdentification($cedula)
-    {
-        $ced_1 = substr($cedula, 0, 3);
-        $ced_2 = substr($cedula, 4, 2);
-        $ced_3 = substr($cedula, 6, 2);
-
-        $foto = env('ENCARTES_CARPETA_FOTO') . $ced_1 . '\\' . $ced_2 . '\\' . $ced_3 . '\\' . $cedula . '.jpg';
-
-        if (!file_exists($foto)) {
-            $foto = base_path('\\public\\images\\noFoto.jpg');
-        }
-
-        return $foto;
     }
 
     public static function markCreditCards($tarjetas, $estatus = 'P') {

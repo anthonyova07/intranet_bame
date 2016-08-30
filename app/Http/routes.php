@@ -18,6 +18,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('eliminar/{id}', 'Notificaciones\NotificacionController@getEliminar')->name('eliminar');
     });
 
+    Route::group(['prefix' => 'clientes', 'as' => 'clientes::'], function () {
+        Route::get('consulta', 'Clientes\ClienteController@getConsulta')->name('consulta');
+        Route::post('consulta', 'Clientes\ClienteController@postConsulta');
+    });
+
     Route::group(['prefix' => 'operaciones', 'as' => 'operaciones::'], function () {
 
         Route::group(['prefix' => 'tdc', 'as' => 'tdc::'], function () {
