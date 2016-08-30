@@ -9,7 +9,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class GenerarEncartes extends Job implements ShouldQueue
+class GeneradorEncartes extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
@@ -56,6 +56,9 @@ class GenerarEncartes extends Job implements ShouldQueue
         $tarjetas = Encarte::all();
 
         if (!$tarjetas) {
+            $noti = new Notificacion($this->usuario);
+            $noti->create('Encartes', 'No se encontraron encartes de acuerdo a los parametros suministrados!');
+            $noti->save();
             return false;
         }
 
