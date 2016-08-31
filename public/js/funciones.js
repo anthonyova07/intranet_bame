@@ -19,8 +19,7 @@ function notificar(title, body) {
         Notification.requestPermission(function (permission) {
             // If the user accepts, let's create a notification
             if (permission === "granted") {
-                options.body = '';
-                var notification = new Notification("Las notificaciones están permitidas en este equipo.", options);
+                var notification = new Notification('Bancamérica Intranet - ' + title, options);
             }
         });
     }
