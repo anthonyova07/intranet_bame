@@ -24,7 +24,7 @@ class EncarteRequest extends Request
     public function rules()
     {
         return [
-            'identificacion' => '',
+            'identificacion' => 'alpha_dash',
             'tarjeta' => 'alpha_dash|min:16|max:19',
             'fecha' => 'date_format:"Y-m-d"|min:8|max:10',
         ];

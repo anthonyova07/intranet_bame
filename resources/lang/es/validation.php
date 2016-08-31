@@ -107,5 +107,6 @@ return [
       'link' => 'Link',
       'coduni' => 'Código Único',
       'identificacion' => 'Identificación',
+      'tarjeta' => 'TDC',
     ],
 ];

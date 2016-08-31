@@ -24,7 +24,7 @@ class ConsultaRequest extends Request
     public function rules()
     {
         return [
-            'identificacion' => 'required'
+            'identificacion' => 'required|alpha_dash'
         ];
     }
 }

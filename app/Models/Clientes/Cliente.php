@@ -4,14 +4,10 @@ namespace Bame\Models\Clientes;
 
 class Cliente
 {
-    private static $sql;
-
     public static function getByIdentification($identificacion) {
-        $sql = 'SELECT ' . implode(', ', self::getFields()) . ' FROM CUMST WHERE CUSLN3 = :identificacion';
+        $sql = 'SELECT ' . implode(', ', self::getFields()) . ' FROM CUMST WHERE CUSLN3 = \'' . remove_dashes($identificacion) . '\'';
         $stmt = app('con_ibs')->prepare($sql);
-        $stmt->execute([
-            ':identificacion' => remove_dashes($identificacion),
-        ]);
+        $stmt->execute();
         return $stmt->fetch();
     }
 
@@ -34,11 +30,9 @@ class Cliente
 
     public static function getByIdentificationAlt($identificacion)
     {
-        $sql = 'SELECT ' . implode(', ', self::getAltFields()) . ' FROM BAGRPLIB.CEDPAD WHERE CEDIDN = :identificacion';
+        $sql = 'SELECT ' . implode(', ', self::getAltFields()) . ' FROM BAGRPLIB.CEDPAD WHERE CEDIDN = \'' . remove_dashes($identificacion) . '\'';
         $stmt = app('con_ibs')->prepare($sql);
-        $stmt->execute([
-            ':identificacion' => remove_dashes($identificacion),
-        ]);
+        $stmt->execute();
         return $stmt->fetch();
     }
 
