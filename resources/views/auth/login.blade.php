@@ -12,13 +12,12 @@
                 <form method="post" action="{{ route('auth.login') }}" id="form_login">
                     <div class="form-group{{ $errors->first('usuario') ? ' has-error':'' }}">
                         <label class="control-label" for="usuario">Usuario</label>
-                        <input type="text" class="form-control" name="usuario" placeholder="usuario" value="j.peguero">
-                        {{-- <input type="text" class="form-control" name="usuario" placeholder="usuario" value="{{ old('usuario') }}"> --}}
+                        <input type="text" class="form-control" name="usuario" placeholder="usuario" value="{{ old('usuario') }}">
                         <span class="help-block">{{ $errors->first('usuario') }}</span>
                     </div>
                     <div class="form-group{{ $errors->first('clave') ? ' has-error':'' }}">
                         <label class="control-label" for="clave">Contraseña</label>
-                        <input type="password" class="form-control" name="clave" placeholder="*********" value="zxc.123456^">
+                        <input type="password" class="form-control" name="clave" placeholder="*********" value="">
                         <span class="help-block">{{ $errors->first('clave') }}</span>
                     </div>
                     {{ csrf_field() }}
