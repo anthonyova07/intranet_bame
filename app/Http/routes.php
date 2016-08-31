@@ -3,10 +3,6 @@ Route::group(['prefix' => 'intranet'], function () {
 
     Route::get('/', 'HomeController@index')->name('home');
 
-    Route::get('/test', function () {
-        return 'test';
-    });
-
     Route::get('auth/login', 'Auth\AuthController@getLogin')->name('auth.login');
     Route::post('auth/login', 'Auth\AuthController@postLogin');
     Route::get('auth/logout', 'Auth\AuthController@getLogout')->name('auth.logout');
@@ -19,7 +15,12 @@ Route::group(['prefix' => 'intranet'], function () {
             Route::get('eliminar/{id}', 'Notificaciones\NotificacionController@getEliminar')->name('eliminar');
         });
 
-        Route::group(['prefix' => 'operaciones', 'as' => 'operaciones::'], function () {
+    Route::group(['prefix' => 'clientes', 'as' => 'clientes::'], function () {
+        Route::get('consulta', 'Clientes\ClienteController@getConsulta')->name('consulta');
+        Route::post('consulta', 'Clientes\ClienteController@postConsulta');
+    });
+
+    Route::group(['prefix' => 'operaciones', 'as' => 'operaciones::'], function () {
 
             Route::group(['prefix' => 'tdc', 'as' => 'tdc::'], function () {
                 Route::get('encartes', 'Operaciones\Tdc\EncarteController@getEncartes')->name('encartes');
