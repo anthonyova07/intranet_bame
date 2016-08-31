@@ -8,7 +8,7 @@ use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
 use Bame\Models\Operaciones\Tdc\Encarte;
-use Bame\Jobs\Operaciones\Tdc\GenerarEncartes;
+use Bame\Jobs\Operaciones\Tdc\GeneradorEncartes;
 use Bame\Http\Requests\Operaciones\Tdc\EncarteRequest;
 
 class EncarteController extends Controller
@@ -38,7 +38,7 @@ class EncarteController extends Controller
             $encartes->filtros->put('todos_pendientes', true);
         }
 
-        $this->dispatch(new GenerarEncartes($encartes->filtros, $request->session()->get('usuario')));
+        $this->dispatch(new GeneradorEncartes($encartes->filtros, $request->session()->get('usuario')));
 
         return back()->with('success', 'Los encartes solicitados serán generados en la ruta especificada.')->with('info', 'El tiempo estimado dependerá de la cantidad de encartes (500 = 20 min aprox).');
     }
