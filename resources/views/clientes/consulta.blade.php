@@ -30,7 +30,7 @@
                 @if ($cliente)
                     <div class="col-xs-12 well well-sm">
                         <div class="col-xs-12 text-center">
-                            <h2>Información del Cliente</h2>
+                            <h2>Información del Cliente <small>({{ $cliente->IBS ? 'Es':'No es' }} cliente)</small></h2>
                         </div>
                         <form method="post" action="" id="form_cliente">
                             <div class="col-xs-4">

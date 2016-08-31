@@ -32,6 +32,16 @@ class Cliente
         return $foto;
     }
 
+    public static function getByIdentificationAlt($identificacion)
+    {
+        $sql = 'SELECT ' . implode(', ', self::getAltFields()) . ' FROM BAGRPLIB.CEDPAD WHERE CEDIDN = :identificacion';
+        $stmt = app('con_ibs')->prepare($sql);
+        $stmt->execute([
+            ':identificacion' => remove_dashes($identificacion),
+        ]);
+        return $stmt->fetch();
+    }
+
     private static function getFields()
     {
         return [
@@ -46,6 +56,15 @@ class Cliente
             'TRIM(CUSNA3) CASA',
             'TRIM(CUSNA4) EDIFICIO',
             'TRIM(CUSPH1) TELEFONO'
+        ];
+    }
+
+    private static function getAltFields()
+    {
+        return [
+            'TRIM(CEDIDN) CEDULA',
+            'CONCAT(CONCAT(TRIM(CEDNO1), \' \'), TRIM(CEDNO2)) NOMBRES',
+            'CONCAT(CONCAT(TRIM(CEDAP1), \' \'), TRIM(CEDAP2)) APELLIDOS'
         ];
     }
 }
