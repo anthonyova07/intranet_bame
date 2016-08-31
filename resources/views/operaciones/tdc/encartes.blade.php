@@ -28,7 +28,7 @@
                             <span class="help-block">{{ $errors->first('tarjeta') }}</span>
                         </div>
                         <div class="form-group{{ $errors->first('fecha') ? ' has-error':'' }}">
-                            <label class="control-label">Fecha</label>
+                            <label class="control-label">Fecha de Embozado</label>
                             <input type="text" class="form-control" name="fecha" placeholder="yyyy-mm-dd" value="{{ old('fecha') }}">
                             <span class="help-block">{{ $errors->first('fecha') }}</span>
                         </div>
