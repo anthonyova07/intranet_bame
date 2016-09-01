@@ -18,7 +18,7 @@
                     <td colspan="6" align="center">Generado en Fecha {{ format_date($tarjeta->FECHA) }} {{ format_time($tarjeta->HORA) }}</td>
                 </tr>
                 <tr>
-                    <td colspan="6" align="center">Cambio de Tipo: <b>{{ $tarjeta->TIPOD }}</b></td>
+                    <td colspan="6" align="center">{{ $tarjeta->TIPO }}: <b>{{ $tarjeta->TIPOD }}</b></td>
                 </tr>
                 <tr>
                     <td colspan="2">Nombres</td>
@@ -130,7 +130,7 @@
                     <td colspan="6" align="center">Generado en Fecha {{ format_date($tarjeta->FECHA) }} {{ format_time($tarjeta->HORA) }}</td>
                 </tr>
                 <tr>
-                    <td colspan="6" align="center">Cambio de Tipo: <b>{{ $tarjeta->TIPOD }}</b></td>
+                    <td colspan="6" align="center">{{ $tarjeta->TIPO }}: <b>{{ $tarjeta->TIPOD }}</b></td>
                 </tr>
                 <tr>
                     <td colspan="2">Nombres</td>
