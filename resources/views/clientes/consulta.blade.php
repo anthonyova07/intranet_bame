@@ -19,7 +19,7 @@
                     <form method="post" action="{{ route('clientes::consulta') }}" id="form_consulta">
                         <div class="form-group{{ $errors->first('identificacion') ? ' has-error':'' }}">
                             <label class="control-label">Identificación</label>
-                            <input type="text" class="form-control" name="identificacion" placeholder="Cédula" value="{{ old('identificacion') }}">
+                            <input type="text" class="form-control" name="identificacion" placeholder="Cédula/Pasaporte" value="{{ old('identificacion') }}">
                             <span class="help-block">{{ $errors->first('identificacion') }}</span>
                         </div>
                         {{ csrf_field() }}
@@ -35,8 +35,8 @@
                         <form method="post" action="" id="form_cliente">
                             <div class="col-xs-4">
                                 <div class="form-group">
-                                    <label class="control-label">Cédula</label>
-                                    <input type="text" class="form-control" value="{{ $cliente->CEDULA }}" readonly="readonly">
+                                    <label class="control-label">Cédula/Pasaporte</label>
+                                    <input type="text" class="form-control" value="{{ $cliente->CEDULA == '' ? $cliente->PASAPORTE : $cliente->CEDULA }}" readonly="readonly">
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Nombres</label>

@@ -5,7 +5,7 @@ namespace Bame\Models\Clientes;
 class Cliente
 {
     public static function getByIdentification($identificacion) {
-        $sql = 'SELECT ' . implode(', ', self::getFields()) . ' FROM CUMST WHERE CUSLN3 = \'' . remove_dashes($identificacion) . '\'';
+        $sql = 'SELECT ' . implode(', ', self::getFields()) . ' FROM CUMST WHERE CUSLN3 = \'' . remove_dashes($identificacion) . '\' OR CUSIDN = \'' . remove_dashes($identificacion) . '\'';
         $stmt = app('con_ibs')->prepare($sql);
         $stmt->execute();
         return $stmt->fetch();
@@ -39,6 +39,7 @@ class Cliente
     private static function getFields()
     {
         return [
+            'TRIM(CUSIDN) PASAPORTE',
             'TRIM(CUSLN3) CEDULA',
             'CONCAT(CONCAT(TRIM(CUSFNA), \' \'), TRIM(CUSFN2)) NOMBRES',
             'CONCAT(CONCAT(TRIM(CUSLN1), \' \'), TRIM(CUSLN2)) APELLIDOS',
