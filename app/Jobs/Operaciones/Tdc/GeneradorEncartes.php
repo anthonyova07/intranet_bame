@@ -65,21 +65,17 @@ class GeneradorEncartes extends Job implements ShouldQueue
         $tarjetas_procesadas = Encarte::getCreditCardNumbers($tarjetas);
 
         $fechas_embozado = Encarte::getWrappedDates($tarjetas);
-        $horas_embozado = Encarte::getWrappedTimes($tarjetas);
 
         $tarjetas = Encarte::formatAll($tarjetas);
 
-        $fechas_embozado->unique()->each(function ($fecha, $index) use ($tarjetas, $horas_embozado) {
-            $horas_embozado->unique()->each(function($hora, $index) use ($tarjetas, $fecha) {
-                $trozos = $tarjetas->where('FECHA', $fecha)->where('HORA', $hora)->chunk(env('ENCARTE_CANTIDAD_POR_ARCHIVO'));
+        $fechas_embozado->unique()->each(function ($fecha, $index) use ($tarjetas) {
+            $trozos = $tarjetas->where('FECHA', $fecha)->chunk(env('ENCARTE_CANTIDAD_POR_ARCHIVO'));
 
-                $trozos->each(function ($tarjetas, $index) use ($fecha, $hora) {
-                    $html = view('pdfs.encartes', ['tarjetas' => $tarjetas])->render();
+            $trozos->each(function ($tarjetas, $index) use ($fecha) {
+                $html = view('pdfs.encartes', ['tarjetas' => $tarjetas])->render();
 
-                    $archivo = env('ENCARTES_CARPETA_PDF') . format_datetime_to_file($fecha, $hora) . '_' . $index . '_encartes.pdf';
-
-                    Encarte::generatePdf($html, $archivo);
-                });
+                $archivo = env('ENCARTES_CARPETA_PDF') . format_datetime_to_file($fecha, (new \Datetime)->format('H:i:s')) . '_' . $index . '_encartes.pdf';
+                Encarte::generatePdf($html, $archivo);
             });
         });
 
