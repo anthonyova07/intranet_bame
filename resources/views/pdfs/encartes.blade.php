@@ -15,7 +15,7 @@
                     <td colspan="3" align="right">ORIGINAL DEL CLIENTE</td>
                 </tr>
                 <tr>
-                    <td colspan="6" align="center">Generado en Fecha {{ date('d/m/Y H:i:s') }}</td>
+                    <td colspan="6" align="center">Generado en Fecha {{ format_date($tarjeta->FECHA) }} {{ format_time($tarjeta->HORA) }}</td>
                 </tr>
                 <tr>
                     <td colspan="6" align="center">Cambio de Tipo: <b>{{ $tarjeta->TIPOD }}</b></td>
@@ -127,7 +127,7 @@
                     <td colspan="3" align="right">COPIA DEL BANCO</td>
                 </tr>
                 <tr>
-                    <td colspan="6" align="center">Generado en Fecha {{ date('d/m/Y H:i:s') }}</td>
+                    <td colspan="6" align="center">Generado en Fecha {{ format_date($tarjeta->FECHA) }} {{ format_time($tarjeta->HORA) }}</td>
                 </tr>
                 <tr>
                     <td colspan="6" align="center">Cambio de Tipo: <b>{{ $tarjeta->TIPOD }}</b></td>

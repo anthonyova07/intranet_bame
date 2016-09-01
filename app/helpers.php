@@ -130,3 +130,36 @@ function get_nationality($codigo_pais) {
             break;
     }
 }
+
+function format_date($fecha) {
+    if (strlen($fecha) == 8) {
+        $a = substr($fecha, 0, 4);
+        $m = substr($fecha, 4, 2);
+        $d = substr($fecha, 6, 2);
+
+        $fecha = $d . '/' . $m . '/' . $a;
+    }
+
+    return $fecha;
+}
+
+function format_time($time) {
+    if (strlen($time) == 5) {
+        $time = '0' . $time;
+    }
+
+    if (strlen($time) == 6) {
+        $h = substr($time, 0, 2);
+        $m = substr($time, 2, 2);
+        $s = substr($time, 4, 2);
+
+        $time = $h . ':' . $m . ':' . $s;
+    }
+
+    return $time;
+}
+
+function format_datetime_to_file($date, $time)
+{
+    return str_replace('/', '_', format_date($date)) . '_' . str_replace(':', '_', format_time($time));
+}

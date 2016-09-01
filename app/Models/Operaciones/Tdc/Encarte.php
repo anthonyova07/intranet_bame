@@ -158,6 +158,16 @@ class Encarte
         return $tarjetas->pluck('TARJETA')->toArray();
     }
 
+    public static function getWrappedDates($tarjetas)
+    {
+        return $tarjetas->pluck('FECHA');
+    }
+
+    public static function getWrappedTimes($tarjetas)
+    {
+        return $tarjetas->pluck('HORA');
+    }
+
     public static function markCreditCards($tarjetas, $estatus = 'P') {
         $sql = 'UPDATE SADENTR00 SET STSEN_ENTR = \'' . $estatus . '\' WHERE NUMTA_ENTR IN (\'' . implode('\', \'', $tarjetas) . '\')';
         return app('con_itc')->prepare($sql)->execute();
@@ -187,6 +197,8 @@ class Encarte
             'TRIM(CODT3_ENTR) CODCELULAR',
             'TRIM(CELUL_ENTR) TELCELULAR',
             'TRIM(COMEN_ENTR) COMENTARIO',
+            'TRIM(FECEN_ENTR) FECHA',
+            'TRIM(HOREN_ENTR) HORA',
             'TRIM((SELECT NOMBR_DESC FROM SATDESC00 WHERE PREFI_DESC = \'SAT_TSOL\' AND CODIG_DESC = TIPSO_ENTR)) AS TIPO',
             'TRIM((SELECT DESCR_BIN FROM ENCARTBIN WHERE NUMTA_BIN = SUBSTR(NUMTA_ENTR,1,6))) AS TIPOD'
         ];
