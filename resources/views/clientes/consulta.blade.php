@@ -19,7 +19,7 @@
                     <form method="post" action="{{ route('clientes::consulta') }}" id="form_consulta">
                         <div class="form-group{{ $errors->first('identificacion') ? ' has-error':'' }}">
                             <label class="control-label">Identificación</label>
-                            <input type="text" class="form-control" name="identificacion" placeholder="Cédula/Pasaporte" value="{{ old('identificacion') }}">
+                            <input type="text" class="form-control" name="identificacion" placeholder="Cédula" value="{{ old('identificacion') }}">
                             <span class="help-block">{{ $errors->first('identificacion') }}</span>
                         </div>
                         {{ csrf_field() }}
