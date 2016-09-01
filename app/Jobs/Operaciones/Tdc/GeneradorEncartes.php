@@ -68,13 +68,15 @@ class GeneradorEncartes extends Job implements ShouldQueue
 
         $tarjetas = Encarte::formatAll($tarjetas);
 
-        $fechas_embozado->unique()->each(function ($fecha, $index) use ($tarjetas) {
+        $horaActual = (new \Datetime)->format('H:i:s');
+
+        $fechas_embozado->unique()->each(function ($fecha, $index) use ($tarjetas, $horaActual) {
             $trozos = $tarjetas->where('FECHA', $fecha)->chunk(env('ENCARTE_CANTIDAD_POR_ARCHIVO'));
 
-            $trozos->each(function ($tarjetas, $index) use ($fecha) {
+            $trozos->each(function ($tarjetas, $index) use ($fecha, $horaActual) {
                 $html = view('pdfs.encartes', ['tarjetas' => $tarjetas])->render();
 
-                $archivo = env('ENCARTES_CARPETA_PDF') . format_datetime_to_file($fecha, (new \Datetime)->format('H:i:s')) . '_' . $index . '_encartes.pdf';
+                $archivo = env('ENCARTES_CARPETA_PDF') . format_datetime_to_file($fecha, $horaActual) . '_' . $index . '_encartes.pdf';
                 Encarte::generatePdf($html, $archivo);
             });
         });
