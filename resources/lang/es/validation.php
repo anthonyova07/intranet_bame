@@ -100,6 +100,7 @@ return [
      */
     'attributes' => [
       'usuario' => 'Usuario',
+      'clave' => 'Contraseña',
       'menu' => 'Menú',
       'submenu' => 'SubMenú',
       'descripcion' => 'Descripción',
