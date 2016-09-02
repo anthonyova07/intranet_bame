@@ -1,11 +1,13 @@
 @extends('layouts.master')
 
-@section('title', 'Home')
+@section('title', 'Intranet Bancamérica')
 
-@section('page_title', 'Inicio')
+@section('page_title', 'Intranet Bancamérica')
 
 @section('contents')
-<div class="row">
-    Inicio
-</div>
+    <div class="row">
+        <div class="jumbotron">
+            <h1>Bienvenid@...</h1>
+        </div>
+    </div>
 @endsection

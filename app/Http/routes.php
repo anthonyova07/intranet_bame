@@ -1,5 +1,5 @@
 <?php
-Route::group(['prefix' => 'intranet'], function () {
+// Route::group(['prefix' => 'intranet'], function () {
 
     Route::get('/', 'HomeController@index')->name('home');
 
@@ -58,4 +58,4 @@ Route::group(['prefix' => 'intranet'], function () {
 
     });
 
-});
+// });
