@@ -51,12 +51,16 @@ function can_not_do($permiso)
     return !$can_access;
 }
 
-function generate_pdf($html, $archivo) {
+// I: envía el fichero al navegador de forma que se usa la extensión (plug in) si está disponible.
+// D: envía el fichero al navegador y fuerza la descarga del fichero con el nombre especificado por name.
+// F: guarda el fichero en un fichero local de nombre name.
+// S: devuelve el documento como una cadena.
+function generate_pdf($html, $archivo, $destino = 'F') {
     require_once base_path() . '\vendor\spipu\html2pdf\html2pdf.class.php';
     $html2pdf = new \HTML2PDF('P', 'A4', 'es', true, 'UTF-8', [3, 6, 133, 2]);
     $html2pdf->setDefaultFont('Helvetica');
     $html2pdf->WriteHTML($html);
-    $html2pdf->Output($archivo, 'F');
+    $html2pdf->Output($archivo, $destino);
 }
 
 function get_notifications($usuario) {

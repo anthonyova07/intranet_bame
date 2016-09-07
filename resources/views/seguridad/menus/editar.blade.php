@@ -13,9 +13,9 @@
 @section('contents')
 
     <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="col-xs-4">
+        <div class="col-xs-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
                     <form method="post" action="{{ route('seguridad::menus::editar', ['codigo' => $menu->CODIGO]) }}" id="form_menus">
                         <div class="form-group{{ $errors->first('descripcion') ? ' has-error':'' }}">
                             <label class="control-label">Descripción</label>

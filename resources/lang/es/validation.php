@@ -109,5 +109,10 @@ return [
       'coduni' => 'Código Único',
       'identificacion' => 'Identificación',
       'tarjeta' => 'TDC',
+      'codigo_cliente' => '# Cliente',
+      'producto' => '# Producto',
+      'mes_proceso' => 'Mes del Proceso',
+      'anio_proceso' => 'Año del Proceso',
+      'ncf' => '# NCF',
     ],
 ];

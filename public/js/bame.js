@@ -5,7 +5,7 @@ $(document).ready(function() {
 
     $('[data-toggle="tooltip"]').tooltip();
 
-    $('table').DataTable({
+    $('.datatable').DataTable({
         "language": {
             "url": $('body').attr('ruta') + "/js/dataTables.spanish.lang"
         },

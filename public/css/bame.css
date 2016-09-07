@@ -1,6 +1,6 @@
 body, #page-wrapper {
     background-color: #eef0f0;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Juhl', 'Museo', sans-serif;
 }
 
 .navbar-default {
@@ -21,11 +21,9 @@ body, #page-wrapper {
     background-color: #e7e7e7;
 }
 
-.btn-bame-primary {
+.btn-danger {
     color: #ffffff;
     background-color: #da291c;
-    border-color: #ffffff;
-    font-weight: bold;
 }
 
 a.dropdown-toggle, .nav>li>a{
@@ -56,11 +54,15 @@ a.dropdown-toggle, .nav>li>a{
 }
 
 .rojo {
-    color: red;
+    color: #d9534f;
+}
+
+.verde {
+    color: #5cb85c;
 }
 
 .naranja {
-    color: orange;
+    color: #f0ad4e;
 }
 
 .jumbotron {

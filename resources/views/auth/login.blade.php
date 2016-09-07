@@ -8,9 +8,9 @@
         @section('page_title', 'Inicio de Sesión')
 
         <div class="row">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="col-xs-4">
+            <div class="col-xs-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
                         <form method="post" action="{{ route('auth.login') }}" id="form_login">
                             <div class="form-group{{ $errors->first('usuario') ? ' has-error':'' }}">
                                 <label class="control-label" for="usuario">Usuario</label>

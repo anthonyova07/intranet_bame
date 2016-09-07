@@ -13,9 +13,9 @@
 @section('contents')
 
     <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="col-xs-4">
+        <div class="col-xs-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
                     <form method="post" action="{{ route('seguridad::menus::submenus::editar', ['menu' => request()->menu, 'codigo' => $submenu->CODIGO]) }}" id="form_submenus">
                         <div class="form-group{{ $errors->first('menu') ? ' has-error':'' }}">
                             <label class="control-label">Menús</label>

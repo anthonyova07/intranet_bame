@@ -18,7 +18,7 @@
                 <a class="btn btn-danger" href="{{ route('seguridad::menus::nuevo') }}">Nuevo</a>
                 <br>
                 <br>
-                <table class="table table-striped table-bordered table-hover table-condensed">
+                <table class="table table-striped table-bordered table-hover table-condensed datatable">
                     <thead>
                         <tr>
                             <th>Descripción</th>
