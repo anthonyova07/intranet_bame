@@ -4,11 +4,25 @@ namespace Bame\Models\Clientes;
 
 class Cliente
 {
+    public static function getByCode($codigo) {
+        $sql = 'SELECT ' . implode(', ', self::getFields()) . ' FROM CUMST WHERE CUSCUN = ' . remove_dashes($codigo);
+        $stmt = app('con_ibs')->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
     public static function getByIdentification($identificacion) {
         $sql = 'SELECT ' . implode(', ', self::getFields()) . ' FROM CUMST WHERE CUSLN3 = \'' . remove_dashes($identificacion) . '\' OR CUSIDN = \'' . remove_dashes($identificacion) . '\'';
         $stmt = app('con_ibs')->prepare($sql);
         $stmt->execute();
         return $stmt->fetch();
+    }
+
+    public static function format($cliente) {
+        $cliente->NOMBRES = cap_str($cliente->NOMBRES);
+        $cliente->APELLIDOS = cap_str($cliente->APELLIDOS);
+
+        return $cliente;
     }
 
     public static function getPhotoByIdentification($identificacion)
@@ -39,6 +53,7 @@ class Cliente
     private static function getFields()
     {
         return [
+            'TRIM(CUSCUN) CODIGO',
             'TRIM(CUSIDN) PASAPORTE',
             'TRIM(CUSLN3) CEDULA',
             'CONCAT(CONCAT(TRIM(CUSFNA), \' \'), TRIM(CUSFN2)) NOMBRES',

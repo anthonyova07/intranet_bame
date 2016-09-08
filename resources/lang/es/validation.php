@@ -114,5 +114,9 @@ return [
       'mes_proceso' => 'Mes del Proceso',
       'anio_proceso' => 'Año del Proceso',
       'ncf' => '# NCF',
+      'dia_desde' => 'Día (Desde)',
+      'dia_hasta' => 'Día (Hasta)',
+      'anio' => 'Año',
+      'monto' => 'Monto',
     ],
 ];

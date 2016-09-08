@@ -24,6 +24,17 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('consulta', 'Clientes\NcfController@postConsulta');
             Route::get('anular/{ncf}', 'Clientes\NcfController@getAnular')->name('anular');
 
+            Route::get('nuevo', 'Clientes\NcfController@getNuevo')->name('nuevo');
+            Route::post('nuevo', 'Clientes\NcfController@postNuevo');
+
+            Route::get('guardar', 'Clientes\NcfController@getGuardar')->name('guardar');
+
+            Route::get('editar/{id}', 'Clientes\NcfController@getEditar')->name('editar');
+            Route::post('editar/{id}', 'Clientes\NcfController@postEditar');
+
+            Route::get('eliminar/todo', 'Clientes\NcfController@getEliminarTodo')->name('eliminar_todo');
+            Route::get('eliminar/{id}', 'Clientes\NcfController@getEliminar')->name('eliminar');
+
             Route::group(['prefix' => 'detalle', 'as' => 'detalle::'], function () {
                 Route::get('consulta/{factura}', 'Clientes\NcfDetalleController@getConsulta')->name('consulta');
                 Route::get('anular/{factura}/{secuencia}', 'Clientes\NcfDetalleController@getAnular')->name('anular');

@@ -93,7 +93,7 @@
             <thead>
                 <tr style="font-size: 12px;">
                     <th style="width: 4%;">Cantidad</th>
-                    <th>Descripción</th>
+                    <th align="left">Descripción</th>
                     <th style="width: 8%;">Moneda</th>
                     <th style="width: 5%;">Monto</th>
                     <th style="width: 12%;">Fecha Generado</th>
@@ -112,6 +112,6 @@
             </tbody>
         </table>
 
-        {{-- @include('partials.print_and_exit') --}}
+        @include('partials.print_and_exit')
     </body>
 </html>

@@ -68,3 +68,7 @@ a.dropdown-toggle, .nav>li>a{
 .jumbotron {
     background-color: #FFFFFF;
 }
+
+.input_money {
+    text-align: right;
+}

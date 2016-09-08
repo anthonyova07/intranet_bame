@@ -87,6 +87,54 @@ class Ncf
         return app('con_ibs')->prepare($sql)->execute();
     }
 
+    public static function getNextNcfSequence($sucursal = 1) {
+        $sql = 'SELECT ' . implode(', ', self::getNcfFields()) . ' FROM BACNCF WHERE NCFSUC = ' . remove_dashes($sucursal);
+
+        $stmt = app('con_ibs')->prepare($sql);
+        $stmt->execute();
+        $ncf = $stmt->fetch();
+        $sequence = $ncf->DESDE + 1;
+
+        $sql = 'UPDATE BACNCF SET NCFDES = ' . $sequence . ' WHERE NCFSUC = ' . remove_dashes($sucursal);
+
+        app('con_ibs')->prepare($sql)->execute();
+
+        return $ncf->CODIGO . str_pad($sequence, 8, '0', STR_PAD_LEFT);
+    }
+
+    public static function getNextInvoice() {
+        $sql = 'SELECT MAX(ENCFACT) ULTIMO FROM BACNCFE';
+
+        $stmt = app('con_ibs')->prepare($sql);
+        $stmt->execute();
+        $factura = $stmt->fetch()->ULTIMO + 1;
+
+        return $factura;
+    }
+
+    public static function save($cliente, $transacciones) {
+        $ncf = self::getNextNcfSequence();
+
+        $factura = self::getNextInvoice();
+
+        $datetime = new \DateTime;
+
+        $sql = 'INSERT INTO BACNCFE(ENCFACT, ENCCLI, ENCNCF, ENCDIAG, ENCMESG, ENCANIOG, ENCMESP, ENCANIOP, ENCMONTO, ENCSTS, ENCREIM, ENCSUC, ENCUSR, ENCCTA, ENCTID, ENCIDN, ENCNOM, ENCPUB, ENCCCY) VALUES(' . $factura . ', ' . $cliente->CODIGO . ', \'' . $ncf . '\', ' . $datetime->format('d, m, Y') . ', ' . $cliente->MES . ', ' . $cliente->ANIO . ', ' . $transacciones->sum('MONTO') . ', \'A\', \'0\', \'1\', \'' . session()->get('usuario') . '\', \'0\', \'\', \'\', \'\', \'S\', \'DOP\')';
+
+        app('con_ibs')->prepare($sql)->execute();
+
+        $transacciones->each(function ($transaccion, $index) use ($factura) {
+            $sql = 'INSERT INTO BACNCFD(DETCANT, DETFAC, DETCTA, DETSEC, DETDESC, DETCCY, DETTAS, DETMTO, DETDIA, DETMES, DETANIO, DEASTS) VALUES(\'1\', ' . $factura . ', \'0\', ' . ($index + 1) . ', \'' . $transaccion->DESCRIPCION . '\', \'DOP\', \'0\', ' . $transaccion->MONTO . ', ' . $transaccion->DIA . ', ' . $transaccion->MES . ', ' . $transaccion->ANIO . ', \'A\')';
+
+            app('con_ibs')->prepare($sql)->execute();
+        });
+
+        session()->forget('cliente');
+        session()->forget('transacciones');
+
+        return ['ncf' => $ncf, 'factura' => $factura];
+    }
+
     private static function getFields()
     {
         return [
@@ -102,6 +150,20 @@ class Ncf
             'TRIM(ENCANIOG) ANIO_GENERADO',
             'TRIM(ENCMONTO) MONTO',
             'TRIM(ENCREIM) IMPUESTO'
+        ];
+    }
+
+    private static function getNcfFields()
+    {
+        return [
+            'TRIM(NCFSUC) SUCURSAL',
+            'TRIM(NCFDESC) DESCRIPCION',
+            'TRIM(NCFCOD) CODIGO',
+            'TRIM(NCFDES) DESDE',
+            'TRIM(NCFHAS) HASTA',
+            'TRIM(NCFMIN) MINIMO',
+            'TRIM(NCFMES) MES',
+            'TRIM(NCFANO) ANIO'
         ];
     }
 }
