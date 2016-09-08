@@ -43,8 +43,7 @@ class AuthController extends Controller
     }
 
     public function getLogout(Request $request) {
-        $request->session()->forget('usuario');
-        $request->session()->forget('menus');
+        $request->session()->flush();
         return redirect()->route('home');
     }
 }
