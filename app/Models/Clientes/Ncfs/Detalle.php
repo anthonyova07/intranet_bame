@@ -1,8 +1,8 @@
 <?php
 
-namespace Bame\Models\Clientes;
+namespace Bame\Models\Clientes\Ncfs;
 
-class NcfDetalle
+class Detalle
 {
     public static function get($factura, $secuencia)
     {

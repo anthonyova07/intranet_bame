@@ -1,17 +1,16 @@
 <?php
 
-namespace Bame\Http\Controllers\Clientes;
+namespace Bame\Http\Controllers\Clientes\Ncfs;
 
 use Illuminate\Http\Request;
 
 use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
-use Bame\Models\Clientes\Ncf;
-use Bame\Models\Clientes\NcfDetalle;
-use Bame\Jobs\Clientes\GeneradorNcf;
+use Bame\Models\Clientes\Ncfs\Ncf;
+use Bame\Models\Clientes\Ncfs\Detalle;
 
-class NcfDetalleController extends Controller
+class DetalleController extends Controller
 {
     public function getConsulta(Request $request, $factura) {
         $ncf = Ncf::get($factura);
@@ -22,9 +21,9 @@ class NcfDetalleController extends Controller
 
         $ncf = Ncf::format($ncf);
 
-        $detalles = NcfDetalle::all($ncf->FACTURA);
+        $detalles = Detalle::all($ncf->FACTURA);
 
-        $detalles = NcfDetalle::formatAll($detalles);
+        $detalles = Detalle::formatAll($detalles);
 
         return view('clientes.ncfs.detalle', ['ncf' => $ncf, 'detalles' => $detalles]);
     }
@@ -34,7 +33,7 @@ class NcfDetalleController extends Controller
             return view('partials.access_denied');
         }
 
-        NcfDetalle::cancel($factura, $secuencia);
+        Detalle::cancel($factura, $secuencia);
 
         return back()->with('success', 'El Detalle de la fuctura ha sido anulado correctamente.');
     }
@@ -44,7 +43,7 @@ class NcfDetalleController extends Controller
             return view('partials.access_denied');
         }
 
-        NcfDetalle::active($factura, $secuencia);
+        Detalle::active($factura, $secuencia);
 
         return back()->with('success', 'El Detalle de la fuctura ha sido activado correctamente.');
     }
@@ -61,13 +60,13 @@ class NcfDetalleController extends Controller
         }
 
         $ncf = Ncf::format($ncf);
-        $detalles = NcfDetalle::all($ncf->FACTURA, true);
+        $detalles = Detalle::all($ncf->FACTURA, true);
 
         if (!$detalles) {
             return back()->with('warning', 'Esta factura no contiene ningún detalle.');
         }
 
-        $detalles = NcfDetalle::formatAll($detalles);
+        $detalles = Detalle::formatAll($detalles);
 
         return view('pdfs.ncf_detalle', ['ncf' => $ncf, 'detalles' => $detalles]);
     }

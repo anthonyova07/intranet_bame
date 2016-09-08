@@ -1,76 +1,24 @@
 <?php
 
-namespace Bame\Http\Controllers\Clientes;
+namespace Bame\Http\Controllers\Clientes\Ncfs\Divisas;
 
 use Illuminate\Http\Request;
 
-use Bame\Http\Requests\Clientes\NcfRequest;
 use Bame\Http\Controllers\Controller;
 
-use Bame\Models\Clientes\Ncf;
+use Bame\Models\Clientes\Ncfs\Ncf;
 use Bame\Models\Clientes\Cliente;
 use Bame\Models\Operaciones\TransaccionesCaja;
-use Bame\Http\Requests\Clientes\NcfNuevoRequest;
-use Bame\Http\Requests\Clientes\NcfEditarRequest;
+use Bame\Http\Requests\Clientes\Ncfs\Divisas\NuevoRequest;
+use Bame\Http\Requests\Clientes\Ncfs\Divisas\EditarRequest;
 
 class NcfController extends Controller
 {
-    public function getConsulta() {
-        return view('clientes.ncfs.consulta', ['ncfs' => collect()]);
-    }
-
-    public function postConsulta(NcfRequest $request) {
-        if ($request->codigo_cliente) {
-            Ncf::addClientCodeFilter($request->codigo_cliente);
-        }
-
-        if ($request->producto) {
-            Ncf::addProductFilter($request->producto);
-        }
-
-        if ($request->mes_proceso) {
-            Ncf::addMonthProcessFilter($request->mes_proceso);
-        }
-
-        if ($request->anio_proceso) {
-            Ncf::addYearProcessFilter($request->anio_proceso);
-        }
-
-        if ($request->ncf) {
-            Ncf::addNcfFilter($request->ncf);
-        }
-
-        Ncf::orderByNcf();
-
-        $ncfs = Ncf::all();
-
-        $ncfs = Ncf::formatAll($ncfs);
-
-        if (!$ncfs) {
-            $request->session()->forget('ncfs');
-            return back()->with('warning', 'No se encontraron resultados de acuerdo a su búsqueda.');
-        }
-
-        $request->session()->put('ncfs', $ncfs);
-
-        return view('clientes.ncfs.consulta');
-    }
-
-    public function getAnular(Request $request, $ncf) {
-        if (can_not_do('clientes_ncf')) {
-            return view('partials.access_denied');
-        }
-
-        Ncf::cancel($ncf);
-
-        return back()->with('success', 'El NCF: ' . $ncf . ' ha sido anulado correctamente.');
-    }
-
     public function getNuevo() {
         return view('clientes.ncfs.divisas.nuevo', ['transacciones' => collect()]);
     }
 
-    public function postNuevo(NcfNuevoRequest $request) {
+    public function postNuevo(NuevoRequest $request) {
         $cliente = Cliente::getByCode($request->codigo_cliente);
 
         if (!$cliente) {
@@ -108,6 +56,41 @@ class NcfController extends Controller
         return back()->withInput();
     }
 
+    public function getEditar(Request $request, $id) {
+        if (can_not_do('clientes_ncf')) {
+            return view('partials.access_denied');
+        }
+
+        $transacciones = collect($request->session()->get('transacciones'));
+
+        $transaccion = $transacciones->get($id);
+
+        if (!$transaccion) {
+            return back()->with('warning', 'El detalle indicado no existe.');
+        }
+
+        return view('clientes.ncfs.divisas.editar', ['transaccion' => $transaccion]);
+    }
+
+    public function postEditar(EditarRequest $request, $id) {
+        $transacciones = collect($request->session()->get('transacciones'));
+
+        $transaccion = $transacciones->get($id);
+
+        if (!$transaccion) {
+            return back()->with('warning', 'El detalle indicado no existe.');
+        }
+
+        $transaccion->DESCRIPCION = cap_str($request->descripcion);
+        $transaccion->MONTO = $request->monto;
+
+        $transacciones->put($id, $transaccion);
+
+        $request->session()->put('transacciones', $transacciones);
+
+        return redirect(route('clientes::ncfs::divisas::nuevo'))->with('success', 'El detalle fue editado correctamente.');
+    }
+
     public function getGuardar(Request $request) {
         if (can_not_do('clientes_ncf')) {
             return view('partials.access_denied');
@@ -130,41 +113,6 @@ class NcfController extends Controller
         return redirect(route('clientes::ncfs::divisas::nuevo'))
         ->with('success', 'El ncf ' . $infoExtra['ncf'] . ' a sido creado satisfactoria mente. El # de factura es: ' . $infoExtra['factura'])
         ->with('link', route('clientes::ncfs::detalles::imprimir', ['factura' => $infoExtra['factura']]));
-    }
-
-    public function getEditar(Request $request, $id) {
-        if (can_not_do('clientes_ncf')) {
-            return view('partials.access_denied');
-        }
-
-        $transacciones = collect($request->session()->get('transacciones'));
-
-        $transaccion = $transacciones->get($id);
-
-        if (!$transaccion) {
-            return back()->with('warning', 'El detalle indicado no existe.');
-        }
-
-        return view('clientes.ncfs.divisas.editar', ['transaccion' => $transaccion]);
-    }
-
-    public function postEditar(NcfEditarRequest $request, $id) {
-        $transacciones = collect($request->session()->get('transacciones'));
-
-        $transaccion = $transacciones->get($id);
-
-        if (!$transaccion) {
-            return back()->with('warning', 'El detalle indicado no existe.');
-        }
-
-        $transaccion->DESCRIPCION = cap_str($request->descripcion);
-        $transaccion->MONTO = $request->monto;
-
-        $transacciones->put($id, $transaccion);
-
-        $request->session()->put('transacciones', $transacciones);
-
-        return redirect(route('clientes::ncfs::divisas::nuevo'))->with('success', 'El detalle fue editado correctamente.');
     }
 
     public function getEliminar(Request $request, $id) {

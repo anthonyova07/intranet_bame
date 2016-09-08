@@ -1,6 +1,6 @@
 <?php
 
-namespace Bame\Models\Clientes;
+namespace Bame\Models\Clientes\Ncfs;
 
 class Ncf
 {

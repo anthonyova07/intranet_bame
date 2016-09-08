@@ -1,10 +1,10 @@
 <?php
 
-namespace Bame\Http\Requests\Clientes;
+namespace Bame\Http\Requests\Clientes\Ncfs\Divisas;
 
 use Bame\Http\Requests\Request;
 
-class NcfNuevoRequest extends Request
+class NuevoRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

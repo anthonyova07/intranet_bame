@@ -1,10 +1,10 @@
 <?php
 
-namespace Bame\Http\Requests\Clientes;
+namespace Bame\Http\Requests\Clientes\Ncfs;
 
 use Bame\Http\Requests\Request;
 
-class NcfEditarRequest extends Request
+class NcfRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,11 @@ class NcfEditarRequest extends Request
     public function rules()
     {
         return [
-            'descripcion' => 'required',
-            'monto' => 'required|numeric',
+            'codigo_cliente' => 'numeric',
+            'producto' => 'numeric',
+            'mes_proceso' => 'numeric|between:1,12',
+            'anio_proceso' => 'numeric|between:2015,' . (new \Datetime)->format('Y'),
+            'ncf' => 'alpha_num|min:19|max:19',
         ];
     }
 }

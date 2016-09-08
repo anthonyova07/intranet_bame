@@ -20,28 +20,28 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('consulta', 'Clientes\ClienteController@postConsulta');
 
         Route::group(['prefix' => 'ncfs', 'as' => 'ncfs::'], function () {
-            Route::get('consulta', 'Clientes\NcfController@getConsulta')->name('consulta');
-            Route::post('consulta', 'Clientes\NcfController@postConsulta');
-            Route::get('anular/{ncf}', 'Clientes\NcfController@getAnular')->name('anular');
+            Route::get('consulta', 'Clientes\Ncfs\NcfController@getConsulta')->name('consulta');
+            Route::post('consulta', 'Clientes\Ncfs\NcfController@postConsulta');
+            Route::get('anular/{ncf}', 'Clientes\Ncfs\NcfController@getAnular')->name('anular');
 
             Route::group(['prefix' => 'divisas', 'as' => 'divisas::'], function () {
-                Route::get('nuevo', 'Clientes\NcfController@getNuevo')->name('nuevo');
-                Route::post('nuevo', 'Clientes\NcfController@postNuevo');
+                Route::get('nuevo', 'Clientes\Ncfs\Divisas\NcfController@getNuevo')->name('nuevo');
+                Route::post('nuevo', 'Clientes\Ncfs\Divisas\NcfController@postNuevo');
 
-                Route::get('guardar', 'Clientes\NcfController@getGuardar')->name('guardar');
+                Route::get('guardar', 'Clientes\Ncfs\Divisas\NcfController@getGuardar')->name('guardar');
 
-                Route::get('editar/{id}', 'Clientes\NcfController@getEditar')->name('editar');
-                Route::post('editar/{id}', 'Clientes\NcfController@postEditar');
+                Route::get('editar/{id}', 'Clientes\Ncfs\Divisas\NcfController@getEditar')->name('editar');
+                Route::post('editar/{id}', 'Clientes\Ncfs\Divisas\NcfController@postEditar');
 
-                Route::get('eliminar/todo', 'Clientes\NcfController@getEliminarTodo')->name('eliminar_todo');
-                Route::get('eliminar/{id}', 'Clientes\NcfController@getEliminar')->name('eliminar');
+                Route::get('eliminar/todo', 'Clientes\Ncfs\Divisas\NcfController@getEliminarTodo')->name('eliminar_todo');
+                Route::get('eliminar/{id}', 'Clientes\Ncfs\Divisas\NcfController@getEliminar')->name('eliminar');
             });
 
             Route::group(['prefix' => 'detalles', 'as' => 'detalles::'], function () {
-                Route::get('consulta/{factura}', 'Clientes\NcfDetalleController@getConsulta')->name('consulta');
-                Route::get('anular/{factura}/{secuencia}', 'Clientes\NcfDetalleController@getAnular')->name('anular');
-                Route::get('activar/{factura}/{secuencia}', 'Clientes\NcfDetalleController@getActivar')->name('activar');
-                Route::get('imprimir/{factura}', 'Clientes\NcfDetalleController@getImprimir')->name('imprimir');
+                Route::get('consulta/{factura}', 'Clientes\Ncfs\NcfDetalleController@getConsulta')->name('consulta');
+                Route::get('anular/{factura}/{secuencia}', 'Clientes\Ncfs\DetalleController@getAnular')->name('anular');
+                Route::get('activar/{factura}/{secuencia}', 'Clientes\Ncfs\DetalleController@getActivar')->name('activar');
+                Route::get('imprimir/{factura}', 'Clientes\Ncfs\DetalleController@getImprimir')->name('imprimir');
             });
         });
     });

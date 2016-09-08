@@ -70,7 +70,7 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <a class="btn btn-danger" href="{{ route('clientes::ncfs::divisas::nuevo') }}">Nuevo NCF (Divisas)</a>
-                {{-- <a class="btn btn-danger pull-right" href="">Nuevo</a> --}}
+                <a class="btn btn-warning pull-right" href="">Nuevo NCF (No Clientes)</a>
                 <br>
                 <br>
                 <table class="table table-striped table-bordered table-hover table-condensed datatable">
