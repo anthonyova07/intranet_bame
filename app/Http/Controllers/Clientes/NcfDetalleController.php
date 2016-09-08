@@ -26,7 +26,7 @@ class NcfDetalleController extends Controller
 
         $detalles = NcfDetalle::formatAll($detalles);
 
-        return view('clientes.ncf_detalle', ['ncf' => $ncf, 'detalles' => $detalles]);
+        return view('clientes.ncfs.detalle', ['ncf' => $ncf, 'detalles' => $detalles]);
     }
 
     public function getAnular(Request $request, $factura, $secuencia) {

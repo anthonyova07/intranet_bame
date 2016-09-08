@@ -15,8 +15,8 @@
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-body">
-                <a class="btn btn-info" href="{{ route('clientes::ncf::consulta') }}"><i class="fa fa-arrow-left"></i> Atras</a>
-                <a class="btn btn-warning pull-right" target="__blank" href="{{ route('clientes::ncf::detalle::imprimir', ['factura' => $ncf->FACTURA]) }}">Imprimir</a>
+                <a class="btn btn-info" href="{{ route('clientes::ncfs::consulta') }}"><i class="fa fa-arrow-left"></i> Atras</a>
+                <a class="btn btn-warning pull-right" target="__blank" href="{{ route('clientes::ncfs::detalles::imprimir', ['factura' => $ncf->FACTURA]) }}">Imprimir</a>
 
                 <br><br>
 
@@ -108,9 +108,9 @@
                                 <td align="center"><span class="label label-{{ $detalle->ESTATUS == 'A' ? 'success':'danger' }}">{{ $detalle->ESTATUS == 'A' ? 'Activo':'Anulado' }}</span></td>
                                 <td align="center">
                                     @if ($detalle->ESTATUS == 'R')
-                                        <a href="{{ route('clientes::ncf::detalle::activar', ['factura' => $detalle->FACTURA, 'secuencia' => $detalle->SECUENCIA]) }}" class="link_activar verde" data-toggle="tooltip" data-placement="top" title="Activar Este Detalle"><i class="fa fa-check fa-fw"></i></a>
+                                        <a href="{{ route('clientes::ncfs::detalles::activar', ['factura' => $detalle->FACTURA, 'secuencia' => $detalle->SECUENCIA]) }}" class="link_activar verde" data-toggle="tooltip" data-placement="top" title="Activar Este Detalle"><i class="fa fa-check fa-fw"></i></a>
                                     @else
-                                        <a href="{{ route('clientes::ncf::detalle::anular', ['factura' => $detalle->FACTURA, 'secuencia' => $detalle->SECUENCIA]) }}" class="link_anular rojo" data-toggle="tooltip" data-placement="top" title="Anular Este Detalle"><i class="fa fa-times fa-fw"></i></a>
+                                        <a href="{{ route('clientes::ncfs::detalles::anular', ['factura' => $detalle->FACTURA, 'secuencia' => $detalle->SECUENCIA]) }}" class="link_anular rojo" data-toggle="tooltip" data-placement="top" title="Anular Este Detalle"><i class="fa fa-times fa-fw"></i></a>
                                     @endif
                                 </td>
                             </tr>

@@ -15,7 +15,7 @@
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-body">
-                <form method="post" action="{{ route('clientes::ncf::editar', ['id' => $transaccion->ID]) }}" id="form_consulta">
+                <form method="post" action="{{ route('clientes::ncfs::divisas::editar', ['id' => $transaccion->ID]) }}" id="form_consulta">
                     <div class="row">
                         <div class="col-xs-4">
                             <div class="form-group{{ $errors->first('descripcion') ? ' has-error':'' }}">
@@ -30,7 +30,7 @@
                             </div>
                             <div class="pull-right">
                                 {{ csrf_field() }}
-                                <a href="{{ route('clientes::ncf::nuevo') }}" class="btn btn-default">Cancelar</a>
+                                <a href="{{ route('clientes::ncfs::divisas::nuevo') }}" class="btn btn-default">Cancelar</a>
                                 <button type="submit" class="btn btn-danger" id="btn_submit" data-loading-text="Guardando...">Guardar</button>
                             </div>
                         </div>

@@ -16,7 +16,7 @@ use Bame\Http\Requests\Clientes\NcfEditarRequest;
 class NcfController extends Controller
 {
     public function getConsulta() {
-        return view('clientes.ncf', ['ncfs' => collect()]);
+        return view('clientes.ncfs.consulta', ['ncfs' => collect()]);
     }
 
     public function postConsulta(NcfRequest $request) {
@@ -53,7 +53,7 @@ class NcfController extends Controller
 
         $request->session()->put('ncfs', $ncfs);
 
-        return view('clientes.ncf');
+        return view('clientes.ncfs.consulta');
     }
 
     public function getAnular(Request $request, $ncf) {
@@ -67,7 +67,7 @@ class NcfController extends Controller
     }
 
     public function getNuevo() {
-        return view('clientes.ncf_nuevo', ['transacciones' => collect()]);
+        return view('clientes.ncfs.divisas.nuevo', ['transacciones' => collect()]);
     }
 
     public function postNuevo(NcfNuevoRequest $request) {
@@ -127,9 +127,9 @@ class NcfController extends Controller
 
         $infoExtra = Ncf::save($cliente, $transacciones);
 
-        return redirect(route('clientes::ncf::nuevo'))
+        return redirect(route('clientes::ncfs::divisas::nuevo'))
         ->with('success', 'El ncf ' . $infoExtra['ncf'] . ' a sido creado satisfactoria mente. El # de factura es: ' . $infoExtra['factura'])
-        ->with('link', route('clientes::ncf::detalle::imprimir', ['factura' => $infoExtra['factura']]));
+        ->with('link', route('clientes::ncfs::detalles::imprimir', ['factura' => $infoExtra['factura']]));
     }
 
     public function getEditar(Request $request, $id) {
@@ -145,7 +145,7 @@ class NcfController extends Controller
             return back()->with('warning', 'El detalle indicado no existe.');
         }
 
-        return view('clientes.ncf_editar', ['transaccion' => $transaccion]);
+        return view('clientes.ncfs.divisas.editar', ['transaccion' => $transaccion]);
     }
 
     public function postEditar(NcfEditarRequest $request, $id) {
@@ -164,7 +164,7 @@ class NcfController extends Controller
 
         $request->session()->put('transacciones', $transacciones);
 
-        return redirect(route('clientes::ncf::nuevo'))->with('success', 'El detalle fue editado correctamente.');
+        return redirect(route('clientes::ncfs::divisas::nuevo'))->with('success', 'El detalle fue editado correctamente.');
     }
 
     public function getEliminar(Request $request, $id) {

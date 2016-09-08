@@ -18,7 +18,7 @@
                 <h3 class="panel-title">Filtros de Búsqueda</h3>
             </div>
             <div class="panel-body">
-                <form method="post" action="{{ route('clientes::ncf::nuevo') }}" id="form_consulta">
+                <form method="post" action="{{ route('clientes::ncfs::divisas::nuevo') }}" id="form_consulta">
                     <div class="row">
                         <div class="col-xs-2">
                             <div class="form-group{{ $errors->first('dia_desde') ? ' has-error':'' }}">
@@ -77,7 +77,7 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">
                         Transacciones Encontradas
-                        <a class="btn btn-warning pull-right btn-xs" href="{{ route('clientes::ncf::eliminar_todo') }}" data-toggle="tooltip" data-placement="top" title="Eliminar Todo" style="margin-top: -3px;">
+                        <a class="btn btn-warning pull-right btn-xs" href="{{ route('clientes::ncfs::divisas::eliminar_todo') }}" data-toggle="tooltip" data-placement="top" title="Eliminar Todo" style="margin-top: -3px;">
                             <i class="fa fa-close"></i>
                         </a>
                     </h3>
@@ -107,7 +107,7 @@
                             </div>
                         </div>
                         <div class="col-xs-4">
-                            <a class="btn btn-success pull-right" href="{{ route('clientes::ncf::guardar') }}">Guardar NCF (Divisas)</a>
+                            <a class="btn btn-success pull-right" href="{{ route('clientes::ncfs::divisas::guardar') }}">Guardar NCF (Divisas)</a>
                         </div>
                     </div>
 
@@ -129,8 +129,8 @@
                                     <td align="right">{{ number_format($transaccion->MONTO, 2) }}</td>
                                     <td align="center">{{ $transaccion->DIA . '/' . $transaccion->MES . '/' . $transaccion->ANIO }}</td>
                                     <td align="center" width="20">
-                                        <a href="{{ route('clientes::ncf::editar', ['id' => $transaccion->ID]) }}" class="naranja" data-toggle="tooltip" data-placement="top" title="Editar Detalle"><i class="fa fa-edit fa-fw"></i></a>
-                                        <a href="{{ route('clientes::ncf::eliminar', ['id' => $transaccion->ID]) }}" class="rojo" data-toggle="tooltip" data-placement="top" title="Eliminar Detalle"><i class="fa fa-trash fa-fw"></i></a>
+                                        <a href="{{ route('clientes::ncfs::divisas::editar', ['id' => $transaccion->ID]) }}" class="naranja" data-toggle="tooltip" data-placement="top" title="Editar Detalle"><i class="fa fa-edit fa-fw"></i></a>
+                                        <a href="{{ route('clientes::ncfs::divisas::eliminar', ['id' => $transaccion->ID]) }}" class="rojo" data-toggle="tooltip" data-placement="top" title="Eliminar Detalle"><i class="fa fa-trash fa-fw"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

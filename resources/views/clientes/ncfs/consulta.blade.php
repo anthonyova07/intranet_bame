@@ -69,7 +69,7 @@
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-body">
-                <a class="btn btn-danger" href="{{ route('clientes::ncf::nuevo') }}">Nuevo NCF (Divisas)</a>
+                <a class="btn btn-danger" href="{{ route('clientes::ncfs::divisas::nuevo') }}">Nuevo NCF (Divisas)</a>
                 {{-- <a class="btn btn-danger pull-right" href="">Nuevo</a> --}}
                 <br>
                 <br>
@@ -100,8 +100,8 @@
                                     <td>{{ $ncf->DIA_GENERADO . '/' . $ncf->MES_GENERADO . '/' . $ncf->ANIO_GENERADO }}</td>
                                     <td align="right">{{ $ncf->MONTO }}</td>
                                     <td align="center" width="20">
-                                        <a href="{{ route('clientes::ncf::detalle::consulta', ['ncf' => $ncf->FACTURA]) }}" data-toggle="tooltip" data-placement="top" ncf="{{ $ncf->NCF }}" title="Ver Detalle del NCF {{ $ncf->NCF }}"><i class="fa fa-align-justify fa-fw"></i></a>
-                                        <a href="{{ route('clientes::ncf::anular', ['ncf' => $ncf->NCF]) }}" class="link_anular rojo" data-toggle="tooltip" data-placement="top" ncf="{{ $ncf->NCF }}" title="Anular NCF {{ $ncf->NCF }}"><i class="fa fa-times fa-fw"></i></a>
+                                        <a href="{{ route('clientes::ncfs::detalles::consulta', ['ncf' => $ncf->FACTURA]) }}" data-toggle="tooltip" data-placement="top" ncf="{{ $ncf->NCF }}" title="Ver Detalle del NCF {{ $ncf->NCF }}"><i class="fa fa-align-justify fa-fw"></i></a>
+                                        <a href="{{ route('clientes::ncfs::anular', ['ncf' => $ncf->NCF]) }}" class="link_anular rojo" data-toggle="tooltip" data-placement="top" ncf="{{ $ncf->NCF }}" title="Anular NCF {{ $ncf->NCF }}"><i class="fa fa-times fa-fw"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
