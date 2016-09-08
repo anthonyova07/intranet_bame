@@ -48,12 +48,12 @@ class DetalleController extends Controller
         return back()->with('success', 'El Detalle de la fuctura ha sido activado correctamente.');
     }
 
-    public function getImprimir(Request $request, $factura) {
+    public function getImprimir(Request $request, $factura, $ibs) {
         if (can_not_do('clientes_ncf')) {
             return view('partials.access_denied');
         }
 
-        $ncf = Ncf::get($factura);
+        $ncf = Ncf::get($factura, boolval($ibs));
 
         if (!$ncf) {
             return back()->with('warning', 'Este número de factura no existe.');

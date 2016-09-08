@@ -112,7 +112,7 @@ class NcfController extends Controller
 
         return redirect(route('clientes::ncfs::divisas::nuevo'))
         ->with('success', 'El ncf ' . $infoExtra['ncf'] . ' a sido creado satisfactoria mente. El # de factura es: ' . $infoExtra['factura'])
-        ->with('link', route('clientes::ncfs::detalles::imprimir', ['factura' => $infoExtra['factura']]));
+        ->with('link', route('clientes::ncfs::detalles::imprimir', ['factura' => $infoExtra['factura'], 'ibs' => 1]));
     }
 
     public function getEliminar(Request $request, $id) {

@@ -6,9 +6,10 @@ class Ncf
 {
     private static $sql;
 
-    public static function get($factura)
+    public static function get($factura, $ibs = true)
     {
-        $sql = 'SELECT ' . implode(', ', self::getFields()) . ' FROM BACNCFE,CUMST WHERE ENCCLI = CUSCUN AND ENCFACT = ' . remove_dashes($factura);
+        $sql = 'SELECT ' . implode(', ', self::getFields()) . ' FROM BACNCFE,CUMST WHERE' . ($ibs ? ' ENCCLI = CUSCUN AND':'') . ' ENCFACT = ' . remove_dashes($factura);
+        // dd($sql);
         $stmt = app('con_ibs')->prepare($sql);
         $stmt->execute();
         return $stmt->fetch();
@@ -131,6 +132,29 @@ class Ncf
 
         session()->forget('cliente');
         session()->forget('transacciones');
+
+        return ['ncf' => $ncf, 'factura' => $factura];
+    }
+
+    public static function saveNoIBS($cliente, $transacciones) {
+        $ncf = self::getNextNcfSequence();
+
+        $factura = self::getNextInvoice();
+
+        $datetime = new \DateTime;
+
+        $sql = 'INSERT INTO BACNCFE(ENCFACT, ENCCLI, ENCNCF, ENCDIAG, ENCMESG, ENCANIOG, ENCMESP, ENCANIOP, ENCMONTO, ENCSTS, ENCREIM, ENCSUC, ENCUSR, ENCCTA, ENCTID, ENCIDN, ENCNOM, ENCPUB, ENCCCY) VALUES(' . $factura . ', 0, \'' . $ncf . '\', ' . $datetime->format('d, m, Y') . ', ' . $cliente->MES . ', ' . $cliente->ANIO . ', ' . $transacciones->sum('MONTO') . ', \'A\', \'0\', \'1\', \'' . session()->get('usuario') . '\', \'0\', \'' . $cliente->TIPO_IDENTIFICACION . '\', \'' . $cliente->IDENTIFICACION . '\', \'' . $cliente->NOMBRES_APELLIDOS . '\', \'S\', \'DOP\')';
+
+        app('con_ibs')->prepare($sql)->execute();
+
+        $transacciones->each(function ($transaccion, $index) use ($factura) {
+            $sql = 'INSERT INTO BACNCFD(DETCANT, DETFAC, DETCTA, DETSEC, DETDESC, DETCCY, DETTAS, DETMTO, DETDIA, DETMES, DETANIO, DEASTS, DETITB) VALUES(\'1\', ' . $factura . ', \'0\', ' . ($index + 1) . ', \'' . $transaccion->DESCRIPCION . '\', \'DOP\', \'0\', ' . $transaccion->MONTO . ', ' . $transaccion->DIA . ', ' . $transaccion->MES . ', ' . $transaccion->ANIO . ', \'A\', ' . $transaccion->IMPUESTO .')';
+
+            app('con_ibs')->prepare($sql)->execute();
+        });
+
+        session()->forget('cliente_noibs');
+        session()->forget('transacciones_noibs');
 
         return ['ncf' => $ncf, 'factura' => $factura];
     }

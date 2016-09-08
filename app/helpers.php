@@ -178,3 +178,14 @@ function get_months($mes = false)
 
     return $meses->get((int) $mes);
 }
+
+function get_identification_types($tipo_identificacion = false)
+{
+    $tipos_identificacion = collect(['C' => 'Cédula', 'N' => 'RNC', 'O' => 'OffShore', 'P' => 'Pasaporte']);
+
+    if (!$tipo_identificacion) {
+        return $tipos_identificacion;
+    }
+
+    return $tipos_identificacion->get($tipo_identificacion);
+}

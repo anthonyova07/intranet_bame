@@ -37,11 +37,30 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('eliminar/{id}', 'Clientes\Ncfs\Divisas\NcfController@getEliminar')->name('eliminar');
             });
 
+            Route::group(['prefix' => 'no_ibs', 'as' => 'no_ibs::'], function () {
+                Route::get('nuevo', 'Clientes\Ncfs\NoIbs\NcfController@getNuevo')->name('nuevo');
+                Route::post('nuevo', 'Clientes\Ncfs\NoIbs\NcfController@postNuevo');
+
+                Route::get('guardar', 'Clientes\Ncfs\NoIbs\NcfController@getGuardar')->name('guardar');
+
+                Route::group(['prefix' => 'detalle', 'as' => 'detalle::'], function () {
+                    Route::get('nuevo', 'Clientes\Ncfs\NoIbs\NcfController@getNuevoDetalle')->name('nuevo');
+                    Route::post('nuevo', 'Clientes\Ncfs\NoIbs\NcfController@postNuevoDetalle');
+
+                    Route::get('editar/{id}', 'Clientes\Ncfs\NoIbs\NcfController@getEditar')->name('editar');
+                    Route::post('editar/{id}', 'Clientes\Ncfs\NoIbs\NcfController@postEditar');
+
+                    Route::get('eliminar/{id}', 'Clientes\Ncfs\NoIbs\NcfController@getEliminar')->name('eliminar');
+                });
+
+                Route::get('eliminar/todo', 'Clientes\Ncfs\NoIbs\NcfController@getEliminarTodo')->name('eliminar_todo');
+            });
+
             Route::group(['prefix' => 'detalles', 'as' => 'detalles::'], function () {
-                Route::get('consulta/{factura}', 'Clientes\Ncfs\NcfDetalleController@getConsulta')->name('consulta');
+                Route::get('consulta/{factura}', 'Clientes\Ncfs\DetalleController@getConsulta')->name('consulta');
                 Route::get('anular/{factura}/{secuencia}', 'Clientes\Ncfs\DetalleController@getAnular')->name('anular');
                 Route::get('activar/{factura}/{secuencia}', 'Clientes\Ncfs\DetalleController@getActivar')->name('activar');
-                Route::get('imprimir/{factura}', 'Clientes\Ncfs\DetalleController@getImprimir')->name('imprimir');
+                Route::get('imprimir/{factura}/{ibs}', 'Clientes\Ncfs\DetalleController@getImprimir')->name('imprimir');
             });
         });
     });
