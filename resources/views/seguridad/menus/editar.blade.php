@@ -32,8 +32,8 @@
                             </label>
                         </div>
                         {{ csrf_field() }}
-                        <a class="btn btn-default" href="{{ route('seguridad::menus::lista') }}">Cancelar</a>
-                        <button type="submit" class="btn btn-danger" id="btn_submit" data-loading-text="Editando menú...">Editar</button>
+                        <a class="btn btn-default btn-sm" href="{{ route('seguridad::menus::lista') }}">Cancelar</a>
+                        <button type="submit" class="btn btn-danger btn-sm" id="btn_submit" data-loading-text="Editando menú...">Editar</button>
                     </form>
                 </div>
             </div>

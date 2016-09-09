@@ -23,7 +23,7 @@
                                 <span class="help-block">{{ $errors->first('clave') }}</span>
                             </div>
                             {{ csrf_field() }}
-                            <button type="submit" class="btn btn-danger" id="btn_submit" data-loading-text="Iniciando sesión...">Iniciar Sesión</button>
+                            <button type="submit" class="btn btn-danger btn-sm" id="btn_submit" data-loading-text="Iniciando sesión...">Iniciar Sesión</button>
                         </form>
                     </div>
                 </div>

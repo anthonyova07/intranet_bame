@@ -15,7 +15,7 @@
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-body">
-                <a class="btn btn-danger" href="{{ route('seguridad::menus::nuevo') }}">Nuevo</a>
+                <a class="btn btn-danger btn-sm" href="{{ route('seguridad::menus::nuevo') }}">Nuevo</a>
                 <br>
                 <br>
                 <table class="table table-striped table-bordered table-hover table-condensed datatable">

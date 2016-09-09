@@ -15,8 +15,8 @@
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-body">
-                <a class="btn btn-info" href="{{ route('seguridad::menus::lista') }}"><i class="fa fa-arrow-left"></i> Atras</a>
-                <a class="btn btn-danger" href="{{ route('seguridad::menus::submenus::nuevo', ['menu' => request()->menu]) }}">Nuevo</a>
+                <a class="btn btn-info btn-sm" href="{{ route('seguridad::menus::lista') }}"><i class="fa fa-arrow-left"></i> Atras</a>
+                <a class="btn btn-danger btn-sm" href="{{ route('seguridad::menus::submenus::nuevo', ['menu' => request()->menu]) }}">Nuevo</a>
                 <br>
                 <br>
                 <table class="table table-striped table-bordered table-hover table-condensed datatable">

@@ -57,7 +57,7 @@
                         </div>
                         {{ csrf_field() }}
                         <a class="btn btn-default" href="{{ route('seguridad::menus::submenus::lista', ['menu' => request()->menu]) }}">Cancelar</a>
-                        <button type="submit" class="btn btn-danger" id="btn_submit" data-loading-text="Editando submenú...">Editar</button>
+                        <button type="submit" class="btn btn-danger btn-sm" id="btn_submit" data-loading-text="Editando submenú...">Editar</button>
                     </form>
                 </div>
             </div>

@@ -33,8 +33,7 @@
                             <span class="help-block">{{ $errors->first('fecha') }}</span>
                         </div>
                         {{ csrf_field() }}
-                        <button type="submit" class="btn btn-danger" id="btn_submit" data-loading-text="Generando encartes...">Generar PDFs <span class="badge" data-toggle="tooltip" data-placement="bottom" title="Encartes Pendientes">{{ $cantidad }}</span></button>
-                        {{-- <a href="http://192.168.0.100/intranet/pdfs/encartes/" target="__blank" class="btn btn-info pull-right">Ver encartes</a> --}}
+                        <button type="submit" class="btn btn-danger btn-sm" id="btn_submit" data-loading-text="Generando encartes...">Generar PDFs <span class="badge" data-toggle="tooltip" data-placement="bottom" title="Encartes Pendientes">{{ $cantidad }}</span></button>
                     </form>
                 </div>
             </div>

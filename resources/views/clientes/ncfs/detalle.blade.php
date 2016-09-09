@@ -15,8 +15,8 @@
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-body">
-                <a class="btn btn-info" href="{{ route('clientes::ncfs::consulta') }}"><i class="fa fa-arrow-left"></i> Atras</a>
-                <a class="btn btn-warning pull-right" target="__blank" href="{{ route('clientes::ncfs::detalles::imprimir', ['factura' => $ncf->FACTURA, 'ibs' => 1]) }}">Imprimir</a>
+                <a class="btn btn-info btn-sm" href="{{ route('clientes::ncfs::consulta') }}"><i class="fa fa-arrow-left"></i> Atras</a>
+                <a class="btn btn-warning btn-sm pull-right" target="__blank" href="{{ route('clientes::ncfs::detalles::imprimir', ['factura' => $ncf->FACTURA, 'ibs' => 1]) }}">Imprimir</a>
 
                 <br><br>
 

@@ -118,6 +118,8 @@ return [
       'dia_hasta' => 'Día (Hasta)',
       'anio' => 'Año',
       'monto' => 'Monto',
+      'mes' => 'Mes',
+      'dia' => 'Día',
       'nombres_apellidos' => 'Nombres y Apellidos',
     ],
 ];

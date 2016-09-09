@@ -58,7 +58,7 @@
                             </label>
                         </div>
                         {{ csrf_field() }}
-                        <button type="submit" class="btn btn-danger" id="btn_submit" data-loading-text="Procesando solicitud...">Enviar</button>
+                        <button type="submit" class="btn btn-danger btn-sm" id="btn_submit" data-loading-text="Procesando solicitud...">Enviar</button>
                     </form>
                 </div>
             </div>

@@ -13,12 +13,12 @@
 @section('contents')
 
     <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Filtros de Búsqueda</h3>
-            </div>
-            <div class="panel-body">
-
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Filtros de Búsqueda</h3>
+                </div>
+                <div class="panel-body">
                     <form method="post" action="" id="form_consulta">
                         <div class="row">
                             <div class="col-xs-2">
@@ -58,56 +58,59 @@
                             </div>
                             <div class="col-xs-2">
                                 {{ csrf_field() }}
-                                <button type="submit" class="btn btn-danger" id="btn_submit" data-loading-text="Consultando ncfs..." style="margin-top: 25px;">Consultar NCFs</button>
+                                <button type="submit" class="btn btn-danger btn-sm" id="btn_submit" data-loading-text="Consultando ncfs..." style="margin-top: 27px;">Consultar NCFs</button>
                             </div>
                         </div>
                     </form>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <a class="btn btn-danger" href="{{ route('clientes::ncfs::divisas::nuevo') }}">Nuevo NCF (Divisas)</a>
-                <a class="btn btn-warning pull-right" href="{{ route('clientes::ncfs::no_ibs::nuevo') }}">Nuevo NCF (No IBS)</a>
-                <br>
-                <br>
-                <table class="table table-striped table-bordered table-hover table-condensed datatable">
-                    <thead>
-                        <tr>
-                            <th>Factura</th>
-                            <th>Cliente</th>
-                            <th>Nombre</th>
-                            <th>Producto</th>
-                            <th>NCF</th>
-                            <th>Fec.Proceso</th>
-                            <th>Fec.Generado</th>
-                            <th>Monto</th>
-                            <th style="width: 26px;"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (session()->has('ncfs'))
-                            @foreach (session()->get('ncfs') as $ncf)
-                                <tr>
-                                    <td>{{ $ncf->FACTURA }}</td>
-                                    <td>{{ $ncf->CODIGO_CLIENTE }}</td>
-                                    <td>{{ $ncf->NOMBRE }}</td>
-                                    <td>{{ $ncf->PRODUCTO }}</td>
-                                    <td>{{ $ncf->NCF }}</td>
-                                    <td>{{ $ncf->MES_PROCESO . '/' . $ncf->ANIO_PROCESO }}</td>
-                                    <td>{{ $ncf->DIA_GENERADO . '/' . $ncf->MES_GENERADO . '/' . $ncf->ANIO_GENERADO }}</td>
-                                    <td align="right">{{ $ncf->MONTO }}</td>
-                                    <td align="center" width="20">
-                                        <a href="{{ route('clientes::ncfs::detalles::consulta', ['ncf' => $ncf->FACTURA]) }}" data-toggle="tooltip" data-placement="top" ncf="{{ $ncf->NCF }}" title="Ver Detalle del NCF {{ $ncf->NCF }}"><i class="fa fa-align-justify fa-fw"></i></a>
-                                        <a href="{{ route('clientes::ncfs::anular', ['ncf' => $ncf->NCF]) }}" class="link_anular rojo" data-toggle="tooltip" data-placement="top" ncf="{{ $ncf->NCF }}" title="Anular NCF {{ $ncf->NCF }}"><i class="fa fa-times fa-fw"></i></a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
-                    </tbody>
-                </table>
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a class="btn btn-danger btn-sm" href="{{ route('clientes::ncfs::divisas::nuevo') }}">Nuevo NCF (Divisas)</a>
+                    <a class="btn btn-warning btn-sm pull-right" href="{{ route('clientes::ncfs::no_ibs::nuevo') }}">Nuevo NCF (No IBS)</a>
+                    <br>
+                    <br>
+                    <table class="table table-striped table-bordered table-hover table-condensed datatable">
+                        <thead>
+                            <tr>
+                                <th>Factura</th>
+                                <th>Cliente</th>
+                                <th>Nombre</th>
+                                <th>Producto</th>
+                                <th>NCF</th>
+                                <th>Fec.Proceso</th>
+                                <th>Fec.Generado</th>
+                                <th>Monto</th>
+                                <th style="width: 26px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (session()->has('ncfs'))
+                                @foreach (session()->get('ncfs') as $ncf)
+                                    <tr>
+                                        <td>{{ $ncf->FACTURA }}</td>
+                                        <td>{{ $ncf->CODIGO_CLIENTE }}</td>
+                                        <td>{{ $ncf->NOMBRE }}</td>
+                                        <td>{{ $ncf->PRODUCTO }}</td>
+                                        <td>{{ $ncf->NCF }}</td>
+                                        <td>{{ $ncf->MES_PROCESO . '/' . $ncf->ANIO_PROCESO }}</td>
+                                        <td>{{ $ncf->DIA_GENERADO . '/' . $ncf->MES_GENERADO . '/' . $ncf->ANIO_GENERADO }}</td>
+                                        <td align="right">{{ $ncf->MONTO }}</td>
+                                        <td align="center" width="20">
+                                            <a href="{{ route('clientes::ncfs::detalles::consulta', ['ncf' => $ncf->FACTURA]) }}" data-toggle="tooltip" data-placement="top" ncf="{{ $ncf->NCF }}" title="Ver Detalle del NCF {{ $ncf->NCF }}"><i class="fa fa-align-justify fa-fw"></i></a>
+                                            <a href="{{ route('clientes::ncfs::anular', ['ncf' => $ncf->NCF]) }}" class="link_anular rojo" data-toggle="tooltip" data-placement="top" ncf="{{ $ncf->NCF }}" title="Anular NCF {{ $ncf->NCF }}"><i class="fa fa-times fa-fw"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
