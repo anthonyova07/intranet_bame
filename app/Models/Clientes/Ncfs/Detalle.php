@@ -82,7 +82,8 @@ class Detalle
             'TRIM(DETDIA) DIA_GENERADO',
             'TRIM(DETMES) MES_GENERADO',
             'TRIM(DETANIO) ANIO_GENERADO',
-            'TRIM(DEASTS) ESTATUS'
+            'TRIM(DEASTS) ESTATUS',
+            'TRIM(DETITB) IMPUESTO'
         ];
     }
 }

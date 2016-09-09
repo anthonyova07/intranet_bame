@@ -108,7 +108,7 @@
                             <div class="col-xs-2">
                                 <div class="form-group">
                                     <label class="control-label">Monto Total</label>
-                                    <p class="form-control-static">RD$ {{ number_format(collect(session()->get('transacciones_noibs'))->sum('MONTO'), 2) }}</p>
+                                    <p class="form-control-static">RD$ {{ number_format(collect(session()->get('transacciones_noibs'))->sum('MONTO') + collect(session()->get('transacciones_noibs'))->sum('IMPUESTO'), 2) }}</p>
                                 </div>
                             </div>
                             <div class="col-xs-2">
@@ -122,6 +122,7 @@
                                     <th>Descripción</th>
                                     <th>Moneda</th>
                                     <th>Monto</th>
+                                    <th>Impuesto (18%)</th>
                                     <th>Fecha</th>
                                     <th style="width: 26px;"></th>
                                 </tr>
@@ -133,6 +134,7 @@
                                             <td>{{ $transaccion->DESCRIPCION }}</td>
                                             <td align="center">RD$</td>
                                             <td align="right">{{ number_format($transaccion->MONTO, 2) }}</td>
+                                            <td align="right">{{ number_format($transaccion->IMPUESTO, 2) }}</td>
                                             <td align="center">{{ $transaccion->DIA . '/' . $transaccion->MES . '/' . $transaccion->ANIO }}</td>
                                             <td align="center" width="20">
                                                 <a href="{{ route('clientes::ncfs::no_ibs::detalle::editar', ['id' => $index]) }}" class="naranja" data-toggle="tooltip" data-placement="top" title="Editar Detalle"><i class="fa fa-edit fa-fw"></i></a>

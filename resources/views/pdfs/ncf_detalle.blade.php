@@ -95,7 +95,10 @@
                     <th style="width: 4%;">Cantidad</th>
                     <th align="left">Descripción</th>
                     <th style="width: 8%;">Moneda</th>
-                    <th style="width: 5%;">Monto</th>
+                    <th align="right" style="width: 12%;">Monto</th>
+                    @if ($detalles[0]->IMPUESTO > 0)
+                        <th align="right"style="width: 12%;">Impuesto</th>
+                    @endif
                     <th style="width: 12%;">Fecha Generado</th>
                 </tr>
             </thead>
@@ -106,6 +109,9 @@
                         <td>{{ $detalle->DESCRIPCION }}</td>
                         <td align="center">{{ $detalle->MONEDA == 'DOP' ? 'RD$':'US$' }}</td>
                         <td align="right">{{ $detalle->MONTO }}</td>
+                        @if ($detalles[0]->IMPUESTO > 0)
+                            <td align="right">{{ $detalle->IMPUESTO }}</td>
+                        @endif
                         <td align="center">{{ $detalle->MES_GENERADO . '/' . $detalle->ANIO_GENERADO }}</td>
                     </tr>
                 @endforeach
