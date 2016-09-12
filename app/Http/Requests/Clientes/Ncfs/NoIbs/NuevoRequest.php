@@ -24,7 +24,7 @@ class NuevoRequest extends Request
     public function rules()
     {
         return [
-            'nombres_apellidos' => 'required',
+            'a_nombre_de' => 'required',
             'tipo_identificacion' => 'required',
             'identificacion' => 'required|alpha_num',
             'mes' => 'required|integer|between:1,12',

@@ -11,7 +11,7 @@
 @endif
 
 @section('contents')
-{{-- {{ dd(session()->get('cliente_noibs')) }} --}}
+
     <div class="row">
         <div class="col-xs-12">
             <div class="panel panel-warning">
@@ -24,15 +24,15 @@
                     <form method="post" action="{{ route('clientes::ncfs::no_ibs::nuevo') }}" id="form_consulta">
                         <div class="row">
                             <div class="col-xs-4">
-                                <div class="form-group{{ $errors->first('nombres_apellidos') ? ' has-error':'' }}">
-                                    <label class="control-label">Nombres y Apellidos</label>
-                                    <input type="text" class="form-control" name="nombres_apellidos" value="{{ old('nombres_apellidos') }}">
-                                    <span class="help-block">{{ $errors->first('nombres_apellidos') }}</span>
+                                <div class="form-group{{ $errors->first('a_nombre_de') ? ' has-error':'' }}">
+                                    <label class="control-label">A nombre de</label>
+                                    <input type="text" class="form-control" name="a_nombre_de" value="{{ old('a_nombre_de') }}">
+                                    <span class="help-block">{{ $errors->first('a_nombre_de') }}</span>
                                 </div>
                             </div>
                             <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('tipo_identificacion') ? ' has-error':'' }}">
-                                    <label class="control-label">Tipo de Identificación</label>
+                                    <label class="control-label" title="Tipo de Identificación" data-toggle="tooltip">TP</label>
                                     <select class="form-control" name="tipo_identificacion">
                                         @foreach (get_identification_types() as $key => $tipo_identificacion)
                                             <option value="{{ $key }}" {{ old('tipo_identificacion') == $key ? 'selected':'' }}>{{ $tipo_identificacion }}</option>
@@ -82,7 +82,7 @@
                 <div class="panel panel-warning">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            Transacciones para el NCF de {{ session()->get('cliente_noibs')->NOMBRES_APELLIDOS }}
+                            Transacciones para el NCF de {{ session()->get('cliente_noibs')->A_NOMBRE_DE }}
                             <a class="btn btn-warning pull-right btn-xs" href="{{ route('clientes::ncfs::no_ibs::eliminar_todo') }}" data-toggle="tooltip" data-placement="top" title="Eliminar Todo" style="margin-top: -3px;color: #FFFFFF;">
                                 <i class="fa fa-close"></i>
                             </a>
@@ -96,7 +96,7 @@
                             <div class="col-xs-3">
                                 <div class="form-group">
                                     <label class="control-label">Nombre y Apellido</label>
-                                    <p class="form-control-static">{{ session()->get('cliente_noibs')->NOMBRES_APELLIDOS }}</p>
+                                    <p class="form-control-static">{{ session()->get('cliente_noibs')->A_NOMBRE_DE }}</p>
                                 </div>
                             </div>
                             <div class="col-xs-3">

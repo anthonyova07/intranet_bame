@@ -21,7 +21,7 @@ class NcfController extends Controller
     public function postNuevo(NuevoRequest $request) {
         $cliente = new Cliente;
 
-        $cliente->NOMBRES_APELLIDOS = cap_str($request->nombres_apellidos);
+        $cliente->A_NOMBRE_DE = cap_str($request->a_nombre_de);
         $cliente->TIPO_IDENTIFICACION = $request->tipo_identificacion;
         $cliente->IDENTIFICACION = strtoupper($request->identificacion);
         $cliente->MES = $request->mes;

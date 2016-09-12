@@ -165,7 +165,7 @@ class Ncf
 
         $datetime = new \DateTime;
 
-        $sql = 'INSERT INTO BACNCFE(ENCFACT, ENCCLI, ENCNCF, ENCDIAG, ENCMESG, ENCANIOG, ENCMESP, ENCANIOP, ENCMONTO, ENCSTS, ENCREIM, ENCSUC, ENCUSR, ENCCTA, ENCTID, ENCIDN, ENCNOM, ENCPUB, ENCCCY) VALUES(' . $factura . ', 0, \'' . $ncf . '\', ' . $datetime->format('d, m, Y') . ', ' . $cliente->MES . ', ' . $cliente->ANIO . ', ' . ($transacciones->sum('MONTO') + $transacciones->sum('IMPUESTO')) . ', \'A\', \'0\', \'1\', \'' . session()->get('usuario') . '\', \'0\', \'' . $cliente->TIPO_IDENTIFICACION . '\', \'' . $cliente->IDENTIFICACION . '\', \'' . $cliente->NOMBRES_APELLIDOS . '\', \'S\', \'DOP\')';
+        $sql = 'INSERT INTO BACNCFE(ENCFACT, ENCCLI, ENCNCF, ENCDIAG, ENCMESG, ENCANIOG, ENCMESP, ENCANIOP, ENCMONTO, ENCSTS, ENCREIM, ENCSUC, ENCUSR, ENCCTA, ENCTID, ENCIDN, ENCNOM, ENCPUB, ENCCCY) VALUES(' . $factura . ', 0, \'' . $ncf . '\', ' . $datetime->format('d, m, Y') . ', ' . $cliente->MES . ', ' . $cliente->ANIO . ', ' . ($transacciones->sum('MONTO') + $transacciones->sum('IMPUESTO')) . ', \'A\', \'0\', \'1\', \'' . session()->get('usuario') . '\', \'0\', \'' . $cliente->TIPO_IDENTIFICACION . '\', \'' . $cliente->IDENTIFICACION . '\', \'' . $cliente->A_NOMBRE_DE . '\', \'S\', \'DOP\')';
 
         app('con_ibs')->prepare($sql)->execute();
 

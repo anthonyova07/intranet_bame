@@ -120,6 +120,6 @@ return [
       'monto' => 'Monto',
       'mes' => 'Mes',
       'dia' => 'Día',
-      'nombres_apellidos' => 'Nombres y Apellidos',
+      'a_nombre_de' => 'A nombre de',
     ],
 ];
