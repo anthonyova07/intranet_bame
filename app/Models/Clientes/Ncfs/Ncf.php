@@ -9,7 +9,6 @@ class Ncf
     public static function get($factura, $ibs = true)
     {
         $sql = 'SELECT ' . implode(', ', self::getFields()) . ' FROM BACNCFE,CUMST WHERE' . ($ibs ? ' ENCCLI = CUSCUN AND':'') . ' ENCFACT = ' . remove_dashes($factura);
-        // dd($sql);
         $stmt = app('con_ibs')->prepare($sql);
         $stmt->execute();
         return $stmt->fetch();
