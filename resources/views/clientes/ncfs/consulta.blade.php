@@ -95,7 +95,7 @@
                                     <tr>
                                         <td>{{ $ncf->FACTURA }}</td>
                                         <td>{{ $ncf->CODIGO_CLIENTE }}</td>
-                                        <td>{{ $ncf->NOMBRE }}</td>
+                                        <td>{{ $ncf->CODIGO_CLIENTE ? $ncf->NOMBRE:$ncf->NOMBRE_ALT }}</td>
                                         <td>{{ $ncf->PRODUCTO }}</td>
                                         <td>{{ $ncf->NCF }}</td>
                                         <td>{{ $ncf->MES_PROCESO . '/' . $ncf->ANIO_PROCESO }}</td>

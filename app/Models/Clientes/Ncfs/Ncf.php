@@ -53,11 +53,13 @@ class Ncf
         self::$sql .= ' ORDER BY ENCNCF';
     }
 
-    public static function all()
+    public static function all($es_cliente = true)
     {
-        $sql = 'SELECT ' . implode(', ', self::getFields()) . ' FROM BACNCFE,CUMST WHERE ENCCLI = CUSCUN AND ENCSTS = \'A\'' . self::$sql;
+        $sql = 'SELECT ' . implode(', ', self::getFields()) . ' FROM BACNCFE' . ($es_cliente ? ',CUMST WHERE ENCCLI = CUSCUN AND':' WHERE') . ' ENCSTS = \'A\'' . self::$sql;
 
-        self::$sql = '';
+        if (!$es_cliente) {
+            $sql = str_replace('TRIM(CUSNA1) NOMBRE, ', '', $sql);
+        }
 
         $stmt = app('con_ibs')->prepare($sql);
         $stmt->execute();
@@ -68,10 +70,19 @@ class Ncf
 
     public static function formatAll($ncfs)
     {
-        if (!$ncfs) { return false; }
+        if (!$ncfs) {
+            $ncfs = self::all(false);
+            self::$sql = '';
+        }
+
+        if (!$ncfs) {
+            return false;
+        }
 
         $ncfs->each(function ($ncf, $index) {
-            $ncf->NOMBRE = cap_str($ncf->NOMBRE);
+            if ($ncf->CODIGO_CLIENTE) {
+                $ncf->NOMBRE = cap_str($ncf->NOMBRE);
+            }
 
             $ncf->MONTO = number_format($ncf->MONTO, 2);
             $ncf->IMPUESTO = number_format($ncf->IMPUESTO, 2);
