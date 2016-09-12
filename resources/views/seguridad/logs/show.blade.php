@@ -4,11 +4,11 @@
 
 @section('page_title', 'Logs del Sistema')
 
-{{-- @if (can_not_do('clientes_ncf'))
+@if (can_not_do('seguridad_logs'))
     @section('contents')
         @include('partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 
