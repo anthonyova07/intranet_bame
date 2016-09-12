@@ -57,7 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
             });
 
             Route::group(['prefix' => 'detalles', 'as' => 'detalles::'], function () {
-                Route::get('consulta/{factura}', 'Clientes\Ncfs\DetalleController@getConsulta')->name('consulta');
+                Route::get('consulta/{factura}/{es_cliente}', 'Clientes\Ncfs\DetalleController@getConsulta')->name('consulta');
                 Route::get('anular/{factura}/{secuencia}', 'Clientes\Ncfs\DetalleController@getAnular')->name('anular');
                 Route::get('activar/{factura}/{secuencia}', 'Clientes\Ncfs\DetalleController@getActivar')->name('activar');
                 Route::get('imprimir/{factura}/{ibs}', 'Clientes\Ncfs\DetalleController@getImprimir')->name('imprimir');

@@ -6,16 +6,24 @@ class Ncf
 {
     private static $sql;
 
-    public static function get($factura, $ibs = true)
+    public static function get($factura, $es_cliente = true)
     {
-        $sql = 'SELECT ' . implode(', ', self::getFields()) . ' FROM BACNCFE,CUMST WHERE' . ($ibs ? ' ENCCLI = CUSCUN AND':'') . ' ENCFACT = ' . remove_dashes($factura);
+        $sql = 'SELECT ' . implode(', ', self::getFields()) . ' FROM BACNCFE' . ($es_cliente ? ',CUMST WHERE ENCCLI = CUSCUN AND':' WHERE') . ' ENCFACT = ' . remove_dashes($factura);
+
+        if (!$es_cliente) {
+            $sql = str_replace('TRIM(CUSNA1) NOMBRE, ', '', $sql);
+        }
+
+        // dd($sql);
         $stmt = app('con_ibs')->prepare($sql);
         $stmt->execute();
         return $stmt->fetch();
     }
 
     public static function format($ncf) {
-        $ncf->NOMBRE = cap_str($ncf->NOMBRE);
+        if ($ncf->CODIGO_CLIENTE) {
+            $ncf->NOMBRE = cap_str($ncf->NOMBRE);
+        }
 
         $ncf->MONTO = number_format($ncf->MONTO, 2);
         $ncf->IMPUESTO = number_format($ncf->IMPUESTO, 2);

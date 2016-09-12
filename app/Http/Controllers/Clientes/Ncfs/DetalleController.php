@@ -12,8 +12,8 @@ use Bame\Models\Clientes\Ncfs\Detalle;
 
 class DetalleController extends Controller
 {
-    public function getConsulta(Request $request, $factura) {
-        $ncf = Ncf::get($factura);
+    public function getConsulta(Request $request, $factura, $es_cliente) {
+        $ncf = Ncf::get($factura, boolval($es_cliente));
 
         if (!$ncf) {
             return back()->with('warning', 'Este numero de factura no existe.');
@@ -48,12 +48,12 @@ class DetalleController extends Controller
         return back()->with('success', 'El Detalle de la fuctura ha sido activado correctamente.');
     }
 
-    public function getImprimir(Request $request, $factura, $ibs) {
+    public function getImprimir(Request $request, $factura, $es_cliente) {
         if (can_not_do('clientes_ncf')) {
             return view('partials.access_denied');
         }
 
-        $ncf = Ncf::get($factura, boolval($ibs));
+        $ncf = Ncf::get($factura, boolval($es_cliente));
 
         if (!$ncf) {
             return back()->with('warning', 'Este número de factura no existe.');

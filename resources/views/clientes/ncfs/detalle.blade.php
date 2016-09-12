@@ -16,7 +16,7 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <a class="btn btn-info btn-sm" href="{{ route('clientes::ncfs::consulta') }}"><i class="fa fa-arrow-left"></i> Atras</a>
-                <a class="btn btn-warning btn-sm pull-right" target="__blank" href="{{ route('clientes::ncfs::detalles::imprimir', ['factura' => $ncf->FACTURA, 'ibs' => 1]) }}">Imprimir</a>
+                <a class="btn btn-warning btn-sm pull-right" target="__blank" href="{{ route('clientes::ncfs::detalles::imprimir', ['factura' => $ncf->FACTURA, 'es_cliente' => ($ncf->CODIGO_CLIENTE ? 1:0)]) }}">Imprimir</a>
 
                 <br><br>
 
@@ -48,7 +48,7 @@
                                     <b>Nombre: </b>
                                 </td>
                                 <td align="left">
-                                    {{ $ncf->NOMBRE }}
+                                    {{ $ncf->CODIGO_CLIENTE ? $ncf->NOMBRE:$ncf->NOMBRE_ALT }}
                                 </td>
                             </tr>
                             <tr>

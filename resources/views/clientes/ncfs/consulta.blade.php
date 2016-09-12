@@ -102,7 +102,7 @@
                                         <td>{{ $ncf->DIA_GENERADO . '/' . $ncf->MES_GENERADO . '/' . $ncf->ANIO_GENERADO }}</td>
                                         <td align="right">{{ $ncf->MONTO }}</td>
                                         <td align="center" width="20">
-                                            <a href="{{ route('clientes::ncfs::detalles::consulta', ['ncf' => $ncf->FACTURA]) }}" data-toggle="tooltip" data-placement="top" ncf="{{ $ncf->NCF }}" title="Ver Detalle del NCF {{ $ncf->NCF }}"><i class="fa fa-align-justify fa-fw"></i></a>
+                                            <a href="{{ route('clientes::ncfs::detalles::consulta', ['ncf' => $ncf->FACTURA, 'es_cliente' => ($ncf->CODIGO_CLIENTE ? 1:0)]) }}" data-toggle="tooltip" data-placement="top" ncf="{{ $ncf->NCF }}" title="Ver Detalle del NCF {{ $ncf->NCF }}"><i class="fa fa-align-justify fa-fw"></i></a>
                                             <a href="{{ route('clientes::ncfs::anular', ['ncf' => $ncf->NCF]) }}" class="link_anular rojo" data-toggle="tooltip" data-placement="top" ncf="{{ $ncf->NCF }}" title="Anular NCF {{ $ncf->NCF }}"><i class="fa fa-times fa-fw"></i></a>
                                         </td>
                                     </tr>
