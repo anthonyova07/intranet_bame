@@ -38,6 +38,7 @@ class AuthController extends Controller
 
         } catch (\Exception $e) {
             // dd($e->getMessage());
+            $request->session()->flush();
             return back()->with('error', 'Usuario y Contraseña incorrectos.');
         }
     }
