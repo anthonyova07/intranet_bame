@@ -24,7 +24,7 @@ class NuevoDetalleRequest extends Request
     public function rules()
     {
         return [
-            'descripcion' => 'required',
+            'descripcion' => 'required|max:40',
             'monto' => 'required|numeric',
             'dia' => 'required|integer|between:1,31',
             'mes' => 'required|integer|between:1,12',
