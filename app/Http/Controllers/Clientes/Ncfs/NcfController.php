@@ -36,6 +36,10 @@ class NcfController extends Controller
             Ncf::addNcfFilter($request->ncf);
         }
 
+        if ($request->factura) {
+            Ncf::addInvoiceFilter($request->factura);
+        }
+
         Ncf::orderByNcf();
 
         $ncfs = Ncf::all();

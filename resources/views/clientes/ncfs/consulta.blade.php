@@ -35,16 +35,16 @@
                                     <span class="help-block">{{ $errors->first('producto') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-2">
+                            <div class="col-xs-1">
                                 <div class="form-group{{ $errors->first('mes_proceso') ? ' has-error':'' }}">
-                                    <label class="control-label">Mes del Proceso</label>
+                                    <label class="control-label" title="Mes del Proceso" data-toggle="tooltip">MP</label>
                                     <input type="text" class="form-control" name="mes_proceso" placeholder="00" value="{{ old('mes_proceso') }}">
                                     <span class="help-block">{{ $errors->first('mes_proceso') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-2">
+                            <div class="col-xs-1">
                                 <div class="form-group{{ $errors->first('anio_proceso') ? ' has-error':'' }}">
-                                    <label class="control-label">Año del Proceso</label>
+                                    <label class="control-label" title="Año del Proceso" data-toggle="tooltip">AP</label>
                                     <input type="text" class="form-control" name="anio_proceso" placeholder="0000" value="{{ old('anio_proceso') }}">
                                     <span class="help-block">{{ $errors->first('anio_proceso') }}</span>
                                 </div>
@@ -54,6 +54,13 @@
                                     <label class="control-label"># NCF</label>
                                     <input type="text" class="form-control" name="ncf" placeholder="0000" value="{{ old('ncf') }}">
                                     <span class="help-block">{{ $errors->first('ncf') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div class="form-group{{ $errors->first('factura') ? ' has-error':'' }}">
+                                    <label class="control-label"># Factura</label>
+                                    <input type="text" class="form-control" name="factura" placeholder="0000" value="{{ old('ncf') }}">
+                                    <span class="help-block">{{ $errors->first('factura') }}</span>
                                 </div>
                             </div>
                             <div class="col-xs-2">

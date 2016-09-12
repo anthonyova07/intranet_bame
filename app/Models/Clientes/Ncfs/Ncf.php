@@ -14,7 +14,6 @@ class Ncf
             $sql = str_replace('TRIM(CUSNA1) NOMBRE, ', '', $sql);
         }
 
-        // dd($sql);
         $stmt = app('con_ibs')->prepare($sql);
         $stmt->execute();
         return $stmt->fetch();
@@ -54,6 +53,11 @@ class Ncf
     public static function addNcfFilter($ncf)
     {
         self::$sql .= ' AND ENCNCF = \'' . remove_dashes($ncf) . '\'';
+    }
+
+    public static function addInvoiceFilter($factura)
+    {
+        self::$sql .= ' AND ENCFACT = \'' . remove_dashes($factura) . '\'';
     }
 
     public static function orderByNcf()
