@@ -24,7 +24,7 @@ class EditarDetalleRequest extends Request
     public function rules()
     {
         return [
-            'descripcion' => 'required|max:40',
+            'descripcion' => 'required|max:50',
             'monto' => 'required|numeric',
         ];
     }
