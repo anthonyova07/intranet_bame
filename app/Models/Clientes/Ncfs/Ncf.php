@@ -173,7 +173,10 @@ class Ncf
             'TRIM(ENCMESG) MES_GENERADO',
             'TRIM(ENCANIOG) ANIO_GENERADO',
             'TRIM(ENCMONTO) MONTO',
-            'TRIM(ENCREIM) IMPUESTO'
+            'TRIM(ENCREIM) IMPUESTO',
+            'TRIM(ENCTID) TIPO_IDENTIFICACION',
+            'TRIM(ENCIDN) IDENTIFICACION',
+            'TRIM(ENCNOM) NOMBRE_ALT'
         ];
     }
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Comprobante Fiscal {{ $ncf->NOMBRE == '' ? '':('de ' . $ncf->NOMBRE) }}</title>
+    <title>Comprobante Fiscal {{ $ncf->CODIGO_CLIENTE ? ('de ' . $ncf->NOMBRE):'' }}</title>
     <style>
         body {
             font-family: 'Juhl';
@@ -53,7 +53,7 @@
                         <b>Nombre: </b>
                     </td>
                     <td align="left">
-                        {{ $ncf->NOMBRE }}
+                        {{ $ncf->CODIGO_CLIENTE ? $ncf->NOMBRE:$ncf->NOMBRE_ALT }}
                     </td>
                 </tr>
                 <tr>
