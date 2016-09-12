@@ -27,6 +27,8 @@ class AuthController extends Controller
                 $request->session()->put('menus', $menus);
             }
 
+            do_log('Inicio sesión');
+
             $url_anterior = $request->session()->get('url_anterior');
             $request->session()->forget('url_anterior');
 
@@ -44,6 +46,7 @@ class AuthController extends Controller
     }
 
     public function getLogout(Request $request) {
+        do_log('Cerro sesión');
         $request->session()->flush();
         return redirect()->route('home');
     }

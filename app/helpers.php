@@ -189,3 +189,10 @@ function get_identification_types($tipo_identificacion = false)
 
     return $tipos_identificacion->get($tipo_identificacion);
 }
+
+function do_log($description) {
+    $log = new \Bame\Models\Log;
+    $log->user = session()->get('usuario');
+    $log->description = $description;
+    $log->save();
+}

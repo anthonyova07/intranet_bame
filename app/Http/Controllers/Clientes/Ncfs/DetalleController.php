@@ -35,6 +35,8 @@ class DetalleController extends Controller
 
         Detalle::cancel($factura, $secuencia);
 
+        do_log('Anuló un detalle NCF ( factura:' . $factura . ' secuencia:' . $secuencia . ' )');
+
         return back()->with('success', 'El Detalle de la fuctura ha sido anulado correctamente.');
     }
 
@@ -44,6 +46,8 @@ class DetalleController extends Controller
         }
 
         Detalle::active($factura, $secuencia);
+
+        do_log('Activo un detalle NCF ( factura:' . $factura . ' secuencia:' . $secuencia . ' )');
 
         return back()->with('success', 'El Detalle de la fuctura ha sido activado correctamente.');
     }
@@ -67,6 +71,8 @@ class DetalleController extends Controller
         }
 
         $detalles = Detalle::formatAll($detalles);
+
+        do_log('Imprimió el NCF ( ncf:' . $ncf->NCF . ' )');
 
         return view('pdfs.ncf_detalle', ['ncf' => $ncf, 'detalles' => $detalles]);
     }

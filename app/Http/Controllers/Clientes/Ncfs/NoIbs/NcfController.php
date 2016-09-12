@@ -118,6 +118,8 @@ class NcfController extends Controller
 
         $infoExtra = Ncf::saveNoIBS($cliente, $transacciones);
 
+        do_log('Generó un NCF (NoIBS) ( ncf:' . $infoExtra['ncf'] . ' factura:' . $infoExtra['factura'] . ' )');
+
         return redirect(route('clientes::ncfs::no_ibs::nuevo'))
         ->with('success', 'El ncf ' . $infoExtra['ncf'] . ' a sido creado satisfactoria mente. El # de factura es: ' . $infoExtra['factura'])
         ->with('link', route('clientes::ncfs::detalles::imprimir', ['factura' => $infoExtra['factura'], 'ibs' => 0]));

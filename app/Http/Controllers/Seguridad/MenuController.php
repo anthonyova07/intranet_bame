@@ -26,6 +26,8 @@ class MenuController extends Controller
     {
         Menu::create($request->descripcion, $request->estatus, $request->web);
 
+        do_log('Creó el Menú ( descripción:' . cap_str($request->descripcion) . ' estatus:' . get_status($request->estatus) . ' web:' . get_web($request->web) . ' )');
+
         return redirect()->route('seguridad::menus::lista')->with('success', 'El menú ha sido agregado correctamente.');
     }
 
@@ -37,6 +39,8 @@ class MenuController extends Controller
     public function postMenuEditar(MenuRequest $request, $codigo)
     {
         Menu::update($request->descripcion, $request->estatus, $request->web, $codigo);
+
+        do_log('Editó el Menú ( código:' . $codigo . ' descripción:' . cap_str($request->descripcion) . ' estatus:' . get_status($request->estatus) . ' web:' . get_web($request->web) . ' )');
 
         return redirect()->route('seguridad::menus::lista')->with('success', 'El menú ha sido modificado correctamente.');
     }

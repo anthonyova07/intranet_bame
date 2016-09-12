@@ -63,6 +63,8 @@ class NcfController extends Controller
 
         Ncf::cancel($ncf);
 
+        do_log('Anuló el NCF ( ncf:' . $ncf . ' )');
+
         return back()->with('success', 'El NCF: ' . $ncf . ' ha sido anulado correctamente.');
     }
 }
