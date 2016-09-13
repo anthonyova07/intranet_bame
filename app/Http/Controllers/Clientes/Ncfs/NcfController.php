@@ -16,27 +16,35 @@ class NcfController extends Controller
     }
 
     public function postConsulta(NcfRequest $request) {
+        $log = 'Consultó los NCF de ( ';
+
         if ($request->codigo_cliente) {
+            $log .= ' codigo_cliente:' . $request->codigo_cliente;
             Ncf::addClientCodeFilter($request->codigo_cliente);
         }
 
         if ($request->producto) {
+            $log .= ' producto:' . $request->producto;
             Ncf::addProductFilter($request->producto);
         }
 
         if ($request->mes_proceso) {
+            $log .= ' mes_proceso:' . $request->mes_proceso;
             Ncf::addMonthProcessFilter($request->mes_proceso);
         }
 
         if ($request->anio_proceso) {
+            $log .= ' anio_proceso:' . $request->anio_proceso;
             Ncf::addYearProcessFilter($request->anio_proceso);
         }
 
         if ($request->ncf) {
+            $log .= ' ncf:' . $request->ncf;
             Ncf::addNcfFilter($request->ncf);
         }
 
         if ($request->factura) {
+            $log .= ' factura:' . $request->factura;
             Ncf::addInvoiceFilter($request->factura);
         }
 
@@ -45,6 +53,8 @@ class NcfController extends Controller
         $ncfs = Ncf::all();
 
         $ncfs = Ncf::formatAll($ncfs);
+
+        do_log($log . ' )');
 
         if (!$ncfs) {
             $request->session()->forget('ncfs');

@@ -15,6 +15,8 @@ class DetalleController extends Controller
     public function getConsulta(Request $request, $factura, $es_cliente) {
         $ncf = Ncf::get($factura, boolval($es_cliente));
 
+        do_log('Consultó el detalle NCF de ( factura:' . $factura . ' )');
+
         if (!$ncf) {
             return back()->with('warning', 'Este numero de factura no existe.');
         }
