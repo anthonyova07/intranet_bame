@@ -12,12 +12,12 @@ class LogController extends Controller
 {
     public function getShow()
     {
-        $logs = Log::lastestFirst()->take(100)->get();
+        $logs = Log::lastestFirst()->take(env('LOG_MAX_ROWS'))->get();
         return view('seguridad.logs.show', ['logs' => $logs]);
     }
 
     public function postShow(Request $request) {
-        $logs = Log::where('user', '<>', '');
+        $logs = Log::lastestFirst();
 
         if ($request->id) {
             $logs = $logs->where('id', $request->id);
@@ -39,7 +39,7 @@ class LogController extends Controller
             $logs = $logs->where('created_at', '<=', $request->fecha_hasta . ' 23:59:59');
         }
 
-        $logs = $logs->take(100)->get();
+        $logs = $logs->take(env('LOG_MAX_ROWS'))->get();
 
         return view('seguridad.logs.show', ['logs' => $logs]);
     }
