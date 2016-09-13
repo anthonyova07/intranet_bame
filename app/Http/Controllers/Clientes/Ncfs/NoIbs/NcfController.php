@@ -113,7 +113,7 @@ class NcfController extends Controller
         $transacciones = collect($request->session()->get('transacciones_noibs'));
 
         if (!$transacciones->count()) {
-            return back()->with('warning', 'No se encontraron transacciones de divisas para generar el NCF.');
+            return back()->with('warning', 'No se encontraron transacciones para generar el NCF.');
         }
 
         $infoExtra = Ncf::saveNoIBS($cliente, $transacciones);
