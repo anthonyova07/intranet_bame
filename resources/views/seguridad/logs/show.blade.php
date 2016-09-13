@@ -77,7 +77,7 @@
                                 <th>ID</th>
                                 <th>Usuario</th>
                                 <th>Detalle</th>
-                                <th>Fecha</th>
+                                <th style="width: 120px;">Fecha</th>
                             </tr>
                         </thead>
                         <tbody>
