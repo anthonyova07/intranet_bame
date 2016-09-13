@@ -34,7 +34,7 @@ class NcfController extends Controller
         }
 
         if ($request->anio_proceso) {
-            $log .= ' anio_proceso:' . $request->anio_proceso;
+            $log .= ' año_proceso:' . $request->anio_proceso;
             Ncf::addYearProcessFilter($request->anio_proceso);
         }
 
