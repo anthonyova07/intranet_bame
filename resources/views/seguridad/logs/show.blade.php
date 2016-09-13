@@ -71,7 +71,7 @@
         <div class="col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <table class="table table-striped table-bordered table-hover table-condensed datatable">
+                    <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
                         <thead>
                             <tr>
                                 <th>ID</th>

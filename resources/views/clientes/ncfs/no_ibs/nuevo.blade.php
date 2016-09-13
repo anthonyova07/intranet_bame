@@ -116,7 +116,7 @@
                             </div>
                         </div>
 
-                        <table class="table table-striped table-bordered table-hover table-condensed datatable">
+                        <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='2|asc'>
                             <thead>
                                 <tr>
                                     <th>Descripción</th>

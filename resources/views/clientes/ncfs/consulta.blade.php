@@ -82,7 +82,7 @@
                     <a class="btn btn-warning btn-sm pull-right" href="{{ route('clientes::ncfs::no_ibs::nuevo') }}">Nuevo NCF (No IBS)</a>
                     <br>
                     <br>
-                    <table class="table table-striped table-bordered table-hover table-condensed datatable">
+                    <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
                         <thead>
                             <tr>
                                 <th>Factura</th>
