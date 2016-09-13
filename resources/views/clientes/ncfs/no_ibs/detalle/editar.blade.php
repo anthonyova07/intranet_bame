@@ -25,11 +25,19 @@
                                     <span class="help-block">{{ $errors->first('descripcion') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-6">
+                            <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('monto') ? ' has-error':'' }}">
                                     <label class="control-label">Monto</label>
                                     <input type="text" class="form-control input_money" name="monto" value="{{ $transaccion->MONTO }}">
                                     <span class="help-block">{{ $errors->first('monto') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group{{ $errors->first('calcular_itbis') ? ' has-error':'' }}">
+                                    <label>
+                                        <input type="checkbox" name="calcular_itbis" data-toggle="tooltip" title="Cacular ITBIS" style="margin-top: 30px;"> Cal. ITBIS
+                                    </label>
+                                    <span class="help-block">{{ $errors->first('calcular_itbis') }}</span>
                                 </div>
                             </div>
                         </div>

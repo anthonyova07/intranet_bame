@@ -41,7 +41,7 @@ class NcfController extends Controller
 
         $transaccion->DESCRIPCION = cap_str($request->descripcion);
         $transaccion->MONTO = $request->monto;
-        $transaccion->IMPUESTO = floatval($request->monto) * 0.18;
+        $transaccion->IMPUESTO = $request->calcular_itbis ? (floatval($request->monto) * 0.18):0;
         $transaccion->DIA = $request->dia;
         $transaccion->MES = $request->mes;
         $transaccion->ANIO = $request->anio;
@@ -87,7 +87,7 @@ class NcfController extends Controller
 
         $transaccion->DESCRIPCION = cap_str($request->descripcion);
         $transaccion->MONTO = $request->monto;
-        $transaccion->IMPUESTO = floatval($request->monto) * 0.18;
+        $transaccion->IMPUESTO = $request->calcular_itbis ? (floatval($request->monto) * 0.18):0;
         $transaccion->DIA = $request->dia;
         $transaccion->MES = $request->mes;
         $transaccion->ANIO = $request->anio;
