@@ -27,6 +27,8 @@ class AuthController extends Controller
                 $request->session()->put('menus', $menus);
             }
 
+            do_log('Inicio sesión');
+
             $url_anterior = $request->session()->get('url_anterior');
             $request->session()->forget('url_anterior');
 
@@ -38,13 +40,14 @@ class AuthController extends Controller
 
         } catch (\Exception $e) {
             // dd($e->getMessage());
+            $request->session()->flush();
             return back()->with('error', 'Usuario y Contraseña incorrectos.');
         }
     }
 
     public function getLogout(Request $request) {
-        $request->session()->forget('usuario');
-        $request->session()->forget('menus');
+        do_log('Cerro sesión');
+        $request->session()->flush();
         return redirect()->route('home');
     }
 }

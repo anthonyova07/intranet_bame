@@ -20,23 +20,33 @@ class EncarteController extends Controller
 
     public function postEncartes(EncarteRequest $request)
     {
+        $log = 'Solicitó generar los encartes con (';
+
         $encartes = new Encarte;
 
         if ($request->identificacion) {
+            $log .= ' identificación:' . $request->identificacion;
             $encartes->filtros->put('identificacion', $request->identificacion);
         }
 
         if ($request->tarjeta) {
+            $log .= ' tarjeta:' . $request->tarjeta;
             $encartes->filtros->put('tarjeta', $request->tarjeta);
         }
 
         if ($request->fecha) {
+            $log .= ' fecha:' . $request->fecha;
             $encartes->filtros->put('fecha', $request->fecha);
         }
 
         if (!$request->identificacion and !$request->tarjeta and !$request->fecha) {
+            $log .= ' todos_los_pendientes';
             $encartes->filtros->put('todos_pendientes', true);
         }
+
+        $log .= ' )';
+
+        do_log($log);
 
         $this->dispatch(new GeneradorEncartes($encartes->filtros, $request->session()->get('usuario')));
 

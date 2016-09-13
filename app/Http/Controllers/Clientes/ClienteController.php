@@ -35,6 +35,8 @@ class ClienteController extends Controller
             }
         }
 
+        do_log('Consulto la identificación: ' . $request->identificacion);
+
         if (!$cliente) {
             return back()->with('warning', 'Este numero de identificación no corresponde a ningún cliente.');
         }

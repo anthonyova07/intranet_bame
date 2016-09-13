@@ -13,9 +13,9 @@
 @section('contents')
 
     <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="col-xs-4">
+        <div class="col-xs-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
                     <form method="post" action="{{ route('seguridad::accesos') }}" id="form_accesos">
                         <div class="form-group{{ $errors->first('usuario') ? ' has-error':'' }}">
                             <label class="control-label">Usuario</label>
@@ -58,7 +58,7 @@
                             </label>
                         </div>
                         {{ csrf_field() }}
-                        <button type="submit" class="btn btn-danger" id="btn_submit" data-loading-text="Procesando solicitud...">Enviar</button>
+                        <button type="submit" class="btn btn-danger btn-sm" id="btn_submit" data-loading-text="Procesando solicitud...">Enviar</button>
                     </form>
                 </div>
             </div>

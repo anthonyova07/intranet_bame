@@ -13,9 +13,9 @@
 @section('contents')
 
     <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="col-xs-4">
+        <div class="col-xs-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
                     <form method="post" action="{{ route('seguridad::menus::nuevo') }}" id="form_menus">
                         <div class="form-group{{ $errors->first('descripcion') ? ' has-error':'' }}">
                             <label class="control-label">Descripción</label>
@@ -32,8 +32,8 @@
                             </label>
                         </div>
                         {{ csrf_field() }}
-                        <a class="btn btn-default" href="{{ route('seguridad::menus::lista') }}">Cancelar</a>
-                        <button type="submit" class="btn btn-danger" id="btn_submit" data-loading-text="Creando menú...">Crear</button>
+                        <a class="btn btn-default btn-sm" href="{{ route('seguridad::menus::lista') }}">Cancelar</a>
+                        <button type="submit" class="btn btn-danger btn-sm" id="btn_submit" data-loading-text="Creando menú...">Crear</button>
                     </form>
                 </div>
             </div>

@@ -51,12 +51,16 @@ function can_not_do($permiso)
     return !$can_access;
 }
 
-function generate_pdf($html, $archivo) {
+// I: envía el fichero al navegador de forma que se usa la extensión (plug in) si está disponible.
+// D: envía el fichero al navegador y fuerza la descarga del fichero con el nombre especificado por name.
+// F: guarda el fichero en un fichero local de nombre name.
+// S: devuelve el documento como una cadena.
+function generate_pdf($html, $archivo, $destino = 'F') {
     require_once base_path() . '\vendor\spipu\html2pdf\html2pdf.class.php';
     $html2pdf = new \HTML2PDF('P', 'A4', 'es', true, 'UTF-8', [3, 6, 133, 2]);
     $html2pdf->setDefaultFont('Helvetica');
     $html2pdf->WriteHTML($html);
-    $html2pdf->Output($archivo, 'F');
+    $html2pdf->Output($archivo, $destino);
 }
 
 function get_notifications($usuario) {
@@ -162,4 +166,33 @@ function format_time($time) {
 function format_datetime_to_file($date, $time)
 {
     return str_replace('/', '_', format_date($date)) . '_' . str_replace(':', '_', format_time($time));
+}
+
+function get_months($mes = false)
+{
+    $meses = collect([1 => 'Enero', 2 => 'Febrero', 3 => 'Marzo', 4 => 'Abril', 5 => 'Mayo', 6 => 'Junio', 7 => 'Julio', 8 => 'Agosto', 9 => 'Septiembre', 10 => 'Octubre', 11 => 'Noviembre', 12 => 'Diciembre']);
+
+    if (!$mes) {
+        return $meses;
+    }
+
+    return $meses->get((int) $mes);
+}
+
+function get_identification_types($tipo_identificacion = false)
+{
+    $tipos_identificacion = collect(['C' => 'Cédula', 'N' => 'RNC', 'O' => 'OffShore', 'P' => 'Pasaporte']);
+
+    if (!$tipo_identificacion) {
+        return $tipos_identificacion;
+    }
+
+    return $tipos_identificacion->get($tipo_identificacion);
+}
+
+function do_log($description) {
+    $log = new \Bame\Models\Log;
+    $log->user = session()->get('usuario');
+    $log->description = $description;
+    $log->save();
 }

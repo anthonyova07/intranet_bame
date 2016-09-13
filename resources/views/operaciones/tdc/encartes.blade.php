@@ -13,9 +13,9 @@
 @section('contents')
 
     <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="col-xs-4">
+        <div class="col-xs-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
                     <form method="post" action="{{ route('operaciones::tdc::encartes') }}" id="form_encarte">
                         <div class="form-group{{ $errors->first('identificacion') ? ' has-error':'' }}">
                             <label class="control-label">Identificación</label>
@@ -33,8 +33,7 @@
                             <span class="help-block">{{ $errors->first('fecha') }}</span>
                         </div>
                         {{ csrf_field() }}
-                        <button type="submit" class="btn btn-danger" id="btn_submit" data-loading-text="Generando encartes...">Generar PDFs <span class="badge" data-toggle="tooltip" data-placement="bottom" title="Encartes Pendientes">{{ $cantidad }}</span></button>
-                        {{-- <a href="http://192.168.0.100/intranet/pdfs/encartes/" target="__blank" class="btn btn-info pull-right">Ver encartes</a> --}}
+                        <button type="submit" class="btn btn-danger btn-sm" id="btn_submit" data-loading-text="Generando encartes...">Generar PDFs <span class="badge" data-toggle="tooltip" data-placement="bottom" title="Encartes Pendientes">{{ $cantidad }}</span></button>
                     </form>
                 </div>
             </div>

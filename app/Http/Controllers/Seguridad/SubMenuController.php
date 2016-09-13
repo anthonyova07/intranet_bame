@@ -31,6 +31,8 @@ class SubMenuController extends Controller
 
         SubMenu::create($request->menu, $request->descripcion, $request->caption, $request->estatus, $request->web, $request->link, $request->coduni);
 
+        do_log('Creó el SubMenú ( menú:' . $request->menu . ' descripción:' . cap_str($request->descripcion) . ' caption:' . cap_str($request->caption) . ' estatus:' . get_status($request->estatus) . ' web:' . get_web($request->web) . ' link:' . clear_str($request->link) . ' coduni:' . $request->coduni . ' )');
+
         return redirect()->route('seguridad::menus::submenus::lista', ['menu' => $menu])->with('success', 'El submenú ha sido agregado correctamente.');
     }
 
@@ -52,6 +54,8 @@ class SubMenuController extends Controller
         }
 
         SubMenu::update($request->menu, $codigo_nuevo, $request->descripcion, $request->caption, $request->estatus, $request->web, $request->link, $request->coduni, $menu, $codigo);
+
+        do_log('Editó el SubMenú ( menú:' . $request->menu . ' codnuevo:' . $codigo_nuevo . ' descripción:' . cap_str($request->descripcion) . ' caption:' . $request->caption . ' estatus:' . get_status($request->estatus) . ' web:' . get_web($request->web) . ' link:' . clear_str($request->link) . ' coduni:' . $request->coduni . ' )');
 
         return redirect()->route('seguridad::menus::submenus::lista', ['menu' => $menu])->with('success', 'El submenú ha sido modificado correctamente.');
     }

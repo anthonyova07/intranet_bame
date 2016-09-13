@@ -13,9 +13,9 @@
 @section('contents')
 
     <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="col-xs-4">
+        <div class="col-xs-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
                     <form method="post" action="{{ route('seguridad::menus::submenus::editar', ['menu' => request()->menu, 'codigo' => $submenu->CODIGO]) }}" id="form_submenus">
                         <div class="form-group{{ $errors->first('menu') ? ' has-error':'' }}">
                             <label class="control-label">Menús</label>
@@ -57,7 +57,7 @@
                         </div>
                         {{ csrf_field() }}
                         <a class="btn btn-default" href="{{ route('seguridad::menus::submenus::lista', ['menu' => request()->menu]) }}">Cancelar</a>
-                        <button type="submit" class="btn btn-danger" id="btn_submit" data-loading-text="Editando submenú...">Editar</button>
+                        <button type="submit" class="btn btn-danger btn-sm" id="btn_submit" data-loading-text="Editando submenú...">Editar</button>
                     </form>
                 </div>
             </div>
