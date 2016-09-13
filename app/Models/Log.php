@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Log extends Model
 {
     public function scopeLastestFirst($query) {
-        return $query->orderBy('id' , 'desc');
+        return $query->orderBy('created_at' , 'desc');
     }
 }

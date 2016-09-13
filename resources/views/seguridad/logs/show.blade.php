@@ -71,7 +71,7 @@
         <div class="col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
+                    <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='3|desc'>
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -86,7 +86,7 @@
                                     <td>{{ $log->id }}</td>
                                     <td>{{ $log->user }}</td>
                                     <td>{{ $log->description }}</td>
-                                    <td>{{ $log->created_at->format('d/m/Y h:i:s') }}</td>
+                                    <td>{{ $log->created_at }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
