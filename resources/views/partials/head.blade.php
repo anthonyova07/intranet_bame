@@ -11,6 +11,7 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="{{ route('home') }}/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ route('home') }}/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="{{ route('home') }}/css/dataTables.bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->

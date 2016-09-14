@@ -8,9 +8,9 @@
             <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="{{ route('home') }}" style="padding-top: 0px;">
-            <img src="{{ route('home') }}/images/logo.png" style="width: 49px;">
+            <img src="{{ route('home') }}/images/logo.jpg" style="width: 200px;margin-left: 8px;">
         </a>
-        <a class="navbar-brand" href="{{ route('home') }}" style="padding-left: 0px; font-size: 25px;">Bancamérica - INTRANET</a>
+        {{-- <a class="navbar-brand" href="{{ route('home') }}" style="padding-left: 0px; font-size: 25px;">Bancamérica - INTRANET</a> --}}
     </div>
     <!-- /.navbar-header -->
 

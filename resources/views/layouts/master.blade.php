@@ -7,19 +7,31 @@
 
     <body ruta="{{ route('home') }}" icon-noti="{{ route('home') . '/images/noFoto.jpg' }}">
 
-        <div id="wrapper">
+        <div id="wrapper" style="background-color: #646369;">
 
             @include('partials.navbar')
 
             <!-- Page Content -->
             <div id="page-wrapper">
                 <div class="container-fluid">
-                    <div class="row">
+                    <div class="row row-top">
                         <div class="col-xs-12">
-                            <h1 class="page-header">@yield('page_title')</h1>
+                            {{-- <div class="col-xs-3" style="margin-top: 6px;">
+                                <div class="input-group custom-search-form">
+                                    <input type="text" class="form-control" placeholder="buscar...">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div> --}}
+                            <div class="col-xs-12">
+                                <h3 class="header-page">@yield('page_title')</h3>
+                            </div>
                         </div>
-                        <!-- /.col-lg-12 -->
                     </div>
+
                     @include('partials.messages')
 
                     @yield('contents')

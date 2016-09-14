@@ -13,7 +13,7 @@
 @section('contents')
 
     <div class="row">
-        <div class="col-xs-3">
+        <div class="col-xs-4 col-xs-offset-4">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="hidden-print">

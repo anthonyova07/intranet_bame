@@ -13,7 +13,7 @@
 @section('contents')
 
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-xs-6 col-xs-offset-3">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form method="post" action="{{ route('clientes::ncfs::no_ibs::detalle::nuevo') }}" id="form_consulta">

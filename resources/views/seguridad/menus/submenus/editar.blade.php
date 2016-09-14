@@ -13,7 +13,7 @@
 @section('contents')
 
     <div class="row">
-        <div class="col-xs-4">
+        <div class="col-xs-4 col-xs-offset-4">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form method="post" action="{{ route('seguridad::menus::submenus::editar', ['menu' => request()->menu, 'codigo' => $submenu->CODIGO]) }}" id="form_submenus">
