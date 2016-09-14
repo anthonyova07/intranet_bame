@@ -7,7 +7,7 @@
 @section('contents')
     <div class="row">
         <div class="jumbotron">
-            <h1>Bienvenid@###</h1>
+            <h1>Bienvenid@...</h1>
         </div>
     </div>
 @endsection
