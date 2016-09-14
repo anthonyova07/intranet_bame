@@ -105,6 +105,20 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 
+    Route::group(['prefix' => 'mercadeo', 'as' => 'mercadeo::'], function () {
+
+        Route::group(['prefix' => 'noticias', 'as' => 'noticias::'], function () {
+
+            Route::get('lista', 'Mercadeo\Noticias\NoticiaController@getLista')->name('lista');
+            Route::post('lista', 'Mercadeo\Noticias\NoticiaController@postLista');
+
+            Route::get('nueva', 'Mercadeo\Noticias\NoticiaController@getNueva')->name('nueva');
+            Route::post('nueva', 'Mercadeo\Noticias\NoticiaController@postNueva');
+
+        });
+
+    });
+
 });
 
 // });

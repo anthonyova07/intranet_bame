@@ -196,3 +196,14 @@ function do_log($description) {
     $log->description = $description;
     $log->save();
 }
+
+function get_news_types($type = false)
+{
+    $meses = collect(['C' => 'Columna', 'N' => 'Noticia', 'B' => 'Banner']);
+
+    if (!$type) {
+        return $meses;
+    }
+
+    return $meses->get($type);
+}
