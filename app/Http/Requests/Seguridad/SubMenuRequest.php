@@ -24,11 +24,11 @@ class SubMenuRequest extends Request
     public function rules()
     {
         return [
-            'menu' => 'required',
-            'coduni' => 'required|alpha_dash',
-            'descripcion' => 'required',
-            'caption' => 'required',
-            'link' => 'required',
+            'menu' => 'required|integer',
+            'coduni' => 'required|alpha_dash|max:50',
+            'descripcion' => 'required|max:40',
+            'caption' => 'required|max:100',
+            'link' => 'required|max:30',
         ];
     }
 }
