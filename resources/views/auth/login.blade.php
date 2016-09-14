@@ -8,7 +8,7 @@
         @section('page_title', 'Inicio de Sesión')
 
         <div class="row">
-            <div class="col-xs-4">
+            <div class="col-xs-4 col-xs-offset-4">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <form method="post" action="{{ route('auth.login') }}" id="form_login">
