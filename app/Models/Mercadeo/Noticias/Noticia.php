@@ -96,8 +96,8 @@ class Noticia
 
     public static function create($id, $title, $detail, $image, $type)
     {
-        $title = cap_str($title);
-        $detail = trim(nl2br($detail));
+        $title = $title;
+        $detail = nl2br($detail);
         $image = $image;
         $type = $type;
         $created_by = session()->get('usuario');
@@ -110,15 +110,15 @@ class Noticia
         $stmt->execute();
     }
 
-    public static function update($id, $title, $detail, $type)
+    public static function update($id, $title, $detail, $type, $repost)
     {
-        $title = cap_str($title);
-        $detail = trim(nl2br($detail));
+        $title = $title;
+        $detail = nl2br($detail);
         $type = $type;
         $updated_by = session()->get('usuario');
         $updated_at = (new \DateTime)->format('Y-m-d h:i:s');
 
-        $sql = "UPDATE INTRANET_NEWS SET TITLE = '{$title}', DETAIL = '{$detail}', TYPE = '{$type}', UPDATED_BY = '{$updated_by}', UPDATED_AT = '{$updated_at}' WHERE ID = '{$id}'";
+        $sql = "UPDATE INTRANET_NEWS SET TITLE = '{$title}', DETAIL = '{$detail}', TYPE = '{$type}', UPDATED_BY = '{$updated_by}', UPDATED_AT = '{$updated_at}'" . ($repost ? ", CREATED_AT = '{$updated_at}'":"") . " WHERE ID = '{$id}'";
 
         $stmt = app('con_ibs')->prepare($sql);
 

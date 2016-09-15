@@ -83,7 +83,7 @@ class NoticiaController extends Controller
             $request->file('image')->move(public_path() . '\\mercadeo\\images\\', $destinationFileName);
         }
 
-        Noticia::update($id, $request->title, clear_tag($request->detail), $request->type);
+        Noticia::update($id, $request->title, clear_tag($request->detail), $request->type, $request->repost);
 
         return redirect()->route('mercadeo::noticias::lista')->with('success', 'La noticia ha sido modificada correctamente.');
     }

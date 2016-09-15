@@ -47,11 +47,19 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12">
+                            <div class="col-xs-8">
                                 <div class="form-group{{ $errors->first('image') ? ' has-error':'' }}">
                                     <label class="control-label">Imagen</label>
                                     <input type="file" name="image">
                                     <span class="help-block">{{ $errors->first('image') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group{{ $errors->first('respost') ? ' has-error':'' }}">
+                                    <label>
+                                        <input type="checkbox" name="repost" data-toggle="tooltip" title="Re-Publicar esta noticia" style="margin-top: 23px;"> Re-Publicar
+                                    </label>
+                                    <span class="help-block">{{ $errors->first('repost') }}</span>
                                 </div>
                             </div>
                         </div>

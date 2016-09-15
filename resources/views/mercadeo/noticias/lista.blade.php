@@ -60,7 +60,7 @@
                     <a class="btn btn-danger btn-sm" href="{{ route('mercadeo::noticias::nueva') }}">Nueva Noticia</a>
                     <br>
                     <br>
-                    <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='3|desc'>
+                    <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='2|desc'>
                         <thead>
                             <tr>
                                 <th>Título</th>
