@@ -76,8 +76,8 @@
                                     <td>{{ get_news_types($noticia->TYPE) }}</td>
                                     <td>{{ $noticia->CREATED_AT }}</td>
                                     <td align="center">
-                                        <a href="{{ route('mercadeo::noticias::lista') }}" data-toggle="tooltip" title="Editar" class="naranja"><i class="fa fa-edit fa-fw"></i></a>
-                                        <a href="{{ route('mercadeo::noticias::lista') }}" class="link_anular rojo" data-toggle="tooltip" title="Anular"><i class="fa fa-times fa-fw"></i></a>
+                                        <a href="{{ route('mercadeo::noticias::editar', ['id' => $noticia->ID]) }}" data-toggle="tooltip" title="Editar" class="naranja"><i class="fa fa-edit fa-fw"></i></a>
+                                        <a href="{{ route('mercadeo::noticias::eliminar', ['id' => $noticia->ID, 'image' => explode('/', $noticia->IMAGE)[3]]) }}" class="link_eliminar rojo" data-toggle="tooltip" title="Eliminar"><i class="fa fa-times fa-fw"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -91,6 +91,14 @@
     <script type="text/javascript">
         $('#form_consulta').submit(function (event) {
             $('#btn_submit').button('loading');
+        });
+
+        $('.link_eliminar').click(function (event) {
+            res = confirm('Realmente desea eliminar esta noticia?');
+
+            if (!res) {
+                event.preventDefault();
+            }
         });
     </script>
 

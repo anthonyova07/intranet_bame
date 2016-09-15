@@ -20,4 +20,6 @@ $(document).ready(function() {
         "lengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
         'order': [$orderBy]
     });
+
+    $('.carousel').carousel();
 });

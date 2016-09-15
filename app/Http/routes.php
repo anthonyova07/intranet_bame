@@ -115,6 +115,11 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('nueva', 'Mercadeo\Noticias\NoticiaController@getNueva')->name('nueva');
             Route::post('nueva', 'Mercadeo\Noticias\NoticiaController@postNueva');
 
+            Route::get('editar/{id}', 'Mercadeo\Noticias\NoticiaController@getEditar')->name('editar');
+            Route::post('editar/{id}', 'Mercadeo\Noticias\NoticiaController@postEditar');
+
+            Route::get('eliminar/{id}/{image}', 'Mercadeo\Noticias\NoticiaController@getEliminar')->name('eliminar');
+
         });
 
     });

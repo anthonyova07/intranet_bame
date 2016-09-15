@@ -207,3 +207,12 @@ function get_news_types($type = false)
 
     return $meses->get($type);
 }
+
+function get_extensions_file($file_name) {
+    $name_parts = explode('.', $file_name);
+    return array_pop($name_parts);
+}
+
+function clear_tag($str) {
+    return strip_tags($str, '<br><b><i>');
+}
