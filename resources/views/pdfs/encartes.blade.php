@@ -4,7 +4,7 @@
             <tbody>
                 <tr>
                     <td colspan="3" rowspan="3">
-                        <img src="{{ base_path('\\public\\images\\logo.jpg') }}" style="width: 320px;">
+                        <img src="{{ base_path('\\public\\images\\logo.jpg') }}" style="width: 310px;">
                     </td>
                     <td colspan="3" align="right" width="408">ACUSE DE RECIBO DE TARJETA DE CRÉDITO</td>
                 </tr>
@@ -24,7 +24,7 @@
                     <td colspan="2">Nombres</td>
                     <td colspan="2"><b>: {{ $tarjeta->NOMBRE1 }} {{ $tarjeta->NOMBRE2 }}</b></td>
                     <td colspan="2" rowspan="9" align="right">
-                        <img src="{{ $tarjeta->FOTO }}" style="width: 150px; height: 150px;">
+                        <img src="{{ $tarjeta->FOTO }}" style="width: 150px; height: 140px;">
                         <br>
                         Autorizo al Banco Múltiple de las Américas S.A. a activar esta tarjeta de crédito al recibirla.
                         <br><br><br><br>
@@ -116,7 +116,7 @@
             <tbody>
                 <tr>
                     <td colspan="3" rowspan="3">
-                        <img src="{{ base_path('\\public\\images\\logo.jpg') }}" style="width: 320px;">
+                        <img src="{{ base_path('\\public\\images\\logo.jpg') }}" style="width: 310px;">
                     </td>
                     <td colspan="3" align="right" width="408">ACUSE DE RECIBO DE TARJETA DE CRÉDITO</td>
                 </tr>
@@ -136,7 +136,7 @@
                     <td colspan="2">Nombres</td>
                     <td colspan="2"><b>: {{ $tarjeta->NOMBRE1 }} {{ $tarjeta->NOMBRE2 }}</b></td>
                     <td colspan="2" rowspan="9" align="right">
-                        <img src="{{ $tarjeta->FOTO }}" style="width: 150px; height: 150px;">
+                        <img src="{{ $tarjeta->FOTO }}" style="width: 150px; height: 140px;">
                         <br>
                         Autorizo al Banco Múltiple de las Américas S.A. a activar esta tarjeta de crédito al recibirla.
                         <br><br><br><br>
