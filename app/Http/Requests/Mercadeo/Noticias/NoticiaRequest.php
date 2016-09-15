@@ -27,7 +27,7 @@ class NoticiaRequest extends Request
             'title' => 'required|max:150',
             'type' => 'required|in:C,N,B',
             'detail' => 'required|max:10000',
-            'image' => 'required|image',
+            'image' => 'image' . ($this->id ? '':'|required'),
         ];
     }
 }

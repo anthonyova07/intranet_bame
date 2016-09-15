@@ -4,7 +4,7 @@
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/noticia/{id}', 'HomeController@noticia')->name('noticia');
-Route::get('/banners', 'HomeController@banners')->name('banners');
+Route::get('/banner/{id}', 'HomeController@banner')->name('banner');
 
 Route::get('auth/login', 'Auth\AuthController@getLogin')->name('auth.login');
 Route::post('auth/login', 'Auth\AuthController@postLogin');

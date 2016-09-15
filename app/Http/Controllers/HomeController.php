@@ -29,10 +29,14 @@ class HomeController extends Controller {
         return view('home.noticia', ['noticia' => $noticia]);
     }
 
-    public function banners(Request $request) {
-        $noticias_banners = Noticia::getLastBanners(10);
+    public function banner(Request $request, $id) {
+        $banner = Noticia::getById($id);
 
-        return view('home.banners', ['noticias_banners' => $noticias_banners]);
+        if (!$banner) {
+            return back()->with('warning', 'Esta noticia no existe.');
+        }
+
+        return view('home.banner', ['banner' => $banner]);
     }
 
 }

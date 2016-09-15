@@ -214,5 +214,7 @@ function get_extensions_file($file_name) {
 }
 
 function clear_tag($str) {
-    return strip_tags($str, '<br><b><i>');
+    $str = str_replace('“', '"', $str);
+    $str = str_replace('”', '"', $str);
+    return strip_tags($str, '<br><b><i><ol><ul><li>');
 }

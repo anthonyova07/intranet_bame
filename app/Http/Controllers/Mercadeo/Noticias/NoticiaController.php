@@ -61,7 +61,7 @@ class NoticiaController extends Controller
             $request->file('image')->move(public_path() . '\\mercadeo\\images\\', $destinationFileName);
         }
 
-        Noticia::create($id, $request->title, clear_tag($request->detail), '/mercadeo/images/' . $destinationFileName, $request->type);
+        Noticia::create($id, clear_tag($request->title), clear_tag($request->detail), '/mercadeo/images/' . $destinationFileName, $request->type);
 
         return redirect()->route('mercadeo::noticias::lista')->with('success', 'La noticia ha sido guardada correctamente.');
     }
@@ -77,13 +77,12 @@ class NoticiaController extends Controller
     }
 
     public function postEditar(NoticiaRequest $request, $id) {
-        $destinationFileName = $id . '.' . get_extensions_file($request->file('image')->getClientOriginalName());
-
         if ($request->hasFile('image')) {
+            $destinationFileName = $id . '.' . get_extensions_file($request->file('image')->getClientOriginalName());
             $request->file('image')->move(public_path() . '\\mercadeo\\images\\', $destinationFileName);
         }
 
-        Noticia::update($id, $request->title, clear_tag($request->detail), $request->type, $request->repost);
+        Noticia::update($id, clear_tag($request->title), clear_tag($request->detail), $request->type, $request->repost);
 
         return redirect()->route('mercadeo::noticias::lista')->with('success', 'La noticia ha sido modificada correctamente.');
     }

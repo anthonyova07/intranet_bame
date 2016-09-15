@@ -9,20 +9,25 @@
         <div class="col-xs-12">
 
             <div class="col-xs-5 col-noticias">
-                <div class="row titulo-columna img-rounded">
-                    {{ $noticia_columna->TITLE }}
-                </div>
-                <div class="row text-center" style="margin-bottom: 10px;">
-                    <img class="img-thumbnail" src="{{ route('home') . $noticia_columna->IMAGE }}">
-                </div>
-                <div class="row parrafo-columna text-justify">
-                    <p>{!! substr($noticia_columna->DETAIL, 0, 800) !!}</p>
-                </div>
+                @if ($noticia_columna)
+                    <div class="row titulo-columna img-rounded">
+                        {{ $noticia_columna->TITLE }}
+                    </div>
+                    <div class="row text-center" style="margin-bottom: 10px;">
+                        <img class="img-thumbnail" src="{{ route('home') . $noticia_columna->IMAGE }}">
+                    </div>
+                    <div class="row parrafo-columna text-justify">
+                        <p>{!! substr($noticia_columna->DETAIL, 0, 800) !!}</p>
+                    </div>
+                    <div class="row text-center">
+                        <a href="{{ route('noticia', ['id' => $noticia_columna->ID]) }}" class="btn btn-info btn-xs">Ver Más</a>
+                    </div>
+                @endif
             </div>
 
             <div class="col-xs-7">
 
-                <div class="col-xs-12">
+                <div class="col-xs-12" style="padding: 0 0 0 0;margin-left: 12px;">
 
                     <div class="carousel slide carousel-banners img-thumbnail" data-ride="carousel" data-interval="3000" style="width: 100%;">
                         <!-- Indicators -->
@@ -38,7 +43,7 @@
                                 <div class="item {{ $index == 0 ? 'active':'' }}">
                                     <img src="{{ route('home') . $banner->IMAGE }}">
                                     <div class="carousel-caption" style="right: 0;left: 0;margin-bottom: -45px;">
-                                        <a href="{{ route('banners') }}" class="btn btn-info btn-xs">Ver Banners</a>
+                                        <a href="{{ route('banner', ['id' => $banner->ID]) }}" class="btn btn-info btn-xs">Ver Banners</a>
                                     </div>
                                 </div>
                             @endforeach
@@ -58,7 +63,7 @@
 
                 </div>
 
-                <div class="col-xs-12" style="margin-top: 20px;">
+                <div class="col-xs-12" style="margin-top: 20px;padding: 0 0 0 0;margin-left: 12px;">
 
                     <div class="carousel slide carousel-noticias img-thumbnail" data-ride="carousel" data-interval="5000" style="width: 100%;">
                         <!-- Indicators -->
