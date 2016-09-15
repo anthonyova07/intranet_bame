@@ -68,6 +68,19 @@ class Noticia
         return collect($stmt->fetchAll());
     }
 
+    public static function getLastNews($cantidad) {
+        self::orderByCreatedAtDesc();
+        self::take($cantidad);
+
+        $sql = 'SELECT ' . implode(', ', self::getFields()) . ' FROM INTRANET_NEWS WHERE TYPE = \'N\'' . self::$sql;
+
+        self::$sql = '';
+
+        $stmt = app('con_ibs')->prepare($sql);
+        $stmt->execute();
+        return collect($stmt->fetchAll());
+    }
+
     public static function all($usuario)
     {
         $sql = 'SELECT ' . implode(', ', self::getFields()) . ' FROM INTRANET_NEWS WHERE CREATED_BY = \'' . $usuario . '\'' . self::$sql;
@@ -105,7 +118,7 @@ class Noticia
         $updated_by = session()->get('usuario');
         $updated_at = (new \DateTime)->format('Y-m-d h:i:s');
 
-        $sql = "UPDATE INTRANET_NEWS SET TITLE = '{$title}', DETAIL = '{$detail}', TYPE = '{$type}', UPDATED_BY = '{$updated_by}', UPDATED_AT = '{$updated_at}'";
+        $sql = "UPDATE INTRANET_NEWS SET TITLE = '{$title}', DETAIL = '{$detail}', TYPE = '{$type}', UPDATED_BY = '{$updated_by}', UPDATED_AT = '{$updated_at}' WHERE ID = '{$id}'";
 
         $stmt = app('con_ibs')->prepare($sql);
 

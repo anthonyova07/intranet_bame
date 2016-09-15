@@ -14,7 +14,9 @@ class HomeController extends Controller {
 
         $noticias_banners = Noticia::getLastBanners(5);
 
-        return view('home.index', ['noticia_columna' => $noticia_columna, 'noticias_banners' => $noticias_banners]);
+        $noticias = Noticia::getLastNews(5);
+
+        return view('home.index', ['noticia_columna' => $noticia_columna, 'noticias_banners' => $noticias_banners, 'noticias' => $noticias]);
     }
 
 }
