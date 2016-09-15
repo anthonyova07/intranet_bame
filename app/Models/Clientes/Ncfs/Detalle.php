@@ -39,28 +39,36 @@ class Detalle
 
     public static function cancel($factura, $secuencia)
     {
-        $monto = self::get($factura, $secuencia)->MONTO;
+        $detalle = self::get($factura, $secuencia);
 
-        $sql = 'UPDATE BACNCFE SET ENCMONTO = ENCMONTO - ' . $monto . ' WHERE ENCFACT = ' . $factura;
+        if ($detalle->ESTATUS != 'R') {
+            $monto = $detalle->MONTO;
 
-        app('con_ibs')->prepare($sql)->execute();
+            $sql = 'UPDATE BACNCFE SET ENCMONTO = ENCMONTO - ' . $monto . ' WHERE ENCFACT = ' . $factura;
 
-        $sql = 'UPDATE BACNCFD SET DEASTS= \'R\' WHERE DETFAC = ' . $factura . ' AND DETSEC = ' . $secuencia;
+            app('con_ibs')->prepare($sql)->execute();
 
-        return app('con_ibs')->prepare($sql)->execute();
+            $sql = 'UPDATE BACNCFD SET DEASTS= \'R\' WHERE DETFAC = ' . $factura . ' AND DETSEC = ' . $secuencia;
+
+            return app('con_ibs')->prepare($sql)->execute();
+        }
     }
 
     public static function active($factura, $secuencia)
     {
-        $monto = self::get($factura, $secuencia)->MONTO;
+        $detalle = self::get($factura, $secuencia);
 
-        $sql = 'UPDATE BACNCFE SET ENCMONTO = ENCMONTO + ' . $monto . ' WHERE ENCFACT = ' . $factura;
+        if ($detalle->ESTATUS != 'A') {
+            $monto = $detalle->MONTO;
 
-        app('con_ibs')->prepare($sql)->execute();
+            $sql = 'UPDATE BACNCFE SET ENCMONTO = ENCMONTO + ' . $monto . ' WHERE ENCFACT = ' . $factura;
 
-        $sql = 'UPDATE BACNCFD SET DEASTS= \'A\' WHERE DETFAC = ' . $factura . ' AND DETSEC = ' . $secuencia;
+            app('con_ibs')->prepare($sql)->execute();
 
-        return app('con_ibs')->prepare($sql)->execute();
+            $sql = 'UPDATE BACNCFD SET DEASTS= \'A\' WHERE DETFAC = ' . $factura . ' AND DETSEC = ' . $secuencia;
+
+            return app('con_ibs')->prepare($sql)->execute();
+        }
     }
 
     public static function generatePdf($html, $archivo)

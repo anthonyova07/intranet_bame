@@ -108,9 +108,9 @@
                                 <td align="center"><span class="label label-{{ $detalle->ESTATUS == 'A' ? 'success':'danger' }}">{{ $detalle->ESTATUS == 'A' ? 'Activo':'Anulado' }}</span></td>
                                 <td align="center">
                                     @if ($detalle->ESTATUS == 'R')
-                                        <a href="{{ route('clientes::ncfs::detalles::activar', ['factura' => $detalle->FACTURA, 'secuencia' => $detalle->SECUENCIA]) }}" class="link_activar verde" data-toggle="tooltip" data-placement="top" title="Activar Este Detalle"><i class="fa fa-check fa-fw"></i></a>
+                                        <a id="link_a_r" href="{{ route('clientes::ncfs::detalles::activar', ['factura' => $detalle->FACTURA, 'secuencia' => $detalle->SECUENCIA]) }}" class="link_activar verde" data-toggle="tooltip" data-placement="top" title="Activar Este Detalle"><i class="fa fa-check fa-fw"></i></a>
                                     @else
-                                        <a href="{{ route('clientes::ncfs::detalles::anular', ['factura' => $detalle->FACTURA, 'secuencia' => $detalle->SECUENCIA]) }}" class="link_anular rojo" data-toggle="tooltip" data-placement="top" title="Anular Este Detalle"><i class="fa fa-times fa-fw"></i></a>
+                                        <a id="link_a_r" href="{{ route('clientes::ncfs::detalles::anular', ['factura' => $detalle->FACTURA, 'secuencia' => $detalle->SECUENCIA]) }}" class="link_anular rojo" data-toggle="tooltip" data-placement="top" title="Anular Este Detalle"><i class="fa fa-times fa-fw"></i></a>
                                     @endif
                                 </td>
                             </tr>
@@ -120,5 +120,11 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $('#link_a_r').click(function () {
+            $(this).remove();
+        });
+    </script>
 
 @endsection
