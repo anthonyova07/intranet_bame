@@ -45,7 +45,7 @@
         <!-- /#wrapper -->
         @if (session()->has('usuario'))
             <script>
-                verificar_notificaciones();
+                setTimeout(verificar_notificaciones, 1000);
                 setInterval(verificar_notificaciones, {{ env('NOTIFICACIONES_INTERVALO') }});
             </script>
         @endif
