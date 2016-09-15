@@ -44,7 +44,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
 
-                    <h3 style="text-align: center;">{{ $banner->TITLE }}</h3>
+                    <h3 style="text-align: center;margin-top: 0px;">{{ $banner->TITLE }}</h3>
 
                     <p>
                         {!! $banner->DETAIL !!}

@@ -43,7 +43,7 @@
                                 <div class="item {{ $index == 0 ? 'active':'' }}">
                                     <img src="{{ route('home') . $banner->IMAGE }}">
                                     <div class="carousel-caption" style="right: 0;left: 0;margin-bottom: -45px;">
-                                        <a href="{{ route('banner', ['id' => $banner->ID]) }}" class="btn btn-info btn-xs">Ver Banners</a>
+                                        <a href="{{ route('banner', ['id' => $banner->ID]) }}" class="btn btn-info btn-xs">Ver Detalle</a>
                                     </div>
                                 </div>
                             @endforeach
