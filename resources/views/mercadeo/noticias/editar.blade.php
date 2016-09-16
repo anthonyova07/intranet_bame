@@ -55,7 +55,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-4">
-                                <div class="form-group{{ $errors->first('respost') ? ' has-error':'' }}">
+                                <div class="form-group{{ $errors->first('repost') ? ' has-error':'' }}">
                                     <label>
                                         <input type="checkbox" name="repost" data-toggle="tooltip" title="Re-Publicar esta noticia" style="margin-top: 23px;"> Re-Publicar
                                     </label>

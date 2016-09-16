@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Bame\Http\Requests;
 
 use Bame\Models\Mercadeo\Noticias\Noticia;
+use Bame\Models\Mercadeo\Coco\Coco;
 
 class HomeController extends Controller {
 
@@ -16,27 +17,14 @@ class HomeController extends Controller {
 
         $noticias = Noticia::getLastNews(5);
 
-        return view('home.index', ['noticia_columna' => $noticia_columna, 'noticias_banners' => $noticias_banners, 'noticias' => $noticias]);
-    }
+        $coco = new Coco();
 
-    public function noticia(Request $request, $id) {
-        $noticia = Noticia::getById($id);
-
-        if (!$noticia) {
-            return back()->with('warning', 'Esta noticia no existe.');
-        }
-
-        return view('home.noticia', ['noticia' => $noticia]);
-    }
-
-    public function banner(Request $request, $id) {
-        $banner = Noticia::getById($id);
-
-        if (!$banner) {
-            return back()->with('warning', 'Esta noticia no existe.');
-        }
-
-        return view('home.banner', ['banner' => $banner]);
+        return view('home.index', [
+            'noticia_columna' => $noticia_columna,
+            'noticias_banners' => $noticias_banners,
+            'noticias' => $noticias,
+            'coco' => $coco
+        ]);
     }
 
 }

@@ -3,8 +3,14 @@
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('/noticia/{id}', 'HomeController@noticia')->name('noticia');
-Route::get('/banner/{id}', 'HomeController@banner')->name('banner');
+Route::group(['prefix' => 'mercadeo', 'as' => 'mercadeo::'], function () {
+
+    Route::get('/noticia/{id}', 'Mercadeo\MercadeoController@noticia')->name('noticia');
+    Route::get('/banner/{id}', 'Mercadeo\MercadeoController@banner')->name('banner');
+
+    Route::get('rompete_el_coco', 'Mercadeo\MercadeoController@coco')->name('coco');
+
+});
 
 Route::get('auth/login', 'Auth\AuthController@getLogin')->name('auth.login');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
@@ -122,6 +128,13 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('editar/{id}', 'Mercadeo\Noticias\NoticiaController@postEditar');
 
             Route::get('eliminar/{id}/{image}', 'Mercadeo\Noticias\NoticiaController@getEliminar')->name('eliminar');
+
+        });
+
+        Route::group(['prefix' => 'coco', 'as' => 'coco::'], function () {
+
+            Route::get('mantenimiento', 'Mercadeo\Coco\CocoController@getMantenimiento')->name('mantenimiento');
+            Route::post('mantenimiento', 'Mercadeo\Coco\CocoController@postMantenimiento');
 
         });
 

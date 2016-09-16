@@ -83,7 +83,13 @@ function save_notifications($usuario, $notifications) {
 }
 
 function get_noti_path() {
-    return storage_path() . '\\app\\notifications\\';
+    $path = storage_path() . '\\app\\notifications\\';
+
+    if (!file_exists($path)) {
+        mkdir($path);
+    }
+
+    return $path;
 }
 
 function format_identification($identificacion) {
@@ -217,4 +223,40 @@ function clear_tag($str) {
     $str = str_replace('“', '"', $str);
     $str = str_replace('”', '"', $str);
     return strip_tags($str, '<br><b><i><ol><ul><li>');
+}
+
+function get_coco_info() {
+    $archivo_json = get_coco_path() . 'coco.json';
+
+    if (file_exists($archivo_json)) {
+        return json_decode(file_get_contents($archivo_json));
+    }
+
+    return null;
+}
+
+function save_coco($coco) {
+    $archivo_json = get_coco_path() . 'coco.json';
+    file_put_contents($archivo_json, $coco);
+}
+
+function get_coco_path() {
+    $path = storage_path() . '\\app\\coco\\';
+
+    if (!file_exists($path)) {
+        mkdir($path);
+    }
+
+    return $path;
+}
+
+function remove_n_r($str, $use_nl2br = true) {
+    $buscar=array(chr(13).chr(10), "\r\n", "\n", "\r");
+    $reemplazar=array("", "", "", "");
+
+    if ($use_nl2br) {
+        return str_ireplace($buscar, $reemplazar, nl2br($str));
+    }
+
+    return str_ireplace($buscar, $reemplazar, $str);
 }

@@ -125,5 +125,7 @@ return [
       'detail' => 'Detalle',
       'image' => 'Imagen',
       'type' => 'Tipo',
+      'descriptions' => 'Descripciones',
+      'awards' => 'Premios',
     ],
 ];

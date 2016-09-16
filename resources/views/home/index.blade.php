@@ -20,7 +20,7 @@
                         <p>{!! substr($noticia_columna->DETAIL, 0, 800) !!}</p>
                     </div>
                     <div class="row text-center">
-                        <a href="{{ route('noticia', ['id' => $noticia_columna->ID]) }}" class="btn btn-info btn-xs">Ver Más</a>
+                        <a href="{{ route('mercadeo::noticia', ['id' => $noticia_columna->ID]) }}" class="btn btn-info btn-xs">Ver Más</a>
                     </div>
                 @endif
             </div>
@@ -43,7 +43,7 @@
                                 <div class="item {{ $index == 0 ? 'active':'' }}">
                                     <img src="{{ route('home') . $banner->IMAGE }}">
                                     <div class="carousel-caption" style="right: 0;left: 0;margin-bottom: -45px;">
-                                        <a href="{{ route('banner', ['id' => $banner->ID]) }}" class="btn btn-info btn-xs">Ver Detalle</a>
+                                        <a href="{{ route('mercadeo::banner', ['id' => $banner->ID]) }}" class="btn btn-info btn-xs">Ver Detalle</a>
                                     </div>
                                 </div>
                             @endforeach
@@ -79,7 +79,7 @@
                                 <div class="item {{ $index == 0 ? 'active':'' }}">
                                     <img src="{{ route('home') . $noticia->IMAGE }}" style="height: 280px;margin: auto;">
                                     <div class="carousel-caption carousel-caption-noticias" style="right: 0;left: 0;margin-bottom: -45px;">
-                                        <a data-toggle="tooltip" title="Click para más detalles" href="{{ route('noticia', ['id' => $noticia->ID]) }}" class="btn btn-danger btn-sm">{{ substr($noticia->TITLE, 0, 85) . '...' }}</a>
+                                        <a data-toggle="tooltip" title="Click para más detalles" href="{{ route('mercadeo::noticia', ['id' => $noticia->ID]) }}" class="btn btn-danger btn-sm">{{ substr($noticia->TITLE, 0, 85) . '...' }}</a>
                                     </div>
                                 </div>
                             @endforeach
@@ -107,7 +107,63 @@
         <div class="col-xs-12">
 
             <div class="col-xs-4">
-                uno
+                <div class="panel panel-default" style="margin-top: 16px;">
+
+                    <div class="panel-body text-center">
+                        <img src="{{ route('home') . '/mercadeo/coco/rompete_el_coco.png' }}" style="width: 220px;">
+                    </div>
+
+                    @if ($coco->get()->active)
+
+                        <div class="panel-body text-center">
+                            <label class="control-label text-center label label-info" style="font-size: 24px;">Descripción</label>
+                            <ul class="list-group text-left" style="box-shadow: 0 0 0 0;margin-top: 20px;">
+                                @foreach ($coco->get()->descriptions->sortBy('order') as $description)
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <a href="javascript:void(0)">
+                                                <span class="badge btn-info" style="font-size: 35px;width: 40px;">{{ $description->order }}</span>
+                                            </a>
+                                        </div>
+                                        <div class="media-body" style="font-weight: bold;">
+                                            {{ $description->description }}
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </ul>
+                        </div>
+
+                        <div class="panel-body text-center">
+                            <label class="control-label text-center label label-warning" style="font-size: 24px;">Premios</label>
+                            <ul class="list-group text-left" style="box-shadow: 0 0 0 0;margin-top: 20px;">
+                                @foreach ($coco->get()->awards->sortBy('order') as $award)
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <a href="javascript:void(0)">
+                                                <span class="badge btn-warning" style="font-size: 35px;width: 40px;">{{ $award->order }}</span>
+                                            </a>
+                                        </div>
+                                        <div class="media-body" style="font-weight: bold;vertical-align: middle;">
+                                            {{ $award->award }}
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </ul>
+                        </div>
+
+                        <div class="panel-body text-right" style="margin-top: -38px;">
+                            <a href="{{ route('mercadeo::coco') }}" class="btn btn-success btn-sm" style="margin-top: -12px;">Enviar Idea...</a>
+                        </div>
+
+                    @else
+
+                        <div class="panel-body text-center">
+                            <label class="control-label text-center label label-danger" style="font-size: 24px;">Desactivado</label>
+                        </div>
+
+                    @endif
+
+                </div>
             </div>
 
             <div class="col-xs-4">
