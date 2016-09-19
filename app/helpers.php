@@ -222,7 +222,7 @@ function get_extensions_file($file_name) {
 function clear_tag($str) {
     $str = str_replace('“', '"', $str);
     $str = str_replace('”', '"', $str);
-    return strip_tags($str, '<br><b><i><ol><ul><li>');
+    return strip_tags($str, '<br><u><sub><sup><s><b><i><ol><ul><li>');
 }
 
 function get_coco_info() {

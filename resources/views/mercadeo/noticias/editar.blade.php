@@ -13,7 +13,7 @@
 @section('contents')
 
     <div class="row">
-        <div class="col-xs-8 col-xs-offset-2">
+        <div class="col-xs-8">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form method="post" action="{{ route('mercadeo::noticias::editar', ['id' => $noticia->ID]) }}" id="form_consulta" enctype="multipart/form-data">
@@ -69,6 +69,10 @@
                     </form>
                 </div>
             </div>
+        </div>
+
+        <div class="col-xs-4">
+            @include('partials.edition_help')
         </div>
     </div>
 
