@@ -14,7 +14,10 @@
     </div>
     <!-- /.navbar-header -->
 
-    <ul class="nav navbar-top-links navbar-right">
+    <ul class="nav navbar-top-links navbar-right text-right">
+        <li class="pull-left" style="margin-left: -41px;">
+            <img src="{{ route('home') }}/images/navesquina.svg" style="width: 41px;">
+        </li>
         @if (session()->has('usuario'))
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">

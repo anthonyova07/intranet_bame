@@ -7,7 +7,7 @@
 
     <body ruta="{{ route('home') }}" icon-noti="{{ route('home') . '/images/noFoto.jpg' }}">
 
-        <div id="wrapper" style="background-color: #646369;">
+        <div id="wrapper" style="background-color: #616365;">
 
             @include('partials.navbar')
 
