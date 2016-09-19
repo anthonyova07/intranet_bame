@@ -122,7 +122,7 @@ class Noticia
 
         $file_name =  '/mercadeo/images/' . $image;
 
-        $sql = "UPDATE INTRANET_NEWS SET TITLE = '{$title}', DETAIL = '{$detail}', TYPE = '{$type}', IMAGE = '{$file_name}', UPDATED_BY = '{$updated_by}', UPDATED_AT = '{$updated_at}'" . ($repost ? ", CREATED_AT = '{$updated_at}'":"") . " WHERE ID = '{$id}'";
+        $sql = "UPDATE INTRANET_NEWS SET TITLE = '{$title}', DETAIL = '{$detail}', TYPE = '{$type}'" . ($image ? ", IMAGE = '{$file_name}'":"") . ", UPDATED_BY = '{$updated_by}', UPDATED_AT = '{$updated_at}'" . ($repost ? ", CREATED_AT = '{$updated_at}'":"") . " WHERE ID = '{$id}'";
 
         $stmt = app('con_ibs')->prepare($sql);
 
@@ -142,6 +142,8 @@ class Noticia
             if (file_exists($file_name)) {
                 unlink($file_name);
             }
+
+            do_log('Eliminó la Noticia ( titulo:' . strip_tags($noticia->TITLE) . ' )');
         }
     }
 

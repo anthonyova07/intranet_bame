@@ -63,6 +63,8 @@ class NoticiaController extends Controller
 
         Noticia::create($id, clear_tag($request->title), clear_tag($request->detail), $file_name_destination, $request->type);
 
+        do_log('Creó la Noticia ( titulo:' . strip_tags($request->title) . ' )');
+
         return redirect()->route('mercadeo::noticias::lista')->with('success', 'La noticia ha sido guardada correctamente.');
     }
 
@@ -97,6 +99,8 @@ class NoticiaController extends Controller
         }
 
         Noticia::update($id, clear_tag($request->title), clear_tag($request->detail), $request->type, $file_name_destination, $request->repost);
+
+        do_log('Editó la Noticia ( titulo:' . strip_tags($request->title) . ' )');
 
         return redirect()->route('mercadeo::noticias::lista')->with('success', 'La noticia ha sido modificada correctamente.');
     }
