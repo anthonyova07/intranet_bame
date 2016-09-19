@@ -22,8 +22,4 @@ $(document).ready(function() {
     });
 
     $('.carousel').carousel();
-
-    $('[data-toggle="popover"]').popover({
-        html: true
-    });
 });

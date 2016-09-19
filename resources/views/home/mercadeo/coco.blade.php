@@ -39,7 +39,7 @@
                     @else
 
                         <div class="panel-body text-center">
-                            <label class="control-label text-center label label-danger" style="font-size: 24px;">El concurso no se encuentra habilitado en estos momentos.</label>
+                            <label class="control-label text-center label label-danger" style="font-size: 24px;">El concurso se encuentra inhabilitado.</label>
                         </div>
 
                     @endif

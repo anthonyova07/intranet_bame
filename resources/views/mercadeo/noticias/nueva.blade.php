@@ -41,7 +41,7 @@
                             <div class="col-xs-12">
                                 <div class="form-group{{ $errors->first('detail') ? ' has-error':'' }}">
                                     <label class="control-label">Detalle</label>
-                                    <textarea class="form-control" name="detail" rows="10" data-toggle="popover" title="Ayuda de Edición" data-content="Para negritas &lt;b>texto</b>" {{-- data-trigger="focus" --}}>{{ old('detail') }}</textarea>
+                                    <textarea class="form-control" name="detail" rows="10">{{ old('detail') }}</textarea>
                                     <span class="help-block">{{ $errors->first('detail') }}</span>
                                 </div>
                             </div>

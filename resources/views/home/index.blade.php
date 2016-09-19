@@ -11,13 +11,13 @@
             <div class="col-xs-5 col-noticias">
                 @if ($noticia_columna)
                     <div class="row titulo-columna">
-                        {{ $noticia_columna->TITLE }}
+                        {{ substr($noticia_columna->TITLE, 0, 80) . '...' }}
                     </div>
                     <div class="row text-center" style="margin-bottom: 10px;">
                         <img class="img-thumbnail" src="{{ route('home') . $noticia_columna->IMAGE }}">
                     </div>
                     <div class="row parrafo-columna text-justify">
-                        <p>{!! substr($noticia_columna->DETAIL, 0, 550) . '...' !!}</p>
+                        <p>{!! substr($noticia_columna->DETAIL, 0, 400) . '...' !!}</p>
                     </div>
                     <div class="row text-center">
                         <a href="{{ route('mercadeo::noticia', ['id' => $noticia_columna->ID]) }}" class="btn btn-info btn-xs">Ver Más</a>
@@ -42,7 +42,7 @@
                             <div class="carousel-inner">
                                 @foreach ($noticias_banners as $index => $banner)
                                     <div class="item {{ $index == 0 ? 'active':'' }}">
-                                        <img src="{{ route('home') . $banner->IMAGE }}">
+                                        <img src="{{ route('home') . $banner->IMAGE }}" style="height: 232px;margin: auto;">
                                         <div class="carousel-caption" style="right: 0;left: 0;margin-bottom: -44px;">
                                             <a href="{{ route('mercadeo::banner', ['id' => $banner->ID]) }}" class="btn btn-info btn-xs">Ver Detalle</a>
                                         </div>
@@ -117,6 +117,10 @@
                         <img src="{{ route('home') . '/mercadeo/coco/rompete_el_coco.png' }}" style="width: 220px;">
                     </div>
 
+                    <div class="panel-body text-center">
+                        <h3 style="padding-top: 0;color: #da291c;">{{ $coco->get()->title }}</h3>
+                    </div>
+
                     @if ($coco->get()->active)
 
                         <div class="panel-body text-center">
@@ -162,7 +166,7 @@
                     @else
 
                         <div class="panel-body text-center">
-                            <label class="control-label text-center label label-danger" style="font-size: 24px;">Desactivado</label>
+                            <label class="control-label text-center label label-danger" style="font-size: 24px;">Concurso no Disponible</label>
                         </div>
 
                     @endif
