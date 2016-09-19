@@ -55,13 +55,13 @@ class NoticiaController extends Controller
     public function postNueva(NoticiaRequest $request) {
         $id = uniqid(true);
 
-        $destinationFileName = $id . '.' . get_extensions_file($request->file('image')->getClientOriginalName());
+        $file_name_destination = $id . '.' . get_extensions_file($request->file('image')->getClientOriginalName());
 
         if ($request->hasFile('image')) {
-            $request->file('image')->move(public_path() . '\\mercadeo\\images\\', $destinationFileName);
+            $request->file('image')->move(public_path() . '\\mercadeo\\images\\', $file_name_destination);
         }
 
-        Noticia::create($id, clear_tag($request->title), clear_tag($request->detail), '/mercadeo/images/' . $destinationFileName, $request->type);
+        Noticia::create($id, clear_tag($request->title), clear_tag($request->detail), $file_name_destination, $request->type);
 
         return redirect()->route('mercadeo::noticias::lista')->with('success', 'La noticia ha sido guardada correctamente.');
     }
@@ -77,18 +77,32 @@ class NoticiaController extends Controller
     }
 
     public function postEditar(NoticiaRequest $request, $id) {
-        if ($request->hasFile('image')) {
-            $destinationFileName = $id . '.' . get_extensions_file($request->file('image')->getClientOriginalName());
-            $request->file('image')->move(public_path() . '\\mercadeo\\images\\', $destinationFileName);
+        $noticia = Noticia::getById($id);
+
+        if (!$noticia) {
+            return back()->with('warning', 'El id: ' . $id . ' de noticia no existe.');
         }
 
-        Noticia::update($id, clear_tag($request->title), clear_tag($request->detail), $request->type, $request->repost);
+        $file_name_destination = null;
+
+        if ($request->hasFile('image')) {
+            $file_name = public_path() . str_replace('/', '\\', $noticia->IMAGE);
+
+            if (file_exists($file_name)) {
+                unlink($file_name);
+            }
+
+            $file_name_destination = $id . '.' . get_extensions_file($request->file('image')->getClientOriginalName());
+            $request->file('image')->move(public_path() . '\\mercadeo\\images\\', $file_name_destination);
+        }
+
+        Noticia::update($id, clear_tag($request->title), clear_tag($request->detail), $request->type, $file_name_destination, $request->repost);
 
         return redirect()->route('mercadeo::noticias::lista')->with('success', 'La noticia ha sido modificada correctamente.');
     }
 
-    public function getEliminar(Request $request, $id, $image) {
-        Noticia::delete($request->session()->get('usuario'), $id, $image);
+    public function getEliminar(Request $request, $id) {
+        Noticia::delete($request->session()->get('usuario'), $id);
 
         return back()->with('success', 'La noticia ha sido eliminada correctamente.');
     }

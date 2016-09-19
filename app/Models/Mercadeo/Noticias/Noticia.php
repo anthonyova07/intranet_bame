@@ -103,14 +103,16 @@ class Noticia
         $created_by = session()->get('usuario');
         $created_at = (new \DateTime)->format('Y-m-d h:i:s');
 
-        $sql = "INSERT INTO INTRANET_NEWS(ID, TITLE, DETAIL, IMAGE, TYPE, CREATED_BY, CREATED_AT) VALUES('{$id}', '{$title}', '{$detail}', '{$image}', '{$type}', '{$created_by}', '{$created_at}')";
+        $file_name =  '/mercadeo/images/' . $image;
+
+        $sql = "INSERT INTO INTRANET_NEWS(ID, TITLE, DETAIL, IMAGE, TYPE, CREATED_BY, CREATED_AT) VALUES('{$id}', '{$title}', '{$detail}', '{$file_name}', '{$type}', '{$created_by}', '{$created_at}')";
 
         $stmt = app('con_ibs')->prepare($sql);
 
         $stmt->execute();
     }
 
-    public static function update($id, $title, $detail, $type, $repost)
+    public static function update($id, $title, $detail, $type, $image, $repost)
     {
         $title = $title;
         $detail = nl2br($detail);
@@ -118,20 +120,28 @@ class Noticia
         $updated_by = session()->get('usuario');
         $updated_at = (new \DateTime)->format('Y-m-d h:i:s');
 
-        $sql = "UPDATE INTRANET_NEWS SET TITLE = '{$title}', DETAIL = '{$detail}', TYPE = '{$type}', UPDATED_BY = '{$updated_by}', UPDATED_AT = '{$updated_at}'" . ($repost ? ", CREATED_AT = '{$updated_at}'":"") . " WHERE ID = '{$id}'";
+        $file_name =  '/mercadeo/images/' . $image;
+
+        $sql = "UPDATE INTRANET_NEWS SET TITLE = '{$title}', DETAIL = '{$detail}', TYPE = '{$type}', IMAGE = '{$file_name}', UPDATED_BY = '{$updated_by}', UPDATED_AT = '{$updated_at}'" . ($repost ? ", CREATED_AT = '{$updated_at}'":"") . " WHERE ID = '{$id}'";
 
         $stmt = app('con_ibs')->prepare($sql);
 
         $stmt->execute();
     }
 
-    public static function delete($usuario, $id, $image) {
-        $sql = 'DELETE FROM INTRANET_NEWS WHERE CREATED_BY = \'' . $usuario . '\' AND ID = \'' . $id . '\'';
+    public static function delete($usuario, $id) {
+        $noticia = Noticia::getById($id);
+
+        $sql = 'DELETE FROM INTRANET_NEWS WHERE CREATED_BY = \'' . $usuario . '\' AND ID = \'' . $noticia->ID . '\'';
 
         $stmt = app('con_ibs')->prepare($sql);
 
         if ($stmt->execute()) {
-            unlink(public_path() . '\\mercadeo\\images\\' . $image);
+            $file_name = public_path() . str_replace('/', '\\', $noticia->IMAGE);
+
+            if (file_exists($file_name)) {
+                unlink($file_name);
+            }
         }
     }
 

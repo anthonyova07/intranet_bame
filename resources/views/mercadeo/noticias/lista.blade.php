@@ -77,7 +77,7 @@
                                     <td>{{ $noticia->CREATED_AT }}</td>
                                     <td align="center">
                                         <a href="{{ route('mercadeo::noticias::editar', ['id' => $noticia->ID]) }}" data-toggle="tooltip" title="Editar" class="naranja"><i class="fa fa-edit fa-fw"></i></a>
-                                        <a href="{{ route('mercadeo::noticias::eliminar', ['id' => $noticia->ID, 'image' => explode('/', $noticia->IMAGE)[3]]) }}" class="link_eliminar rojo" data-toggle="tooltip" title="Eliminar"><i class="fa fa-times fa-fw"></i></a>
+                                        <a href="{{ route('mercadeo::noticias::eliminar', ['id' => $noticia->ID]) }}" class="link_eliminar rojo" data-toggle="tooltip" title="Eliminar"><i class="fa fa-times fa-fw"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -95,10 +95,13 @@
 
         $('.link_eliminar').click(function (event) {
             res = confirm('Realmente desea eliminar esta noticia?');
-
+            console.log(res);
             if (!res) {
                 event.preventDefault();
+                return;
             }
+
+            $(this).remove();
         });
     </script>
 
