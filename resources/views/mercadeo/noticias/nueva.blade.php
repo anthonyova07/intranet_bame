@@ -49,7 +49,7 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group{{ $errors->first('image') ? ' has-error':'' }}">
-                                    <label class="control-label">Imagen</label>
+                                    <label class="control-label">Imagen <small class="label label-warning">MAX 2 MB</small></label>
                                     <input type="file" name="image">
                                     <span class="help-block">{{ $errors->first('image') }}</span>
                                 </div>

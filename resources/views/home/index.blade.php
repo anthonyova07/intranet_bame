@@ -11,13 +11,13 @@
             <div class="col-xs-5 col-noticias">
                 @if ($noticia_columna)
                     <div class="row titulo-columna">
-                        {{ substr($noticia_columna->TITLE, 0, 80) . '...' }}
+                        La Columna del Presidente
                     </div>
                     <div class="row text-center" style="margin-bottom: 10px;">
                         <img class="img-thumbnail" src="{{ route('home') . $noticia_columna->IMAGE }}">
                     </div>
                     <div class="row parrafo-columna text-justify">
-                        <p>{!! substr($noticia_columna->DETAIL, 0, 400) . '...' !!}</p>
+                        <p><b>{{ substr($noticia_columna->TITLE, 0, 80) . '...' }}</b> {!! substr($noticia_columna->DETAIL, 0, 400) . '...' !!}</p>
                     </div>
                     <div class="row text-center">
                         <a href="{{ route('mercadeo::noticia', ['id' => $noticia_columna->ID]) }}" class="btn btn-info btn-xs">Ver Más</a>
