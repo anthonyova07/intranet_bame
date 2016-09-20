@@ -48,11 +48,17 @@ $app->singleton(
 */
 
 $app->singleton('con_ibs', function () {
-    return \Bame\Models\ConDB::getConDBIBS();
+    return new PDO('odbc:' . env('ODBC_DSN_IBS'), env('ODBC_USR_IBS'), env('ODBC_PASS_IBS'), [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ
+    ]);
 });
 
 $app->singleton('con_itc', function () {
-    return \Bame\Models\ConDB::getConDBITC();
+    return new PDO('odbc:' . env('ODBC_DSN_ITC'), env('ODBC_USR_ITC'), env('ODBC_PASS_ITC'), [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ
+    ]);
 });
 
 /*
