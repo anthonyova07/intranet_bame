@@ -69,7 +69,7 @@ class NoticiaController extends Controller
     }
 
     public function getEditar(Request $request, $id) {
-        $noticia = Noticia::getById($id);
+        $noticia = Noticia::getById($id, $request->session()->get('usuario'));
 
         if (!$noticia) {
             return back()->with('warning', 'El id: ' . $id . ' de noticia no existe.');
@@ -79,7 +79,7 @@ class NoticiaController extends Controller
     }
 
     public function postEditar(NoticiaRequest $request, $id) {
-        $noticia = Noticia::getById($id);
+        $noticia = Noticia::getById($id, $request->session()->get('usuario'));
 
         if (!$noticia) {
             return back()->with('warning', 'El id: ' . $id . ' de noticia no existe.');

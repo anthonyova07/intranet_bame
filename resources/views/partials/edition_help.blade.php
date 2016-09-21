@@ -3,7 +3,7 @@
         Ayuda de Edición
     </div>
     <div class="panel-body" style="text-align: center;">
-        <span class="label label-warning" style="font-size: 16px;">Encerar el texto en los tags indicados.</span>
+        <span class="label label-warning" style="font-size: 16px;">Encerrar texto en los tags indicados.</span>
         <table class="table">
             <thead>
                 <th style="text-align: center;">Etiqueta</th>
@@ -33,10 +33,6 @@
                 <tr>
                     <td>&lt;s&gt;…&lt;/s&gt;</td>
                     <td>Poner texto como tachado</td>
-                </tr>
-                <tr>
-                    <td>&lt;br /&gt;</td>
-                    <td>Poner salto de linea</td>
                 </tr>
                 <tr style="text-align: left;">
                     <td>

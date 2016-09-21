@@ -17,7 +17,7 @@
 
                     <img class="img-thumbnail pull-left" src="{{ route('home') . $noticia->IMAGE }}" style="max-height: 380px;margin: 0px 15px 15px 0px;">
 
-                    <p style="color: #616365;">
+                    <p style="color: #616365;" class="text-justify">
                         {!! $noticia->DETAIL !!}
                     </p>
 

@@ -35,8 +35,8 @@ class Noticia
         self::$sql .= ' FETCH FIRST ' . $cantidad . ' ROWS ONLY';
     }
 
-    public static function getById($id) {
-        $sql = "SELECT " . implode(", ", self::getFields()) . " FROM INTRANET_NEWS WHERE ID = '{$id}'";
+    public static function getById($id, $user = null) {
+        $sql = "SELECT " . implode(", ", self::getFields()) . " FROM INTRANET_NEWS WHERE ID = '{$id}'" . ($user ? " AND CREATED_BY = '{$user}'":"");
         $stmt = app('con_ibs')->prepare($sql);
         $stmt->execute();
         return $stmt->fetch();

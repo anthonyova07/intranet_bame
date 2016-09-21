@@ -46,7 +46,7 @@
 
                     <h3 style="text-align: center;margin-top: 0px;margin-bottom: 16px;">{{ $banner->TITLE }}</h3>
 
-                    <p style="color: #616365;">
+                    <p style="color: #616365;" class="text-justify">
                         {!! $banner->DETAIL !!}
                     </p>
 

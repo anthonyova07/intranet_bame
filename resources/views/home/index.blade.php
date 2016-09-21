@@ -14,10 +14,10 @@
                         La Columna del Presidente
                     </div>
                     <div class="row text-center" style="margin-bottom: 10px;">
-                        <img class="img-thumbnail" src="{{ route('home') . $noticia_columna->IMAGE }}">
+                        <img class="img-thumbnail" style="max-width: 280px" src="{{ route('home') . $noticia_columna->IMAGE }}">
                     </div>
                     <div class="row parrafo-columna text-justify">
-                        <p><b>{{ substr($noticia_columna->TITLE, 0, 80) . '...' }}</b> {!! substr($noticia_columna->DETAIL, 0, 400) . '...' !!}</p>
+                        <p style="height: 220px;max-height: 220px;"><b>{{ substr($noticia_columna->TITLE, 0, 80) . '...' }}</b> {!! str_replace('<br />', ' ', substr($noticia_columna->DETAIL, 0, 600))  . '...' !!}</p>
                     </div>
                     <div class="row text-center">
                         <a href="{{ route('mercadeo::noticia', ['id' => $noticia_columna->ID]) }}" class="btn btn-info btn-xs">Ver Más</a>
