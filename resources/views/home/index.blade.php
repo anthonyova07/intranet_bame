@@ -81,7 +81,7 @@
                                 @foreach ($noticias as $index => $noticia)
                                     <div class="item {{ $index == 0 ? 'active':'' }}">
                                         <img src="{{ route('home') . $noticia->IMAGE }}" style="height: 280px;margin: auto;">
-                                        <div class="carousel-caption carousel-caption-noticias" style="right: 0;left: 0;margin-bottom: -50px;">
+                                        <div class="carousel-caption carousel-caption-noticias" style="right: 0;left: 0;margin-bottom: -47px;">
                                             <a data-toggle="tooltip" style="color: #fff;background-color: #616365;padding: 5px;" title="Click para más detalles" href="{{ route('mercadeo::noticia', ['id' => $noticia->ID]) }}">{{ substr($noticia->TITLE, 0, 85) . '...' }}</a>
                                         </div>
                                     </div>

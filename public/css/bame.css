@@ -172,13 +172,15 @@ box-shadow: 0px 0px 26px 0px rgba(140,140,140,1);
 }
 
 .carousel-control:focus, .carousel-control:hover {
-    opacity: 0;
+    opacity: 1;
 }
 
 .carousel-control.right {
+    color: #d82f27;
     background-image: none;
 }
 
 .carousel-control.left {
+    color: #d82f27;
     background-image: none;
 }
