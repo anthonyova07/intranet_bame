@@ -121,5 +121,11 @@ return [
       'mes' => 'Mes',
       'dia' => 'Día',
       'a_nombre_de' => 'A nombre de',
+      'title' => 'Título',
+      'detail' => 'Detalle',
+      'image' => 'Imagen',
+      'type' => 'Tipo',
+      'descriptions' => 'Descripciones',
+      'awards' => 'Premios',
     ],
 ];

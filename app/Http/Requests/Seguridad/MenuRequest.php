@@ -24,7 +24,7 @@ class MenuRequest extends Request
     public function rules()
     {
         return [
-            'descripcion' => 'required',
+            'descripcion' => 'required|max:40',
         ];
     }
 }

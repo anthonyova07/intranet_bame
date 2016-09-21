@@ -3,6 +3,15 @@
 
 Route::get('/', 'HomeController@index')->name('home');
 
+Route::group(['prefix' => 'mercadeo', 'as' => 'mercadeo::'], function () {
+
+    Route::get('/noticia/{id}', 'Mercadeo\MercadeoController@noticia')->name('noticia');
+    Route::get('/banner/{id}', 'Mercadeo\MercadeoController@banner')->name('banner');
+
+    Route::get('rompete_el_coco', 'Mercadeo\MercadeoController@coco')->name('coco');
+
+});
+
 Route::get('auth/login', 'Auth\AuthController@getLogin')->name('auth.login');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout')->name('auth.logout');
@@ -103,6 +112,32 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('show', 'LogController@getShow')->name('show');
             Route::post('show', 'LogController@postShow');
         });
+    });
+
+    Route::group(['prefix' => 'mercadeo', 'as' => 'mercadeo::'], function () {
+
+        Route::group(['prefix' => 'noticias', 'as' => 'noticias::'], function () {
+
+            Route::get('lista', 'Mercadeo\Noticias\NoticiaController@getLista')->name('lista');
+            Route::post('lista', 'Mercadeo\Noticias\NoticiaController@postLista');
+
+            Route::get('nueva', 'Mercadeo\Noticias\NoticiaController@getNueva')->name('nueva');
+            Route::post('nueva', 'Mercadeo\Noticias\NoticiaController@postNueva');
+
+            Route::get('editar/{id}', 'Mercadeo\Noticias\NoticiaController@getEditar')->name('editar');
+            Route::post('editar/{id}', 'Mercadeo\Noticias\NoticiaController@postEditar');
+
+            Route::get('eliminar/{id}', 'Mercadeo\Noticias\NoticiaController@getEliminar')->name('eliminar');
+
+        });
+
+        Route::group(['prefix' => 'coco', 'as' => 'coco::'], function () {
+
+            Route::get('mantenimiento', 'Mercadeo\Coco\CocoController@getMantenimiento')->name('mantenimiento');
+            Route::post('mantenimiento', 'Mercadeo\Coco\CocoController@postMantenimiento');
+
+        });
+
     });
 
 });

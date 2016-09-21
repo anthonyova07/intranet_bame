@@ -25,8 +25,8 @@ class AccesosRequest extends Request
     {
         return [
             'usuario' => 'required',
-            'menu' => 'required',
-            'submenu' => 'required',
+            'menu' => 'required|integer',
+            'submenu' => 'required|integer',
         ];
     }
 }
