@@ -20,7 +20,7 @@
                         <p style="height: 220px;max-height: 220px;"><b>{{ substr($noticia_columna->TITLE, 0, 80) . '...' }}</b> {!! str_replace('<br />', ' ', substr($noticia_columna->DETAIL, 0, 600))  . '...' !!}</p>
                     </div>
                     <div class="row text-center">
-                        <a href="{{ route('mercadeo::noticia', ['id' => $noticia_columna->ID]) }}" class="btn btn-info btn-xs">Ver Más</a>
+                        <a href="{{ route('mercadeo::noticia', ['id' => $noticia_columna->ID]) }}" style="color: #fff;background-color: #616365;padding: 5px;">Ver Más</a>
                     </div>
                 @endif
             </div>
@@ -44,7 +44,7 @@
                                     <div class="item {{ $index == 0 ? 'active':'' }}">
                                         <img src="{{ route('home') . $banner->IMAGE }}" style="height: 232px;margin: auto;">
                                         <div class="carousel-caption" style="right: 0;left: 0;margin-bottom: -44px;">
-                                            <a href="{{ route('mercadeo::banner', ['id' => $banner->ID]) }}" class="btn btn-info btn-xs">Ver Detalle</a>
+                                            {{-- <a href="{{ route('mercadeo::banner', ['id' => $banner->ID]) }}" class="btn btn-info btn-xs">Ver Detalle</a> --}}
                                         </div>
                                     </div>
                                 @endforeach
@@ -82,7 +82,7 @@
                                     <div class="item {{ $index == 0 ? 'active':'' }}">
                                         <img src="{{ route('home') . $noticia->IMAGE }}" style="height: 280px;margin: auto;">
                                         <div class="carousel-caption carousel-caption-noticias" style="right: 0;left: 0;margin-bottom: -50px;">
-                                            <a data-toggle="tooltip" title="Click para más detalles" href="{{ route('mercadeo::noticia', ['id' => $noticia->ID]) }}" class="btn btn-info btn-xs">{{ substr($noticia->TITLE, 0, 85) . '...' }}</a>
+                                            <a data-toggle="tooltip" style="color: #fff;background-color: #616365;padding: 5px;" title="Click para más detalles" href="{{ route('mercadeo::noticia', ['id' => $noticia->ID]) }}">{{ substr($noticia->TITLE, 0, 85) . '...' }}</a>
                                         </div>
                                     </div>
                                 @endforeach
