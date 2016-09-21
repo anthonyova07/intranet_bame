@@ -175,11 +175,11 @@
             </div>
 
             <div class="col-xs-4">
-                dos
+                {{-- dos --}}
             </div>
 
             <div class="col-xs-4">
-                tres
+                {{-- tres --}}
             </div>
 
         </div>
