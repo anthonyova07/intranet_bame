@@ -13,9 +13,9 @@ class HomeController extends Controller {
     public function index(Request $request) {
         $noticia_columna = Noticia::getLastNewColumn();
 
-        $noticias_banners = Noticia::getLastBanners(5);
+        $noticias_banners = Noticia::getLastBanners(env('BANNERS_QUANTITY'));
 
-        $noticias = Noticia::getLastNews(5);
+        $noticias = Noticia::getLastNews(env('NEWS_QUANTITY'));
 
         $coco = new Coco();
 
