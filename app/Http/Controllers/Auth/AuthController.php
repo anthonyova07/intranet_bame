@@ -3,7 +3,7 @@
 namespace Bame\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
-use Bame\Models\Seguridad\Acceso;
+use Bame\Models\Security\Access;
 use Bame\Http\Requests\AuthRequest;
 use Bame\Http\Controllers\Controller;
 
@@ -17,11 +17,11 @@ class AuthController extends Controller
         try {
 
             $lc = ldap_connect('bancamerica.local');
-            $lb = ldap_bind($lc, 'bancamerica\\' . $request->usuario, $request->clave);
+            $lb = ldap_bind($lc, 'bancamerica\\' . $request->user, $request->password);
 
-            $request->session()->put('usuario', $request->usuario);
+            $request->session()->put('user', $request->user);
 
-            $menus = Acceso::getAccessMenus(clear_str($request->usuario));
+            $menus = Access::getUserAccess(clear_str($request->user));
 
             if ($menus) {
                 $request->session()->put('menus', $menus);
@@ -41,7 +41,7 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             // dd($e->getMessage());
             $request->session()->flush();
-            return back()->with('error', 'Usuario y Contraseña incorrectos.');
+            return back()->with('error', 'Usuario y Contraseña incorrectos: ' . $e->getMessage());
         }
     }
 

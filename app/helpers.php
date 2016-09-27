@@ -41,7 +41,7 @@ function can_not_do($permiso)
     if (session()->has('menus')) {
         $menus = session()->get('menus');
         $menus->each(function ($menu, $index) use ($permiso, &$can_access) {
-            $can_access = $menu->submenus->contains('CODUNI', $permiso);
+            $can_access = $menu->submenus->contains('sub_coduni', $permiso);
             if ($can_access) {
                 return false;
             }
@@ -63,9 +63,9 @@ function generate_pdf($html, $archivo, $destino = 'F') {
     $html2pdf->Output($archivo, $destino);
 }
 
-function get_notifications($usuario) {
-    $usuario = str_replace('.', '_', $usuario);
-    $archivo_json = get_noti_path() . $usuario . '.json';
+function get_notifications($user) {
+    $user = str_replace('.', '_', $user);
+    $archivo_json = get_noti_path() . $user . '.json';
 
     if (file_exists($archivo_json)) {
         return collect(json_decode(file_get_contents($archivo_json)));
@@ -74,10 +74,10 @@ function get_notifications($usuario) {
     return collect();
 }
 
-function save_notifications($usuario, $notifications) {
-    if ($usuario) {
-        $usuario = str_replace('.', '_', $usuario);
-        $archivo_json = get_noti_path() . $usuario . '.json';
+function save_notifications($user, $notifications) {
+    if ($user) {
+        $user = str_replace('.', '_', $user);
+        $archivo_json = get_noti_path() . $user . '.json';
         file_put_contents($archivo_json, $notifications);
     }
 }
@@ -92,8 +92,20 @@ function get_noti_path() {
     return $path;
 }
 
-function format_identification($identificacion) {
-    return (strlen(clear_str($identificacion)) == 11) ? (substr($identificacion, 0, 3) . '-' . substr($identificacion, 3, 7) . '-' . substr($identificacion, 10, 11)) : $identificacion;
+function format_identification($identification) {
+    $idn = $identification;
+
+    if (strlen(clear_str($identification)) == 11) {
+        $idn = substr($identification, 0, 3);
+        $idn .= '-';
+        $idn .= substr($identification, 3, 7);
+        $idn .= '-';
+        $idn .= substr($identification, 10, 11);
+
+        return $idn;
+    }
+
+    return $idn;
 }
 
 function get_marital_status($id) {
@@ -118,10 +130,10 @@ function get_marital_status($id) {
 
 function get_gender($genero) {
     switch ($genero) {
-        case 'F':
+        case 'f':
             return 'Femenino';
             break;
-        case 'M':
+        case 'm':
             return 'Masculino';
             break;
         default:
@@ -132,7 +144,7 @@ function get_gender($genero) {
 
 function get_nationality($codigo_pais) {
     switch ($codigo_pais) {
-        case 'DR':
+        case 'dr':
             return 'Dominicano(a)';
             break;
         default:
@@ -185,20 +197,20 @@ function get_months($mes = false)
     return $meses->get((int) $mes);
 }
 
-function get_identification_types($tipo_identificacion = false)
+function get_identification_types($identification_type = false)
 {
-    $tipos_identificacion = collect(['C' => 'Cédula', 'N' => 'RNC', 'O' => 'OffShore', 'P' => 'Pasaporte']);
+    $identification_types = collect(['C' => 'Cédula', 'N' => 'RNC', 'O' => 'OffShore', 'P' => 'Pasaporte']);
 
-    if (!$tipo_identificacion) {
-        return $tipos_identificacion;
+    if (!$identification_type) {
+        return $identification_types;
     }
 
-    return $tipos_identificacion->get($tipo_identificacion);
+    return $identification_types->get($identification_type);
 }
 
 function do_log($description) {
-    $log = new \Bame\Models\Log;
-    $log->user = session()->get('usuario');
+    $log = new \Bame\Models\Security\Log;
+    $log->user = session()->get('user');
     $log->description = $description;
     $log->save();
 }
@@ -222,6 +234,7 @@ function get_extensions_file($file_name) {
 function clear_tag($str) {
     $str = str_replace('“', '"', $str);
     $str = str_replace('”', '"', $str);
+    $str = str_replace('―', '&#8213;', $str);
     return strip_tags($str, '<br><u><sub><sup><s><b><i><ol><ul><li>');
 }
 

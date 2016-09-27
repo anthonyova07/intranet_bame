@@ -9,18 +9,18 @@
         <div class="col-xs-12">
 
             <div class="col-xs-5 col-noticias">
-                @if ($noticia_columna)
+                @if ($column_new)
                     <div class="row titulo-columna">
                         La Columna del Presidente
                     </div>
                     <div class="row text-center" style="margin-bottom: 10px;">
-                        <img class="img-thumbnail" style="max-width: 280px" src="{{ route('home') . $noticia_columna->IMAGE }}">
+                        <img class="img-thumbnail" style="max-width: 280px" src="{{ route('home') . $column_new->image }}">
                     </div>
                     <div class="row parrafo-columna text-justify">
-                        <p style="height: 220px;max-height: 220px;"><b>{{ substr($noticia_columna->TITLE, 0, 80) . '...' }}</b> {!! str_replace('<br />', ' ', substr($noticia_columna->DETAIL, 0, 600))  . '...' !!}</p>
+                        <p style="height: 220px;max-height: 220px;"><b>{{ substr($column_new->title, 0, 80) . '...' }}</b> {!! str_replace('<br />', ' ', substr($column_new->detail, 0, 600))  . '...' !!}</p>
                     </div>
                     <div class="row text-center">
-                        <a href="{{ route('mercadeo::noticia', ['id' => $noticia_columna->ID]) }}" class="link_noticias">Ver Más</a>
+                        <a href="{{ route('marketing.show.show', ['id' => $column_new->id]) }}" class="link_noticias">Ver Más</a>
                     </div>
                 @endif
             </div>
@@ -33,16 +33,16 @@
                         <div class="carousel slide carousel-banners" data-ride="carousel" data-interval="3000" style="width: 100%;height: 226px;margin-top: 9px;">
                             <!-- Indicators -->
                             <ol class="carousel-indicators" style="display: none;">
-                                @foreach ($noticias_banners as $index => $banner)
+                                @foreach ($banners_news as $index => $banner)
                                     <li data-slide-to="{{ $index }}" class="{{ $index == 0 ? 'active':'' }}"></li>
                                 @endforeach
                             </ol>
 
                             <!-- Wrapper for slides -->
                             <div class="carousel-inner">
-                                @foreach ($noticias_banners as $index => $banner)
+                                @foreach ($banners_news as $index => $banner)
                                     <div class="item {{ $index == 0 ? 'active':'' }}">
-                                        <img src="{{ route('home') . $banner->IMAGE }}" style="height: 232px;margin: auto;">
+                                        <img src="{{ route('home') . $banner->image }}" style="height: 232px;margin: auto;">
                                         <div class="carousel-caption" style="right: 0;left: 0;margin-bottom: -44px;">
                                             <a href="http://bancamerica.com.do/" target="__blank" class="link_noticias">Ver Detalle</a>
                                         </div>
@@ -71,18 +71,18 @@
                         <div class="carousel slide carousel-noticias" data-ride="carousel" data-interval="5000" style="width: 100%;height: 281px;margin-top: 9px;">
                             <!-- Indicators -->
                             <ol class="carousel-indicators" style="display: none;">
-                                @foreach ($noticias as $index => $noticia)
+                                @foreach ($news as $index => $new)
                                     <li data-slide-to="{{ $index }}" class="{{ $index == 0 ? 'active':'' }}"></li>
                                 @endforeach
                             </ol>
 
                             <!-- Wrapper for slides -->
                             <div class="carousel-inner">
-                                @foreach ($noticias as $index => $noticia)
+                                @foreach ($news as $index => $new)
                                     <div class="item {{ $index == 0 ? 'active':'' }}">
-                                        <img src="{{ route('home') . $noticia->IMAGE }}" style="height: 280px;margin: auto;">
+                                        <img src="{{ route('home') . $new->image }}" style="height: 280px;margin: auto;">
                                         <div class="carousel-caption carousel-caption-noticias" style="right: 0;left: 0;margin-bottom: -47px;">
-                                            <a data-toggle="tooltip" class="link_noticias" title="Click para más detalles" href="{{ route('mercadeo::noticia', ['id' => $noticia->ID]) }}">{{ substr($noticia->TITLE, 0, 85) . '...' }}</a>
+                                            <a data-toggle="tooltip" class="link_noticias" title="Click para más detalles" href="{{ route('marketing.show.show', ['id' => $new->id]) }}">{{ substr($new->title, 0, 85) . '...' }}</a>
                                         </div>
                                     </div>
                                 @endforeach
@@ -114,7 +114,7 @@
                 <div class="panel panel-default" style="margin-top: 16px;">
 
                     <div class="panel-body text-center">
-                        <img src="{{ route('home') . '/mercadeo/coco/rompete_el_coco.png' }}" style="width: 220px;">
+                        <img src="{{ route('home') . '/marketing/coco/rompete_el_coco.png' }}" style="width: 220px;">
                     </div>
 
                     <div class="panel-body text-center">
@@ -160,7 +160,7 @@
                         </div>
 
                         <div class="panel-body text-right" style="margin-top: -38px;">
-                            <a href="{{ route('mercadeo::coco') }}" class="btn btn-success btn-sm" style="margin-top: -12px;">Enviar Idea...</a>
+                            <a href="{{ route('coco') }}" class="btn btn-success btn-sm" style="margin-top: -12px;">Enviar Idea...</a>
                         </div>
 
                     @else

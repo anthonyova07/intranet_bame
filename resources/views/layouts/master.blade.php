@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
 
-    @include('partials.head')
+    @include('layouts.partials.head')
 
-    @include('partials.scripts')
+    @include('layouts.partials.scripts')
 
     <body ruta="{{ route('home') }}" icon-noti="{{ route('home') . '/images/noFoto.jpg' }}">
 
         <div id="wrapper" style="background-color: #616365;">
 
-            @include('partials.navbar')
+            @include('layouts.partials.navbar')
 
             <!-- Page Content -->
             <div id="page-wrapper">
@@ -32,7 +32,7 @@
                         </div>
                     </div>
 
-                    @include('partials.messages')
+                    @include('layouts.partials.messages')
 
                     @yield('contents')
                     <!-- /.row -->
@@ -43,10 +43,10 @@
 
         </div>
         <!-- /#wrapper -->
-        @if (session()->has('usuario'))
+        @if (session()->has('user'))
             <script>
-                setTimeout(verificar_notificaciones, 1000);
-                setInterval(verificar_notificaciones, {{ env('NOTIFICACIONES_INTERVALO') }});
+                setTimeout(check_notifications, 1000);
+                setInterval(check_notifications, {{ env('NOTIFICACIONES_INTERVALO') }});
             </script>
         @endif
     </body>

@@ -78,6 +78,164 @@ return [
             'schema' => 'public',
         ],
 
+        /*
+       |--------------------------------------------------------------------------
+       | DB2 Databases
+       | drivers 'odbc' / 'ibm' / 'odbczos'
+       | driverNames '{IBM i Access ODBC Driver}' / '{iSeries Access ODBC Driver}'
+       |--------------------------------------------------------------------------
+       */
+
+       'ibs' => [
+           'driver'               => 'odbc',
+           'driverName'           => '{iSeries Access ODBC Driver}',
+            // General settings
+           'host'                 => env('IBS_IP'),
+           'username'             => env('IBS_USR'),
+           'password'             => env('IBS_PASS'),
+           //Server settings
+           'database'             => env('IBS_DB'),
+           'prefix'               => '',
+           'schema'               => env('IBS_DB'),
+           'port'                 => 50000,
+           'signon'               => 3,
+           'ssl'                  => 0,
+           'commitMode'           => 2,
+           'connectionType'       => 0,
+           'defaultLibraries'     => '',
+           'naming'               => 0,
+           'unicodeSql'           => 0,
+           // Format settings
+           'dateFormat'           => 5,
+           'dateSeperator'        => 0,
+           'decimal'              => 0,
+           'timeFormat'           => 0,
+           'timeSeparator'        => 0,
+           // Performances settings
+           'blockFetch'           => 1,
+           'blockSizeKB'          => 32,
+           'allowDataCompression' => 1,
+           'concurrency'          => 0,
+           'lazyClose'            => 0,
+           'maxFieldLength'       => 15360,
+           'prefetch'             => 0,
+           'queryTimeout'         => 1,
+           // Modules settings
+           'defaultPkgLibrary'    => 'QGPL',
+           'defaultPackage'       => 'A/DEFAULT(IBM),2,0,1,0',
+           'extendedDynamic'      => 1,
+           // Diagnostic settings
+           'QAQQINILibrary'       => '',
+           'sqDiagCode'           => '',
+           // Sort settings
+           'languageId'           => 'ENU',
+           'sortTable'            => '',
+           'sortSequence'         => 0,
+           'sortWeight'           => 0,
+           'jobSort'              => 0,
+           // Conversion settings
+           'allowUnsupportedChar' => 0,
+           'ccsid'                => 1208,
+           'graphic'              => 0,
+           'forceTranslation'     => 0,
+           // Other settings
+           'allowProcCalls'       => 0,
+           'DB2SqlStates'         => 0,
+           'debug'                => 0,
+           'trueAutoCommit'       => 0,
+           'catalogOptions'       => 3,
+           'libraryView'          => 0,
+           'ODBCRemarks'          => 0,
+           'searchPattern'        => 1,
+           'translationDLL'       => '',
+           'translationOption'    => 0,
+           'maxTraceSize'         => 0,
+           'multipleTraceFiles'   => 1,
+           'trace'                => 0,
+           'traceFilename'        => '',
+           'extendedColInfo'      => 0,
+           'options'  => [
+               PDO::ATTR_CASE => PDO::CASE_LOWER,
+               PDO::ATTR_EMULATE_PREPARES => false,
+               PDO::ATTR_PERSISTENT => false
+           ]
+       ],
+
+       'itc' => [
+           'driver'               => 'odbc',
+           'driverName'           => '{iSeries Access ODBC Driver}',
+            // General settings
+           'host'                 => env('ITC_IP'),
+           'username'             => env('ITC_USR'),
+           'password'             => env('ITC_PASS'),
+           //Server settings
+           'database'             => env('ITC_DB'),
+           'prefix'               => '',
+           'schema'               => env('ITC_DB'),
+           'port'                 => 50000,
+           'signon'               => 3,
+           'ssl'                  => 0,
+           'commitMode'           => 2,
+           'connectionType'       => 0,
+           'defaultLibraries'     => '',
+           'naming'               => 0,
+           'unicodeSql'           => 0,
+           // Format settings
+           'dateFormat'           => 5,
+           'dateSeperator'        => 0,
+           'decimal'              => 0,
+           'timeFormat'           => 0,
+           'timeSeparator'        => 0,
+           // Performances settings
+           'blockFetch'           => 1,
+           'blockSizeKB'          => 32,
+           'allowDataCompression' => 1,
+           'concurrency'          => 0,
+           'lazyClose'            => 0,
+           'maxFieldLength'       => 15360,
+           'prefetch'             => 0,
+           'queryTimeout'         => 1,
+           // Modules settings
+           'defaultPkgLibrary'    => 'QGPL',
+           'defaultPackage'       => 'A/DEFAULT(IBM),2,0,1,0',
+           'extendedDynamic'      => 1,
+           // Diagnostic settings
+           'QAQQINILibrary'       => '',
+           'sqDiagCode'           => '',
+           // Sort settings
+           'languageId'           => 'ENU',
+           'sortTable'            => '',
+           'sortSequence'         => 0,
+           'sortWeight'           => 0,
+           'jobSort'              => 0,
+           // Conversion settings
+           'allowUnsupportedChar' => 0,
+           'ccsid'                => 1208,
+           'graphic'              => 0,
+           'forceTranslation'     => 0,
+           // Other settings
+           'allowProcCalls'       => 0,
+           'DB2SqlStates'         => 0,
+           'debug'                => 0,
+           'trueAutoCommit'       => 0,
+           'catalogOptions'       => 3,
+           'libraryView'          => 0,
+           'ODBCRemarks'          => 0,
+           'searchPattern'        => 1,
+           'translationDLL'       => '',
+           'translationOption'    => 0,
+           'maxTraceSize'         => 0,
+           'multipleTraceFiles'   => 1,
+           'trace'                => 0,
+           'traceFilename'        => '',
+           'extendedColInfo'      => 0,
+           'options'  => [
+               PDO::ATTR_CASE => PDO::CASE_LOWER,
+               PDO::ATTR_EMULATE_PREPARES => false,
+               PDO::ATTR_PERSISTENT => false
+           ]
+       ],
+
     ],
 
     /*

@@ -24,8 +24,8 @@ class AuthRequest extends Request
     public function rules()
     {
         return [
-            'usuario' => 'required',
-            'clave' => 'required',
+            'user' => 'required',
+            'password' => 'required',
         ];
     }
 }

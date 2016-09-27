@@ -5,24 +5,31 @@ namespace Bame\Http\Controllers;
 use Illuminate\Http\Request;
 use Bame\Http\Requests;
 
-use Bame\Models\Mercadeo\Noticias\Noticia;
-use Bame\Models\Mercadeo\Coco\Coco;
+use Bame\Models\Marketing\News\News;
+use Bame\Models\Marketing\Coco\Coco;
 
 class HomeController extends Controller {
 
     public function index(Request $request) {
-        $noticia_columna = Noticia::getLastNewColumn();
+        $column_new = News::where('type', 'C')
+            ->orderBy('created_at', 'desc')->first();
 
-        $noticias_banners = Noticia::getLastBanners(env('BANNERS_QUANTITY'));
+        $banners_news = News::where('type', 'B')
+            ->orderBy('created_at', 'desc')
+            ->take(env('BANNERS_QUANTITY'))
+            ->get();
 
-        $noticias = Noticia::getLastNews(env('NEWS_QUANTITY'));
+        $news = News::where('type', 'N')
+            ->orderBy('created_at', 'desc')
+            ->take(env('NEWS_QUANTITY'))
+            ->get();
 
         $coco = new Coco();
 
         return view('home.index', [
-            'noticia_columna' => $noticia_columna,
-            'noticias_banners' => $noticias_banners,
-            'noticias' => $noticias,
+            'column_new' => $column_new,
+            'banners_news' => $banners_news,
+            'news' => $news,
             'coco' => $coco
         ]);
     }

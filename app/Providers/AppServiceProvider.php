@@ -4,7 +4,7 @@ namespace Bame\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-use Bame\Models\Notificaciones\Notificacion;
+use Bame\Models\Notification\Notification;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,8 +16,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('*', function ($view) {
-            $noti = new Notificacion;
-            $view->with('notificaciones', $noti->all());
+            $noti = new Notification;
+            $view->with('notifications', $noti->all());
         });
     }
 

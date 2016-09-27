@@ -156,6 +156,11 @@ return [
         Bame\Providers\EventServiceProvider::class,
         Bame\Providers\RouteServiceProvider::class,
 
+        /*
+        * Librerias extras
+        */
+        Cooperl\Database\DB2\DB2ServiceProvider::class,
+
     ],
 
     /*

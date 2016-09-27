@@ -1,4 +1,4 @@
-function notificar(title, body) {
+function desktop_noty(title, body) {
     var options = {
         body: body,
         icon: $('body').attr('icon-noti')
@@ -28,27 +28,27 @@ function notificar(title, body) {
     // want to be respectful there is no need to bother them any more.
 }
 
-function verificar_notificaciones() {
+function check_notifications() {
     var ruta_base = $('body').attr('ruta');
     $.ajax({
-        url: ruta_base + '/notificaciones/todas',
+        url: ruta_base + '/notification/all',
         success: function (data,status) {
             $.each(data, function (index, notificacion) {
-                notificar(notificacion.titulo, notificacion.texto);
+                desktop_noty(notificacion.titulo, notificacion.texto);
                 $.ajax({
-                    url: ruta_base + '/notificaciones/notificado/' + notificacion.id,
+                    url: ruta_base + '/notification/notified/' + notificacion.id,
                 });
             });
         }
     });
 }
 
-function eliminar_notificacion(id) {
+function delete_notification(id) {
     var ruta_base = $('body').attr('ruta');
     $('#' + id).remove();
     $('#' + id + '_divider').remove();
 
     $.ajax({
-        url: ruta_base + '/notificaciones/eliminar/' + id
+        url: ruta_base + '/notification/delete/' + id
     });
 }
