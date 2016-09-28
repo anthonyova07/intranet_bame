@@ -234,3 +234,11 @@ form {
     /*animation: rollIn 1s;*/
     display: none;
 }
+
+.alert {
+    display: none;
+}
+
+.header-page {
+    display: none;
+}

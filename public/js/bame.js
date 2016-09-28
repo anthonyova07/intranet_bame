@@ -24,12 +24,21 @@ $(document).ready(function() {
     $('.carousel').carousel();
 
     var panel = $('.panel');
-    panel.css('display', 'block');
-    panel.addClass('animated rollIn');
+    var alert = $('.alert');
+    var headerPage = $('.header-page');
 
-    $('a.btn').on('click', function (e) {
+    panel.css('display', 'block');
+    alert.css('display', 'block');
+    headerPage.css('display', 'block');
+
+    panel.addClass('animated rollIn');
+    alert.addClass('animated rollIn');
+    headerPage.addClass('animated slideInLeft');
+
+    $('a.btn, .pagination>li>a, .nav-second-level>li>a, .naranja, button[type=submit]').on('click', function (e) {
         panel.removeClass('animated rollIn');
         panel.addClass('animated rollOut');
+        headerPage.addClass('animated slideOutRight');
         panel.one('webkitAnimationEnd mozAnimationEnd oanimationend MSAnimationEnd animationend', function () {
             $(this).removeClass('animated rollOut');
         });
