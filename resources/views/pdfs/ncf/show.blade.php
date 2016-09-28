@@ -119,8 +119,8 @@
                     <tr>
                         <td style="border-bottom: 1px solid #CCCCCC;">{{ $detail->getQuantity() }}</td>
                         <td style="border-bottom: 1px solid #CCCCCC;">{{ $detail->getDescription() }}</td>
-                        <td align="center" style="border-bottom: 1px solid #CCCCCC;">{{ $detail->getCurrency() == 'DOP' ? 'RD$':'US$' }}</td>
-                        <td align="right" style="border-bottom: 1px solid #CCCCCC;">{{ $detail->getAmount() }}</td>
+                        <td align="center" style="border-bottom: 1px solid #CCCCCC;">{{ 'RD$' }}</td>
+                        <td align="right" style="border-bottom: 1px solid #CCCCCC;">{{ ($detail->getRate() > 0) ? number_format($detail->getRate() * $detail->getAmount(), 2) : number_format($detail->getAmount(), 2) }}</td>
                         <td align="right" style="border-bottom: 1px solid #CCCCCC;">{{ $detail->getTaxAmount() }}</td>
                         <td align="center" style="border-bottom: 1px solid #CCCCCC;">{{ $detail->getDateGenerated() }}</td>
                     </tr>

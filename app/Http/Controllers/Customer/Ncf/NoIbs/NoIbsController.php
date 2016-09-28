@@ -106,7 +106,7 @@ class NoIbsController extends Controller
                 $detail->detsec = $index + 1;
                 $detail->detdesc = $transaction->description;
                 $detail->detccy = 'DOP';
-                $detail->dettas = 0;
+                $detail->dettas = 1;
                 $detail->detmto = $transaction->amount;
                 $detail->detdia = $transaction->day;
                 $detail->detmes = $transaction->month;

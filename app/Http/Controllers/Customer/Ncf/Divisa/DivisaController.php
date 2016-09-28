@@ -78,7 +78,7 @@ class DivisaController extends Controller
 
         $transactions->each(function ($transaction, $index) use ($customer) {
             $transaction->description = cap_str($transaction->getDescription());
-            $customer->totalAmount += $transaction->getAmount();
+            $customer->totalAmount += ($transaction->getAmount() * $transaction->getRate());
         });
 
         session()->put('customer_divisa', $customer);
@@ -89,91 +89,86 @@ class DivisaController extends Controller
 
     public function store(Request $request)
     {
-        // try {
-            $customer = session()->get('customer_divisa');
+        $customer = session()->get('customer_divisa');
 
-            if (!$customer) {
-                return back()->with('warning', 'No existe cliente para guardar el ncf!');
-            }
+        if (!$customer) {
+            return back()->with('warning', 'No existe cliente para guardar el ncf!');
+        }
 
-            $transactions = session()->get('transactions_divisa');
+        $transactions = session()->get('transactions_divisa');
 
-            if (!$transactions->count()) {
-                return back()->with('warning', 'No existe transacciones para guardar el ncf!');
-            }
+        if (!$transactions->count()) {
+            return back()->with('warning', 'No existe transacciones para guardar el ncf!');
+        }
 
-            $datetime = new DateTime;
+        $datetime = new DateTime;
 
-            $ncf = new Ncf;
+        $ncf = new Ncf;
 
-            $ncf->encfact = Ncf::orderBy('encfact', 'desc')->first()->encfact + 1;
-            $ncf->enccli = $customer->getCode();
+        $ncf->encfact = Ncf::orderBy('encfact', 'desc')->first()->encfact + 1;
+        $ncf->enccli = $customer->getCode();
 
-            $ncf->encdiag = $datetime->format('d');
-            $ncf->encmesg = $datetime->format('m');
-            $ncf->encaniog = $datetime->format('Y');
+        $ncf->encdiag = $datetime->format('d');
+        $ncf->encmesg = $datetime->format('m');
+        $ncf->encaniog = $datetime->format('Y');
 
-            $ncf->encmesp = $customer->month;
-            $ncf->encaniop = $customer->year;
+        $ncf->encmesp = $customer->month;
+        $ncf->encaniop = $customer->year;
 
-            $ncf->encmonto = round($customer->totalAmount, 2);
+        $ncf->encmonto = round($customer->totalAmount, 2);
 
-            $ncf->encsts = 'A';
-            $ncf->encreim = 0;
-            $ncf->encsuc = 1;
-            $ncf->encusr = session()->get('user');
-            $ncf->enccta = 0;
-            $ncf->encpub = 'S';
-            $ncf->encccy = 'DOP';
+        $ncf->encsts = 'A';
+        $ncf->encreim = 0;
+        $ncf->encsuc = 1;
+        $ncf->encusr = session()->get('user');
+        $ncf->enccta = 0;
+        $ncf->encpub = 'S';
+        $ncf->encccy = 'DOP';
 
-            $ncf_sequence = DB::connection('ibs')->table('bacncf')->select('*')->where('ncfsuc', 1)->first();
+        $ncf_sequence = DB::connection('ibs')->table('bacncf')->select('*')->where('ncfsuc', 1)->first();
 
-            if (!$ncf_sequence) {
-                return back()->with('warning', 'No existen ncf disponibles!');
-            }
+        if (!$ncf_sequence) {
+            return back()->with('warning', 'No existen ncf disponibles!');
+        }
 
-            $ncf_next_sequence = $ncf_sequence->ncfdes + 1;
+        $ncf_next_sequence = $ncf_sequence->ncfdes + 1;
 
-            $ncf->encncf = $ncf_sequence->ncfcod . str_pad($ncf_next_sequence, 8, '0', STR_PAD_LEFT);
+        $ncf->encncf = $ncf_sequence->ncfcod . str_pad($ncf_next_sequence, 8, '0', STR_PAD_LEFT);
 
-            $ncf->save();
+        $ncf->save();
 
-            DB::connection('ibs')->table('bacncf')->where('ncfsuc', 1)->update([
-                'ncfdes' => $ncf_next_sequence
-            ]);
+        DB::connection('ibs')->table('bacncf')->where('ncfsuc', 1)->update([
+            'ncfdes' => $ncf_next_sequence
+        ]);
 
-            $transactions->each(function ($transaction, $index) use ($ncf) {
-                $detail = new Detail;
+        $transactions->each(function ($transaction, $index) use ($ncf) {
+            $detail = new Detail;
 
-                $detail->detcant = 1;
-                $detail->detfac = $ncf->encfact;
-                $detail->detcta = 0;
-                $detail->detsec = $index + 1;
-                $detail->detdesc = $transaction->description;
-                $detail->detccy = 'DOP';
-                $detail->dettas = 0;
-                $detail->detmto = round($transaction->getAmount(), 2);
-                $detail->detdia = $transaction->getDay();
-                $detail->detmes = $transaction->getMonth();
-                $detail->detanio = $transaction->getYear();
-                $detail->deasts = 'A';
-                $detail->detitb = $transaction->tax_amount;
+            $detail->detcant = 1;
+            $detail->detfac = $ncf->encfact;
+            $detail->detcta = 0;
+            $detail->detsec = $index + 1;
+            $detail->detdesc = $transaction->description;
+            $detail->detccy = 'DOP';
+            $detail->dettas = $transaction->getRate();
+            $detail->detmto = round($transaction->getAmount(), 2);
+            $detail->detdia = $transaction->getDay();
+            $detail->detmes = $transaction->getMonth();
+            $detail->detanio = $transaction->getYear();
+            $detail->deasts = 'A';
+            $detail->detitb = $transaction->tax_amount;
 
-                $detail->save();
-            });
+            $detail->save();
+        });
 
-            do_log('Generó un NCF (Divisa) ( ncf:' . $ncf->encncf . ' factura:' . $ncf->encfact . ' )');
+        do_log('Generó un NCF (Divisa) ( ncf:' . $ncf->encncf . ' factura:' . $ncf->encfact . ' )');
 
-            session()->forget('customer_divisa');
-            session()->forget('transactions_divisa');
+        session()->forget('customer_divisa');
+        session()->forget('transactions_divisa');
 
-            return back()
-                ->with('success', 'El ncf ' . $ncf->encncf . ' a sido creado satisfactoria mente. El # de factura es: ' . $ncf->encfact . ' ')
-                ->with('link', route('customer.ncf.show', ['id' => $ncf->encfact]));
-
-        // } catch (\Exception $e) {
-        //     return back()->with('error', 'El Ncf no pudo ser generado: ' . $e->getMessage());
-        // }
+        return redirect(route('customer.ncf.divisa.new.index'))
+            ->with('success', 'El ncf ' . $ncf->encncf . ' a sido creado satisfactoria mente. El # de factura es: ' . $ncf->encfact . ' ')
+            ->with('link', route('customer.ncf.show', ['id' => $ncf->encfact]));
     }
 
     public function destroy($id)

@@ -75,6 +75,11 @@ class Customer extends Model
         return $this->getFirstName() . ' ' . $this->getFirstLastName();
     }
 
+    public function getLegalName()
+    {
+        return cap_str($this->cusna1);
+    }
+
     public function getGender()
     {
         return clear_str($this->cussex);

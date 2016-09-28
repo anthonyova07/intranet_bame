@@ -229,3 +229,8 @@ form {
 .pagination {
     font-size: smaller;
 }
+
+.panel {
+    /*animation: rollIn 1s;*/
+    display: none;
+}

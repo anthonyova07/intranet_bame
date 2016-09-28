@@ -103,12 +103,13 @@
                                 <td>{{ $detail->getSequence() }}</td>
                                 <td>{{ $detail->getQuantity() }}</td>
                                 <td>{{ $detail->getDescription() }}</td>
-                                <td align="center">{{ $detail->getCurrency() == 'DOP' ? 'RD$':'US$' }}</td>
-                                <td align="right">{{ $detail->getAmount() }}</td>
+                                <td align="center">{{ 'RD$' }}</td>
+                                <td align="right">{{ ($detail->getRate() > 0) ? number_format($detail->getRate() * $detail->getAmount(), 2) : number_format($detail->getAmount(), 2) }}</td>
                                 <td align="right">{{ $detail->getTaxAmount() }}</td>
                                 <td>{{ $detail->getDateGenerated() }}</td>
                                 <td align="center"><span class="label label-{{ $detail->getStatus() == 'A' ? 'success':'danger' }}">{{ $detail->getStatus() == 'A' ? 'Activo':'Anulado' }}</span></td>
                                 <td align="center">
+                                    <a href="{{ route('customer.ncf.{invoice}.detail.edit', ['invoice' => $ncf->getInvoice(), 'id' => $detail->getSequence()]) }}" class="naranja" data-toggle="tooltip" data-placement="top" title="Editar Descripción"><i class="fa fa-edit fa-fw"></i></a>
                                     @if ($detail->getStatus() == 'R')
                                         <a
                                             id="link_a_r"

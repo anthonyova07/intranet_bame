@@ -9,6 +9,7 @@ use Bame\Http\Controllers\Controller;
 
 use Bame\Models\Customer\Ncf\Ncf;
 use Bame\Models\Customer\Ncf\Detail;
+use Bame\Http\Requests\Customer\Ncf\Divisa\Detail\EditRequest;
 
 class DetailController extends Controller
 {
@@ -28,6 +29,39 @@ class DetailController extends Controller
         return view('customer.ncf.detail.index')
             ->with('ncf', $ncf)
             ->with('details', $details);
+    }
+
+    public function edit($invoice, $id)
+    {
+        $detail = Detail::where('detfac', $invoice)->find($id);
+
+        if (!$detail) {
+            return back()->with('warning', 'Esta detalle no existe!');
+        }
+
+        return view('customer.ncf.detail.edit')
+        ->with('detail', $detail);
+    }
+
+    public function update(EditRequest $request, $invoice, $id)
+    {
+        $detail = Detail::where('detfac', $invoice)->find($id);
+
+        if (!$detail) {
+            return back()->with('warning', 'Esta detalle no existe!');
+        }
+
+        $detail->detdesc = cap_str($request->description);
+
+        Detail::where('detfac', $invoice)
+            ->where('detsec', $id)
+            ->update([
+                'detdesc' => cap_str($request->description)
+            ]);
+
+        return redirect(route('customer.ncf.{invoice}.detail.index', [
+            'invoice' => $invoice
+        ]))->with('success', 'El detalle ha sido editado con exito.');
     }
 
     public function destroy($invoice, $id)

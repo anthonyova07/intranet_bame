@@ -52,7 +52,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::group(['prefix' => 'ncf'], function () {
             Route::resource('{invoice}/detail', 'Customer\Ncf\DetailController', ['only' => [
-                'index', 'destroy'
+                'index', 'edit', 'update', 'destroy'
             ]]);
 
             Route::resource('no_ibs/new', 'Customer\Ncf\NoIbs\NoIbsController', ['only' => [

@@ -24,9 +24,14 @@ class CashTransaction extends Model
         return 'CARGO POR TRANSFERENCIA';
     }
 
+    public function getRate()
+    {
+        return (float) clear_str($this->ticexr);
+    }
+
     public function getAmount()
     {
-        return floatval($this->ticdch) * floatval($this->ticexr);
+        return (float) clear_str($this->ticdch);
     }
 
     public function getCurrency()

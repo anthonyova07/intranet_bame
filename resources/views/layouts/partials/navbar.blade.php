@@ -98,10 +98,10 @@
                                 <span class="fa arrow"></span>
                             </a>
                             @if ($menu->submenus->count())
-                                <ul class="nav nav-second-level">
+                                <ul class="nav nav-second-level animated swing">
                                     @foreach ($menu->submenus as $submenu)
                                         @if (Route::has($submenu->sub_link))
-                                            <li>
+                                            <li class="animated fadeInDown">
                                                 <a href="{{ route($submenu->sub_link) }}">
                                                     <i class="fa fa-unlock-alt fa-fw"></i>
                                                     {{ $submenu->sub_descri }}

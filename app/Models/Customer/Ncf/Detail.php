@@ -48,16 +48,12 @@ class Detail extends Model
 
     public function getRate()
     {
-        return clear_str($this->dettas);
+        return (float) clear_str($this->dettas);
     }
 
-    public function getAmount($with_format = true)
+    public function getAmount()
     {
-        if ($with_format) {
-            return number_format(clear_str($this->detmto), 2);
-        }
-
-        return clear_str($this->detmto);
+        return (float) clear_str($this->detmto);
     }
 
     public function getDayGenerated()

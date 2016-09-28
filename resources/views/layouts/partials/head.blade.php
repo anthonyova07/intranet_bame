@@ -16,6 +16,7 @@
 
     <!-- MetisMenu CSS -->
     <link href="{{ route('home') }}/css/metisMenu.min.css" rel="stylesheet">
+    <link href="{{ route('home') }}/css/animate.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="{{ route('home') }}/css/sb-admin-2.css" rel="stylesheet">

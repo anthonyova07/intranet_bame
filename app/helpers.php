@@ -7,7 +7,7 @@ function clear_str($str)
 
 function cap_str($str)
 {
-    return ucwords(clear_str(htmlentities($str)));
+    return ucwords(clear_str($str));
 }
 
 function remove_dashes($str) {

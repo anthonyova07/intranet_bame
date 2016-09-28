@@ -22,4 +22,16 @@ $(document).ready(function() {
     });
 
     $('.carousel').carousel();
+
+    var panel = $('.panel');
+    panel.css('display', 'block');
+    panel.addClass('animated rollIn');
+
+    $('a.btn').on('click', function (e) {
+        panel.removeClass('animated rollIn');
+        panel.addClass('animated rollOut');
+        panel.one('webkitAnimationEnd mozAnimationEnd oanimationend MSAnimationEnd animationend', function () {
+            $(this).removeClass('animated rollOut');
+        });
+    });
 });

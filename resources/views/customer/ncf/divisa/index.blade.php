@@ -77,7 +77,7 @@
                 <div class="panel panel-danger">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            Transacciones Encontradas de {{ session()->get('customer_divisa')->getName() }}
+                            Transacciones Encontradas de {{ (session()->get('customer_divisa')->getName() == ' ') ? session()->get('customer_divisa')->getLegalName() : session()->get('customer_divisa')->getName() }}
                             <a
                                 class="btn btn-danger pull-right btn-xs"
                                 href="javascript:void(0)"
@@ -102,7 +102,7 @@
                             <div class="col-xs-3">
                                 <div class="form-group">
                                     <label class="control-label">Nombre y Apellido</label>
-                                    <p class="form-control-static">{{ session()->get('customer_divisa')->getName() }}</p>
+                                    <p class="form-control-static">{{ (session()->get('customer_divisa')->getName() == ' ') ? session()->get('customer_divisa')->getLegalName() : session()->get('customer_divisa')->getName() }}</p>
                                 </div>
                             </div>
                             <div class="col-xs-3">
@@ -152,7 +152,7 @@
                                     <tr>
                                         <td>{{ $transaction->description }}</td>
                                         <td align="center">{{ $transaction->getCurrency() }}</td>
-                                        <td align="right">{{ number_format($transaction->getAmount(), 2) }}</td>
+                                        <td align="right">{{ number_format(($transaction->getAmount() * $transaction->getRate()), 2) }}</td>
                                         <td align="center">{{ $transaction->getDate() }}</td>
                                         <td align="center" width="20">
                                             <a href="{{ route('customer.ncf.divisa.new.detail.edit', ['id' => $index]) }}" class="naranja" data-toggle="tooltip" data-placement="top" title="Editar Detalle"><i class="fa fa-edit fa-fw"></i></a>
