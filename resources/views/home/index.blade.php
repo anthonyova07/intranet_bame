@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-xs-12">
 
-            <div class="col-xs-5 col-noticias">
+            <div class="col-xs-5 col-noticias news">
                 @if ($column_new)
                     <div class="row titulo-columna">
                         La Columna del Presidente
@@ -28,7 +28,7 @@
             <div class="col-xs-7">
 
                 <div class="row" style="margin-bottom: 13px;">
-                    <div class="col-xs-12" style="margin-left: 12px;">
+                    <div class="col-xs-12 news" style="margin-left: 12px;">
 
                         <div class="carousel slide carousel-banners" data-ride="carousel" data-interval="3000" style="width: 100%;height: 226px;margin-top: 9px;">
                             <!-- Indicators -->
@@ -66,7 +66,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xs-12" style="margin-top: 5px;margin-left: 12px;">
+                    <div class="col-xs-12 news" style="margin-top: 5px;margin-left: 12px;">
 
                         <div class="carousel slide carousel-noticias" data-ride="carousel" data-interval="5000" style="width: 100%;height: 281px;margin-top: 9px;">
                             <!-- Indicators -->

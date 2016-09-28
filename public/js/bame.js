@@ -23,24 +23,41 @@ $(document).ready(function() {
 
     $('.carousel').carousel();
 
+    var animateNameIn = 'rollIn';
+    var animateNameOut = 'rollOut';
+
     var panel = $('.panel');
     var alert = $('.alert');
     var headerPage = $('.header-page');
+    var news = $('.news');
 
-    panel.css('display', 'block');
-    alert.css('display', 'block');
-    headerPage.css('display', 'block');
-
-    panel.addClass('animated rollIn');
-    alert.addClass('animated rollIn');
-    headerPage.addClass('animated slideInLeft');
-
-    $('a.btn, .pagination>li>a, .nav-second-level>li>a, .naranja, button[type=submit]').on('click', function (e) {
-        panel.removeClass('animated rollIn');
-        panel.addClass('animated rollOut');
-        headerPage.addClass('animated slideOutRight');
-        panel.one('webkitAnimationEnd mozAnimationEnd oanimationend MSAnimationEnd animationend', function () {
-            $(this).removeClass('animated rollOut');
+    panel.each(function (index, value) {
+        $(this).animateCSS(animateNameIn, {
+            delay: index * 200
         });
     });
+    news.each(function (index, value) {
+        $(this).animateCSS(animateNameIn, {
+            delay: index * 200
+        });
+    });
+    alert.each(function (index, value) {
+        $(this).animateCSS('bounceInDown', {
+            delay: index * 300
+        });
+    });
+    headerPage.animateCSS('slideInLeft');
+
+    $('a.btn, .pagination>li>a, .nav-second-level>li>a, .naranja, button[type=submit], .fa-share, a.link_noticias').click(function () {
+        panel.animateCSS(animateNameOut);
+        news.animateCSS(animateNameOut);
+        headerPage.animateCSS('slideOutRight');
+        alert.animateCSS('bounceOutUp');
+    });
+
+    $('.alert').click(function () {
+        $(this).animateCSS('bounceOutUp', function () {
+            $(this).remove();
+        });
+    })
 });
