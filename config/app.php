@@ -160,6 +160,7 @@ return [
         * Librerias extras
         */
         Cooperl\Database\DB2\DB2ServiceProvider::class,
+        Dsdevbe\LdapConnector\LdapConnectorServiceProvider::class,
 
     ],
 

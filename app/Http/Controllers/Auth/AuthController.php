@@ -7,6 +7,8 @@ use Bame\Models\Security\Access;
 use Bame\Http\Requests\AuthRequest;
 use Bame\Http\Controllers\Controller;
 
+use Auth;
+
 class AuthController extends Controller
 {
     public function getLogin(Request $request) {
@@ -14,11 +16,8 @@ class AuthController extends Controller
     }
 
     public function postLogin(AuthRequest $request) {
-        try {
 
-            $lc = ldap_connect('bancamerica.local');
-            $lb = ldap_bind($lc, 'bancamerica\\' . $request->user, $request->password);
-
+        if (Auth::attempt(['username' => $request->user, 'password' => $request->password])) {
             $request->session()->put('user', $request->user);
 
             $menus = Access::getUserAccess(clear_str($request->user));
@@ -37,12 +36,9 @@ class AuthController extends Controller
             }
 
             return redirect($url_anterior);
-
-        } catch (\Exception $e) {
-            // dd($e->getMessage());
-            $request->session()->flush();
-            return back()->with('error', 'Usuario y Contraseña incorrectos: ' . $e->getMessage());
         }
+
+        return back()->with('error', 'Usuario y Contraseña incorrectos!');
     }
 
     public function getLogout(Request $request) {

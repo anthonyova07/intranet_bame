@@ -54,7 +54,7 @@
             <ul class="dropdown-menu dropdown-user">
                 @if (session()->has('user'))
                     <li>
-                        <a href="#"><i class="fa fa-user fa-fw"></i> {{ session()->get('user') }}</a>
+                        <a href="#"><i class="fa fa-user fa-fw"></i> {{ Auth::user()->getAdLDAP()->getFirstName() . ' ' . Auth::user()->getAdLDAP()->getLastName() }}</a>
                     </li>
                     <li class="divider"></li>
                     <li>
