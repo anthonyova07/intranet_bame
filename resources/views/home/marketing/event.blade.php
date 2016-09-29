@@ -67,7 +67,7 @@
 
                 <div class="col-xs-8">
                     <img src="http://3.bp.blogspot.com/_QZXzZ365U0Y/TM7j37ITJXI/AAAAAAAAAnM/0jSSvPWctHA/s1600/BM1.JPG" style="max-height: 280px;margin: 0px 15px 15px 0px;" class="img-thumbnail pull-left">
-                    <p>{!! $event->detail !!}</p>
+                    <p  style="color: #616365;" class="text-justify">{!! $event->detail !!}</p>
                 </div>
             </div>
         </div>
