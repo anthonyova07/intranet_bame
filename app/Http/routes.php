@@ -5,9 +5,8 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('rompete_el_coco', 'Marketing\MarketingController@coco')->name('coco');
 Route::post('rompete_el_coco', 'Marketing\MarketingController@post_coco');
 
-Route::resource('marketing/show', 'Marketing\MarketingController', ['only' => [
-    'show'
-]]);
+Route::get('news/{id}', 'Marketing\MarketingController@news')->name('home.news');
+Route::get('event/{id}', 'Marketing\MarketingController@event')->name('home.event');
 
 Route::get('auth/login', 'Auth\AuthController@getLogin')->name('auth.login');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
@@ -39,6 +38,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('break_coco', 'Marketing\Coco\CocoController', ['only' => [
             'index', 'store'
         ]]);
+
+        Route::resource('event', 'Marketing\Event\EventController');
     });
 
     Route::resource('customer', 'Customer\CustomerController', ['only' => [

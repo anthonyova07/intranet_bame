@@ -81,7 +81,7 @@ class NewsController extends Controller
 
     public function edit($id)
     {
-        $new = News::find($id);
+        $new = News::where('created_by', session()->get('user'))->find($id);
 
         if (!$new) {
             return back()->with('warning', 'Esta noticia no existe!');
@@ -93,7 +93,7 @@ class NewsController extends Controller
 
     public function update(NewsRequest $request, $id)
     {
-        $new = News::find($id);
+        $new = News::where('created_by', session()->get('user'))->find($id);
 
         if (!$new) {
             return back()->with('warning', 'Esta noticia no existe!');
@@ -132,7 +132,7 @@ class NewsController extends Controller
 
     public function destroy($id)
     {
-        $new = News::find($id);
+        $new = News::where('created_by', session()->get('user'))->find($id);
 
         if (!$new) {
             return back()->with('warning', 'Esta noticia no existe!');

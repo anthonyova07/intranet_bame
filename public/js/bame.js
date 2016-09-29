@@ -48,10 +48,16 @@ $(document).ready(function() {
     });
     headerPage.animateCSS('slideInLeft');
 
-    $('a.btn, .pagination>li>a, .nav-second-level>li>a, .naranja, button[type=submit], .fa-share, a.link_noticias').click(function () {
-        panel.animateCSS(animateNameOut);
-        news.animateCSS(animateNameOut);
-        headerPage.animateCSS('slideOutRight');
+    $('a.btn, .pagination>li>a, .nav-second-level>li>a, .naranja, button[type=submit], .fa-share, a.link_noticias, a.list-group-item').click(function () {
+        panel.animateCSS(animateNameOut, function () {
+            $(this).remove();
+        });
+        news.animateCSS(animateNameOut, function () {
+            $(this).remove();
+        });
+        headerPage.animateCSS('slideOutRight', function () {
+            $(this).remove();
+        });
         alert.animateCSS('bounceOutUp');
     });
 
@@ -59,5 +65,5 @@ $(document).ready(function() {
         $(this).animateCSS('bounceOutUp', function () {
             $(this).remove();
         });
-    })
+    });
 });

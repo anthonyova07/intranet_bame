@@ -41,6 +41,7 @@ class Access extends Model
         $menus = Menu::where('men_estatu', 'A')
                 ->where('men_web', 'S')
                 ->whereIn('men_codigo', $access->pluck('acc_codmen')->toArray())
+                ->orderBy('men_descri')
                 ->get();
 
         $menus->each(function ($menu, $index) use ($access) {
@@ -48,6 +49,7 @@ class Access extends Model
                 ->where('sub_estatu', 'A')
                 ->where('sub_web', 'S')
                 ->whereIn('sub_codigo', $access->pluck('acc_submen')->toArray())
+                ->orderBy('sub_descri')
                 ->get();
         });
 

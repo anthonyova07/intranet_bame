@@ -127,5 +127,10 @@ return [
       'type' => 'Tipo',
       'descriptions' => 'Descripciones',
       'awards' => 'Premios',
+      'start_event' => 'Inicio del Evento',
+      'end_subscriptions' => 'Fin de Suscripciones',
+      'number_persons' => 'Numero de Personas',
+      'number_companions' => 'Total de Acompañantes P/P',
+      'limit_persons' => 'Limita Personas',
     ],
 ];

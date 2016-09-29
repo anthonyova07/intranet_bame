@@ -9,10 +9,11 @@ use Bame\Http\Controllers\Controller;
 
 use Bame\Models\Marketing\News\News;
 use Bame\Models\Marketing\Coco\Coco;
+use Bame\Models\Marketing\Event\Event;
 
 class MarketingController extends Controller
 {
-    public function show($id)
+    public function news($id)
     {
         $new = News::find($id);
 
@@ -31,6 +32,14 @@ class MarketingController extends Controller
         }
 
         return view('home.marketing.new.index');
+    }
+
+    public function event($id)
+    {
+        $event = Event::find($id);
+
+        return view('home.marketing.event')
+            ->with('event', $event);
     }
 
     public function coco()

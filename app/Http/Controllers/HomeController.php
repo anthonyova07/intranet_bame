@@ -5,8 +5,10 @@ namespace Bame\Http\Controllers;
 use Illuminate\Http\Request;
 use Bame\Http\Requests;
 
+use DateTime;
 use Bame\Models\Marketing\News\News;
 use Bame\Models\Marketing\Coco\Coco;
+use Bame\Models\Marketing\Event\Event;
 
 class HomeController extends Controller {
 
@@ -26,11 +28,16 @@ class HomeController extends Controller {
 
         $coco = new Coco();
 
+        $events = Event::where('is_active', true)
+            ->where('start_event', '>=', new DateTime)
+            ->get();
+
         return view('home.index', [
             'column_new' => $column_new,
             'banners_news' => $banners_news,
             'news' => $news,
-            'coco' => $coco
+            'coco' => $coco,
+            'events' => $events
         ]);
     }
 
