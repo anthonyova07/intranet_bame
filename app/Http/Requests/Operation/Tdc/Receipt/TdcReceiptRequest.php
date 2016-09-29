@@ -25,7 +25,7 @@ class TdcReceiptRequest extends Request
     {
         return [
             'identification' => 'alpha_dash',
-            'credit_card' => 'alpha_dash|min:16|max:19',
+            'credit_card' => 'alpha_dash|min:16|max:16',
             'date' => 'date_format:"Y-m-d"',
         ];
     }
