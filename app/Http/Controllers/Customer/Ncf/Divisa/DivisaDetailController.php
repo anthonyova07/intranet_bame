@@ -61,6 +61,6 @@ class DivisaDetailController extends Controller
 
         session()->put('transactions_divisa', $transactions);
 
-        return back()->with('success', 'El detalle ha sido eliminado con exito.');
+        return redirect(route('customer.ncf.divisa.new.index'))->with('success', 'El detalle ha sido eliminado con exito.');
     }
 }
