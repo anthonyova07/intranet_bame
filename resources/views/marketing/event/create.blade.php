@@ -69,24 +69,31 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-3">
-                                <div class="form-group{{ $errors->first('number_persons') ? ' has-error':'' }}">
-                                    <label class="control-label">Total Personas</label>
-                                    <input type="number" class="form-control input-sm" name="number_persons" value="{{ old('number_persons') ? old('number_persons') : 1 }}">
-                                    <span class="help-block">{{ $errors->first('number_persons') }}</span>
+                                <div class="checkbox">
+                                    <label style="margin-top: 18px;">
+                                        <input type="checkbox" name="limit_persons" {{ old('limit_persons') ? 'checked' : '' }}> Limita Personas
+                                    </label>
                                 </div>
                             </div>
                             <div class="col-xs-3">
-                                <div class="form-group{{ $errors->first('number_companions') ? ' has-error':'' }}">
-                                    <label class="control-label" title="Total Acompañantes P/P" data-toggle="tooltip">Tot. Acom. P/P</label>
-                                    <input type="number" class="form-control input-sm" name="number_companions" value="{{ old('number_companions') ? old('number_companions') : 0 }}">
-                                    <span class="help-block">{{ $errors->first('number_companions') }}</span>
+                                <div class="form-group{{ $errors->first('number_persons') ? ' has-error':'' }}">
+                                    <label class="control-label">Total Personas</label>
+                                    <input type="number" class="form-control input-sm" name="number_persons" value="{{ old('number_persons') }}">
+                                    <span class="help-block">{{ $errors->first('number_persons') }}</span>
                                 </div>
                             </div>
                             <div class="col-xs-3">
                                 <div class="checkbox">
                                     <label style="margin-top: 18px;">
-                                        <input type="checkbox" name="limit_persons" {{ old('limit_persons') ? 'checked' : '' }}> Limita Personas
+                                        <input type="checkbox" name="limit_companions" {{ old('limit_companions') ? 'checked' : '' }}> Limita Acompañantes
                                     </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group{{ $errors->first('number_companions') ? ' has-error':'' }}">
+                                    <label class="control-label" title="Total Acompañantes P/P" data-toggle="tooltip">Tot. Acom. P/P</label>
+                                    <input type="number" class="form-control input-sm" name="number_companions" value="{{ old('number_companions') }}">
+                                    <span class="help-block">{{ $errors->first('number_companions') }}</span>
                                 </div>
                             </div>
                         </div>
