@@ -24,7 +24,7 @@
                         </div>
                         <div class="form-group{{ $errors->first('credit_card') ? ' has-error':'' }}">
                             <label class="control-label"># TDC</label>
-                            <input type="text" class="form-control input-sm" name="credit_card" placeholder="0000-0000-0000-0000" value="{{ old('credit_card') }}">
+                            <input type="text" class="form-control input-sm" name="credit_card" placeholder="0000-0000-0000-0000" value="{{ old('credit_card') }}" autofocus>
                             <span class="help-block">{{ $errors->first('credit_card') }}</span>
                         </div>
                         <div class="form-group{{ $errors->first('date') ? ' has-error':'' }}">
