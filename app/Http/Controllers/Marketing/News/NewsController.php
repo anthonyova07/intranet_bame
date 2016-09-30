@@ -148,6 +148,6 @@ class NewsController extends Controller
 
         do_log('Eliminó la Noticia ( titulo:' . strip_tags($new->title) . ' )');
 
-        return back()->with('success', 'La noticia ha sido eliminada correctamente.');
+        return redirect(route('marketing.news.index'))->with('success', 'La noticia ha sido eliminada correctamente.');
     }
 }

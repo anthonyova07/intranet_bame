@@ -54,7 +54,10 @@
             <ul class="dropdown-menu dropdown-user">
                 @if (session()->has('user'))
                     <li>
-                        <a href="#"><i class="fa fa-user fa-fw"></i> {{ Auth::user()->getAdLDAP()->getFirstName() . ' ' . Auth::user()->getAdLDAP()->getLastName() }}</a>
+                        <a href="#"><i class="fa fa-user fa-fw"></i> {{ session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName() }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('marketing.event.accompanist.index') }}"><i class="fa fa-group fa-fw"></i> Acompañantes</a>
                     </li>
                     <li class="divider"></li>
                     <li>

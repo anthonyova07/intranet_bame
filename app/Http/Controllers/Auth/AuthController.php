@@ -19,6 +19,7 @@ class AuthController extends Controller
 
         if (Auth::attempt(['username' => $request->user, 'password' => $request->password])) {
             $request->session()->put('user', $request->user);
+            $request->session()->put('user_info', Auth::user()->getAdLDAP());
 
             $menus = Access::getUserAccess(clear_str($request->user));
 

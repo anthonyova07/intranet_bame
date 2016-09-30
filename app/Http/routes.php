@@ -39,6 +39,12 @@ Route::group(['middleware' => 'auth'], function () {
             'index', 'store'
         ]]);
 
+        Route::group(['prefix' => 'event'], function () {
+            Route::get('subscribe/{id}', 'Marketing\Event\SubscriptionController@subscribe')->name('marketing.event.subscribe');
+
+            Route::resource('accompanist', 'Marketing\Event\AccompanistController');
+        });
+
         Route::resource('event', 'Marketing\Event\EventController');
     });
 
@@ -95,7 +101,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 // DB::listen(function ($query) {
-    // var_dump($query->sql);
-    // var_dump($query->bindings);
-    // $query->time
+//     var_dump($query->sql);
+//     var_dump($query->bindings);
+//     //$query->time
 // });

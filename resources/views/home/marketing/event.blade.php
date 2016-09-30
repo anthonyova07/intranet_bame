@@ -14,7 +14,23 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="col-xs-4">
-                    <button class="btn btn-warning btn-block">Subscribirse</button>
+                    @if (session()->has('user'))
+                        @if ($event->isSubscribe())
+                            <a href="{{ route('marketing.event.subscribe', ['id' => $event->id]) }}" class="btn btn-danger btn-block bame_wobble">Cancelar Suscripción</a>
+                        @else
+                            @if ($event->canSubscribe())
+                                <a href="{{ route('marketing.event.subscribe', ['id' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Suscribirse</a>
+                            @else
+                                <button class="btn btn-default btn-block bame_hinge" style="font-weight: bold;" disabled>No hay cupo disponible</button>
+                            @endif
+                        @endif
+                    @else
+                        @if ($event->canSubscribe())
+                            <a href="{{ route('marketing.event.subscribe', ['id' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Suscribirse</a>
+                        @else
+                            <button class="btn btn-default btn-block bame_hinge" style="font-weight: bold;" disabled>No hay cupo disponible</button>
+                        @endif
+                    @endif
 
                     <br>
 
@@ -35,11 +51,11 @@
                             </tr>
                             <tr>
                                 <td>Limite de Personas</td>
-                                <td>{{ (int) $event->limit_persons }}</td>
+                                <td>{{ (int) $event->number_persons }}</td>
                             </tr>
                             <tr>
                                 <td>Acompañantes P/P</td>
-                                <td>{{ (int) $event->limit_companions }}</td>
+                                <td>{{ (int) $event->number_companions }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -55,18 +71,18 @@
                         <tbody>
                             <tr>
                                 <td>Participantes</td>
-                                <td>40</td>
+                                <td>{{ $event->subscriptions->where('is_subscribe', '1')->count() }}</td>
                             </tr>
                             <tr>
                                 <td>Acompañantes</td>
-                                <td>7</td>
+                                <td>{{ $event->accompanists->where('is_subscribe', '1')->count() }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="col-xs-8">
-                    <img src="http://3.bp.blogspot.com/_QZXzZ365U0Y/TM7j37ITJXI/AAAAAAAAAnM/0jSSvPWctHA/s1600/BM1.JPG" style="max-height: 280px;margin: 0px 15px 15px 0px;" class="img-thumbnail pull-left">
+                    <img src="{{ route('home') . $event->image }}" style="max-height: 280px;margin: 0px 15px 15px 0px;" class="img-thumbnail pull-left">
                     <p  style="color: #616365;" class="text-justify">{!! $event->detail !!}</p>
                 </div>
             </div>

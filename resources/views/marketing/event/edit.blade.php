@@ -85,15 +85,15 @@
                             <div class="col-xs-3">
                                 <div class="checkbox">
                                     <label style="margin-top: 18px;">
-                                        <input type="checkbox" name="limit_companions" {{ $event->limit_companions ? 'checked' : '' }}> Limita Acompañantes
+                                        <input type="checkbox" name="limit_accompanists" {{ $event->limit_accompanists ? 'checked' : '' }}> Limita Acompañantes
                                     </label>
                                 </div>
                             </div>
                             <div class="col-xs-3">
-                                <div class="form-group{{ $errors->first('number_companions') ? ' has-error':'' }}">
+                                <div class="form-group{{ $errors->first('number_accompanists') ? ' has-error':'' }}">
                                     <label class="control-label" title="Total Acompañantes P/P" data-toggle="tooltip">Tot. Acom. P/P</label>
-                                    <input type="number" min="0" class="form-control input-sm" name="number_companions" value="{{ $event->number_companions }}">
-                                    <span class="help-block">{{ $errors->first('number_companions') }}</span>
+                                    <input type="number" min="0" class="form-control input-sm" name="number_accompanists" value="{{ $event->number_accompanists }}">
+                                    <span class="help-block">{{ $errors->first('number_accompanists') }}</span>
                                 </div>
                             </div>
                         </div>

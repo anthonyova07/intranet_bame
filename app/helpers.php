@@ -208,6 +208,17 @@ function get_identification_types($identification_type = false)
     return $identification_types->get($identification_type);
 }
 
+function get_relationship_types($relation_type = false)
+{
+    $relation_types = collect(['P' => 'Primo/a', 'PA' => 'Padre', 'MA' => 'Madre', 'HE' => 'Hermano/a', 'E' => 'Esposo/a', 'A' => 'Abuelo/a', 'H' => 'Hijo/a']);
+
+    if (!$relation_type) {
+        return $relation_types;
+    }
+
+    return $relation_types->get($relation_type);
+}
+
 function do_log($description) {
     $log = new \Bame\Models\Security\Log;
     $log->user = session()->get('user');

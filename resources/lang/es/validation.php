@@ -132,5 +132,8 @@ return [
       'number_persons' => 'Numero de Personas',
       'number_companions' => 'Total de Acompañantes P/P',
       'limit_persons' => 'Limita Personas',
+      'limit_companions' => 'Limita Acompañantes',
+      'last_names' => 'Apellidos',
+      'names' => 'Nombres',
     ],
 ];
