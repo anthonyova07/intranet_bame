@@ -47,14 +47,14 @@
                         <div class="row">
                             <div class="col-xs-4">
                                 <div class="form-group{{ $errors->first('start_event') ? ' has-error':'' }}">
-                                    <label class="control-label">Inicio del Evento</label>
+                                    <label class="control-label">Fecha del Evento</label>
                                     <input type="datetime-local" class="form-control input-sm" name="start_event" value="">
                                     <span class="help-block">{{ $errors->first('start_event') }}</span>
                                 </div>
                             </div>
                             <div class="col-xs-4">
                                 <div class="form-group{{ $errors->first('end_subscriptions') ? ' has-error':'' }}">
-                                    <label class="control-label">Fin de Suscripciones</label>
+                                    <label class="control-label">Fecha Limite Suscripciones</label>
                                     <input type="date" class="form-control input-sm" name="end_subscriptions" value="">
                                     <span class="help-block">{{ $errors->first('end_subscriptions') }}</span>
                                 </div>
@@ -91,7 +91,7 @@
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('number_accompanists') ? ' has-error':'' }}">
-                                    <label class="control-label" title="Total Acompañantes P/P" data-toggle="tooltip">Tot. Acom. P/P</label>
+                                    <label class="control-label" title="Total Acompañantes P/P" data-toggle="tooltip">MAX Acom. P/P</label>
                                     <input type="number" class="form-control input-sm" name="number_accompanists" value="{{ old('number_accompanists') }}">
                                     <span class="help-block">{{ $errors->first('number_accompanists') }}</span>
                                 </div>

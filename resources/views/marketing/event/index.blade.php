@@ -64,11 +64,11 @@
                         <thead>
                             <tr>
                                 <th>Título</th>
-                                <th style="width: 100px;">Inicio del Evento</th>
-                                <th style="width: 90px;">Fin de Suscripciones</th>
+                                <th style="width: 100px;">Fecha del Evento</th>
+                                <th style="width: 90px;">Fecha Limite Suscripciones</th>
                                 <th style="width: 70px;">Maximo de Personas</th>
                                 <th style="width: 50px;">Maximo de Acompañantes</th>
-                                <th style="width: 112px;">Fecha</th>
+                                <th style="width: 112px;">Fecha Creación</th>
                                 <th style="width: 52px"></th>
                             </tr>
                         </thead>
@@ -76,10 +76,10 @@
                             @foreach ($events as $event)
                                 <tr>
                                     <td>{{ $event->title }}</td>
-                                    <td>{{ $event->start_event->format('Y-m-d H:i') }}</td>
-                                    <td>{{ $event->end_subscriptions->format('Y-m-d') }}</td>
+                                    <td>{{ $event->start_event->format('d/m/Y h:i A') }}</td>
+                                    <td>{{ $event->end_subscriptions->format('d/m/Y') }}</td>
                                     <td>{{ $event->number_persons }}</td>
-                                    <td>{{ $event->number_companions }}</td>
+                                    <td>{{ $event->number_accompanists }}</td>
                                     <td>{{ $event->created_at }}</td>
                                     <td align="center">
                                         <a

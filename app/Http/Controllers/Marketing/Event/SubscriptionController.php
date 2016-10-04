@@ -123,7 +123,7 @@ class SubscriptionController extends Controller
             }
 
             if (!$event->canSubscribe()) {
-                return $redirect->with('warning', 'Este evento no tiene cupo disponible!');
+                return redirect(route('home.event', ['id' => $event->id]))->with('warning', 'Usted ha excedido el limite de acompañantes para este evento!');
             }
 
             AccompanistSubscription::where('event_id', $event->id)
@@ -137,7 +137,7 @@ class SubscriptionController extends Controller
         }
 
         if (!$event->canSubscribe()) {
-            return $redirect->with('warning', 'Este evento no tiene cupo disponible!');
+            return redirect(route('home.event', ['id' => $event->id]))->with('warning', 'Usted ha excedido el limite de acompañantes para este evento!');
         }
 
         $subscription = new AccompanistSubscription;

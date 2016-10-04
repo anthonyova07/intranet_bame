@@ -22,7 +22,9 @@ class EventController extends Controller
         if ($request->term) {
             $events->where(function ($query) use ($request) {
                 $query->where('title', 'like', '%' . $request->term . '%')
-                    ->where('detail', 'like', '%' . $request->term . '%');
+                    ->orWhere('title', 'like', '%' . cap_str($request->term) . '%')
+                    ->orWhere('detail', 'like', '%' . $request->term . '%')
+                    ->orWhere('detail', 'like', '%' . cap_str($request->term) . '%');
             });
         }
 

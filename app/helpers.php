@@ -199,7 +199,13 @@ function get_months($mes = false)
 
 function get_identification_types($identification_type = false)
 {
-    $identification_types = collect(['C' => 'Cédula', 'N' => 'RNC', 'O' => 'OffShore', 'P' => 'Pasaporte']);
+    $identification_types = collect([
+        'C' => 'Cédula',
+        'N' => 'RNC',
+        'O' => 'OffShore',
+        'P' => 'Pasaporte',
+        'NI' => 'Ninguna'
+    ]);
 
     if (!$identification_type) {
         return $identification_types;
@@ -210,7 +216,17 @@ function get_identification_types($identification_type = false)
 
 function get_relationship_types($relation_type = false)
 {
-    $relation_types = collect(['P' => 'Primo/a', 'PA' => 'Padre', 'MA' => 'Madre', 'HE' => 'Hermano/a', 'E' => 'Esposo/a', 'A' => 'Abuelo/a', 'H' => 'Hijo/a']);
+    $relation_types = collect([
+        'P' => 'Primo/a',
+        'PA' => 'Padre',
+        'MA' => 'Madre',
+        'HE' => 'Hermano/a',
+        'E' => 'Esposo/a',
+        'A' => 'Abuelo/a',
+        'H' => 'Hijo/a',
+        'SO' => 'Sobrino/a',
+        'AH' => 'Ahijado/a'
+    ]);
 
     if (!$relation_type) {
         return $relation_types;

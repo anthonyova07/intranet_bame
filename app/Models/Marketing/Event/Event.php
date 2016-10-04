@@ -37,18 +37,23 @@ class Event extends Model
                             ->where('is_subscribe', '1')
                             ->count();
         $totalAccompanists = $this->accompanists
-                            ->where('is_subscribe', '1')
-                            ->count();
+                                ->where('is_subscribe', '1')
+                                ->count();
 
         $totalSubscriptions = $totalPersons + $totalAccompanists;
 
-        $limit_persons = 0;
+        if ($this->limit_accompanists) {
+            $totalUserAccompanist = $this->accompanists
+                                        ->where('owner', session()->get('user'))
+                                        ->where('is_subscribe', '1')
+                                        ->count();
 
-        if ($this->limit_persons) {
-            $limit_persons = (int) $this->number_persons  + ((int) $this->number_persons * (int) $this->number_accompanists);
+            if ($totalUserAccompanist >= (int) $this->number_accompanists) {
+                return false;
+            }
         }
 
-        return $totalSubscriptions < $limit_persons;
+        return $totalSubscriptions < (int) $this->number_persons;
     }
 
     public function userSubscription()

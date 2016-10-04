@@ -177,7 +177,7 @@
 
                 <div class="panel panel-info" style="margin-top: 16px;">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Eventos de la Semana</h3>
+                        <h3 class="panel-title">Eventos</h3>
                     </div>
                     <div class="panel-body">
                         <div class="list-group">
@@ -191,13 +191,11 @@
                                         </span>
                                     </h4>
                                     <p class="list-group-item-text">
-                                        {{ substr($event->detail, 0, 170) . '...' }}
+                                        {!! str_replace('<br />', ' ', substr($event->detail, 0, 170))  . '...' !!}
                                     </p>
                                 </a>
                             @endforeach
                         </div>
-
-                        <a href="#" class="btn btn-info btn-xs btn-block">Ver Todos</a>
                     </div>
                 </div>
 

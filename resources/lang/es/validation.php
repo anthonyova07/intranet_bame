@@ -135,5 +135,6 @@ return [
       'limit_companions' => 'Limita Acompañantes',
       'last_names' => 'Apellidos',
       'names' => 'Nombres',
+      'identification_type' => 'Tipo de Identificación',
     ],
 ];
