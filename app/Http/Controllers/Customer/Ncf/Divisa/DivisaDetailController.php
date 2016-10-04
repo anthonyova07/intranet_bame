@@ -56,6 +56,11 @@ class DivisaDetailController extends Controller
         }
 
         $transactions = $transactions->filter(function ($transaction, $index) use ($id) {
+            if ($index == $id) {
+                $customer = session()->get('customer_divisa');
+                $customer->totalAmount -= ($transaction->getAmount() * $transaction->getRate());
+            }
+
             return $index != $id;
         });
 
