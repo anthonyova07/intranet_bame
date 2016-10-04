@@ -10,6 +10,7 @@ use Bame\Http\Controllers\Controller;
 use DateTime;
 use Bame\Models\Marketing\Event\Event;
 use Bame\Models\Marketing\Event\Subscription\Subscription;
+use Bame\Models\Marketing\Event\Subscription\Accompanist as AccompanistSubscription;
 
 class SubscriptionController extends Controller
 {
@@ -38,6 +39,12 @@ class SubscriptionController extends Controller
                         'is_subscribe' => false,
                     ]);
 
+                AccompanistSubscription::where('event_id', $event->id)
+                    ->where('owner', session()->get('user'))
+                    ->update([
+                        'is_subscribe' => false,
+                    ]);
+
                 return redirect(route('home.event', ['id' => $event->id]))->with('success', 'Su suscripción al evento ha sido cancelada correctamente!');
             }
 
@@ -51,7 +58,7 @@ class SubscriptionController extends Controller
                     'is_subscribe' => true,
                 ]);
 
-            return redirect(route('home.event', ['id' => $event->id]))->with('success', 'Usted ha sido suscrito al evento correctamente!');
+            return redirect(route('marketing.event.accompanist.index', ['event' => $event->id]))->with('success', 'Usted ha sido suscrito al evento correctamente!');
         }
 
         if (!$event->canSubscribe()) {
@@ -67,5 +74,64 @@ class SubscriptionController extends Controller
         $subscription->save();
 
         return redirect(route('home.event', ['id' => $event->id]))->with('success', 'Usted ha sido suscrito al evento correctamente!');
+    }
+
+    public function subscribeAccompanist($event, $accompanist)
+    {
+        $redirect =  redirect(route('home'));
+        $datetime = new DateTime;
+
+        $event = Event::find($event);
+
+        if (!$event) {
+            return $redirect->with('error', 'El evento solicitado no existe!');
+        }
+
+        if ($datetime >= $event->end_subscriptions || !$event->is_active) {
+            return $redirect->with('warning', 'La fecha de suscripción del evento ha caducado o esta inactivo!');
+        }
+
+        $accompanist_subscription = $event->accompanistSubscription($accompanist);
+
+        if ($accompanist_subscription) {
+            if ($accompanist_subscription->is_subscribe) {
+                AccompanistSubscription::where('event_id', $event->id)
+                    ->where('owner', session()->get('user'))
+                    ->where('accompanist_id', $accompanist)
+                    ->update([
+                        'is_subscribe' => false,
+                    ]);
+
+                return back()->with('success', 'La suscripción al evento de su acompañante ha sido cancelada correctamente!');
+            }
+
+            if (!$event->canSubscribe()) {
+                return $redirect->with('warning', 'Este evento no tiene cupo disponible!');
+            }
+
+            AccompanistSubscription::where('event_id', $event->id)
+                ->where('owner', session()->get('user'))
+                ->where('accompanist_id', $accompanist)
+                ->update([
+                    'is_subscribe' => true,
+                ]);
+
+            return back()->with('success', 'Su Acompañante ha sido suscrito al evento correctamente!');
+        }
+
+        if (!$event->canSubscribe()) {
+            return $redirect->with('warning', 'Este evento no tiene cupo disponible!');
+        }
+
+        $subscription = new AccompanistSubscription;
+
+        $subscription->event_id = $event->id;
+        $subscription->owner = session()->get('user');
+        $subscription->accompanist_id = $accompanist;
+        $subscription->is_subscribe = true;
+
+        $subscription->save();
+
+        return back()->with('success', 'Su Acompañante ha sido suscrito al evento correctamente!');
     }
 }

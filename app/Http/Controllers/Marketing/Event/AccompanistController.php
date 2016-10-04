@@ -8,6 +8,7 @@ use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
 use Bame\Models\Marketing\Event\Accompanist;
+use Bame\Models\Marketing\Event\Subscription\Accompanist as AccompanistSubscription;
 use Bame\Http\Requests\Marketing\Event\Accompanist\AccompanistRequest;
 
 class AccompanistController extends Controller
@@ -15,6 +16,10 @@ class AccompanistController extends Controller
     public function index(Request $request)
     {
         $accompanists = Accompanist::where('owner', session()->get('user'));
+
+        $accompanist_subscriptions = AccompanistSubscription::where('owner', session()->get('user'))
+                                                                ->where('is_subscribe', '1')
+                                                                ->get();
 
         if ($request->term) {
             $accompanists->where(function ($query) use ($request) {
@@ -29,7 +34,9 @@ class AccompanistController extends Controller
         $accompanists = $accompanists->paginate();
 
         return view('marketing.event.accompanist.index')
-            ->with('accompanists', $accompanists);
+            ->with('accompanists', $accompanists)
+            ->with('event_id', $request->event)
+            ->with('accompanist_subscriptions', $accompanist_subscriptions);
     }
 
     public function create()
@@ -58,7 +65,7 @@ class AccompanistController extends Controller
 
     public function show($id)
     {
-        return redirect(route('marketing.news.index'));
+        return redirect(route('marketing.event.accompanist.index'));
     }
 
     public function edit($id)

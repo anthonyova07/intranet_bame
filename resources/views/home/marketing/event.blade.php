@@ -17,6 +17,7 @@
                     @if (session()->has('user'))
                         @if ($event->isSubscribe())
                             <a href="{{ route('marketing.event.subscribe', ['id' => $event->id]) }}" class="btn btn-danger btn-block bame_wobble">Cancelar Suscripción</a>
+                            <a href="{{ route('marketing.event.accompanist.index', ['event' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Ver Acompañantes</a>
                         @else
                             @if ($event->canSubscribe())
                                 <a href="{{ route('marketing.event.subscribe', ['id' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Suscribirse</a>

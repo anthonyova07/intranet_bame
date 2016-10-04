@@ -2,7 +2,7 @@
 
 @section('title', 'Mercadeo -> Acompañantes')
 
-@section('page_title', 'Mantenimiento de Acompañantes')
+@section('page_title', $event_id ? 'Agregar Acompañantes' : 'Mantenimiento de Acompañantes')
 
 @section('contents')
 
@@ -66,6 +66,26 @@
                                             class="naranja">
                                             <i class="fa fa-edit fa-fw"></i>
                                         </a>
+                                        @if ($event_id)
+                                            @if ($accompanist_subscriptions->where('accompanist_id', $accompanist->id)->count())
+                                                <a
+                                                    href="{{ route('marketing.event.subscribe.accompanist', ['event' => $event_id, 'accompanist' => $accompanist->id]) }}"
+                                                    data-toggle="tooltip"
+                                                    data-placement="top"
+                                                    title="Eliminar Acompanate del Evento"
+                                                    class="rojo">
+                                                    <i class="fa fa-close fa-fw"></i>
+                                                </a>
+                                            @else
+                                                <a
+                                                    href="{{ route('marketing.event.subscribe.accompanist', ['event' => $event_id, 'accompanist' => $accompanist->id]) }}"
+                                                    data-toggle="tooltip"
+                                                    data-placement="top"
+                                                    title="Agregar Acompanate al Evento">
+                                                    <i class="fa fa-plus fa-fw"></i>
+                                                </a>
+                                            @endif
+                                        @endif
                                         {{-- <a
                                             onclick="cancel('{{ $accompanist->id }}', this)"
                                             href="javascript:void(0)"
