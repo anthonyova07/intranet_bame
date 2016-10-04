@@ -91,6 +91,13 @@
                                             <i class="fa fa-edit fa-fw"></i>
                                         </a>
                                         <a
+                                            href="{{ route('marketing.event.show', ['id' => $event->id]) }}"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="Ver Suscriptores">
+                                            <i class="fa fa-share fa-fw"></i>
+                                        </a>
+                                        {{-- <a
                                             onclick="cancel('{{ $event->id }}', this)"
                                             href="javascript:void(0)"
                                             data-toggle="tooltip"
@@ -104,7 +111,7 @@
                                             method="post" id="form_eliminar_{{ $event->id }}">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
-                                        </form>
+                                        </form> --}}
                                     </td>
                                 </tr>
                             @endforeach

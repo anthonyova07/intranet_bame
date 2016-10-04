@@ -52,6 +52,7 @@ ul.nav.nav-second-level>li>a {
 ul.nav.nav-second-level>li>a:focus, .nav>li>a:hover {
     text-decoration: none;
     background-color: #aa272f;
+    color: #ffffff;
 }
 
 #side-menu>li>a>span {

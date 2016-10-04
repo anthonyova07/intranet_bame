@@ -10,6 +10,8 @@ use Bame\Http\Controllers\Controller;
 use DateTime;
 use Bame\Models\Marketing\Event\Event;
 use Bame\Http\Requests\Marketing\Event\EventRequest;
+use Bame\Models\Marketing\Event\Subscription\Subscription;
+use Bame\Models\Marketing\Event\Subscription\Accompanist as SubscriptionAccompanist;
 
 class EventController extends Controller
 {
@@ -81,7 +83,19 @@ class EventController extends Controller
 
     public function show($id)
     {
-        return redirect(route('marketing.event.index'));
+        $event = Event::find($id);
+
+        if (!$event) {
+            return redirect()->with('warning', 'Este evento no existe!');
+        }
+
+        $subscriptions = Subscription::where('is_subscribe', '1')->get();
+        $accompanist_subscriptions = SubscriptionAccompanist::with('accompanist')->where('is_subscribe', '1')->get();
+
+        return view('marketing.event.show')
+            ->with('event', $event)
+            ->with('subscriptions', $subscriptions)
+            ->with('accompanist_subscriptions', $accompanist_subscriptions);
     }
 
     public function edit($id)

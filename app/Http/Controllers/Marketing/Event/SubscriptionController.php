@@ -76,6 +76,23 @@ class SubscriptionController extends Controller
         return redirect(route('home.event', ['id' => $event->id]))->with('success', 'Usted ha sido suscrito al evento correctamente!');
     }
 
+    public function unsubscribe($event, $user)
+    {
+        Subscription::where('event_id', $event)
+            ->where('username', $user)
+            ->update([
+                'is_subscribe' => false,
+            ]);
+
+        AccompanistSubscription::where('event_id', $event)
+            ->where('owner', $user)
+            ->update([
+                'is_subscribe' => false,
+            ]);
+
+        return back()->with('success', 'Al usuario y acompañantes se le han dado de baja correctamente!');
+    }
+
     public function subscribeAccompanist($event, $accompanist)
     {
         $redirect =  redirect(route('home'));
