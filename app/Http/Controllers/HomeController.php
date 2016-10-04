@@ -30,6 +30,7 @@ class HomeController extends Controller {
 
         $events = Event::where('is_active', true)
             ->where('end_subscriptions', '>=', new DateTime)
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return view('home.index', [

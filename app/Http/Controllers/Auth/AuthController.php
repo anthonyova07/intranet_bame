@@ -17,29 +17,34 @@ class AuthController extends Controller
 
     public function postLogin(AuthRequest $request) {
 
-        if (Auth::attempt(['username' => $request->user, 'password' => $request->password])) {
-            $request->session()->put('user', $request->user);
-            $request->session()->put('user_info', Auth::user()->getAdLDAP());
+        try {
 
-            $menus = Access::getUserAccess(clear_str($request->user));
+            if (Auth::attempt(['username' => $request->user, 'password' => $request->password])) {
+                $request->session()->put('user', $request->user);
+                $request->session()->put('user_info', Auth::user()->getAdLDAP());
 
-            if ($menus) {
-                $request->session()->put('menus', $menus);
+                $menus = Access::getUserAccess(clear_str($request->user));
+
+                if ($menus) {
+                    $request->session()->put('menus', $menus);
+                }
+
+                do_log('Inicio sesión');
+
+                $url_anterior = $request->session()->get('url_anterior');
+                $request->session()->forget('url_anterior');
+
+                if (!$url_anterior) {
+                    return redirect()->route('home');
+                }
+
+                return redirect($url_anterior);
             }
 
-            do_log('Inicio sesión');
-
-            $url_anterior = $request->session()->get('url_anterior');
-            $request->session()->forget('url_anterior');
-
-            if (!$url_anterior) {
-                return redirect()->route('home');
-            }
-
-            return redirect($url_anterior);
+        } catch (\Throwable $e) {
+            return back()->with('error', 'Usuario y Contraseña incorrectos!');
         }
 
-        return back()->with('error', 'Usuario y Contraseña incorrectos!');
     }
 
     public function getLogout(Request $request) {

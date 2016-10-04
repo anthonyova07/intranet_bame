@@ -191,7 +191,7 @@
                                         </span>
                                     </h4>
                                     <p class="list-group-item-text">
-                                        {!! str_replace('<br />', ' ', substr($event->detail, 0, 170))  . '...' !!}
+                                        {!! substr(str_replace('<br />', ' ', $event->detail), 0, 170)  . '...' !!}
                                     </p>
                                 </a>
                             @endforeach

@@ -56,7 +56,7 @@
                             </tr>
                             <tr>
                                 <td>Acompañantes P/P</td>
-                                <td>{{ (int) $event->number_companions }}</td>
+                                <td>{{ (int) $event->number_accompanists }}</td>
                             </tr>
                         </tbody>
                     </table>

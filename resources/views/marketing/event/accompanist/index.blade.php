@@ -13,7 +13,7 @@
                     <h3 class="panel-title">Filtros de Búsqueda</h3>
                 </div>
                 <div class="panel-body">
-                    <form method="get" action="{{ route('marketing.event.accompanist.index') }}" id="form">
+                    <form method="get" action="{{ route('marketing.event.accompanist.index', ['event' => $event_id]) }}" id="form">
                         <div class="row">
                             <div class="col-xs-8">
                                 <div class="form-group{{ $errors->first('term') ? ' has-error':'' }}">
@@ -37,7 +37,7 @@
         <div class="col-xs-8">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <a class="btn btn-danger btn-xs" href="{{ route('marketing.event.accompanist.create') }}">Nuevo</a>
+                    <a class="btn btn-danger btn-xs" href="{{ route('marketing.event.accompanist.create', ['event' => $event_id]) }}">Nuevo</a>
                     <br>
                     <br>
                     <table class="table table-striped table-bordered table-hover table-condensed" order-by='2|desc'>
@@ -59,7 +59,7 @@
                                     <td>{{ $accompanist->created_at }}</td>
                                     <td align="center">
                                         <a
-                                            href="{{ route('marketing.event.accompanist.edit', ['id' => $accompanist->id]) }}"
+                                            href="{{ route('marketing.event.accompanist.edit', ['id' => $accompanist->id, 'event' => $event_id]) }}"
                                             data-toggle="tooltip"
                                             data-placement="top"
                                             title="Editar"
@@ -73,7 +73,7 @@
                                                     data-toggle="tooltip"
                                                     data-placement="top"
                                                     title="Eliminar Acompanate del Evento"
-                                                    class="rojo">
+                                                    class="rojo link_action">
                                                     <i class="fa fa-close fa-fw"></i>
                                                 </a>
                                             @else
@@ -81,6 +81,7 @@
                                                     href="{{ route('marketing.event.subscribe.accompanist', ['event' => $event_id, 'accompanist' => $accompanist->id]) }}"
                                                     data-toggle="tooltip"
                                                     data-placement="top"
+                                                    class="link_action"
                                                     title="Agregar Acompanate al Evento">
                                                     <i class="fa fa-plus fa-fw"></i>
                                                 </a>
@@ -116,6 +117,10 @@
     <script type="text/javascript">
         $('#form').submit(function (event) {
             $('#btn_submit').button('loading');
+        });
+
+        $('.link_action').click(function () {
+            $(this).remove();
         });
 
         function cancel(id, el)

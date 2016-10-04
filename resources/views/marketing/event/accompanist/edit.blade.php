@@ -10,7 +10,7 @@
         <div class="col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form method="post" action="{{ route('marketing.event.accompanist.update', ['id' => $accompanist->id]) }}" id="form">
+                    <form method="post" action="{{ route('marketing.event.accompanist.update', ['id' => $accompanist->id, 'event' => $event_id]) }}" id="form">
                         <div class="row">
                             <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('names') ? ' has-error':'' }}">
@@ -58,7 +58,7 @@
                         </div>
                         {{ method_field('PUT') }}
                         {{ csrf_field() }}
-                        <a class="btn btn-info btn-xs" href="{{ route('marketing.event.accompanist.index') }}"><i class="fa fa-arrow-left"></i> Atras</a>
+                        <a class="btn btn-info btn-xs" href="{{ route('marketing.event.accompanist.index', ['event' => $event_id]) }}"><i class="fa fa-arrow-left"></i> Atras</a>
                         <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Guardar</button>
                     </form>
                 </div>

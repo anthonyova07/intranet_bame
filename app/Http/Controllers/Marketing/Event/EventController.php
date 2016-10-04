@@ -91,8 +91,14 @@ class EventController extends Controller
             return redirect()->with('warning', 'Este evento no existe!');
         }
 
-        $subscriptions = Subscription::where('is_subscribe', '1')->get();
-        $accompanist_subscriptions = SubscriptionAccompanist::with('accompanist')->where('is_subscribe', '1')->get();
+        $subscriptions = Subscription::where('event_id', $event->id)
+                                        ->where('is_subscribe', '1')
+                                        ->get();
+
+        $accompanist_subscriptions = SubscriptionAccompanist::with('accompanist')
+                                        ->where('event_id', $event->id)
+                                        ->where('is_subscribe', '1')
+                                        ->get();
 
         return view('marketing.event.show')
             ->with('event', $event)

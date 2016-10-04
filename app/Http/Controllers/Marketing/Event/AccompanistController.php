@@ -18,6 +18,7 @@ class AccompanistController extends Controller
         $accompanists = Accompanist::where('owner', session()->get('user'));
 
         $accompanist_subscriptions = AccompanistSubscription::where('owner', session()->get('user'))
+                                                                ->where('event_id', $request->event)
                                                                 ->where('is_subscribe', '1')
                                                                 ->get();
 
@@ -39,9 +40,10 @@ class AccompanistController extends Controller
             ->with('accompanist_subscriptions', $accompanist_subscriptions);
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('marketing.event.accompanist.create');
+        return view('marketing.event.accompanist.create')
+                ->with('event_id', $request->event);
     }
 
     public function store(AccompanistRequest $request)
@@ -60,7 +62,7 @@ class AccompanistController extends Controller
 
         do_log('Creó el Acompañante ( nombre:' . strip_tags($accompanist->names . ' ' . $accompanist->last_names) . ' identificacion:' . $accompanist->identification . ' )');
 
-        return redirect(route('marketing.event.accompanist.index'))->with('success', 'Acompañante creado correctamente.');
+        return redirect(route('marketing.event.accompanist.index', ['event' => $request->event]))->with('success', 'Acompañante creado correctamente.');
     }
 
     public function show($id)
@@ -68,7 +70,7 @@ class AccompanistController extends Controller
         return redirect(route('marketing.event.accompanist.index'));
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $accompanist = Accompanist::where('owner', session()->get('user'))->find($id);
 
@@ -77,7 +79,8 @@ class AccompanistController extends Controller
         }
 
         return view('marketing.event.accompanist.edit')
-            ->with('accompanist', $accompanist);
+            ->with('accompanist', $accompanist)
+            ->with('event_id', $request->event);
     }
 
     public function update(AccompanistRequest $request, $id)
@@ -98,7 +101,7 @@ class AccompanistController extends Controller
 
         do_log('Editó el Acompañante ( nombre:' . strip_tags($accompanist->names . ' ' . $accompanist->last_names) . ' identificacion:' . $accompanist->identification . ' )');
 
-        return redirect(route('marketing.event.accompanist.index'))->with('success', 'Acompañante modificado correctamente.');
+        return redirect(route('marketing.event.accompanist.index', ['event' => $request->event]))->with('success', 'Acompañante modificado correctamente.');
     }
 
     public function destroy($id)
