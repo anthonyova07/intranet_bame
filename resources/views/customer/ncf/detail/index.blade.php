@@ -104,7 +104,7 @@
                                 <td>{{ $detail->getQuantity() }}</td>
                                 <td>{{ $detail->getDescription() }}</td>
                                 <td align="center">{{ 'RD$' }}</td>
-                                <td align="right">{{ ($detail->getRate() > 0) ? number_format($detail->getRate() * $detail->getAmount(), 2) : number_format($detail->getAmount(), 2) }}</td>
+                                <td align="right">{{ number_format($detail->getAmount(), 2) }}</td>
                                 <td align="right">{{ $detail->getTaxAmount() }}</td>
                                 <td>{{ $detail->getDateGenerated() }}</td>
                                 <td align="center"><span class="label label-{{ $detail->getStatus() == 'A' ? 'success':'danger' }}">{{ $detail->getStatus() == 'A' ? 'Activo':'Anulado' }}</span></td>
