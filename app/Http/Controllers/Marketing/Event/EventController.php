@@ -73,8 +73,8 @@ class EventController extends Controller
         $event->limit_persons = $request->limit_persons ? true : false;
         $event->limit_accompanists = $request->limit_accompanists ? true : false;
         $event->is_active = $request->is_active ? true : false;
-        $event->number_persons = $request->number_persons;
-        $event->number_accompanists = $request->number_accompanists;
+        $event->number_persons = $request->limit_persons ? $request->number_persons : 0;
+        $event->number_accompanists = $request->limit_accompanists ? $request->number_accompanists : 0;
         $event->created_by = session()->get('user');
 
         $event->save();
