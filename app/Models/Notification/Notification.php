@@ -45,12 +45,13 @@ class Notification
         });
     }
 
-    public function create($titulo, $texto)
+    public function create($titulo, $texto, $url = '')
     {
         $notificacion = new \stdClass;
         $notificacion->id = uniqid();
         $notificacion->titulo = cap_str($titulo);
         $notificacion->texto = cap_str($texto);
+        $notificacion->url = $url;
         $notificacion->creado = (new DateTime)->format('d/m/Y H:i:s');
         $notificacion->notificado = false;
         $this->notifications->push($notificacion);
