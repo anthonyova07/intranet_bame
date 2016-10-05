@@ -43,11 +43,11 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Fecha de Inicio</td>
+                                <td>Fecha del Evento</td>
                                 <td>{{ $event->start_event->format('d/m/Y h:i:s A') }}</td>
                             </tr>
                             <tr>
-                                <td>Fin de Suscripciones</td>
+                                <td>Fecha Limite Suscripciones</td>
                                 <td>{{ $event->end_subscriptions->format('d/m/Y') }}</td>
                             </tr>
                             <tr>
