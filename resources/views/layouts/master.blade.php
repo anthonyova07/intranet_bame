@@ -43,6 +43,9 @@
 
         </div>
         <!-- /#wrapper -->
+        <script>
+            setTimeout(check_global_notifications, 1000);
+        </script>
         @if (session()->has('user'))
             <script>
                 setTimeout(check_notifications, 1000);

@@ -21,6 +21,28 @@ class NotificationController extends Controller
         }
     }
 
+    public function allGlobal(Request $request) {
+        $noti = new Notification('global');
+
+        $ids = collect($request->cookie('ids_notifications'));
+
+        if ($noti->count()) {
+
+            $notifications = $noti->all()->filter(function ($notification, $index) use ($ids) {
+                if (!$ids->contains($notification->id)) {
+                    $ids->push($notification->id);
+                    return true;
+                }
+
+                return false;
+            });
+
+            $ids_cookies = cookie('ids_notifications', $ids, 10080);
+
+            return response()->json($notifications)->cookie($ids_cookies);
+        }
+    }
+
     public function notified($id) {
         $noti = new Notification;
         $noti->notified($id);

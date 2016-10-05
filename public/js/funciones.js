@@ -1,4 +1,4 @@
-function desktop_noty(title, body) {
+function desktop_noty(title, body, url) {
     var options = {
         body: body,
         icon: $('body').attr('icon-noti')
@@ -12,6 +12,11 @@ function desktop_noty(title, body) {
     else if (Notification.permission === "granted") {
         // If it's okay let's create a notification
         var notification = new Notification('Bancamérica Intranet - ' + title, options);
+        notification.onclick = function () {
+            if (url !== undefined) {
+                window.open(url);
+            }
+        };
     }
 
     // Otherwise, we need to ask the user for permission
@@ -20,6 +25,11 @@ function desktop_noty(title, body) {
             // If the user accepts, let's create a notification
             if (permission === "granted") {
                 var notification = new Notification('Bancamérica Intranet - ' + title, options);
+                notification.onclick = function () {
+                    if (url !== undefined) {
+                        window.open(url);
+                    }
+                };
             }
         });
     }
@@ -38,6 +48,18 @@ function check_notifications() {
                 $.ajax({
                     url: ruta_base + '/notification/notified/' + notificacion.id,
                 });
+            });
+        }
+    });
+}
+
+function check_global_notifications() {
+    var ruta_base = $('body').attr('ruta');
+    $.ajax({
+        url: ruta_base + '/notification/all/global',
+        success: function (data,status) {
+            $.each(data, function (index, notificacion) {
+                desktop_noty(notificacion.titulo, notificacion.texto, notificacion.url);
             });
         }
     });
