@@ -8,6 +8,7 @@ use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
 use DateTime;
+use Bame\Models\Notification\Notification;
 use Bame\Models\Marketing\Event\Event;
 use Bame\Http\Requests\Marketing\Event\EventRequest;
 use Bame\Models\Marketing\Event\Subscription\Subscription;
@@ -79,6 +80,10 @@ class EventController extends Controller
         $event->save();
 
         do_log('Creó el Evento ( titulo:' . strip_tags($request->title) . ' )');
+
+        $noti = new Notification('global');
+        $noti->create('..::Nuevo Evento::..', $event->title, route('home.event', ['id' => $event->id]));
+        $noti->save();
 
         return redirect(route('marketing.event.index'))->with('success', 'El evento fue creado correctamente.');
     }

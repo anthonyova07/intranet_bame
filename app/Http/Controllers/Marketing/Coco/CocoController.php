@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
+use Bame\Models\Notification\Notification;
 use Bame\Models\Marketing\Coco\Coco;
 use Bame\Http\Requests\Marketing\Coco\CocoRequest;
 
@@ -52,8 +53,14 @@ class CocoController extends Controller
                 }
             }
 
-            $coco->create($request->title, $request->active ? true:false, $descriptions, $awards);
+            $coco->create($request->title, $request->active ? true : false, $descriptions, $awards);
             $coco->save();
+
+            if ($request->active) {
+                $noti = new Notification('global');
+                $noti->create('..::Concurso Rompete el COCO::..', $request->title, route('coco'));
+                $noti->save();
+            }
 
         } catch (\ErrorException $e) {
             return back()->withInput()->with('error', 'El formato de las descripciones o premios es incorrecta.');

@@ -8,6 +8,7 @@ use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
 use DateTime;
+use Bame\Models\Notification\Notification;
 use Bame\Models\Marketing\News\News;
 use Bame\Http\Requests\Marketing\News\NewsRequest;
 
@@ -69,6 +70,10 @@ class NewsController extends Controller
         $new->save();
 
         do_log('Creó la Noticia ( titulo:' . strip_tags($request->title) . ' )');
+
+        $noti = new Notification('global');
+        $noti->create('..::Nueva Noticia::..', $new->title, route('home.news', ['id' => $new->id]));
+        $noti->save();
 
         return redirect(route('marketing.news.index'))->with('success', 'La noticia fue creada correctamente.');
 
