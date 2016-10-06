@@ -211,6 +211,10 @@ class SubscriptionController extends Controller
                                         ->where('is_subscribe', '1')
                                         ->get();
 
+        $subscriptions->each(function ($subscription, $index) use ($accompanist_subscriptions) {
+            $subscription->accompanists = $accompanist_subscriptions->where('owner', $subscription->username)->values();
+        });
+
         return view('pdfs.marketing.event.subscribers')
             ->with('event', $event)
             ->with('subscriptions', $subscriptions)

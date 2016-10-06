@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Comprobante Fiscal {{ 'sdfsdfs' }}</title>
+    <title>Evento {{ $event->title }}</title>
     <style>
         body {
             font-family: 'Juhl';
@@ -82,13 +82,13 @@
                             <td style="border-bottom: 1px solid #CCCCCC;" align="center" rowspan="{{ $accompanist_subscriptions->where('owner', $subscription->username)->count() }}">{{ $accompanist_subscriptions->where('owner', $subscription->username)->count() + 1 }}</td>
                         @endif
                     </tr>
-                    @if ($accompanist_subscriptions->where('owner', $subscription->username)->count())
-                        @foreach ($accompanist_subscriptions->where('owner', $subscription->username) as $index => $accompanist)
+                    @if ($subscription->accompanists->count())
+                        @foreach ($subscription->accompanists as $index => $accompanist)
                             <tr>
                                 <td style="border-bottom: 1px solid #CCCCCC;">{{ $accompanist->accompanist->names . ' ' . $accompanist->accompanist->last_names }}</td>
                                 <td style="border-bottom: 1px solid #CCCCCC;">{{ get_relationship_types($accompanist->accompanist->relationship) }}</td>
                                 @if (!$index)
-                                    <td style="border-bottom: 1px solid #CCCCCC;" align="center" rowspan="{{ $accompanist_subscriptions->where('owner', $subscription->username)->count() }}">{{ $accompanist_subscriptions->where('owner', $subscription->username)->count() + 1 }}</td>
+                                    <td style="border-bottom: 1px solid #CCCCCC;" align="center" rowspan="{{ $subscription->accompanists->count() }}">{{ $subscription->accompanists->count() + 1 }}</td>
                                 @endif
                             </tr>
                         @endforeach
@@ -96,6 +96,14 @@
                 @endforeach
             </tbody>
             <tfoot>
+                <tr>
+                    <td align="right" colspan="3" style="font-weight: bold;">Total Empleados: </td>
+                    <td align="center" style="font-weight: bold;">{{ $subscriptions->count() }}</td>
+                </tr>
+                <tr>
+                    <td align="right" colspan="3" style="font-weight: bold;">Total Invitados: </td>
+                    <td align="center" style="font-weight: bold;">{{ $accompanist_subscriptions->count() }}</td>
+                </tr>
                 <tr>
                     <td align="right" colspan="3" style="font-weight: bold;">Total: </td>
                     <td align="center" style="font-weight: bold;">{{ $subscriptions->count() + $accompanist_subscriptions->count() }}</td>
