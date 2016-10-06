@@ -20,7 +20,7 @@
                 </div>
                 <div class="panel-body">
 
-                    <a class="btn btn-danger btn-xs pull-right" target="__blank" href="{{ route('marketing.event.subscribers.print', ['event' => $event->id, 'format' => 'pdf']) }}">PDF</a>
+                    <a class="pull-right label label-warning" style="font-size: 13px;" target="__blank" href="{{ route('marketing.event.subscribers.print', ['event' => $event->id, 'format' => 'pdf']) }}">Imprimir</a>
 
                     <div class="pull-right">&nbsp;</div>
 
