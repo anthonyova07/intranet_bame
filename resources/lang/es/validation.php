@@ -136,5 +136,6 @@ return [
       'last_names' => 'Apellidos',
       'names' => 'Nombres',
       'identification_type' => 'Tipo de Identificación',
+      'unsubscription_reason' => 'Motivo'
     ],
 ];

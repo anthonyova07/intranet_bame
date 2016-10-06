@@ -225,7 +225,10 @@ function get_relationship_types($relation_type = false)
         'A' => 'Abuelo/a',
         'H' => 'Hijo/a',
         'SO' => 'Sobrino/a',
-        'AH' => 'Ahijado/a'
+        'AH' => 'Ahijado/a',
+        'AM' => 'Amigo/a',
+        'NI' => 'Nieto/a',
+        'OT' => 'Otro'
     ]);
 
     if (!$relation_type) {

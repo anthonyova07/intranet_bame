@@ -45,8 +45,10 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::group(['prefix' => 'event'], function () {
             Route::get('subscribe/{id}', 'Marketing\Event\SubscriptionController@subscribe')->name('marketing.event.subscribe');
+            Route::get('unsubscribe_reason/{id}', 'Marketing\Event\SubscriptionController@unsubscribe_reason')->name('marketing.event.unsubscribe_reason');
             Route::get('unsubscribe/{event}/{user}', 'Marketing\Event\SubscriptionController@unsubscribe')->name('marketing.event.unsubscribe');
             Route::get('subscribe/accompanist/{event}/{accompanist}', 'Marketing\Event\SubscriptionController@subscribeAccompanist')->name('marketing.event.subscribe.accompanist');
+            Route::get('unsubscribe/accompanist/{event}/{user}/{accompanist}', 'Marketing\Event\SubscriptionController@unsubscribeAccompanist')->name('marketing.event.unsubscribe.accompanist');
 
             Route::resource('accompanist', 'Marketing\Event\AccompanistController');
         });

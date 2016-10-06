@@ -100,6 +100,10 @@ class EventController extends Controller
                                         ->where('is_subscribe', '1')
                                         ->get();
 
+        $unsubscriptions = Subscription::where('event_id', $event->id)
+                                        ->where('is_subscribe', '0')
+                                        ->get();
+
         $accompanist_subscriptions = SubscriptionAccompanist::with('accompanist')
                                         ->where('event_id', $event->id)
                                         ->where('is_subscribe', '1')
@@ -108,6 +112,7 @@ class EventController extends Controller
         return view('marketing.event.show')
             ->with('event', $event)
             ->with('subscriptions', $subscriptions)
+            ->with('unsubscriptions', $unsubscriptions)
             ->with('accompanist_subscriptions', $accompanist_subscriptions);
     }
 

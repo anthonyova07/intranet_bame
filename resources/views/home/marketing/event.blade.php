@@ -4,11 +4,6 @@
 
 @section('page_title', $event->title)
 
-@section('page_title_adicional')
-    <button class="btn btn-warning btn-xs pull-right">Subscribirse</button>
-    <small style="font-size: 20px;">Creado por Ninoska</small>
-@endsection
-
 @section('contents')
     <div class="row">
         <div class="panel panel-default">
@@ -16,8 +11,8 @@
                 <div class="col-xs-4">
                     @if (session()->has('user'))
                         @if ($event->isSubscribe())
-                            <a href="{{ route('marketing.event.subscribe', ['id' => $event->id]) }}" class="btn btn-danger btn-block bame_wobble">Cancelar Suscripción</a>
-                            <a href="{{ route('marketing.event.accompanist.index', ['event' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Ver Acompañantes</a>
+                            <a href="{{ route('marketing.event.unsubscribe_reason', ['id' => $event->id]) }}" class="btn btn-danger btn-block bame_wobble">Cancelar Suscripción</a>
+                            <a href="{{ route('marketing.event.accompanist.index', ['event' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Ver Invitados</a>
                         @else
                             @if ($event->canSubscribe())
                                 <a href="{{ route('marketing.event.subscribe', ['id' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Suscribirse</a>
@@ -55,7 +50,7 @@
                                 <td>{{ (int) $event->number_persons }}</td>
                             </tr>
                             <tr>
-                                <td>Acompañantes P/P</td>
+                                <td>Invitados P/P</td>
                                 <td>{{ (int) $event->number_accompanists }}</td>
                             </tr>
                         </tbody>
@@ -75,7 +70,7 @@
                                 <td>{{ $event->subscriptions->where('is_subscribe', '1')->count() }}</td>
                             </tr>
                             <tr>
-                                <td>Acompañantes</td>
+                                <td>Invitados</td>
                                 <td>{{ $event->accompanists->where('is_subscribe', '1')->count() }}</td>
                             </tr>
                         </tbody>

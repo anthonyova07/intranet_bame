@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
-@section('title', 'Mercadeo - Acompañantes')
+@section('title', 'Mercadeo - Invitados')
 
-@section('page_title', 'Nueva Acompañante')
+@section('page_title', 'Nuevo Invitado')
 
 @section('contents')
 

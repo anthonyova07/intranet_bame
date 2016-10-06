@@ -67,7 +67,7 @@
                                 <th style="width: 100px;">Fecha del Evento</th>
                                 <th style="width: 90px;">Fecha Limite Suscripciones</th>
                                 <th style="width: 70px;">Maximo de Personas</th>
-                                <th style="width: 50px;">Maximo de Acompañantes</th>
+                                <th style="width: 50px;">Maximo de Invitados</th>
                                 <th style="width: 112px;">Fecha Creación</th>
                                 <th style="width: 52px"></th>
                             </tr>

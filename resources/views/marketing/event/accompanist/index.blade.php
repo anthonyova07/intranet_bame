@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
-@section('title', 'Mercadeo -> Acompañantes')
+@section('title', 'Mercadeo -> Invitados')
 
-@section('page_title', $event_id ? 'Agregar Acompañantes' : 'Mantenimiento de Acompañantes')
+@section('page_title', $event_id ? 'Agregar Invitados' : 'Mantenimiento de Invitados')
 
 @section('contents')
 

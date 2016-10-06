@@ -14,7 +14,7 @@ use Bame\Models\Marketing\Event\Subscription\Accompanist as AccompanistSubscript
 
 class SubscriptionController extends Controller
 {
-    public function subscribe($id)
+    public function subscribe(Request $request, $id)
     {
         $redirect =  redirect(route('home'));
         $datetime = new DateTime;
@@ -33,10 +33,16 @@ class SubscriptionController extends Controller
 
         if ($user_subscription) {
             if ($user_subscription->is_subscribe) {
+
+                $this->validate($request, [
+                    'unsubscription_reason' => 'required|min:50|max:150',
+                ]);
+
                 Subscription::where('event_id', $event->id)
                     ->where('username', session()->get('user'))
                     ->update([
                         'is_subscribe' => false,
+                        'unsubscription_reason' => ucfirst($request->unsubscription_reason),
                     ]);
 
                 AccompanistSubscription::where('event_id', $event->id)
@@ -56,6 +62,7 @@ class SubscriptionController extends Controller
                 ->where('username', session()->get('user'))
                 ->update([
                     'is_subscribe' => true,
+                    'unsubscription_reason' => '',
                 ]);
 
             return redirect(route('home.event', ['id' => $event->id]))->with('success', 'Usted ha sido suscrito al evento correctamente!');
@@ -69,6 +76,8 @@ class SubscriptionController extends Controller
 
         $subscription->event_id = $id;
         $subscription->username = session()->get('user');
+        $subscription->names = cap_str(session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName());
+        $subscription->unsubscription_reason = '';
         $subscription->is_subscribe = true;
 
         $subscription->save();
@@ -76,12 +85,17 @@ class SubscriptionController extends Controller
         return redirect(route('home.event', ['id' => $event->id]))->with('success', 'Usted ha sido suscrito al evento correctamente!');
     }
 
-    public function unsubscribe($event, $user)
+    public function unsubscribe(Request $request, $event, $user)
     {
+        $this->validate($request, [
+            'unsubscription_reason' => 'required|min:50|max:150',
+        ]);
+
         Subscription::where('event_id', $event)
             ->where('username', $user)
             ->update([
                 'is_subscribe' => false,
+                'unsubscription_reason' => ucfirst($request->unsubscription_reason),
             ]);
 
         AccompanistSubscription::where('event_id', $event)
@@ -90,7 +104,26 @@ class SubscriptionController extends Controller
                 'is_subscribe' => false,
             ]);
 
-        return back()->with('success', 'Al usuario y acompañantes se le han dado de baja correctamente!');
+        return redirect(route('marketing.event.show', ['id' => $event]))->with('success', 'Al usuario e invitados se le han dado de baja correctamente!');
+    }
+
+    public function unsubscribe_reason(Request $request, $id)
+    {
+        $datetime = new DateTime;
+
+        $event = Event::find($id);
+
+        if (!$event) {
+            return $redirect->with('error', 'El evento solicitado no existe!');
+        }
+
+        if ($datetime >= $event->end_subscriptions || !$event->is_active) {
+            return $redirect->with('warning', 'La fecha de suscripción del evento ha caducado o esta inactivo!');
+        }
+
+        return view('marketing.event.unsubscription_reason')
+            ->with('event_id', $id)
+            ->with('user', $request->user);
     }
 
     public function subscribeAccompanist($event, $accompanist)
@@ -119,11 +152,11 @@ class SubscriptionController extends Controller
                         'is_subscribe' => false,
                     ]);
 
-                return back()->with('success', 'La suscripción al evento de su acompañante ha sido cancelada correctamente!');
+                return back()->with('success', 'La suscripción al evento de su Invitado ha sido cancelada correctamente!');
             }
 
             if (!$event->canSubscribe()) {
-                return redirect(route('home.event', ['id' => $event->id]))->with('warning', 'Usted ha excedido el limite de acompañantes para este evento o no hay cupo disponible!');
+                return redirect(route('home.event', ['id' => $event->id]))->with('warning', 'Usted ha excedido el limite de Invitados para este evento o no hay cupo disponible!');
             }
 
             AccompanistSubscription::where('event_id', $event->id)
@@ -133,11 +166,11 @@ class SubscriptionController extends Controller
                     'is_subscribe' => true,
                 ]);
 
-            return back()->with('success', 'Su Acompañante ha sido suscrito al evento correctamente!');
+            return back()->with('success', 'Su Invitado ha sido suscrito al evento correctamente!');
         }
 
         if (!$event->canSubscribe()) {
-            return redirect(route('home.event', ['id' => $event->id]))->with('warning', 'Usted ha excedido el limite de acompañantes para este evento o no hay cupo disponible!');
+            return redirect(route('home.event', ['id' => $event->id]))->with('warning', 'Usted ha excedido el limite de Invitados para este evento o no hay cupo disponible!');
         }
 
         $subscription = new AccompanistSubscription;
@@ -149,6 +182,18 @@ class SubscriptionController extends Controller
 
         $subscription->save();
 
-        return back()->with('success', 'Su Acompañante ha sido suscrito al evento correctamente!');
+        return back()->with('success', 'Su Invitado ha sido suscrito al evento correctamente!');
+    }
+
+    public function unsubscribeAccompanist($event, $user, $accompanist)
+    {
+        AccompanistSubscription::where('event_id', $event)
+            ->where('owner', $user)
+            ->where('accompanist_id', $accompanist)
+            ->update([
+                'is_subscribe' => false,
+            ]);
+
+        return back()->with('success', 'Al invitado se le ha dado de baja correctamente!');
     }
 }

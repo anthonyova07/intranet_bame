@@ -85,13 +85,13 @@
                             <div class="col-xs-3">
                                 <div class="checkbox">
                                     <label style="margin-top: 18px;">
-                                        <input type="checkbox" name="limit_accompanists" {{ old('limit_accompanists') ? 'checked' : '' }}> Limita Acompañantes
+                                        <input type="checkbox" name="limit_accompanists" {{ old('limit_accompanists') ? 'checked' : '' }}> Limita Invitados
                                     </label>
                                 </div>
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('number_accompanists') ? ' has-error':'' }}">
-                                    <label class="control-label" title="Total Acompañantes P/P" data-toggle="tooltip">MAX Acom. P/P</label>
+                                    <label class="control-label" title="Total Invitados P/P" data-toggle="tooltip">MAX Acom. P/P</label>
                                     <input type="number" class="form-control input-sm" name="number_accompanists" value="{{ old('number_accompanists') }}">
                                     <span class="help-block">{{ $errors->first('number_accompanists') }}</span>
                                 </div>

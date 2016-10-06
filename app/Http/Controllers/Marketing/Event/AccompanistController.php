@@ -60,9 +60,9 @@ class AccompanistController extends Controller
 
         $accompanist->save();
 
-        do_log('Creó el Acompañante ( nombre:' . strip_tags($accompanist->names . ' ' . $accompanist->last_names) . ' identificacion:' . $accompanist->identification . ' )');
+        do_log('Creó el Invitado ( nombre:' . strip_tags($accompanist->names . ' ' . $accompanist->last_names) . ' identificacion:' . $accompanist->identification . ' )');
 
-        return redirect(route('marketing.event.accompanist.index', ['event' => $request->event]))->with('success', 'Acompañante creado correctamente.');
+        return redirect(route('marketing.event.accompanist.index', ['event' => $request->event]))->with('success', 'Invitado creado correctamente.');
     }
 
     public function show($id)
@@ -75,7 +75,7 @@ class AccompanistController extends Controller
         $accompanist = Accompanist::where('owner', session()->get('user'))->find($id);
 
         if (!$accompanist) {
-            return back()->with('warning', 'Este acompañante no existe!');
+            return back()->with('warning', 'Este Invitado no existe!');
         }
 
         return view('marketing.event.accompanist.edit')
@@ -88,7 +88,7 @@ class AccompanistController extends Controller
         $accompanist = Accompanist::where('owner', session()->get('user'))->find($id);
 
         if (!$accompanist) {
-            return back()->with('warning', 'Este acompañante no existe!');
+            return back()->with('warning', 'Este Invitado no existe!');
         }
 
         $accompanist->names = cap_str($request->names);
@@ -99,9 +99,9 @@ class AccompanistController extends Controller
 
         $accompanist->save();
 
-        do_log('Editó el Acompañante ( nombre:' . strip_tags($accompanist->names . ' ' . $accompanist->last_names) . ' identificacion:' . $accompanist->identification . ' )');
+        do_log('Editó el Invitado ( nombre:' . strip_tags($accompanist->names . ' ' . $accompanist->last_names) . ' identificacion:' . $accompanist->identification . ' )');
 
-        return redirect(route('marketing.event.accompanist.index', ['event' => $request->event]))->with('success', 'Acompañante modificado correctamente.');
+        return redirect(route('marketing.event.accompanist.index', ['event' => $request->event]))->with('success', 'Invitado modificado correctamente.');
     }
 
     public function destroy($id)
@@ -109,13 +109,13 @@ class AccompanistController extends Controller
         // $accompanist = Accompanist::where('owner', session()->get('user'))->find($id);
 
         // if (!$accompanist) {
-        //     return back()->with('warning', 'Este acompañante no existe!');
+        //     return back()->with('warning', 'Este Invitado no existe!');
         // }
 
         // $accompanist->delete();
 
-        // do_log('Eliminó el Acompañante ( nombre:' . strip_tags($accompanist->names . ' ' . $accompanist->last_names) . ' identificacion:' . $accompanist->identification . ' )');
+        // do_log('Eliminó el Invitado ( nombre:' . strip_tags($accompanist->names . ' ' . $accompanist->last_names) . ' identificacion:' . $accompanist->identification . ' )');
 
-        // return redirect(route('marketing.event.accompanist.index'))->with('success', 'Acompañante eliminado correctamente.');
+        // return redirect(route('marketing.event.accompanist.index'))->with('success', 'Invitado eliminado correctamente.');
     }
 }
