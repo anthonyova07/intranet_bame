@@ -49,6 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('unsubscribe/{event}/{user}', 'Marketing\Event\SubscriptionController@unsubscribe')->name('marketing.event.unsubscribe');
             Route::get('subscribe/accompanist/{event}/{accompanist}', 'Marketing\Event\SubscriptionController@subscribeAccompanist')->name('marketing.event.subscribe.accompanist');
             Route::get('unsubscribe/accompanist/{event}/{user}/{accompanist}', 'Marketing\Event\SubscriptionController@unsubscribeAccompanist')->name('marketing.event.unsubscribe.accompanist');
+            Route::get('subscribers/print/{event}/{format}', 'Marketing\Event\SubscriptionController@print')->name('marketing.event.subscribers.print');
 
             Route::resource('accompanist', 'Marketing\Event\AccompanistController');
         });

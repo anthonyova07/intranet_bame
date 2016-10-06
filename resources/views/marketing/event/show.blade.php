@@ -20,7 +20,11 @@
                 </div>
                 <div class="panel-body">
 
-                    <a class="btn btn-warning btn-xs pull-right" target="__blank" href="">Imprimir</a>
+                    <a class="btn btn-danger btn-xs pull-right" target="__blank" href="{{ route('marketing.event.subscribers.print', ['event' => $event->id, 'format' => 'pdf']) }}">PDF</a>
+
+                    <div class="pull-right">&nbsp;</div>
+
+                    {{-- <a class="btn btn-success btn-xs pull-right" target="__blank" href="{{ route('marketing.event.subscribers.print', ['event' => $event->id, 'format' => 'excel']) }}">EXCEL</a> --}}
 
                     <ul class="nav nav-tabs">
                         <li class="active">

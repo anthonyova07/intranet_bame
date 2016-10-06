@@ -10,7 +10,7 @@ use Bame\Http\Controllers\Controller;
 use DateTime;
 use Bame\Models\Marketing\Event\Event;
 use Bame\Models\Marketing\Event\Subscription\Subscription;
-use Bame\Models\Marketing\Event\Subscription\Accompanist as AccompanistSubscription;
+use Bame\Models\Marketing\Event\Subscription\Accompanist as SubscriptionAccompanist;
 
 class SubscriptionController extends Controller
 {
@@ -35,7 +35,7 @@ class SubscriptionController extends Controller
             if ($user_subscription->is_subscribe) {
 
                 $this->validate($request, [
-                    'unsubscription_reason' => 'required|min:50|max:150',
+                    'unsubscription_reason' => 'required|max:150',
                 ]);
 
                 Subscription::where('event_id', $event->id)
@@ -45,7 +45,7 @@ class SubscriptionController extends Controller
                         'unsubscription_reason' => ucfirst($request->unsubscription_reason),
                     ]);
 
-                AccompanistSubscription::where('event_id', $event->id)
+                SubscriptionAccompanist::where('event_id', $event->id)
                     ->where('owner', session()->get('user'))
                     ->update([
                         'is_subscribe' => false,
@@ -88,7 +88,7 @@ class SubscriptionController extends Controller
     public function unsubscribe(Request $request, $event, $user)
     {
         $this->validate($request, [
-            'unsubscription_reason' => 'required|min:50|max:150',
+            'unsubscription_reason' => 'required|max:150',
         ]);
 
         Subscription::where('event_id', $event)
@@ -98,7 +98,7 @@ class SubscriptionController extends Controller
                 'unsubscription_reason' => ucfirst($request->unsubscription_reason),
             ]);
 
-        AccompanistSubscription::where('event_id', $event)
+        SubscriptionAccompanist::where('event_id', $event)
             ->where('owner', $user)
             ->update([
                 'is_subscribe' => false,
@@ -145,7 +145,7 @@ class SubscriptionController extends Controller
 
         if ($accompanist_subscription) {
             if ($accompanist_subscription->is_subscribe) {
-                AccompanistSubscription::where('event_id', $event->id)
+                SubscriptionAccompanist::where('event_id', $event->id)
                     ->where('owner', session()->get('user'))
                     ->where('accompanist_id', $accompanist)
                     ->update([
@@ -159,7 +159,7 @@ class SubscriptionController extends Controller
                 return redirect(route('home.event', ['id' => $event->id]))->with('warning', 'Usted ha excedido el limite de Invitados para este evento o no hay cupo disponible!');
             }
 
-            AccompanistSubscription::where('event_id', $event->id)
+            SubscriptionAccompanist::where('event_id', $event->id)
                 ->where('owner', session()->get('user'))
                 ->where('accompanist_id', $accompanist)
                 ->update([
@@ -173,7 +173,7 @@ class SubscriptionController extends Controller
             return redirect(route('home.event', ['id' => $event->id]))->with('warning', 'Usted ha excedido el limite de Invitados para este evento o no hay cupo disponible!');
         }
 
-        $subscription = new AccompanistSubscription;
+        $subscription = new SubscriptionAccompanist;
 
         $subscription->event_id = $event->id;
         $subscription->owner = session()->get('user');
@@ -187,7 +187,7 @@ class SubscriptionController extends Controller
 
     public function unsubscribeAccompanist($event, $user, $accompanist)
     {
-        AccompanistSubscription::where('event_id', $event)
+        SubscriptionAccompanist::where('event_id', $event)
             ->where('owner', $user)
             ->where('accompanist_id', $accompanist)
             ->update([
@@ -195,5 +195,27 @@ class SubscriptionController extends Controller
             ]);
 
         return back()->with('success', 'Al invitado se le ha dado de baja correctamente!');
+    }
+
+    public function print($event, $format)
+    {
+        $datetime = new DateTime;
+        $event = Event::find($event);
+
+        $subscriptions = Subscription::where('event_id', $event->id)
+                                        ->where('is_subscribe', '1')
+                                        ->get();
+
+        $accompanist_subscriptions = SubscriptionAccompanist::with('accompanist')
+                                        ->where('event_id', $event->id)
+                                        ->where('is_subscribe', '1')
+                                        ->get();
+
+        return view('pdfs.marketing.event.subscribers')
+            ->with('event', $event)
+            ->with('subscriptions', $subscriptions)
+            ->with('accompanist_subscriptions', $accompanist_subscriptions)
+            ->with('format', $format)
+            ->with('datetime', $datetime);
     }
 }
