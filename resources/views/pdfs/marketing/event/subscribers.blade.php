@@ -65,7 +65,7 @@
         <table style="width: 100%">
             <thead>
                 <tr>
-                    <th valign="bottom" align="left" style="width: 30%;">Subscriptores</th>
+                    <th valign="bottom" align="left" style="width: 30%;">Suscriptores</th>
                     <th valign="bottom" align="left" style="width: 20%;">Invitado</th>
                     <th valign="bottom" align="left" style="width: 12%;">Relación</th>
                     <th valign="bottom" style="width: 12%;">Total</th>
