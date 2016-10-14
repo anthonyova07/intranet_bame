@@ -16,7 +16,7 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <a class="btn btn-info btn-xs" href="{{ route('customer.ncf.index', ['invoice' => $ncf->getInvoice()]) }}"><i class="fa fa-arrow-left"></i> Atras</a>
-                <a style="font-size: 13px;" class="label label-warning pull-right" target="__blank" href="{{ route('customer.ncf.show', ['invoice' => $ncf->getInvoice()]) }}">Imprimir</a>
+                <a style="font-size: 13px;" class="label btn-warning pull-right" target="__blank" href="{{ route('customer.ncf.show', ['invoice' => $ncf->getInvoice()]) }}">Imprimir</a>
 
                 <br><br>
 

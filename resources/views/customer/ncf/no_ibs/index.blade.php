@@ -128,8 +128,9 @@
                             </div>
                             <div class="col-xs-2">
                                 <a
-                                    class="btn btn-success btn-xs pull-right"
+                                    class="label btn-success pull-right"
                                     onclick="action('save', this)"
+                                    style="font-size: 13px;"
                                     href="javascript:void(0)">
                                     Guardar NCF (No IBS)
                                 </a>
