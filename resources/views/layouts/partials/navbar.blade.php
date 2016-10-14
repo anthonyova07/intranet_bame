@@ -92,6 +92,21 @@
                 <li>
                     <a href="{{ route('home') }}"><i class="fa fa-home fa-fw"></i> Inicio</a>
                 </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-download fa-fw"></i>
+                        GesticDoc
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level animated swing">
+                        <li class="animated fadeInDown">
+                            <a href="{{ route('marketing.gesticdoc') }}">
+                                <i class="fa fa-files-o fa-fw"></i>
+                                Mercadeo
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 @if (session()->has('menus'))
                     @foreach (session()->get('menus') as $menu)
                         <li>

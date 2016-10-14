@@ -1,5 +1,15 @@
 <?php
 
+function get_file_icon($ext)
+{
+    if (!file_exists(public_path('images\\' . $ext . '.png'))) {
+        $ext = 'default';
+    }
+
+    $icon = route('home') . '/images/' . $ext . '.png';
+    return $icon;
+}
+
 function clear_str($str)
 {
     return strtolower(trim($str));

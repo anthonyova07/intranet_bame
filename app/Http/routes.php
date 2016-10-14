@@ -2,6 +2,10 @@
 
 Route::get('/', 'HomeController@index')->name('home');
 
+Route::group(['prefix' => 'gesticdoc'], function () {
+    Route::get('marketing', 'Marketing\MarketingController@gesticdoc')->name('marketing.gesticdoc');
+});
+
 Route::get('rompete_el_coco', 'Marketing\MarketingController@coco')->name('coco');
 Route::post('rompete_el_coco', 'Marketing\MarketingController@post_coco');
 
