@@ -34,6 +34,7 @@ class NoIbsController extends Controller
             $cliente->year = $request->year;
 
             session()->put('customer_no_ibs', $cliente);
+            session()->put('transactions_no_ibs', collect());
         }
 
         return view('customer.ncf.no_ibs.index');
