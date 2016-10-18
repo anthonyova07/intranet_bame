@@ -42,7 +42,7 @@ class GesticDocController extends Controller
             $files->each(function ($file, $index) use ($department) {
                 $file_name_destination = str_replace(' ', '_', $file->getClientOriginalName());
 
-                $file->move(public_path('files\\gestic_doc\\' . $department), $file_name_destination);
+                $file->move(public_path('files\\gestic_doc\\' . $department), remove_accents($file_name_destination));
             });
         }
 
