@@ -9,7 +9,7 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="form-group{{ $errors->first('term') ? ' has-error':'' }}">
-                                <label class="control-label">Archivos</label>
+                                <label class="control-label">Archivos <div class="label label-warning"> MAX: 10MB</div></label>
                                 <input type="file" name="files[]" multiple>
                                 <span class="help-block">{{ $errors->first('term') }}</span>
                             </div>
