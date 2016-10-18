@@ -14,14 +14,6 @@ use Bame\Models\Marketing\GesticDoc\GesticDoc;
 
 class MarketingController extends Controller
 {
-    public function gesticdoc()
-    {
-        $files = GesticDoc::getFiles('marketing');
-
-        return view('home.marketing.gestic_doc')
-            ->with('files', $files);
-    }
-
     public function news($id)
     {
         $new = News::find($id);

@@ -3,7 +3,8 @@
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'gesticdoc'], function () {
-    Route::get('marketing', 'Marketing\MarketingController@gesticdoc')->name('marketing.gesticdoc');
+    Route::get('marketing', 'GesticDoc\GesticDocController@gesticdoc')->name('gesticdoc.marketing');
+    Route::get('human_resources', 'GesticDoc\GesticDocController@gesticdoc')->name('gesticdoc.human_resources');
 });
 
 Route::get('rompete_el_coco', 'Marketing\MarketingController@coco')->name('coco');
@@ -47,7 +48,7 @@ Route::group(['middleware' => 'auth'], function () {
             'index', 'store'
         ]]);
 
-        Route::resource('gesticdoc', 'Marketing\GesticDoc\GesticDocController', ['only' => [
+        Route::resource('gesticdoc', 'GesticDoc\GesticDocController', ['only' => [
             'index', 'store', 'destroy'
         ]]);
 
@@ -63,6 +64,12 @@ Route::group(['middleware' => 'auth'], function () {
         });
 
         Route::resource('event', 'Marketing\Event\EventController');
+    });
+
+    Route::group(['prefix' => 'human_resources'], function () {
+        Route::resource('gesticdoc', 'GesticDoc\GesticDocController', ['only' => [
+            'index', 'store', 'destroy'
+        ]]);
     });
 
     Route::resource('customer', 'Customer\CustomerController', ['only' => [

@@ -1,12 +1,64 @@
 <?php
 
+function get_department_name($department)
+{
+    switch ($department) {
+        case 'marketing':
+            return 'Mercadeo';
+            break;
+        case 'human_resources':
+            return 'Recursos Humanos';
+            break;
+    }
+}
+
 function get_file_icon($ext)
 {
+    switch ($ext) {
+        case 'png':
+        case 'jpg':
+            $name = 'image';
+            break;
+        case 'doc':
+        case 'docx':
+            $name = 'word';
+            break;
+        case 'xls':
+        case 'xlsx':
+            $name = 'excel';
+            break;
+        case 'ppt':
+        case 'pptx':
+            $name = 'powerpoint';
+            break;
+        case 'pst':
+            $name = 'correo';
+            break;
+        case 'pub':
+            $name = 'publisher';
+            break;
+        case 'mp3':
+            $name = 'music';
+            break;
+        case 'mpp':
+            $name = 'project';
+            break;
+        case 'one':
+            $name = 'onenote';
+            break;
+        case 'pdf':
+            $name = 'pdf';
+            break;
+        default:
+            $name = 'default';
+            break;
+    }
+
     if (!file_exists(public_path('images\\' . $ext . '.png'))) {
         $ext = 'default';
     }
 
-    $icon = route('home') . '/images/' . $ext . '.png';
+    $icon = route('home') . '/images/' . $name . '.png';
     return $icon;
 }
 

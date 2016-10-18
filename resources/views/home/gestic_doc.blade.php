@@ -2,7 +2,7 @@
 
 @section('title', 'Gestic DOC')
 
-@section('page_title', 'Gestic DOC - Mercadeo')
+@section('page_title', 'Gestic DOC - ' . get_department_name($department))
 
 @section('contents')
 

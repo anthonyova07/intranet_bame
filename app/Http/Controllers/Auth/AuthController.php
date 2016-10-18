@@ -41,6 +41,8 @@ class AuthController extends Controller
                 return redirect($url_anterior);
             }
 
+            return back()->with('error', 'Usuario y Contraseña incorrectos!');
+
         } catch (\Throwable $e) {
             return back()->with('error', 'Usuario y Contraseña incorrectos!');
         }

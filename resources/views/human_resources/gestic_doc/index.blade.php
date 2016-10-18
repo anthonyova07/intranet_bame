@@ -4,7 +4,7 @@
 
 @section('page_title', 'Mantenimiento GesticDoc - ' . get_department_name($department))
 
-@if (can_not_do('marketing_gesticdoc'))
+@if (can_not_do('human_resources_gesticdoc'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection

@@ -48,7 +48,7 @@ class Access extends Model
             $menu->submenus = SubMenu::where('sub_codmen', $menu->men_codigo)
                 ->where('sub_estatu', 'A')
                 ->where('sub_web', 'S')
-                ->whereIn('sub_codigo', $access->pluck('acc_submen')->toArray())
+                ->whereIn('sub_codigo', $access->where('acc_codmen', $menu->men_codigo)->pluck('acc_submen')->toArray())
                 ->orderBy('sub_descri')
                 ->get();
         });

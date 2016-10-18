@@ -100,9 +100,15 @@
                     </a>
                     <ul class="nav nav-second-level animated swing">
                         <li class="animated fadeInDown">
-                            <a href="{{ route('marketing.gesticdoc') }}">
+                            <a href="{{ route('gesticdoc.marketing') }}">
                                 <i class="fa fa-files-o fa-fw"></i>
                                 Mercadeo
+                            </a>
+                        </li>
+                        <li class="animated fadeInDown">
+                            <a href="{{ route('gesticdoc.human_resources') }}">
+                                <i class="fa fa-files-o fa-fw"></i>
+                                Recursos Humanos
                             </a>
                         </li>
                     </ul>
