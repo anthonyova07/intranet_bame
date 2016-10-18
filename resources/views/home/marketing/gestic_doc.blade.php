@@ -11,7 +11,7 @@
             <div class="panel panel-default">
 
                 <div class="panel-body">
-                    <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|asc'>
+                    <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='1|asc'>
                         <thead>
                             <tr>
                                 <th style="width: 40px">Tipo</th>

@@ -10,33 +10,13 @@ use Bame\Http\Controllers\Controller;
 use Bame\Models\Marketing\News\News;
 use Bame\Models\Marketing\Coco\Coco;
 use Bame\Models\Marketing\Event\Event;
+use Bame\Models\Marketing\GesticDoc\GesticDoc;
 
 class MarketingController extends Controller
 {
     public function gesticdoc()
     {
-        $url_files = public_path('files\\gestic_doc\\marketing');
-
-        $files = collect();
-
-        if (file_exists($url_files)) {
-            $list = collect(scandir($url_files));
-
-            $list->each(function ($item, $index) use ($files) {
-                if ($item != '.' && $item != '..') {
-                    $file = new \stdClass;
-
-                    $parts = explode('.', $item);
-
-                    $file->url = route('home') . '/files/gestic_doc/marketing/' . $item;
-
-                    $file->name = $parts[0];
-                    $file->type = array_pop($parts);
-
-                    $files->push($file);
-                }
-            });
-        }
+        $files = GesticDoc::getFiles('marketing');
 
         return view('home.marketing.gestic_doc')
             ->with('files', $files);

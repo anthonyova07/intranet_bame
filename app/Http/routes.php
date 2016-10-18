@@ -47,6 +47,10 @@ Route::group(['middleware' => 'auth'], function () {
             'index', 'store'
         ]]);
 
+        Route::resource('gesticdoc', 'Marketing\GesticDoc\GesticDocController', ['only' => [
+            'index', 'store', 'destroy'
+        ]]);
+
         Route::group(['prefix' => 'event'], function () {
             Route::get('subscribe/{id}', 'Marketing\Event\SubscriptionController@subscribe')->name('marketing.event.subscribe');
             Route::get('unsubscribe_reason/{id}', 'Marketing\Event\SubscriptionController@unsubscribe_reason')->name('marketing.event.unsubscribe_reason');
