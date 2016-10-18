@@ -41,7 +41,7 @@
                     <tbody>
                         @foreach ($files as $file)
                             <tr>
-                                <td style="text-align: center;"><img src="{{ get_file_icon($file->type) }}" style="width: 40px;"></td>
+                                <td style="text-align: center;"><img src="{{ get_file_icon($file->type) }}" style="width: 50px;"></td>
                                 <td style="vertical-align: middle;">{{ str_replace('_', ' ', $file->name) }}</td>
                                 <td style="vertical-align: middle;text-align: center;font-size: 20px;">
                                     <a
