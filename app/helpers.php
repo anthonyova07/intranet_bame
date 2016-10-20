@@ -30,6 +30,7 @@ function get_file_icon($ext)
         case 'docx':
             $name = 'word';
             break;
+        case 'csv':
         case 'xls':
         case 'xlsx':
             $name = 'excel';
