@@ -72,7 +72,7 @@ class NewsController extends Controller
         do_log('Creó la Noticia ( titulo:' . strip_tags($request->title) . ' )');
 
         $noti = new Notification('global');
-        $noti->create('..::Nueva Noticia::..', $new->title, route('home.news', ['id' => $new->id]));
+        $noti->create('Nueva Noticia', $new->title, route('home.news', ['id' => $new->id]));
         $noti->save();
 
         return redirect(route('marketing.news.index'))->with('success', 'La noticia fue creada correctamente.');

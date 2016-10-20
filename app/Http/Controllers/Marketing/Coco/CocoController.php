@@ -58,7 +58,7 @@ class CocoController extends Controller
 
             if ($request->active) {
                 $noti = new Notification('global');
-                $noti->create('..::Concurso Rompete el COCO::..', $request->title, route('coco'));
+                $noti->create('Concurso Rompete el COCO', $request->title, route('coco'));
                 $noti->save();
             }
 

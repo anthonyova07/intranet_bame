@@ -82,7 +82,7 @@ class EventController extends Controller
         do_log('Creó el Evento ( titulo:' . strip_tags($request->title) . ' )');
 
         $noti = new Notification('global');
-        $noti->create('..::Nuevo Evento::..', $event->title, route('home.event', ['id' => $event->id]));
+        $noti->create('Nuevo Evento', $event->title, route('home.event', ['id' => $event->id]));
         $noti->save();
 
         return redirect(route('marketing.event.index'))->with('success', 'El evento fue creado correctamente.');
