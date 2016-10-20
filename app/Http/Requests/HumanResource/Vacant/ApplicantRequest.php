@@ -4,7 +4,7 @@ namespace Bame\Http\Requests\HumanResource\Vacant;
 
 use Bame\Http\Requests\Request;
 
-class VacantRequest extends Request
+class ApplicantRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class VacantRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|max:150',
-            'detail' => 'required|max:10000',
+            'curriculum' => 'required|file',
         ];
     }
 }

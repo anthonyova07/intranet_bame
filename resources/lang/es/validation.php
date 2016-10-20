@@ -135,7 +135,9 @@ return [
       'limit_companions' => 'Limita Acompañantes',
       'last_names' => 'Apellidos',
       'names' => 'Nombres',
+      'name' => 'Nombre',
       'identification_type' => 'Tipo de Identificación',
-      'unsubscription_reason' => 'Motivo'
+      'unsubscription_reason' => 'Motivo',
+      'curriculum' => 'Curriculum Vitae',
     ],
 ];

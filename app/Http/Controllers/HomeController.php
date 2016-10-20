@@ -9,6 +9,7 @@ use DateTime;
 use Bame\Models\Marketing\News\News;
 use Bame\Models\Marketing\Coco\Coco;
 use Bame\Models\Marketing\Event\Event;
+use Bame\Models\HumanResource\Vacant\Vacant;
 
 class HomeController extends Controller {
 
@@ -33,12 +34,17 @@ class HomeController extends Controller {
             ->orderBy('created_at', 'desc')
             ->get();
 
+        $vacancies = Vacant::where('is_active', true)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         return view('home.index', [
             'column_new' => $column_new,
             'banners_news' => $banners_news,
             'news' => $news,
             'coco' => $coco,
-            'events' => $events
+            'events' => $events,
+            'vacancies' => $vacancies,
         ]);
     }
 

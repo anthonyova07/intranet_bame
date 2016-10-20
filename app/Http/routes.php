@@ -13,6 +13,8 @@ Route::post('rompete_el_coco', 'Marketing\MarketingController@post_coco');
 Route::get('news/{id}', 'Marketing\MarketingController@news')->name('home.news');
 Route::get('event/{id}', 'Marketing\MarketingController@event')->name('home.event');
 
+Route::get('vacant/{id}', 'HumanResource\HumanResourceController@vacant')->name('home.vacant');
+
 Route::get('auth/login', 'Auth\AuthController@getLogin')->name('auth.login');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout')->name('auth.logout');
@@ -70,6 +72,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('gesticdoc', 'GesticDoc\GesticDocController', ['only' => [
             'index', 'store', 'destroy'
         ]]);
+
+        Route::group(['prefix' => 'vacant'], function () {
+            Route::post('apply/{id}', 'HumanResource\Vacant\VacantController@apply')->name('human_resources.vacant.apply');
+        });
 
         Route::resource('vacant', 'HumanResource\Vacant\VacantController');
     });

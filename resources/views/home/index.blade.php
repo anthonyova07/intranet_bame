@@ -202,7 +202,31 @@
             </div>
 
             <div class="col-xs-4">
-                {{-- tres --}}
+
+                <div class="panel panel-info" style="margin-top: 16px;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Vacantes</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            @foreach($vacancies as $vacant)
+                                <a href="{{ route('home.vacant', ['id' => $vacant->id]) }}" class="list-group-item">
+                                    <h4 class="list-group-item-heading">
+                                        {{ substr($vacant->name, 0, 70) . '...' }}
+                                        <br>
+                                        <span class="text-muted small">
+                                            <em>{{ $vacant->created_at->format('d/m/Y h:i:s A') }}</em>
+                                        </span>
+                                    </h4>
+                                    <p class="list-group-item-text">
+                                        {!! substr(str_replace('<br />', ' ', $vacant->detail), 0, 170)  . '...' !!}
+                                    </p>
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
