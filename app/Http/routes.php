@@ -70,6 +70,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('gesticdoc', 'GesticDoc\GesticDocController', ['only' => [
             'index', 'store', 'destroy'
         ]]);
+
+        Route::resource('vacant', 'HumanResource\Vacant\VacantController');
     });
 
     Route::resource('customer', 'Customer\CustomerController', ['only' => [
