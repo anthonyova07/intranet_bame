@@ -78,8 +78,8 @@ return [
                     'bancamerica.local'
                 ), // Load balancing domain controllers
                 'base_dn'   =>  'DC=bancamerica,DC=local',
-                'admin_username' => 'j.peguero', // This is required for session persistance in the application
-                'admin_password' => 'zxc.123456^',
+                'admin_username' => env('ADLDAP_ADMIN_USERNAME'), // This is required for session persistance in the application
+                'admin_password' => env('ADLDAP_ADMIN_PASSWORD'),
             ],
         ],
 
