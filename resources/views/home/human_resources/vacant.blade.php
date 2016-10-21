@@ -12,7 +12,7 @@
                     @if (session()->has('user'))
                         <form method="post" action="{{ route('human_resources.vacant.apply', ['id' => $vacant->id]) }}" enctype="multipart/form-data">
                             <div class="form-group{{ $errors->first('curriculum') ? ' has-error':'' }}">
-                                <label class="control-label">Cargar Curriculum Vitae <small class="label label-warning">MAX 10MB</small></label>
+                                <label class="control-label">Cargar Curriculum Vitae <small style="font-size: 11px;" class="label label-warning">MAX 10MB</small></label>
                                 <input type="file" name="curriculum">
                                 <span class="help-block">{{ $errors->first('curriculum') }}</span>
                             </div>

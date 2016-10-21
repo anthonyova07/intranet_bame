@@ -255,3 +255,13 @@ form {
 .list-group-item-heading {
     font-size: 16px;
 }
+
+.panel-wiget {
+    margin-top: 16px;
+    border-color: #d82f27;
+}
+
+.panel-wiget .panel-heading {
+    background-image: linear-gradient(to bottom,#ff7972 0,#d82f27 100%);
+    color: #FFF;
+}
