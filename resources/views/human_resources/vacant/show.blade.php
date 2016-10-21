@@ -31,7 +31,7 @@
                         <tbody>
                             @foreach ($applicants as $applicant)
                                 <tr>
-                                    <td> <a data-toggle="tooltip" title="Click para contactar empleado" href="mailto:{{ $applicant->username . '@bancamerica.com.do' }}?Subject=Vacante {{ $vacant->name }}">{{ $applicant->username . '@bancamerica.com.do' }}</a></td>
+                                    <td><a data-toggle="tooltip" title="Click para contactar empleado" href="mailto:{{ $applicant->username . '@bancamerica.com.do' }}?Subject=Vacante {{ $vacant->name }}">{{ $applicant->username . '@bancamerica.com.do' }}</a></td>
                                     <td>{{ $applicant->names }}</td>
                                     <td align="center">
                                         <a

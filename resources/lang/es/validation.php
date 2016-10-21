@@ -139,5 +139,8 @@ return [
       'identification_type' => 'Tipo de Identificación',
       'unsubscription_reason' => 'Motivo',
       'curriculum' => 'Curriculum Vitae',
+      'name_last_name' => 'Nombre y Apellido',
+      'mail' => 'Correo',
+      'idea' => 'Idea',
     ],
 ];

@@ -7,8 +7,8 @@ Route::group(['prefix' => 'gesticdoc'], function () {
     Route::get('human_resources', 'GesticDoc\GesticDocController@gesticdoc')->name('gesticdoc.human_resources');
 });
 
-Route::get('rompete_el_coco', 'Marketing\MarketingController@coco')->name('coco');
-Route::post('rompete_el_coco', 'Marketing\MarketingController@post_coco');
+Route::get('break_coco', 'Marketing\MarketingController@coco')->name('coco');
+Route::post('break_coco', 'Marketing\MarketingController@idea');
 
 Route::get('news/{id}', 'Marketing\MarketingController@news')->name('home.news');
 Route::get('event/{id}', 'Marketing\MarketingController@event')->name('home.event');
@@ -49,6 +49,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('break_coco', 'Marketing\Coco\CocoController', ['only' => [
             'index', 'store'
         ]]);
+
+        Route::group(['prefix' => 'break_coco'], function () {
+            Route::resource('ideas', 'Marketing\Coco\IdeaController', ['only' => [
+                'index', 'show'
+            ]]);
+        });
 
         Route::resource('gesticdoc', 'GesticDoc\GesticDocController', ['only' => [
             'index', 'store', 'destroy'
