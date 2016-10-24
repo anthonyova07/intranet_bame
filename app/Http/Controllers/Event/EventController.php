@@ -101,7 +101,7 @@ class EventController extends Controller
     {
         $department = Event::getDepartment($request->path());
 
-        $event = Event::find($id)->where('department', $department)->first();
+        $event = Event::where('department', $department)->find($id);
 
         if (!$event) {
             return redirect()->with('warning', 'Este evento no existe!');
@@ -132,7 +132,7 @@ class EventController extends Controller
     {
         $department = Event::getDepartment($request->path());
 
-        $event = Event::find($id)->where('department', $department)->first();
+        $event = Event::where('department', $department)->find($id);
 
         if (!$event) {
             return back()->with('warning', 'Este evento no existe!');
@@ -147,7 +147,7 @@ class EventController extends Controller
     {
         $department = Event::getDepartment($request->path());
 
-        $event = Event::find($id)->where('department', $department)->first();
+        $event = Event::where('department', $department)->find($id);
 
         if (!$event) {
             return back()->with('warning', 'Este evento no existe!');

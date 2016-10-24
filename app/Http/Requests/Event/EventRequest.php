@@ -29,8 +29,8 @@ class EventRequest extends Request
             'image' => 'image' . ($this->event ? '':'|required'),
             'start_event' => 'required|date_format:"Y-m-d\TH:i"',
             'end_subscriptions' => 'required|date_format:"Y-m-d"',
-            'number_persons' => 'required_if:limit_persons,on|integer|min:1',
-            'number_companions' => 'required_if:limit_companions,on|integer|min:1',
+            'number_persons' => 'required_if:limit_persons,on|integer',
+            'number_companions' => 'required_if:limit_companions,on|integer',
         ];
     }
 }
