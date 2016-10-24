@@ -1,6 +1,6 @@
 <?php
 
-namespace Bame\Models\Marketing\Event\Subscription;
+namespace Bame\Models\Event\Subscription;
 
 use Illuminate\Database\Eloquent\Model;
 

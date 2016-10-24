@@ -1,6 +1,6 @@
 <?php
 
-namespace Bame\Http\Requests\Marketing\Event;
+namespace Bame\Http\Requests\Event;
 
 use Bame\Http\Requests\Request;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bame\Models\Marketing\Event;
+namespace Bame\Models\Event;
 
 use Illuminate\Database\Eloquent\Model;
 

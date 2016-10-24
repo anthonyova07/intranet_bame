@@ -57,7 +57,7 @@
                         <a href="#"><i class="fa fa-user fa-fw"></i> {{ session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName() }}</a>
                     </li>
                     <li>
-                        <a href="{{ route('marketing.event.accompanist.index') }}"><i class="fa fa-group fa-fw"></i> Acompañantes</a>
+                        <a href="{{ route('events.accompanist.index') }}"><i class="fa fa-group fa-fw"></i> Acompañantes</a>
                     </li>
                     <li class="divider"></li>
                     <li>
