@@ -1,14 +1,17 @@
 <?php
 
-namespace Bame\Models\Marketing\Event;
+namespace Bame\Models\Event;
 
 use Illuminate\Database\Eloquent\Model;
 
-use Bame\Models\Marketing\Event\Subscription\Subscription;
-use Bame\Models\Marketing\Event\Subscription\Accompanist;
+use Bame\Models\Department\Department;
+use Bame\Models\Event\Subscription\Subscription;
+use Bame\Models\Event\Subscription\Accompanist;
 
 class Event extends Model
 {
+    use Department;
+
     protected $connection = 'ibs';
 
     protected $table = 'intranet_events';

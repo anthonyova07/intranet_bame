@@ -2,9 +2,9 @@
 
 @section('title', 'Eventos')
 
-@section('page_title', 'Editar Evento')
+@section('page_title', 'Subscriptores del Evento: ' . $event->title)
 
-@if (can_not_do('marketing_event'))
+@if (can_not_do('human_resources_event'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
@@ -12,6 +12,6 @@
 
 @section('contents')
 
-    @include('layouts.partials.event.edit', ['department' => $department])
+    @include('layouts.partials.event.show', ['department' => $department])
 
 @endsection

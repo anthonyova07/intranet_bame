@@ -1,6 +1,6 @@
 <?php
 
-namespace Bame\Http\Controllers\Marketing\Event;
+namespace Bame\Http\Controllers\Event;
 
 use Illuminate\Http\Request;
 
@@ -9,16 +9,18 @@ use Bame\Http\Controllers\Controller;
 
 use DateTime;
 use Bame\Models\Notification\Notification;
-use Bame\Models\Marketing\Event\Event;
-use Bame\Http\Requests\Marketing\Event\EventRequest;
-use Bame\Models\Marketing\Event\Subscription\Subscription;
-use Bame\Models\Marketing\Event\Subscription\Accompanist as SubscriptionAccompanist;
+use Bame\Models\Event\Event;
+use Bame\Http\Requests\Event\EventRequest;
+use Bame\Models\Event\Subscription\Subscription;
+use Bame\Models\Event\Subscription\Accompanist as SubscriptionAccompanist;
 
 class EventController extends Controller
 {
     public function index(Request $request)
     {
-        $events = Event::where('created_by', session()->get('user'));
+        $department = Event::getDepartment($request->path());
+
+        $events = Event::where('department', $department);
 
         if ($request->term) {
             $events->where(function ($query) use ($request) {
@@ -43,17 +45,23 @@ class EventController extends Controller
 
         $events = $events->paginate();
 
-        return view('marketing.event.index')
+        return view($department . '.event.index')
+            ->with('department', $department)
             ->with('events', $events);
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('marketing.event.create');
+        $department = Event::getDepartment($request->path());
+
+        return view($department . '.event.create')
+            ->with('department', $department);
     }
 
     public function store(EventRequest $request)
     {
+        $department = Event::getDepartment($request->path());
+
         $event = new Event;
 
         $event->id = uniqid(true);
@@ -63,9 +71,9 @@ class EventController extends Controller
         if ($request->hasFile('image')) {
             $file_name_destination = $event->id . '.' . get_extensions_file($request->file('image')->getClientOriginalName());
 
-            $request->file('image')->move(public_path() . '\\marketing\\images\\', $file_name_destination);
+            $request->file('image')->move(public_path() . '\\event\\images\\', $file_name_destination);
 
-            $event->image = '/marketing/images/' . $file_name_destination;
+            $event->image = '/event/images/' . $file_name_destination;
         }
 
         $event->end_subscriptions = new DateTime($request->end_subscriptions . ' 23:59:59');
@@ -75,6 +83,7 @@ class EventController extends Controller
         $event->is_active = $request->is_active ? true : false;
         $event->number_persons = $request->limit_persons ? $request->number_persons : 0;
         $event->number_accompanists = $request->limit_accompanists ? $request->number_accompanists : 0;
+        $event->department = $department;
         $event->created_by = session()->get('user');
 
         $event->save();
@@ -85,12 +94,14 @@ class EventController extends Controller
         $noti->create('Nuevo Evento', $event->title, route('home.event', ['id' => $event->id]));
         $noti->save();
 
-        return redirect(route('marketing.event.index'))->with('success', 'El evento fue creado correctamente.');
+        return redirect(route($department . '.event.index'))->with('success', 'El evento fue creado correctamente.');
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $event = Event::find($id);
+        $department = Event::getDepartment($request->path());
+
+        $event = Event::find($id)->where('department', $department)->first();
 
         if (!$event) {
             return redirect()->with('warning', 'Este evento no existe!');
@@ -109,28 +120,34 @@ class EventController extends Controller
                                         ->where('is_subscribe', '1')
                                         ->get();
 
-        return view('marketing.event.show')
+        return view($department . '.event.show')
             ->with('event', $event)
+            ->with('department', $department)
             ->with('subscriptions', $subscriptions)
             ->with('unsubscriptions', $unsubscriptions)
             ->with('accompanist_subscriptions', $accompanist_subscriptions);
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        $event = Event::where('created_by', session()->get('user'))->find($id);
+        $department = Event::getDepartment($request->path());
+
+        $event = Event::find($id)->where('department', $department)->first();
 
         if (!$event) {
             return back()->with('warning', 'Este evento no existe!');
         }
 
-        return view('marketing.event.edit')
+        return view($department . '.event.edit')
+            ->with('department', $department)
             ->with('event', $event);
     }
 
     public function update(EventRequest $request, $id)
     {
-        $event = Event::where('created_by', session()->get('user'))->find($id);
+        $department = Event::getDepartment($request->path());
+
+        $event = Event::find($id)->where('department', $department)->first();
 
         if (!$event) {
             return back()->with('warning', 'Este evento no existe!');
@@ -148,9 +165,9 @@ class EventController extends Controller
 
             $file_name_destination = $id . '.' . get_extensions_file($request->file('image')->getClientOriginalName());
 
-            $request->file('image')->move(public_path() . '\\marketing\\images\\', $file_name_destination);
+            $request->file('image')->move(public_path() . '\\event\\images\\', $file_name_destination);
 
-            $event->image = '/marketing/images/' . $file_name_destination;
+            $event->image = '/event/images/' . $file_name_destination;
         }
 
         $event->end_subscriptions = new DateTime($request->end_subscriptions . ' 23:59:59');
@@ -166,7 +183,7 @@ class EventController extends Controller
 
         do_log('Editó el Evento ( titulo:' . strip_tags($request->title) . ' )');
 
-        return redirect(route('marketing.event.index'))->with('success', 'El evento ha sido modificado correctamente.');
+        return redirect(route($department . '.event.index'))->with('success', 'El evento ha sido modificado correctamente.');
     }
 
     public function destroy($id)

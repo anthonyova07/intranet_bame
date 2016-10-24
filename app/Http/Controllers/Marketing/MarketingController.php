@@ -10,7 +10,6 @@ use Bame\Http\Controllers\Controller;
 use Bame\Models\Marketing\News\News;
 use Bame\Models\Marketing\Coco\Coco;
 use Bame\Models\Marketing\Coco\Idea;
-use Bame\Models\Marketing\Event\Event;
 use Bame\Models\Marketing\GesticDoc\GesticDoc;
 
 class MarketingController extends Controller
@@ -34,14 +33,6 @@ class MarketingController extends Controller
         }
 
         return view('home.marketing.new.index');
-    }
-
-    public function event($id)
-    {
-        $event = Event::find($id);
-
-        return view('home.marketing.event')
-            ->with('event', $event);
     }
 
     public function coco()

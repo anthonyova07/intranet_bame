@@ -1,6 +1,6 @@
 <?php
 
-namespace Bame\Http\Requests\Marketing\Event\Accompanist;
+namespace Bame\Http\Requests\Event\Accompanist;
 
 use Bame\Http\Requests\Request;
 

@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Bame\Http\Requests;
 
 use DateTime;
+use Bame\Models\Event\Event;
 use Bame\Models\Marketing\News\News;
 use Bame\Models\Marketing\Coco\Coco;
-use Bame\Models\Marketing\Event\Event;
 use Bame\Models\HumanResource\Vacant\Vacant;
 
 class HomeController extends Controller {
@@ -48,4 +48,11 @@ class HomeController extends Controller {
         ]);
     }
 
+    public function event($id)
+    {
+        $event = Event::find($id);
+
+        return view('home.event')
+            ->with('event', $event);
+    }
 }

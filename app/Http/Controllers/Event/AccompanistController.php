@@ -1,15 +1,15 @@
 <?php
 
-namespace Bame\Http\Controllers\Marketing\Event;
+namespace Bame\Http\Controllers\Event;
 
 use Illuminate\Http\Request;
 
 use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
-use Bame\Models\Marketing\Event\Accompanist;
-use Bame\Models\Marketing\Event\Subscription\Accompanist as AccompanistSubscription;
-use Bame\Http\Requests\Marketing\Event\Accompanist\AccompanistRequest;
+use Bame\Models\Event\Accompanist;
+use Bame\Models\Event\Subscription\Accompanist as AccompanistSubscription;
+use Bame\Http\Requests\Event\Accompanist\AccompanistRequest;
 
 class AccompanistController extends Controller
 {
@@ -34,7 +34,7 @@ class AccompanistController extends Controller
 
         $accompanists = $accompanists->paginate();
 
-        return view('marketing.event.accompanist.index')
+        return view('event.accompanist.index')
             ->with('accompanists', $accompanists)
             ->with('event_id', $request->event)
             ->with('accompanist_subscriptions', $accompanist_subscriptions);
@@ -42,7 +42,7 @@ class AccompanistController extends Controller
 
     public function create(Request $request)
     {
-        return view('marketing.event.accompanist.create')
+        return view('event.accompanist.create')
                 ->with('event_id', $request->event);
     }
 
@@ -62,12 +62,12 @@ class AccompanistController extends Controller
 
         do_log('Creó el Invitado ( nombre:' . strip_tags($accompanist->names . ' ' . $accompanist->last_names) . ' identificacion:' . $accompanist->identification . ' )');
 
-        return redirect(route('marketing.event.accompanist.index', ['event' => $request->event]))->with('success', 'Invitado creado correctamente.');
+        return redirect(route('events.accompanist.index', ['event' => $request->event]))->with('success', 'Invitado creado correctamente.');
     }
 
     public function show($id)
     {
-        return redirect(route('marketing.event.accompanist.index'));
+        return redirect(route('events.accompanist.index'));
     }
 
     public function edit(Request $request, $id)
@@ -78,7 +78,7 @@ class AccompanistController extends Controller
             return back()->with('warning', 'Este Invitado no existe!');
         }
 
-        return view('marketing.event.accompanist.edit')
+        return view('event.accompanist.edit')
             ->with('accompanist', $accompanist)
             ->with('event_id', $request->event);
     }
@@ -101,7 +101,7 @@ class AccompanistController extends Controller
 
         do_log('Editó el Invitado ( nombre:' . strip_tags($accompanist->names . ' ' . $accompanist->last_names) . ' identificacion:' . $accompanist->identification . ' )');
 
-        return redirect(route('marketing.event.accompanist.index', ['event' => $request->event]))->with('success', 'Invitado modificado correctamente.');
+        return redirect(route('events.accompanist.index', ['event' => $request->event]))->with('success', 'Invitado modificado correctamente.');
     }
 
     public function destroy($id)
