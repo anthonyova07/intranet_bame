@@ -15,14 +15,14 @@
                             <a href="{{ route('events.accompanist.index', ['event' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Ver Invitados</a>
                         @else
                             @if ($event->canSubscribe())
-                                <a href="{{ route('events.subscribe', ['id' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Suscribirse</a>
+                                <a href="{{ route('event.subscribe', ['id' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Suscribirse</a>
                             @else
                                 <button class="btn btn-default btn-block bame_hinge" style="font-weight: bold;" disabled>No hay cupo disponible</button>
                             @endif
                         @endif
                     @else
                         @if ($event->canSubscribe())
-                            <a href="{{ route('events.subscribe', ['id' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Suscribirse</a>
+                            <a href="{{ route('event.subscribe', ['id' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Suscribirse</a>
                         @else
                             <button class="btn btn-default btn-block bame_hinge" style="font-weight: bold;" disabled>No hay cupo disponible</button>
                         @endif
