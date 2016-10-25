@@ -26,6 +26,7 @@ $(document).ready(function() {
     var animateNameIn = 'rollIn';
     var animateNameOut = 'rollOut';
 
+    var headerBar = $('.row-top');
     var panel = $('.panel');
     var alert = $('.alert');
     var headerPage = $('.header-page');
@@ -34,6 +35,11 @@ $(document).ready(function() {
     var bame_wobble = $('.bame_wobble');
     var bame_hinge = $('.bame_hinge');
 
+    headerBar.each(function (index, value) {
+        $(this).animateCSS('slideInDown', {
+            delay: index * 200
+        });
+    });
     panel.each(function (index, value) {
         $(this).animateCSS(animateNameIn, {
             delay: index * 200
@@ -70,6 +76,9 @@ $(document).ready(function() {
     headerPage.animateCSS('slideInLeft');
 
     $('a.btn, .pagination>li>a, .nav-second-level>li>a, .naranja, button[type=submit], .fa-share, a.link_noticias, a.list-group-item').click(function () {
+        headerBar.animateCSS('slideOutUp', function () {
+            $(this).remove();
+        });
         panel.animateCSS(animateNameOut, function () {
             $(this).remove();
         });
