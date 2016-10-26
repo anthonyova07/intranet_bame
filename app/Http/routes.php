@@ -139,6 +139,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('delete/{id}', 'Notification\NotificationController@delete')->name('delete');
     });
 
+    Route::group(['prefix' => 'ib'], function () {
+        Route::resource('transactions', 'IB\Transaction\TransactionController');
+    });
+
 });
 
 // DB::listen(function ($query) {
