@@ -4,6 +4,7 @@ namespace Bame\Http\Controllers\IB\Transaction;
 
 use Illuminate\Http\Request;
 
+use DateTime;
 use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
@@ -15,12 +16,9 @@ class TransactionController extends Controller
 {
     public function index(Request $request)
     {
-        $transaction_types = TransactionType::orderBy('longName')->get();
-
-        $transactions = collect();
+        $transactions = Transaction::orderBy('transactionDate', 'desc');
 
         if ($request->has('transaction_type')) {
-            $transactions = Transaction::orderBy('transactionDate', 'desc');
 
             if ($request->has('date_from')) {
                 $date_parts = explode('T', $request->date_from);
@@ -41,42 +39,21 @@ class TransactionController extends Controller
                                     ->pluck('trnTypeCurrencyID');
 
             $transactions = $transactions->whereIn('trnTypeCurrencyID', $transactions_types_currency_destiny->toArray());
-
-            $transactions = $transactions->paginate();
         }
 
-        return view('ib.transaction.index')
-            ->with('transaction_types', $transaction_types)
-            ->with('transactions', $transactions);
-    }
+        $transactions = $transactions->paginate();
 
-    public function create()
-    {
-        //
-    }
+        if ($request->has('print')) {
+            $datetime = new DateTime;
+            $transaction_type = TransactionType::find($request->transaction_type);
+            $view = view('pdfs.ib.transactions')
+                ->with('transaction_type', $transaction_type)
+                ->with('datetime', $datetime);
+        } else {
+            $transaction_types = TransactionType::orderBy('longName')->get();
+            $view = view('ib.transaction.index')->with('transaction_types', $transaction_types);
+        }
 
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
+        return $view->with('transactions', $transactions);
     }
 }

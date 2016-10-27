@@ -140,7 +140,9 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::group(['prefix' => 'ib'], function () {
-        Route::resource('transactions', 'IB\Transaction\TransactionController');
+        Route::resource('transactions', 'IB\Transaction\TransactionController', ['only' => [
+            'index'
+        ]]);
     });
 
 });

@@ -60,6 +60,9 @@
         <div class="col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-body">
+                    <a class="pull-right label label-warning" style="font-size: 13px;" target="__blank" href="{{ route('ib.transactions.index', ['print' => true]) . '&' . http_build_query(Request::all()) }}">Imprimir</a>
+                    <br>
+                    <br>
                     <table border="1" class="table table-striped table-bordered table-hover table-condensed" order-by='2|desc'>
                         <thead>
                             <tr>
@@ -88,7 +91,7 @@
                                     @if ($transaction->transactionExt->bank)
                                         <td>{{ $transaction->transactionExt->bank->referenceInfo == '' ? $transaction->transactionExt->bank->swiftBankID : $transaction->transactionExt->bank->referenceInfo}}</td>
                                     @else
-                                        <td>Desconocido</td>
+                                        <td>BAME</td>
                                     @endif
                                     <td>{{ $transaction->accountToNumber }}</td>
                                     <td>{{ $transaction->transactionExt->achBeneficiaryName }}</td>
