@@ -16,6 +16,9 @@ function get_department_name($department)
         case 'human_resources':
             return 'Recursos Humanos';
             break;
+        case 'process':
+            return 'Procesos';
+            break;
     }
 }
 
