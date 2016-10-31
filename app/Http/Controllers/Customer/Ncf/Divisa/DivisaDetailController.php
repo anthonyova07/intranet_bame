@@ -56,11 +56,16 @@ class DivisaDetailController extends Controller
         }
 
         $transactions = $transactions->filter(function ($transaction, $index) use ($id) {
+            if ($index == $id) {
+                $customer = session()->get('customer_divisa');
+                $customer->totalAmount -= ($transaction->getAmount() * $transaction->getRate());
+            }
+
             return $index != $id;
         });
 
         session()->put('transactions_divisa', $transactions);
 
-        return back()->with('success', 'El detalle ha sido eliminado con exito.');
+        return redirect(route('customer.ncf.divisa.new.index'))->with('success', 'El detalle ha sido eliminado con exito.');
     }
 }

@@ -34,6 +34,7 @@ class NoIbsController extends Controller
             $cliente->year = $request->year;
 
             session()->put('customer_no_ibs', $cliente);
+            session()->put('transactions_no_ibs', collect());
         }
 
         return view('customer.ncf.no_ibs.index');
@@ -68,7 +69,7 @@ class NoIbsController extends Controller
             $ncf->encmesp = $customer->month;
             $ncf->encaniop = $customer->year;
 
-            $ncf->encmonto = $transactions->sum('amount') + $transactions->sum('tax_amount');
+            $ncf->encmonto = round($transactions->sum('amount') + $transactions->sum('tax_amount'), 2);
 
             $ncf->encsts = 'A';
             $ncf->encreim = 0;
@@ -107,12 +108,12 @@ class NoIbsController extends Controller
                 $detail->detdesc = $transaction->description;
                 $detail->detccy = 'DOP';
                 $detail->dettas = 1;
-                $detail->detmto = $transaction->amount;
+                $detail->detmto = round($transaction->amount, 2);
                 $detail->detdia = $transaction->day;
                 $detail->detmes = $transaction->month;
                 $detail->detanio = $transaction->year;
                 $detail->deasts = 'A';
-                $detail->detitb = $transaction->tax_amount;
+                $detail->detitb = round($transaction->tax_amount, 2);
 
                 $detail->save();
             });

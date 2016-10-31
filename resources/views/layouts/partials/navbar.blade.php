@@ -101,7 +101,7 @@
                                 <span class="fa arrow"></span>
                             </a>
                             @if ($menu->submenus->count())
-                                <ul class="nav nav-second-level animated swing">
+                                <ul class="nav nav-second-level animated fadeInLeft">
                                     @foreach ($menu->submenus as $submenu)
                                         @if (Route::has($submenu->sub_link))
                                             <li class="animated fadeInDown">

@@ -102,7 +102,7 @@ class TdcReceiptGeneratorJob extends Job implements ShouldQueue
             ]);
 
         $noti = new Notification($this->user);
-        $noti->create('Encartes', 'La generación de los encartes ha finalizado con éxito!');
+        $noti->create('Encartes', 'La generacion de los encartes ha finalizado con exito!');
         $noti->save();
     }
 }
