@@ -180,22 +180,28 @@
                         <h3 class="panel-title">Eventos</h3>
                     </div>
                     <div class="panel-body">
-                        <div class="list-group">
-                            @foreach($events as $event)
-                                <a href="{{ route('home.event', ['id' => $event->id]) }}" class="list-group-item">
-                                    <h4 class="list-group-item-heading">
-                                        {{ substr($event->title, 0, 70) . '...' }}
-                                        <br>
-                                        <span class="text-muted small">
-                                            <em>{{ $event->start_event->format('d/m/Y h:i:s A') }}</em>
-                                        </span>
-                                    </h4>
-                                    <p class="list-group-item-text">
-                                        {!! substr(str_replace('<br />', ' ', $event->detail), 0, 170)  . '...' !!}
-                                    </p>
-                                </a>
-                            @endforeach
-                        </div>
+                        @if ($events->count())
+                            <div class="list-group">
+                                @foreach($events as $event)
+                                    <a href="{{ route('home.event', ['id' => $event->id]) }}" class="list-group-item">
+                                        <h4 class="list-group-item-heading">
+                                            {{ substr($event->title, 0, 70) . '...' }}
+                                            <br>
+                                            <span class="text-muted small">
+                                                <em>{{ $event->start_event->format('d/m/Y h:i:s A') }}</em>
+                                            </span>
+                                        </h4>
+                                        <p class="list-group-item-text">
+                                            {!! substr(str_replace('<br />', ' ', $event->detail), 0, 170)  . '...' !!}
+                                        </p>
+                                    </a>
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="panel-body text-center">
+                                <label class="control-label text-center label label-danger" style="font-size: 18px;">No Hay Eventos</label>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
