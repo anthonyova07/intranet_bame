@@ -111,6 +111,12 @@
                                 Recursos Humanos
                             </a>
                         </li>
+                        <li class="animated fadeInDown">
+                            <a href="{{ route('gesticdoc.process') }}">
+                                <i class="fa fa-files-o fa-fw"></i>
+                                Procesos
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 @if (session()->has('menus'))

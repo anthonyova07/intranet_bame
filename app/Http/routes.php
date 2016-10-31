@@ -5,6 +5,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::group(['prefix' => 'gesticdoc'], function () {
     Route::get('marketing', 'GesticDoc\GesticDocController@gesticdoc')->name('gesticdoc.marketing');
     Route::get('human_resources', 'GesticDoc\GesticDocController@gesticdoc')->name('gesticdoc.human_resources');
+    Route::get('process', 'GesticDoc\GesticDocController@gesticdoc')->name('gesticdoc.process');
 });
 
 Route::get('break_coco', 'Marketing\MarketingController@coco')->name('coco');
@@ -84,6 +85,12 @@ Route::group(['middleware' => 'auth'], function () {
         });
 
         Route::resource('vacant', 'HumanResource\Vacant\VacantController');
+    });
+
+    Route::group(['prefix' => 'process'], function () {
+        Route::resource('gesticdoc', 'GesticDoc\GesticDocController', ['only' => [
+            'index', 'store', 'destroy'
+        ]]);
     });
 
     Route::resource('customer', 'Customer\CustomerController', ['only' => [
