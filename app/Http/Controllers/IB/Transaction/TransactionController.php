@@ -16,7 +16,7 @@ class TransactionController extends Controller
 {
     public function index(Request $request)
     {
-        $transactions = Transaction::orderBy('transactionDate', 'desc');
+        $transactions = Transaction::orderBy('transactionDate', 'desc')->where('transactionStatusID', 9001);
 
         if ($request->has('transaction_type')) {
 
