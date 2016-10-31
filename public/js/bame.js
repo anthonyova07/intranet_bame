@@ -23,8 +23,8 @@ $(document).ready(function() {
 
     $('.carousel').carousel();
 
-    var animateNameIn = 'rollIn';
-    var animateNameOut = 'rollOut';
+    var animateNameIn = 'fadeInDown';
+    var animateNameOut = 'fadeOutDown';
 
     var panel = $('.panel');
     var alert = $('.alert');

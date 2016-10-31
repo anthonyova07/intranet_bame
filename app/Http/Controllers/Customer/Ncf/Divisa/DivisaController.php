@@ -151,7 +151,7 @@ class DivisaController extends Controller
             $detail->detdesc = $transaction->description;
             $detail->detccy = 'DOP';
             $detail->dettas = $transaction->getRate();
-            $detail->detmto = round($transaction->getAmount(), 2);
+            $detail->detmto = round($transaction->getAmount() * $transaction->getRate(), 2);
             $detail->detdia = $transaction->getDay();
             $detail->detmes = $transaction->getMonth();
             $detail->detanio = $transaction->getYear();
