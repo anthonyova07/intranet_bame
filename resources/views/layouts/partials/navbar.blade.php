@@ -57,7 +57,7 @@
                         <a href="#"><i class="fa fa-user fa-fw"></i> {{ session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName() }}</a>
                     </li>
                     <li>
-                        <a href="{{ route('marketing.event.accompanist.index') }}"><i class="fa fa-group fa-fw"></i> Acompañantes</a>
+                        <a href="{{ route('events.accompanist.index') }}"><i class="fa fa-group fa-fw"></i> Acompañantes</a>
                     </li>
                     <li class="divider"></li>
                     <li>
@@ -109,6 +109,12 @@
                             <a href="{{ route('gesticdoc.human_resources') }}">
                                 <i class="fa fa-files-o fa-fw"></i>
                                 Recursos Humanos
+                            </a>
+                        </li>
+                        <li class="animated fadeInDown">
+                            <a href="{{ route('gesticdoc.process') }}">
+                                <i class="fa fa-files-o fa-fw"></i>
+                                Procesos
                             </a>
                         </li>
                     </ul>

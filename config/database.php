@@ -78,6 +78,26 @@ return [
             'schema' => 'public',
         ],
 
+        'sqlsrv_ibtrxs' => [
+            'driver' => 'sqlsrv',
+            'host' => env('IB_IP'),
+            'database' => env('IB_DB_TRX'),
+            'username' => env('IB_USR'),
+            'password' => env('IB_PASS'),
+            'charset' => 'utf8',
+            'prefix' => '',
+        ],
+
+        'sqlsrv_ibcustomers' => [
+            'driver' => 'sqlsrv',
+            'host' => env('IB_IP'),
+            'database' => env('IB_DB_CUSTOMER'),
+            'username' => env('IB_USR'),
+            'password' => env('IB_PASS'),
+            'charset' => 'utf8',
+            'prefix' => '',
+        ],
+
         /*
        |--------------------------------------------------------------------------
        | DB2 Databases

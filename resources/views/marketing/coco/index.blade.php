@@ -4,6 +4,12 @@
 
 @section('page_title', 'Rompete el Coco')
 
+@if (can_not_do('marketing_coco'))
+    @section('contents')
+        @include('layouts.partials.access_denied')
+    @endsection
+@endif
+
 @section('contents')
 
     <div class="row">

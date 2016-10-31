@@ -218,7 +218,13 @@ form {
     padding: 5px;
 }
 
-.link_noticias:focus, .link_noticias:hover {
+.link_noticias_no_effect {
+    color: #ffffff;
+    background-color: #616365;
+    padding: 5px;
+}
+
+.link_noticias:focus, .link_noticias:hover, .link_noticias_no_effect:focus, .link_noticias_no_effect:hover {
     color: #ffffff;
 }
 
