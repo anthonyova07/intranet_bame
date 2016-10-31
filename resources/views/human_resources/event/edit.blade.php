@@ -4,7 +4,7 @@
 
 @section('page_title', 'Editar Evento')
 
-@if (can_not_do('marketing_event'))
+@if (can_not_do('human_resources_event'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection

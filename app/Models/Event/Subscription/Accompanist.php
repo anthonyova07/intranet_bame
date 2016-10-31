@@ -1,10 +1,10 @@
 <?php
 
-namespace Bame\Models\Marketing\Event\Subscription;
+namespace Bame\Models\Event\Subscription;
 
 use Illuminate\Database\Eloquent\Model;
 
-use Bame\Models\Marketing\Event\Accompanist as AccompanistInfo;
+use Bame\Models\Event\Accompanist as AccompanistInfo;
 
 class Accompanist extends Model
 {

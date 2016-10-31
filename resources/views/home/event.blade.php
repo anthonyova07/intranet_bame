@@ -11,18 +11,18 @@
                 <div class="col-xs-4">
                     @if (session()->has('user'))
                         @if ($event->isSubscribe())
-                            <a href="{{ route('marketing.event.unsubscribe_reason', ['id' => $event->id]) }}" class="btn btn-danger btn-block bame_wobble">Cancelar Suscripción</a>
-                            <a href="{{ route('marketing.event.accompanist.index', ['event' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Ver Invitados</a>
+                            <a href="{{ route('event.unsubscribe_reason', ['id' => $event->id]) }}" class="btn btn-danger btn-block bame_wobble">Cancelar Suscripción</a>
+                            <a href="{{ route('events.accompanist.index', ['event' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Ver Invitados</a>
                         @else
                             @if ($event->canSubscribe())
-                                <a href="{{ route('marketing.event.subscribe', ['id' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Suscribirse</a>
+                                <a href="{{ route('event.subscribe', ['id' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Suscribirse</a>
                             @else
                                 <button class="btn btn-default btn-block bame_hinge" style="font-weight: bold;" disabled>No hay cupo disponible</button>
                             @endif
                         @endif
                     @else
                         @if ($event->canSubscribe())
-                            <a href="{{ route('marketing.event.subscribe', ['id' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Suscribirse</a>
+                            <a href="{{ route('event.subscribe', ['id' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Suscribirse</a>
                         @else
                             <button class="btn btn-default btn-block bame_hinge" style="font-weight: bold;" disabled>No hay cupo disponible</button>
                         @endif

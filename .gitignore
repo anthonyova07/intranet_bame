@@ -7,4 +7,5 @@ Homestead.json
 composer.lock
 /public/images/temporal.jpg
 /public/marketing
+/public/event
 /public/files

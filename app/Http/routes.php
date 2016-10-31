@@ -12,7 +12,8 @@ Route::get('break_coco', 'Marketing\MarketingController@coco')->name('coco');
 Route::post('break_coco', 'Marketing\MarketingController@idea');
 
 Route::get('news/{id}', 'Marketing\MarketingController@news')->name('home.news');
-Route::get('event/{id}', 'Marketing\MarketingController@event')->name('home.event');
+
+Route::get('event/{id}', 'HomeController@event')->name('home.event');
 
 Route::get('vacant/{id}', 'HumanResource\HumanResourceController@vacant')->name('home.vacant');
 
@@ -44,6 +45,17 @@ Route::group(['middleware' => 'auth'], function () {
 
     });
 
+    Route::group(['prefix' => 'events'], function () {
+        Route::get('subscribe/{id}', 'Event\SubscriptionController@subscribe')->name('event.subscribe');
+        Route::get('unsubscribe_reason/{id}', 'Event\SubscriptionController@unsubscribe_reason')->name('event.unsubscribe_reason');
+        Route::get('unsubscribe/{event}/{user}', 'Event\SubscriptionController@unsubscribe')->name('event.unsubscribe');
+        Route::get('subscribe/accompanist/{event}/{accompanist}', 'Event\SubscriptionController@subscribeAccompanist')->name('event.subscribe.accompanist');
+        Route::get('unsubscribe/accompanist/{event}/{user}/{accompanist}', 'Event\SubscriptionController@unsubscribeAccompanist')->name('event.unsubscribe.accompanist');
+        Route::get('subscribers/print/{event}/{format}', 'Event\SubscriptionController@print')->name('event.subscribers.print');
+
+        Route::resource('accompanist', 'Event\AccompanistController');
+    });
+
     Route::group(['prefix' => 'marketing'], function () {
         Route::resource('news', 'Marketing\News\NewsController');
 
@@ -61,18 +73,7 @@ Route::group(['middleware' => 'auth'], function () {
             'index', 'store', 'destroy'
         ]]);
 
-        Route::group(['prefix' => 'event'], function () {
-            Route::get('subscribe/{id}', 'Marketing\Event\SubscriptionController@subscribe')->name('marketing.event.subscribe');
-            Route::get('unsubscribe_reason/{id}', 'Marketing\Event\SubscriptionController@unsubscribe_reason')->name('marketing.event.unsubscribe_reason');
-            Route::get('unsubscribe/{event}/{user}', 'Marketing\Event\SubscriptionController@unsubscribe')->name('marketing.event.unsubscribe');
-            Route::get('subscribe/accompanist/{event}/{accompanist}', 'Marketing\Event\SubscriptionController@subscribeAccompanist')->name('marketing.event.subscribe.accompanist');
-            Route::get('unsubscribe/accompanist/{event}/{user}/{accompanist}', 'Marketing\Event\SubscriptionController@unsubscribeAccompanist')->name('marketing.event.unsubscribe.accompanist');
-            Route::get('subscribers/print/{event}/{format}', 'Marketing\Event\SubscriptionController@print')->name('marketing.event.subscribers.print');
-
-            Route::resource('accompanist', 'Marketing\Event\AccompanistController');
-        });
-
-        Route::resource('event', 'Marketing\Event\EventController');
+        Route::resource('event', 'Event\EventController');
     });
 
     Route::group(['prefix' => 'human_resources'], function () {
@@ -85,6 +86,8 @@ Route::group(['middleware' => 'auth'], function () {
         });
 
         Route::resource('vacant', 'HumanResource\Vacant\VacantController');
+
+        Route::resource('event', 'Event\EventController');
     });
 
     Route::group(['prefix' => 'process'], function () {

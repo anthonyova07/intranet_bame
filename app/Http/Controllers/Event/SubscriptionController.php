@@ -1,6 +1,6 @@
 <?php
 
-namespace Bame\Http\Controllers\Marketing\Event;
+namespace Bame\Http\Controllers\Event;
 
 use Illuminate\Http\Request;
 
@@ -8,9 +8,9 @@ use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
 use DateTime;
-use Bame\Models\Marketing\Event\Event;
-use Bame\Models\Marketing\Event\Subscription\Subscription;
-use Bame\Models\Marketing\Event\Subscription\Accompanist as SubscriptionAccompanist;
+use Bame\Models\Event\Event;
+use Bame\Models\Event\Subscription\Subscription;
+use Bame\Models\Event\Subscription\Accompanist as SubscriptionAccompanist;
 
 class SubscriptionController extends Controller
 {
@@ -104,7 +104,7 @@ class SubscriptionController extends Controller
                 'is_subscribe' => false,
             ]);
 
-        return redirect(route('marketing.event.show', ['id' => $event]))->with('success', 'Al usuario e invitados se le han dado de baja correctamente!');
+        return redirect(route('event.show', ['id' => $event]))->with('success', 'Al usuario e invitados se le han dado de baja correctamente!');
     }
 
     public function unsubscribe_reason(Request $request, $id)
@@ -121,7 +121,7 @@ class SubscriptionController extends Controller
             return $redirect->with('warning', 'La fecha de suscripción del evento ha caducado o esta inactivo!');
         }
 
-        return view('marketing.event.unsubscription_reason')
+        return view('event.unsubscription_reason')
             ->with('event_id', $id)
             ->with('user', $request->user);
     }
@@ -215,7 +215,7 @@ class SubscriptionController extends Controller
             $subscription->accompanists = $accompanist_subscriptions->where('owner', $subscription->username)->values();
         });
 
-        return view('pdfs.marketing.event.subscribers')
+        return view('pdfs.event.subscribers')
             ->with('event', $event)
             ->with('subscriptions', $subscriptions)
             ->with('accompanist_subscriptions', $accompanist_subscriptions)

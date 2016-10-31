@@ -2,18 +2,11 @@
 
 namespace Bame\Models\GesticDoc;
 
+use Bame\Models\Department\Department;
+
 class GesticDoc
 {
-    public static function getDepartment($path, $inverted = false)
-    {
-        $parts = explode('/', $path);
-
-        if ($inverted) {
-            return array_pop($parts);
-        }
-
-        return $parts[0];
-    }
+    use Department;
 
     public static function getFiles($department)
     {
