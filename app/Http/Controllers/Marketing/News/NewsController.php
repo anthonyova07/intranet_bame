@@ -8,6 +8,7 @@ use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
 use DateTime;
+use Bame\Models\Notification\Notification;
 use Bame\Models\Marketing\News\News;
 use Bame\Http\Requests\Marketing\News\NewsRequest;
 
@@ -70,6 +71,10 @@ class NewsController extends Controller
 
         do_log('Creó la Noticia ( titulo:' . strip_tags($request->title) . ' )');
 
+        $noti = new Notification('global');
+        $noti->create('Nueva Noticia', $new->title, route('home.news', ['id' => $new->id]));
+        $noti->save();
+
         return redirect(route('marketing.news.index'))->with('success', 'La noticia fue creada correctamente.');
 
     }
@@ -81,7 +86,7 @@ class NewsController extends Controller
 
     public function edit($id)
     {
-        $new = News::find($id);
+        $new = News::where('created_by', session()->get('user'))->find($id);
 
         if (!$new) {
             return back()->with('warning', 'Esta noticia no existe!');
@@ -93,7 +98,7 @@ class NewsController extends Controller
 
     public function update(NewsRequest $request, $id)
     {
-        $new = News::find($id);
+        $new = News::where('created_by', session()->get('user'))->find($id);
 
         if (!$new) {
             return back()->with('warning', 'Esta noticia no existe!');
@@ -132,7 +137,7 @@ class NewsController extends Controller
 
     public function destroy($id)
     {
-        $new = News::find($id);
+        $new = News::where('created_by', session()->get('user'))->find($id);
 
         if (!$new) {
             return back()->with('warning', 'Esta noticia no existe!');
@@ -148,6 +153,6 @@ class NewsController extends Controller
 
         do_log('Eliminó la Noticia ( titulo:' . strip_tags($new->title) . ' )');
 
-        return back()->with('success', 'La noticia ha sido eliminada correctamente.');
+        return redirect(route('marketing.news.index'))->with('success', 'La noticia ha sido eliminada correctamente.');
     }
 }

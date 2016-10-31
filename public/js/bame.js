@@ -30,6 +30,9 @@ $(document).ready(function() {
     var alert = $('.alert');
     var headerPage = $('.header-page');
     var news = $('.news');
+    var bame_tada = $('.bame_tada');
+    var bame_wobble = $('.bame_wobble');
+    var bame_hinge = $('.bame_hinge');
 
     panel.each(function (index, value) {
         $(this).animateCSS(animateNameIn, {
@@ -46,12 +49,36 @@ $(document).ready(function() {
             delay: index * 300
         });
     });
+    bame_tada.each(function (index, value) {
+        $(this).animateCSS('tada', {
+            delay: 1000
+        });
+    });
+    bame_wobble.each(function (index, value) {
+        $(this).animateCSS('wobble', {
+            delay: 1000
+        });
+    });
+    bame_hinge.each(function (index, value) {
+        $(this).animateCSS('hinge', {
+            delay: 3000,
+            callback: function () {
+                $(this).remove();
+            }
+        });
+    });
     headerPage.animateCSS('slideInLeft');
 
-    $('a.btn, .pagination>li>a, .nav-second-level>li>a, .naranja, button[type=submit], .fa-share, a.link_noticias').click(function () {
-        panel.animateCSS(animateNameOut);
-        news.animateCSS(animateNameOut);
-        headerPage.animateCSS('slideOutRight');
+    $('a.btn, .pagination>li>a, .nav-second-level>li>a, .naranja, button[type=submit], .fa-share, a.link_noticias, a.list-group-item').click(function () {
+        panel.animateCSS(animateNameOut, function () {
+            $(this).remove();
+        });
+        news.animateCSS(animateNameOut, function () {
+            $(this).remove();
+        });
+        headerPage.animateCSS('slideOutRight', function () {
+            $(this).remove();
+        });
         alert.animateCSS('bounceOutUp');
     });
 
@@ -59,5 +86,5 @@ $(document).ready(function() {
         $(this).animateCSS('bounceOutUp', function () {
             $(this).remove();
         });
-    })
+    });
 });

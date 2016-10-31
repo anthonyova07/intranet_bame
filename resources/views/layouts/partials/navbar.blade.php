@@ -54,7 +54,10 @@
             <ul class="dropdown-menu dropdown-user">
                 @if (session()->has('user'))
                     <li>
-                        <a href="#"><i class="fa fa-user fa-fw"></i> {{ session()->get('user') }}</a>
+                        <a href="#"><i class="fa fa-user fa-fw"></i> {{ session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName() }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('marketing.event.accompanist.index') }}"><i class="fa fa-group fa-fw"></i> Acompañantes</a>
                     </li>
                     <li class="divider"></li>
                     <li>
@@ -88,6 +91,27 @@
                 </li> --}}
                 <li>
                     <a href="{{ route('home') }}"><i class="fa fa-home fa-fw"></i> Inicio</a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-download fa-fw"></i>
+                        GesticDoc
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level animated swing">
+                        <li class="animated fadeInDown">
+                            <a href="{{ route('gesticdoc.marketing') }}">
+                                <i class="fa fa-files-o fa-fw"></i>
+                                Mercadeo
+                            </a>
+                        </li>
+                        <li class="animated fadeInDown">
+                            <a href="{{ route('gesticdoc.human_resources') }}">
+                                <i class="fa fa-files-o fa-fw"></i>
+                                Recursos Humanos
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 @if (session()->has('menus'))
                     @foreach (session()->get('menus') as $menu)

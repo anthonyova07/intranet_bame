@@ -1,5 +1,75 @@
 <?php
 
+function remove_accents($str)
+{
+    $not_allowed= array ("á","é","í","ó","ú","Á","É","Í","Ó","Ú","ñ","À","Ã","Ì","Ò","Ù","Ã™","Ã ","Ã¨","Ã¬","Ã²","Ã¹","ç","Ç","Ã¢","ê","Ã®","Ã´","Ã»","Ã‚","ÃŠ","ÃŽ","Ã”","Ã›","ü","Ã¶","Ã–","Ã¯","Ã¤","«","Ò","Ã","Ã„","Ã‹", "ñ", "Ñ");
+    $allowed= array ("a","e","i","o","u","A","E","I","O","U","n","N","A","E","I","O","U","a","e","i","o","u","c","C","a","e","i","o","u","A","E","I","O","U","u","o","O","i","a","e","U","I","A","E", "n", "N");
+    return str_replace($not_allowed, $allowed ,$str);
+}
+
+function get_department_name($department)
+{
+    switch ($department) {
+        case 'marketing':
+            return 'Mercadeo';
+            break;
+        case 'human_resources':
+            return 'Recursos Humanos';
+            break;
+    }
+}
+
+function get_file_icon($ext)
+{
+    switch ($ext) {
+        case 'png':
+        case 'jpg':
+            $name = 'image';
+            break;
+        case 'doc':
+        case 'docx':
+            $name = 'word';
+            break;
+        case 'csv':
+        case 'xls':
+        case 'xlsx':
+            $name = 'excel';
+            break;
+        case 'ppt':
+        case 'pptx':
+            $name = 'powerpoint';
+            break;
+        case 'pst':
+            $name = 'correo';
+            break;
+        case 'pub':
+            $name = 'publisher';
+            break;
+        case 'mp3':
+            $name = 'music';
+            break;
+        case 'mpp':
+            $name = 'project';
+            break;
+        case 'one':
+            $name = 'onenote';
+            break;
+        case 'pdf':
+            $name = 'pdf';
+            break;
+        default:
+            $name = 'default';
+            break;
+    }
+
+    if (!file_exists(public_path('images\\' . $ext . '.png'))) {
+        $ext = 'default';
+    }
+
+    $icon = route('home') . '/images/' . $name . '.png';
+    return $icon;
+}
+
 function clear_str($str)
 {
     return strtolower(trim($str));
@@ -199,13 +269,43 @@ function get_months($mes = false)
 
 function get_identification_types($identification_type = false)
 {
-    $identification_types = collect(['C' => 'Cédula', 'N' => 'RNC', 'O' => 'OffShore', 'P' => 'Pasaporte']);
+    $identification_types = collect([
+        'C' => 'Cédula',
+        'N' => 'RNC',
+        'O' => 'OffShore',
+        'P' => 'Pasaporte',
+        'NI' => 'Ninguna'
+    ]);
 
     if (!$identification_type) {
         return $identification_types;
     }
 
     return $identification_types->get($identification_type);
+}
+
+function get_relationship_types($relation_type = false)
+{
+    $relation_types = collect([
+        'P' => 'Primo/a',
+        'PA' => 'Padre',
+        'MA' => 'Madre',
+        'HE' => 'Hermano/a',
+        'E' => 'Esposo/a',
+        'A' => 'Abuelo/a',
+        'H' => 'Hijo/a',
+        'SO' => 'Sobrino/a',
+        'AH' => 'Ahijado/a',
+        'AM' => 'Amigo/a',
+        'NI' => 'Nieto/a',
+        'OT' => 'Otro'
+    ]);
+
+    if (!$relation_type) {
+        return $relation_types;
+    }
+
+    return $relation_types->get($relation_type);
 }
 
 function do_log($description) {
@@ -235,6 +335,7 @@ function clear_tag($str) {
     $str = str_replace('“', '"', $str);
     $str = str_replace('”', '"', $str);
     $str = str_replace('―', '&#8213;', $str);
+    $str = str_replace('•', '&#8226;', $str);
     return strip_tags($str, '<br><u><sub><sup><s><b><i><ol><ul><li>');
 }
 

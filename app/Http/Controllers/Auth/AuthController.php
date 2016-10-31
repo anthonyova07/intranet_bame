@@ -7,6 +7,8 @@ use Bame\Models\Security\Access;
 use Bame\Http\Requests\AuthRequest;
 use Bame\Http\Controllers\Controller;
 
+use Auth;
+
 class AuthController extends Controller
 {
     public function getLogin(Request $request) {
@@ -14,40 +16,43 @@ class AuthController extends Controller
     }
 
     public function postLogin(AuthRequest $request) {
+
         try {
 
-            $lc = ldap_connect('bancamerica.local');
-            $lb = ldap_bind($lc, 'bancamerica\\' . $request->user, $request->password);
+            if (Auth::attempt(['username' => $request->user, 'password' => $request->password])) {
+                $request->session()->put('user', $request->user);
+                $request->session()->put('user_info', Auth::user()->getAdLDAP());
 
-            $request->session()->put('user', $request->user);
+                $menus = Access::getUserAccess(clear_str($request->user));
 
-            $menus = Access::getUserAccess(clear_str($request->user));
+                if ($menus) {
+                    $request->session()->put('menus', $menus);
+                }
 
-            if ($menus) {
-                $request->session()->put('menus', $menus);
+                do_log('Inicio sesión');
+
+                $url_anterior = $request->session()->get('url_anterior');
+                $request->session()->forget('url_anterior');
+
+                if (!$url_anterior) {
+                    return redirect()->route('home');
+                }
+
+                return redirect($url_anterior);
             }
 
-            do_log('Inicio sesión');
+            return back()->with('error', 'Usuario y Contraseña incorrectos!');
 
-            $url_anterior = $request->session()->get('url_anterior');
-            $request->session()->forget('url_anterior');
-
-            if (!$url_anterior) {
-                return redirect()->route('home');
-            }
-
-            return redirect($url_anterior);
-
-        } catch (\Exception $e) {
-            // dd($e->getMessage());
-            $request->session()->flush();
-            return back()->with('error', 'Usuario y Contraseña incorrectos: ' . $e->getMessage());
+        } catch (\Throwable $e) {
+            return back()->with('error', 'Usuario y Contraseña incorrectos!');
         }
+
     }
 
     public function getLogout(Request $request) {
         do_log('Cerro sesión');
         $request->session()->flush();
+        Auth::logout();
         return redirect()->route('home');
     }
 }

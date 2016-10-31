@@ -9,10 +9,13 @@ use Bame\Http\Controllers\Controller;
 
 use Bame\Models\Marketing\News\News;
 use Bame\Models\Marketing\Coco\Coco;
+use Bame\Models\Marketing\Coco\Idea;
+use Bame\Models\Marketing\Event\Event;
+use Bame\Models\Marketing\GesticDoc\GesticDoc;
 
 class MarketingController extends Controller
 {
-    public function show($id)
+    public function news($id)
     {
         $new = News::find($id);
 
@@ -33,17 +36,58 @@ class MarketingController extends Controller
         return view('home.marketing.new.index');
     }
 
+    public function event($id)
+    {
+        $event = Event::find($id);
+
+        return view('home.marketing.event')
+            ->with('event', $event);
+    }
+
     public function coco()
     {
-        $coco = new Coco();
+        $coco = new Coco;
 
         return view('home.marketing.coco')
             ->with('coco', $coco);
     }
 
-    public function post_coco()
+    public function idea(Request $request)
     {
-        return back()->with('info', 'El concurso pronto estará disponible.');
+        $idea = new Idea;
+
+        $idea->id = uniqid(true);
+        $created_by = $request->mail;
+
+        if (session()->has('user')) {
+            $idea->names = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+            $idea->mail = session()->get('user') . '@bancamerica.com.do';
+        } else {
+            $request->replace([
+                'name_last_name' => $request->name_last_name,
+                'mail' => $request->mail . '@bancamerica.com.do',
+                'idea' => $request->idea,
+            ]);
+
+            $this->validate($request, [
+                'name_last_name' => 'required|max:150',
+                'mail' => 'required|email|max:45',
+            ]);
+
+            $idea->names = clear_tag($request->name_last_name);
+            $idea->mail = clear_tag($request->mail);
+        }
+
+        $this->validate($request, [
+            'idea' => 'required|max:10000',
+        ]);
+
+        $idea->idea = clear_tag(nl2br($request->idea));
+        $idea->created_by = session()->has('user') ? session()->get('user') : $created_by;
+
+        $idea->save();
+
+        return redirect(route('home'))->with('success', 'La idea fue creada correctamente.');
     }
 
 }

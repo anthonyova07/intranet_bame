@@ -20,7 +20,7 @@
                         <p style="height: 220px;max-height: 220px;"><b>{{ substr($column_new->title, 0, 80) . '...' }}</b> {!! str_replace('<br />', ' ', substr($column_new->detail, 0, 600))  . '...' !!}</p>
                     </div>
                     <div class="row text-center">
-                        <a href="{{ route('marketing.show.show', ['id' => $column_new->id]) }}" class="link_noticias">Ver Más</a>
+                        <a href="{{ route('home.news', ['id' => $column_new->id]) }}" class="link_noticias">Ver Más</a>
                     </div>
                 @endif
             </div>
@@ -44,7 +44,7 @@
                                     <div class="item {{ $index == 0 ? 'active':'' }}">
                                         <img src="{{ route('home') . $banner->image }}" style="height: 232px;margin: auto;">
                                         <div class="carousel-caption" style="right: 0;left: 0;margin-bottom: -44px;">
-                                            <a href="http://bancamerica.com.do/" target="__blank" class="link_noticias">Ver Detalle</a>
+                                            <a href="http://bancamerica.com.do/" target="__blank" class="link_noticias_no_effect">Ver Detalle</a>
                                         </div>
                                     </div>
                                 @endforeach
@@ -82,7 +82,7 @@
                                     <div class="item {{ $index == 0 ? 'active':'' }}">
                                         <img src="{{ route('home') . $new->image }}" style="height: 280px;margin: auto;">
                                         <div class="carousel-caption carousel-caption-noticias" style="right: 0;left: 0;margin-bottom: -47px;">
-                                            <a data-toggle="tooltip" class="link_noticias" title="Click para más detalles" href="{{ route('marketing.show.show', ['id' => $new->id]) }}">{{ substr($new->title, 0, 85) . '...' }}</a>
+                                            <a data-toggle="tooltip" class="link_noticias" title="Click para más detalles" href="{{ route('home.news', ['id' => $new->id]) }}">{{ substr($new->title, 0, 85) . '...' }}</a>
                                         </div>
                                     </div>
                                 @endforeach
@@ -109,7 +109,6 @@
 
     <div class="row" style="border-top: 1px solid #777;margin-top: 8px;border-width: 5px;">
         <div class="col-xs-12">
-
             <div class="col-xs-4" style="padding-left: 0;">
                 <div class="panel panel-default" style="margin-top: 16px;">
 
@@ -175,11 +174,65 @@
             </div>
 
             <div class="col-xs-4">
-                {{-- dos --}}
+
+                <div class="panel panel-info panel-wiget">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Eventos</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            @foreach($events as $event)
+                                <a href="{{ route('home.event', ['id' => $event->id]) }}" class="list-group-item">
+                                    <h4 class="list-group-item-heading">
+                                        {{ substr($event->title, 0, 70) . '...' }}
+                                        <br>
+                                        <span class="text-muted small">
+                                            <em>{{ $event->start_event->format('d/m/Y h:i:s A') }}</em>
+                                        </span>
+                                    </h4>
+                                    <p class="list-group-item-text">
+                                        {!! substr(str_replace('<br />', ' ', $event->detail), 0, 170)  . '...' !!}
+                                    </p>
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <div class="col-xs-4">
-                {{-- tres --}}
+
+                <div class="panel panel-info  panel-wiget">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Vacantes</h3>
+                    </div>
+                    <div class="panel-body">
+                        @if ($vacancies->count())
+                            <div class="list-group">
+                                @foreach($vacancies as $vacant)
+                                    <a href="{{ route('home.vacant', ['id' => $vacant->id]) }}" class="list-group-item">
+                                        <h4 class="list-group-item-heading">
+                                            {{ substr($vacant->name, 0, 70) . '...' }}
+                                            <br>
+                                            <span class="text-muted small">
+                                                <em>{{ $vacant->created_at->format('d/m/Y h:i:s A') }}</em>
+                                            </span>
+                                        </h4>
+                                        <p class="list-group-item-text">
+                                            {!! substr(str_replace('<br />', ' ', $vacant->detail), 0, 170)  . '...' !!}
+                                        </p>
+                                    </a>
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="panel-body text-center">
+                                <label class="control-label text-center label label-danger" style="font-size: 18px;">No Hay Vacantes</label>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
             </div>
 
         </div>

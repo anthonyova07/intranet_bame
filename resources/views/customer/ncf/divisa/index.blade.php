@@ -123,7 +123,8 @@
                             </div>
                             <div class="col-xs-4">
                                 <a
-                                    class="btn btn-success btn-xs pull-right"
+                                    class="label btn-success btn-xs pull-right"
+                                    style="font-size: 13px;"
                                     onclick="action('save', this)"
                                     href="javascript:void(0)">
                                     Guardar NCF (Divisas)

@@ -65,9 +65,22 @@ return [
     */
 
     'providers' => [
+        // 'users' => [
+        //     'driver' => 'eloquent',
+        //     'model' => Bame\Models\User::class,
+        // ],
+
         'users' => [
-            'driver' => 'eloquent',
-            'model' => Bame\Models\User::class,
+            'driver' => 'ldap',
+            'adldap' => [
+                'account_suffix'=>  '@bancamerica.local',
+                'domain_controllers'=>  array(
+                    'bancamerica.local'
+                ), // Load balancing domain controllers
+                'base_dn'   =>  'DC=bancamerica,DC=local',
+                'admin_username' => env('ADLDAP_ADMIN_USERNAME'), // This is required for session persistance in the application
+                'admin_password' => env('ADLDAP_ADMIN_PASSWORD'),
+            ],
         ],
 
         // 'users' => [

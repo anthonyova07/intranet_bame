@@ -28,7 +28,7 @@ class SubMenuRequest extends Request
             'coduni' => 'required|alpha_dash|max:50',
             'description' => 'required|max:40',
             'caption' => 'required|max:100',
-            'link' => 'required|max:30',
+            'link' => 'required|max:255',
         ];
     }
 }
