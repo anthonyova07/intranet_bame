@@ -116,11 +116,11 @@
                         <img src="{{ route('home') . '/marketing/coco/rompete_el_coco.png' }}" style="width: 220px;">
                     </div>
 
-                    <div class="panel-body text-center">
-                        <h3 style="padding-top: 0;color: #da291c;">{{ $coco->get()->title }}</h3>
-                    </div>
-
                     @if ($coco->get()->active)
+
+                        <div class="panel-body text-center">
+                            <h3 style="padding-top: 0;color: #da291c;">{{ $coco->get()->title }}</h3>
+                        </div>
 
                         <div class="panel-body text-center">
                             <label class="control-label text-center label label-info" style="font-size: 24px;">Descripción</label>
