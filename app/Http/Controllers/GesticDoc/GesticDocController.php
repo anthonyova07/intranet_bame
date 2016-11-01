@@ -13,7 +13,7 @@ class GesticDocController extends Controller
 {
     public function gesticdoc(Request $request)
     {
-        $department = GesticDoc::getDepartment($request->path(), true);
+        $department = GesticDoc::getDepartment($request->url(), true);
 
         $files = GesticDoc::getFiles($department);
 
