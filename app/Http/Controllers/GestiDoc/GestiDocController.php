@@ -1,48 +1,48 @@
 <?php
 
-namespace Bame\Http\Controllers\GesticDoc;
+namespace Bame\Http\Controllers\GestiDoc;
 
 use Illuminate\Http\Request;
 
 use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
-use Bame\Models\GesticDoc\GesticDoc;
+use Bame\Models\GestiDoc\GestiDoc;
 
-class GesticDocController extends Controller
+class GestiDocController extends Controller
 {
-    public function gesticdoc(Request $request)
+    public function gestidoc(Request $request)
     {
-        $department = GesticDoc::getDepartment($request->url(), true);
+        $department = GestiDoc::getDepartment($request->url(), true);
 
-        $files = GesticDoc::getFiles($department, $request->folder);
+        $files = GestiDoc::getFiles($department, $request->folder);
 
-        return view('home.gestic_doc')
+        return view('home.gesti_doc')
             ->with('department', $department)
             ->with('files', $files);
     }
 
     public function index(Request $request)
     {
-        $department = GesticDoc::getDepartment($request->path());
+        $department = GestiDoc::getDepartment($request->path());
 
-        $files = GesticDoc::getFiles($department, $request->folder, true);
+        $files = GestiDoc::getFiles($department, $request->folder, true);
 
-        return view($department . '.gestic_doc.index')
+        return view($department . '.gesti_doc.index')
             ->with('department', $department)
             ->with('files', $files);
     }
 
     public function store(Request $request)
     {
-        $department = GesticDoc::getDepartment($request->path());
+        $department = GestiDoc::getDepartment($request->path());
 
         if ($request->hasFile('files')) {
             $files = collect($request->file('files'));
             $files->each(function ($file, $index) use ($department, $request) {
                 $file_name_destination = str_replace(' ', '_', $file->getClientOriginalName());
 
-                $path = public_path('files\\gestic_doc\\' . $department . ($request->folder ? '\\' . str_replace(' ', '_', remove_accents($request->folder)) : ''));
+                $path = public_path('files\\gesti_doc\\' . $department . ($request->folder ? '\\' . str_replace(' ', '_', remove_accents($request->folder)) : ''));
                 // dd($path);
                 $file->move($path, remove_accents($file_name_destination));
             });
@@ -53,9 +53,9 @@ class GesticDocController extends Controller
 
     public function destroy(Request $request, $file)
     {
-        $department = GesticDoc::getDepartment($request->path());
+        $department = GestiDoc::getDepartment($request->path());
 
-        GesticDoc::deleteFile($department, $file, $request->folder);
+        GestiDoc::deleteFile($department, $file, $request->folder);
 
         return back()->with('success', 'El archivo ha sido eliminado correctamente.');
     }

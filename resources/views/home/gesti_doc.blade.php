@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
-@section('title', 'Gestic Doc')
+@section('title', 'Gesti Doc')
 
-@section('page_title', 'Gestic Doc - ' . get_department_name($department))
+@section('page_title', 'Gesti Doc - ' . get_department_name($department))
 
 @section('contents')
 
@@ -13,7 +13,7 @@
                 <div class="panel-body">
                     @if (Request::get('folder'))
                         <a class="btn btn-info btn-xs"
-                            href="{{ route('gesticdoc.' . $department, ['folder' => gesti_doc_back_folder(Request::get('folder'))]) }}"><i class="fa fa-arrow-left"></i> Atras</a>
+                            href="{{ route('gestidoc.' . $department, ['folder' => gesti_doc_back_folder(Request::get('folder'))]) }}"><i class="fa fa-arrow-left"></i> Atras</a>
                         <br>
                         <br>
                     @endif

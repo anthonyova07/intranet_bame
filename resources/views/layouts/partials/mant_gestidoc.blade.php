@@ -5,7 +5,7 @@
                 <h3 class="panel-title">Carga de Archivos</h3>
             </div>
             <div class="panel-body">
-                <form method="post" action="{{ route($department . '.gesticdoc.store') }}" id="form" enctype="multipart/form-data">
+                <form method="post" action="{{ route($department . '.gestidoc.store') }}" id="form" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-xs-8">
                             <div class="form-group{{ $errors->first('term') ? ' has-error':'' }}">
@@ -39,7 +39,7 @@
             <div class="panel-body">
                 @if (Request::get('folder'))
                     <a class="btn btn-info btn-xs"
-                        href="{{ route($department . '.gesticdoc.index', ['folder' => gesti_doc_back_folder(Request::get('folder'))]) }}"><i class="fa fa-arrow-left"></i> Atras</a>
+                        href="{{ route($department . '.gestidoc.index', ['folder' => gesti_doc_back_folder(Request::get('folder'))]) }}"><i class="fa fa-arrow-left"></i> Atras</a>
                     <br>
                     <br>
                 @endif
@@ -82,7 +82,7 @@
                                             <i class="fa fa-trash fa-fw"></i>
                                         </a>
                                         <form
-                                            action="{{ route($department . '.gesticdoc.destroy', ['file' => $file->file]) }}"
+                                            action="{{ route($department . '.gestidoc.destroy', ['file' => $file->file]) }}"
                                             method="post" id="form_eliminar_{{ $file->name }}">
                                             <input type="hidden" name="folder" value="{{ Request::get('folder') }}">
                                             {{ csrf_field() }}
