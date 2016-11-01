@@ -2,10 +2,10 @@
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::group(['prefix' => 'gesticdoc'], function () {
-    Route::get('marketing', 'GesticDoc\GesticDocController@gesticdoc')->name('gesticdoc.marketing');
-    Route::get('human_resources', 'GesticDoc\GesticDocController@gesticdoc')->name('gesticdoc.human_resources');
-    Route::get('process', 'GesticDoc\GesticDocController@gesticdoc')->name('gesticdoc.process');
+Route::group(['prefix' => 'gestidoc'], function () {
+    Route::get('marketing', 'GestiDoc\GestiDocController@gestidoc')->name('gestidoc.marketing');
+    Route::get('human_resources', 'GestiDoc\GestiDocController@gestidoc')->name('gestidoc.human_resources');
+    Route::get('process', 'GestiDoc\GestiDocController@gestidoc')->name('gestidoc.process');
 });
 
 Route::get('break_coco', 'Marketing\MarketingController@coco')->name('coco');
@@ -69,7 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
             ]]);
         });
 
-        Route::resource('gesticdoc', 'GesticDoc\GesticDocController', ['only' => [
+        Route::resource('gestidoc', 'GestiDoc\GestiDocController', ['only' => [
             'index', 'store', 'destroy'
         ]]);
 
@@ -77,7 +77,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::group(['prefix' => 'human_resources'], function () {
-        Route::resource('gesticdoc', 'GesticDoc\GesticDocController', ['only' => [
+        Route::resource('gestidoc', 'GestiDoc\GestiDocController', ['only' => [
             'index', 'store', 'destroy'
         ]]);
 
@@ -91,7 +91,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::group(['prefix' => 'process'], function () {
-        Route::resource('gesticdoc', 'GesticDoc\GesticDocController', ['only' => [
+        Route::resource('gestidoc', 'GestiDoc\GestiDocController', ['only' => [
             'index', 'store', 'destroy'
         ]]);
     });
