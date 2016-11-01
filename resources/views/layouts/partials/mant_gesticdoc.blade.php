@@ -16,7 +16,7 @@
                         </div>
                         <div class="col-xs-4">
                             <div class="form-group{{ $errors->first('folder') ? ' has-error':'' }}">
-                                <label class="control-label">Carpeta</label>
+                                <label class="control-label">Carpeta <u>Separador: <b>\</b></u></label>
                                 <input type="text" name="folder" value="{{ Request::get('folder') }}" class="form-control input-sm">
                                 <span class="help-block">{{ $errors->first('folder') }}</span>
                             </div>
