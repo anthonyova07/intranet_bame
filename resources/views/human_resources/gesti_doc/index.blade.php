@@ -4,7 +4,7 @@
 
 @section('page_title', 'Mantenimiento GestiDoc - ' . get_department_name($department))
 
-@if (can_not_do('human_resources_gesticdoc'))
+@if (can_not_do('human_resources_gestidoc'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
