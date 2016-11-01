@@ -7,6 +7,15 @@ function remove_accents($str)
     return str_replace($not_allowed, $allowed ,$str);
 }
 
+function gesti_doc_back_folder($folders)
+{
+    $folders = explode('\\', $folders);
+
+    $folders = array_slice($folders, 0, count($folders) - 1);
+
+    return implode('\\', $folders);
+}
+
 function get_department_name($department)
 {
     switch ($department) {
@@ -59,6 +68,9 @@ function get_file_icon($ext)
             break;
         case 'pdf':
             $name = 'pdf';
+            break;
+        case 'directory':
+            $name = 'directory';
             break;
         default:
             $name = 'default';

@@ -15,7 +15,7 @@ class GesticDocController extends Controller
     {
         $department = GesticDoc::getDepartment($request->url(), true);
 
-        $files = GesticDoc::getFiles($department);
+        $files = GesticDoc::getFiles($department, $request->folder);
 
         return view('home.gestic_doc')
             ->with('department', $department)
@@ -26,7 +26,7 @@ class GesticDocController extends Controller
     {
         $department = GesticDoc::getDepartment($request->path());
 
-        $files = GesticDoc::getFiles($department);
+        $files = GesticDoc::getFiles($department, $request->folder, true);
 
         return view($department . '.gestic_doc.index')
             ->with('department', $department)
@@ -39,10 +39,12 @@ class GesticDocController extends Controller
 
         if ($request->hasFile('files')) {
             $files = collect($request->file('files'));
-            $files->each(function ($file, $index) use ($department) {
+            $files->each(function ($file, $index) use ($department, $request) {
                 $file_name_destination = str_replace(' ', '_', $file->getClientOriginalName());
 
-                $file->move(public_path('files\\gestic_doc\\' . $department), remove_accents($file_name_destination));
+                $path = public_path('files\\gestic_doc\\' . $department . ($request->folder ? '\\' . str_replace(' ', '_', remove_accents($request->folder)) : ''));
+                // dd($path);
+                $file->move($path, remove_accents($file_name_destination));
             });
         }
 
@@ -53,7 +55,7 @@ class GesticDocController extends Controller
     {
         $department = GesticDoc::getDepartment($request->path());
 
-        GesticDoc::deleteFile($department, $file);
+        GesticDoc::deleteFile($department, $file, $request->folder);
 
         return back()->with('success', 'El archivo ha sido eliminado correctamente.');
     }

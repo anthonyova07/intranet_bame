@@ -11,6 +11,12 @@
             <div class="panel panel-default">
 
                 <div class="panel-body">
+                    @if (Request::get('folder'))
+                        <a class="btn btn-info btn-xs"
+                            href="{{ route('gesticdoc.' . $department, ['folder' => gesti_doc_back_folder(Request::get('folder'))]) }}"><i class="fa fa-arrow-left"></i> Atras</a>
+                        <br>
+                        <br>
+                    @endif
                     <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='1|asc'>
                         <thead>
                             <tr>
@@ -23,16 +29,24 @@
                             @foreach ($files as $file)
                                 <tr>
                                     <td style="text-align: center;"><img src="{{ get_file_icon($file->type) }}" style="width: 50px;"></td>
-                                    <td style="vertical-align: middle;">{{ str_replace('_', ' ', $file->name) }}</td>
+                                    <td style="vertical-align: middle;">
+                                        @if ($file->type == 'directory')
+                                            <a href="{{ $file->url }}">{{ $file->name }}</a>
+                                        @else
+                                            {{ str_replace('_', ' ', $file->name) }}
+                                        @endif
+                                    </td>
                                     <td style="vertical-align: middle;text-align: center;font-size: 35px;">
-                                        <a
-                                            href="{{ $file->url }}"
-                                            target="_blank"
-                                            data-toggle="tooltip"
-                                            data-placement="top"
-                                            title="Descargar {{ str_replace('_', ' ', $file->name) }}">
-                                            <i class="fa fa-download fa-fw"></i>
-                                        </a>
+                                        @if ($file->type != 'directory')
+                                            <a
+                                                href="{{ $file->url }}"
+                                                target="_blank"
+                                                data-toggle="tooltip"
+                                                data-placement="top"
+                                                title="Descargar {{ str_replace('_', ' ', $file->name) }}">
+                                                <i class="fa fa-download fa-fw"></i>
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
