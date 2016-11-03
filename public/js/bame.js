@@ -39,7 +39,7 @@ $(document).ready(function() {
         $(this).animateCSS('slideInDown', {
             delay: index * 200,
             callback: function () {
-                $(this).css('animation-duration', '0.05s');
+                $(this).css('animation-duration', '0ms');
             }
         });
     });
@@ -47,7 +47,7 @@ $(document).ready(function() {
         $(this).animateCSS(animateNameIn, {
             delay: index * 200,
             callback: function () {
-                $(this).css('animation-duration', '0.05s');
+                $(this).css('animation-duration', '0ms');
             }
         });
     });
@@ -55,7 +55,7 @@ $(document).ready(function() {
         $(this).animateCSS(animateNameIn, {
             delay: index * 200,
             callback: function () {
-                $(this).css('animation-duration', '0.05s');
+                $(this).css('animation-duration', '0ms');
             }
         });
     });
