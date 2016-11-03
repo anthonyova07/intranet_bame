@@ -23,8 +23,8 @@ $(document).ready(function() {
 
     $('.carousel').carousel();
 
-    var animateNameIn = 'fadeInDown';
-    var animateNameOut = 'fadeOutDown';
+    var animateNameIn = 'zoomInUp';
+    var animateNameOut = 'zoomOutUp';
 
     var headerBar = $('.row-top');
     var panel = $('.panel');
@@ -37,17 +37,26 @@ $(document).ready(function() {
 
     headerBar.each(function (index, value) {
         $(this).animateCSS('slideInDown', {
-            delay: index * 200
+            delay: index * 200,
+            callback: function () {
+                $(this).css('animation-duration', '0.05s');
+            }
         });
     });
     panel.each(function (index, value) {
         $(this).animateCSS(animateNameIn, {
-            delay: index * 200
+            delay: index * 200,
+            callback: function () {
+                $(this).css('animation-duration', '0.05s');
+            }
         });
     });
     news.each(function (index, value) {
         $(this).animateCSS(animateNameIn, {
-            delay: index * 200
+            delay: index * 200,
+            callback: function () {
+                $(this).css('animation-duration', '0.05s');
+            }
         });
     });
     alert.each(function (index, value) {

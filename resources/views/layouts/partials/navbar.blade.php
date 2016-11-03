@@ -98,20 +98,20 @@
                         GestiDoc
                         <span class="fa arrow"></span>
                     </a>
-                    <ul class="nav nav-second-level animated swing">
-                        <li class="animated fadeInDown">
+                    <ul class="nav nav-second-level animated zoomInLeft" style="animation-duration: 0.5s;">
+                        <li>
                             <a href="{{ route('gestidoc.marketing') }}">
                                 <i class="fa fa-files-o fa-fw"></i>
                                 Mercadeo
                             </a>
                         </li>
-                        <li class="animated fadeInDown">
+                        <li>
                             <a href="{{ route('gestidoc.human_resources') }}">
                                 <i class="fa fa-files-o fa-fw"></i>
                                 Recursos Humanos
                             </a>
                         </li>
-                        <li class="animated fadeInDown">
+                        <li>
                             <a href="{{ route('gestidoc.process') }}">
                                 <i class="fa fa-files-o fa-fw"></i>
                                 Procesos
@@ -128,10 +128,10 @@
                                 <span class="fa arrow"></span>
                             </a>
                             @if ($menu->submenus->count())
-                                <ul class="nav nav-second-level animated fadeInLeft">
+                                <ul class="nav nav-second-level animated zoomInLeft" style="animation-duration: 0.5s;">
                                     @foreach ($menu->submenus as $submenu)
                                         @if (Route::has($submenu->sub_link))
-                                            <li class="animated fadeInDown">
+                                            <li>
                                                 <a href="{{ route($submenu->sub_link) }}">
                                                     <i class="fa fa-unlock-alt fa-fw"></i>
                                                     {{ $submenu->sub_descri }}
