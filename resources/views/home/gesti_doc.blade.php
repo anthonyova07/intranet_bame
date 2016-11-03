@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
-@section('title', 'Gesti Doc')
+@section('title', 'GestiDoc')
 
-@section('page_title', 'Gesti Doc - ' . get_department_name($department))
+@section('page_title', 'GestiDoc - ' . get_department_name($department))
 
 @section('contents')
 

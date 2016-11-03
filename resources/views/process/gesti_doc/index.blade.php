@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Gesti Doc')
+@section('title', 'GestiDoc')
 
 @section('page_title', 'Mantenimiento GestiDoc - ' . get_department_name($department))
 
