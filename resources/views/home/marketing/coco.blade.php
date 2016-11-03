@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
-@section('title', 'Rompete el Coco')
+@section('title', 'Rómpete el Coco')
 
-@section('page_title', 'Rompete el Coco - Idea')
+@section('page_title', 'Rómpete el Coco - Idea')
 
 @section('contents')
 

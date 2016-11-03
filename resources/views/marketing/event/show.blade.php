@@ -2,7 +2,7 @@
 
 @section('title', 'Eventos')
 
-@section('page_title', 'Subscriptores del Evento: ' . $event->title)
+@section('page_title', 'Suscriptores del Evento: ' . $event->title)
 
 @if (can_not_do('marketing_event'))
     @section('contents')

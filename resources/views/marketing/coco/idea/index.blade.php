@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
-@section('title', 'Mercadeo -> Rompete el Coco (Ideas)')
+@section('title', 'Mercadeo -> Rómpete el Coco (Ideas)')
 
-@section('page_title', 'Ideas de Rompete el Coco')
+@section('page_title', 'Ideas de Rómpete el Coco')
 
 @if (can_not_do('marketing_coco_idea'))
     @section('contents')

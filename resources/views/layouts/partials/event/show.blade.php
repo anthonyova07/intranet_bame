@@ -20,7 +20,7 @@
                         <a href="#accompanists" data-toggle="tab">Invitados <span class="badge">{{ $accompanist_subscriptions->count() }}</a>
                     </li>
                     <li>
-                        <a href="#unsubscribers" data-toggle="tab">Desuscritos <span class="badge">{{ $unsubscriptions->count() }}</span></a>
+                        <a href="#unsubscribers" data-toggle="tab">Cancelados <span class="badge">{{ $unsubscriptions->count() }}</span></a>
                     </li>
                 </ul>
 
