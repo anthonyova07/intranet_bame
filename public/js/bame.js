@@ -23,8 +23,8 @@ $(document).ready(function() {
 
     $('.carousel').carousel();
 
-    var animateNameIn = 'zoomInUp';
-    var animateNameOut = 'zoomOutUp';
+    var animateNameIn = 'zoomInDown';
+    var animateNameOut = 'zoomOut';
 
     var headerBar = $('.row-top');
     var panel = $('.panel');
