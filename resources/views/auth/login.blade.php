@@ -11,6 +11,15 @@
             <div class="col-xs-4 col-xs-offset-4">
                 <div class="panel panel-default">
                     <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="alert alert-info">
+                                    Sus credenciales son las del computador.
+                                </div>
+                            </div>
+                        </div>
+
                         <form method="post" action="{{ route('auth.login') }}" id="form">
                             <div class="form-group{{ $errors->first('user') ? ' has-error':'' }}">
                                 <label class="control-label">Usuario</label>
