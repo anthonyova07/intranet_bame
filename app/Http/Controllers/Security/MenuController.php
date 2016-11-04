@@ -91,7 +91,7 @@ class MenuController extends Controller
 
         $menu->delete();
 
-        do_log('Eliminó el Menú ( código:' . $codigo . ' descripción:' . cap_str($menu->sub_descri) . ' estatus:' . get_status($menu->men_estatu) . ' web:' . get_web($menu->web) . ' )');
+        do_log('Eliminó el Menú ( código:' . $menu->men_codigo . ' descripción:' . cap_str($menu->sub_descri) . ' estatus:' . get_status($menu->men_estatu) . ' web:' . get_web($menu->web) . ' )');
 
         return redirect(route('security.menu.index'))->with('success', 'El menú fue eliminado correctamente.');
     }
