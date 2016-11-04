@@ -14,7 +14,7 @@
     @if (!session()->has('customer_divisa'))
         <div class="row">
             <div class="col-xs-12">
-                <div class="panel panel-danger">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Filtros de Búsqueda</h3>
                     </div>
@@ -74,7 +74,7 @@
     @if (session()->has('customer_divisa'))
         <div class="row">
             <div class="col-xs-12">
-                <div class="panel panel-danger">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             Transacciones Encontradas de {{ (session()->get('customer_divisa')->getName() == ' ') ? session()->get('customer_divisa')->getLegalName() : session()->get('customer_divisa')->getName() }}

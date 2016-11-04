@@ -77,8 +77,11 @@ ul.pagination>li>a {
     box-shadow: 0px 0px 26px 0px rgba(140,140,140,1);
 }
 
-.panel-heading {
+.panel-default>.panel-heading {
     padding: 6px 15px;
+    color: #ffffff;
+    background-color: #d82f27;
+    /*border-color: #ff0000;*/
 }
 
 .panel-body {
@@ -103,8 +106,7 @@ form {
 
 .btn-danger {
     color: #ffffff;
-    /*background-color: #da291c;*/
-    background-color: #ff0000;
+    background-color: #d82f27;
 }
 
 .btn-warning {
@@ -238,7 +240,6 @@ form {
 }
 
 .panel {
-    /*animation: rollIn 1s;*/
     display: none;
 }
 
@@ -267,7 +268,12 @@ form {
     border-color: #d82f27;
 }
 
-.panel-wiget .panel-heading {
-    background-image: linear-gradient(to bottom,#ff7972 0,#d82f27 100%);
-    color: #FFF;
+.panel-default {
+    border-color: #ff0000;
+}
+
+.form-control:focus {
+    border-color: #ff0000;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(255,0,0,.6);
 }

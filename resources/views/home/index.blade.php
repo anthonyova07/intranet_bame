@@ -175,7 +175,7 @@
 
             <div class="col-xs-4">
 
-                <div class="panel panel-info panel-wiget">
+                <div class="panel panel-default panel-wiget">
                     <div class="panel-heading">
                         <h3 class="panel-title">Eventos</h3>
                     </div>
@@ -209,7 +209,7 @@
 
             <div class="col-xs-4">
 
-                <div class="panel panel-info  panel-wiget">
+                <div class="panel panel-default  panel-wiget">
                     <div class="panel-heading">
                         <h3 class="panel-title">Vacantes</h3>
                     </div>

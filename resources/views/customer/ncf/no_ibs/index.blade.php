@@ -14,7 +14,7 @@
     @if (!session()->has('customer_no_ibs'))
         <div class="row">
             <div class="col-xs-12">
-                <div class="panel panel-warning">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             Información del Cliente
@@ -80,7 +80,7 @@
     @if (session()->has('customer_no_ibs'))
         <div class="row">
             <div class="col-xs-12">
-                <div class="panel panel-warning">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             Transacciones para el NCF de {{ session()->get('customer_no_ibs')->to_name }}
