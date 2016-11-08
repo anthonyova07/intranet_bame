@@ -39,7 +39,16 @@
                     <div class="panel-body">
                         <div class="col-xs-12 well well-sm">
                             <div class="col-xs-12 text-center">
-                                <h2>Información del Cliente <small>({{ $ibs ? 'Es':'No es' }} cliente)</small></h2>
+                                <h2>Información del Cliente
+                                    <small>
+                                        ({{ $ibs ? 'Es':'No es' }} cliente)
+                                        @if ($ibs)
+                                            @if (!can_not_do('customer_ncf'))
+                                                <a href="{{ route('customer.ncf.index', ['customer_number' => $customer->getCode()]) }}" class="btn btn-warning btn-xs">Ver NCF's</a>
+                                            @endif
+                                        @endif
+                                    </small>
+                                </h2>
                             </div>
                             <form method="post" action="" id="form_cliente">
                                 <div class="col-xs-4">
