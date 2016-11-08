@@ -130,6 +130,16 @@ Route::group(['middleware' => 'auth'], function () {
                 ]]);
             });
         });
+
+        Route::resource('claim', 'Customer\Claim\ClaimController', ['only' => [
+            'index', 'create'
+        ]]);
+
+        Route::group(['prefix' => 'claim/{type}'], function () {
+            Route::resource('ct_dc', 'Customer\Claim\CtDcController', ['only' => [
+                'create', 'store', 'edit', 'update'
+            ]]);
+        });
     });
 
     Route::group(['prefix' => 'operation'], function () {

@@ -2,6 +2,7 @@
 
 namespace Bame\Models\Customer;
 
+use Bame\Models\Customer\Product\Loan;
 use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
@@ -136,6 +137,16 @@ class Customer extends Model
         return '(' . cod_tel($this->cusph1) . ') ' . tel($this->cusph1);
     }
 
+    public function getFaxPhone()
+    {
+        return '(' . cod_tel($this->cusfax) . ') ' . tel($this->cusfax);
+    }
+
+    public function getMail()
+    {
+        return clear_str($this->cusiad);
+    }
+
     public static function getPhoto($identification)
     {
         $identification = clear_str($identification);
@@ -150,5 +161,15 @@ class Customer extends Model
             $photo = base_path('\\public\\images\\noFoto.jpg');
         }
         return $photo;
+    }
+
+    public function agent()
+    {
+        return $this->hasOne(Agent::class, 'cuscun', 'cumcun')->where('cumrtp', 5);
+    }
+
+    public function loans()
+    {
+        return $this->hasMany(Loan::class, 'deacun');
     }
 }

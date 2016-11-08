@@ -389,3 +389,87 @@ function remove_n_r($str, $use_nl2br = true) {
 
     return str_ireplace($buscar, $reemplazar, $str);
 }
+
+function get_offices($office = null)
+{
+    $offices = collect([
+        '1' => 'Oficina Principal',
+        // '2' => 'No Existe',
+        '3' => 'Bella Vista',
+        '4' => 'Blue Mall',
+        '5' => 'Lope de Vega',
+        '6' => 'San Vicente',
+        '7' => 'Barahona',
+        '8' => 'Neyba',
+        '9' => 'Vicente Noble',
+    ]);
+
+    if (!$office) {
+        return $offices;
+    }
+
+    return $offices->get($office);
+}
+
+function get_product_types($product = null)
+{
+    $product_types = collect([
+        'TARCRE' => 'Tarjeta de Crédito',
+        'TARDEB' => 'Tarjeta de Débito',
+        'CUECOR' => 'Cuenta Corriente',
+        'CUEAHO' => 'Cuenta Ahorro',
+        'CERDEP' => 'Cuenta Ahorro',
+        'PRECOM' => 'Préstamo Comercial',
+        'PRECON' => 'Préstamo Consumo',
+        'PREHIP' => 'Préstamo Hipotecario',
+    ]);
+
+    if (!$product) {
+        return $product_types;
+    }
+
+    return $product_types->get($product);
+}
+
+function get_form_types($form_type = null)
+{
+    $form_types = collect([
+        'NIN' => 'Ninguno',
+        'CON' => 'Consumo',
+        'FRA' => 'Fraude',
+        'REV' => 'Reverso',
+    ]);
+
+    if (!$form_type) {
+        return $form_types;
+    }
+
+    return $form_types->get($form_type);
+}
+
+function get_currencies($currency = null)
+{
+    $channels = collect([
+        'DOP' => 'Pesos Dominicanos',
+        'USD' => 'Dólares Estado Unidenses',
+        'EUR' => 'Euros',
+    ]);
+
+    if (!$currency) {
+        return $channels;
+    }
+
+    return $channels->get($currency);
+}
+
+function get_ct_dc($type, $plural = true)
+{
+    switch ($type) {
+        case 'CT':
+            return ($plural ? 'Tipos ' : 'Tipo ') . 'de Reclamación';
+            break;
+        case 'DC':
+            return ($plural ? 'Canales' : 'Canal') . ' de Distribución';
+            break;
+    }
+}
