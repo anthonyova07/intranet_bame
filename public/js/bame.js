@@ -18,7 +18,8 @@ $(document).ready(function() {
             "url": $('body').attr('ruta') + "/js/dataTables.spanish.lang"
         },
         "lengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
-        'order': [$orderBy]
+        'order': [$orderBy],
+        'autoWidth': false
     });
 
     $('.carousel').carousel();

@@ -37,14 +37,14 @@
                             </div>
                             <div class="col-xs-1">
                                 <div class="form-group{{ $errors->first('month_process') ? ' has-error':'' }}">
-                                    <label class="control-label" title="Mes del Proceso" data-toggle="tooltip">MP</label>
+                                    <label class="control-label" title="Mes del Proceso" data-toggle="tooltip">Mes</label>
                                     <input type="text" class="form-control input-sm" name="month_process" placeholder="00" value="{{ old('month_process') }}">
                                     <span class="help-block">{{ $errors->first('month_process') }}</span>
                                 </div>
                             </div>
                             <div class="col-xs-1">
                                 <div class="form-group{{ $errors->first('year_process') ? ' has-error':'' }}">
-                                    <label class="control-label" title="Año del Proceso" data-toggle="tooltip">AP</label>
+                                    <label class="control-label" title="Año del Proceso" data-toggle="tooltip">Año</label>
                                     <input type="text" class="form-control input-sm" name="year_process" placeholder="0000" value="{{ old('year_process') }}">
                                     <span class="help-block">{{ $errors->first('year_process') }}</span>
                                 </div>
@@ -109,7 +109,7 @@
                                     <td align="right">{{ $ncf->getAmount() }}</td>
                                     <td align="center" width="20">
                                         <a
-                                            href="{{ route('customer.ncf.{invoice}.detail.index', ['id' => $ncf->getInvoice()]) }}"
+                                            href="{{ route('customer.ncf.{invoice}.detail.index', array_merge(Request::all(), ['invoice' => $ncf->getInvoice()])) }}"
                                             data-toggle="tooltip"
                                             data-placement="top"
                                             title="Ver Detalle de la factura {{ $ncf->getInvoice() }}">
