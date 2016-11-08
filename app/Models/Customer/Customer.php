@@ -4,6 +4,7 @@ namespace Bame\Models\Customer;
 
 use Bame\Models\Customer\Product\Loan;
 use Illuminate\Database\Eloquent\Model;
+use Bame\Models\Customer\Product\Account;
 
 class Customer extends Model
 {
@@ -171,5 +172,15 @@ class Customer extends Model
     public function loans()
     {
         return $this->hasMany(Loan::class, 'deacun');
+    }
+
+    public function accounts_sav()
+    {
+        return $this->hasMany(Account::class, 'acmcun')->where('acmacd', '04');
+    }
+
+    public function accounts_dda()
+    {
+        return $this->hasMany(Account::class, 'acmcun')->where('acmacd', '<>', '04');
     }
 }

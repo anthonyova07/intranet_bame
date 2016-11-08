@@ -316,7 +316,7 @@
                                 </div>
                             </div>
                             {{ csrf_field() }}
-                            <a class="btn btn-info btn-xs" href="{{ route('marketing.news.index') }}"><i class="fa fa-arrow-left"></i> Atras</a>
+                            <a class="btn btn-info btn-xs" href="{{ route('customer.claim.index') }}"><i class="fa fa-arrow-left"></i> Atras</a>
                             <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Buscando...">Buscar</button>
                         </form>
                     </div>
