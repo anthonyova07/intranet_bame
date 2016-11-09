@@ -109,8 +109,19 @@ class ClaimController extends Controller
 
         $claim->distribution_channel = $distribution_channel->description;
         $claim->product_type = get_product_types($request->product_type);
-        $claim->product_number = $request->product;
-        $claim->product_code = null;
+
+        $product_parts = explode('|', $request->product);
+
+        if (count($product_parts) == 3) {
+            $product_number = $customer->creditcards->get($product_parts[0])->getNumber();
+            $product_code = $product_parts[1];
+        } else {
+            $product_number = $product_parts[1];
+            $product_code = $product_parts[0];
+        }
+
+        $claim->product_number = $product_number;
+        $claim->product_code = $product_code;
 
         $claim->created_by = session()->get('user');
         $claim->created_by_name = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();

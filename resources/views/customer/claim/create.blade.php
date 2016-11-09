@@ -195,8 +195,8 @@
                                                 <option value="{{ $loan->getProductCode() . '|' . $loan->getNumber() }}" {{ old('product') == $loan->getNumber() ? 'selected':'' }}>Préstamo ({{ $loan->getNumber() }})</option>
                                             @endforeach
 
-                                            @foreach (session()->get('customer_claim')->creditcards as $creditcard)
-                                                <option value="{{ $creditcard->getProductCode() . '|' . $creditcard->getNumber() }}" {{ old('product') == $creditcard->getNumber() ? 'selected':'' }}>Tarjeta de Credito ({{ $creditcard->getMaskedNumber() }})</option>
+                                            @foreach (session()->get('customer_claim')->creditcards as $key => $creditcard)
+                                                <option value="{{ $key . '|' . $creditcard->getProductCode() . '|' . $creditcard->getMaskedNumber() }}" {{ old('product') == ($key . '|' . $creditcard->getProductCode() . '|' . $creditcard->getMaskedNumber()) ? 'selected':'' }}>Tarjeta de Credito ({{ $creditcard->getMaskedNumber() }})</option>
                                             @endforeach
 
                                             @foreach (session()->get('customer_claim')->money_markets as $money_market)
