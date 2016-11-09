@@ -450,9 +450,9 @@ function get_form_types($form_type = null)
 function get_currencies($currency = null)
 {
     $channels = collect([
-        'DOP' => 'Pesos Dominicanos',
-        'USD' => 'Dólares Estado Unidenses',
-        'EUR' => 'Euros',
+        'RD$' => 'Pesos Dominicanos',
+        'US$' => 'Dólares Estado Unidenses',
+        'EU$' => 'Euros',
     ]);
 
     if (!$currency) {
@@ -498,4 +498,11 @@ function get_next_claim_number($last_claim_number)
     }
 
     return $number;
+}
+
+function get_response_term()
+{
+    return [
+        30, 45, 60
+    ];
 }

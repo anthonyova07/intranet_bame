@@ -25,4 +25,9 @@ class LoanMoneyMarket extends Model
     {
         return $this->deapro;
     }
+
+    public function getCurrency()
+    {
+        return $this->deaccy;
+    }
 }

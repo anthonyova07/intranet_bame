@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
-use Bame\Models\Customer\CtDc\CtDc;
+use Bame\Models\Customer\Claim\CtDc;
 use Bame\Http\Requests\Customer\Claim\CtDcRequest;
 
 class CtDcController extends Controller

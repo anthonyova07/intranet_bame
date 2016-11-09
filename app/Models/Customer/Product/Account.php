@@ -25,4 +25,9 @@ class Account extends Model
     {
         return $this->acmpro;
     }
+
+    public function getCurrency()
+    {
+        return $this->acmccy;
+    }
 }

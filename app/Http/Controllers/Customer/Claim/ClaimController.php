@@ -8,20 +8,22 @@ use DateTime;
 use Bame\Http\Requests;
 use Bame\Models\Customer\Customer;
 use Bame\Http\Controllers\Controller;
-use Bame\Models\Customer\CtDc\CtDc;
-use Bame\Models\Customer\Claim;
+use Bame\Models\Customer\Claim\CtDc;
+use Bame\Models\Customer\Claim\Claim;
 use Bame\Http\Requests\Customer\Claim\ClaimRequest;
 
 class ClaimController extends Controller
 {
     public function index()
     {
+        $claims = Claim::orderBy('claim_number', 'desc')->paginate();
         $ct_dc = CtDc::all();
 
         $claim_types = $ct_dc->where('type', 'CT');
         $distribution_channels = $ct_dc->where('type', 'DC');
 
         return view('customer.claim.index')
+            ->with('claims', $claims)
             ->with('claim_types', $claim_types)
             ->with('distribution_channels', $distribution_channels);
     }
@@ -59,6 +61,13 @@ class ClaimController extends Controller
 
     public function store(ClaimRequest $request)
     {
+        $messages = $this->validate_field($request);
+
+        if ($messages->count()) {
+            $request->session()->flash('messages_claim', $messages->values());
+            return back()->withInput();
+        }
+
         $claim = new Claim;
 
         $customer = session()->get('customer_claim');
@@ -78,11 +87,11 @@ class ClaimController extends Controller
         $claim->mail = $customer->getMail();
         $claim->street_address = $customer->getStreet();
         $claim->street_number = null;
-        $claim->sector_address = null;
-        $claim->building_number = $customer->getHouse();
-        $claim->apartment_number = $customer->getBuilding();
-        $claim->city = null;
-        $claim->province = null;
+        $claim->sector_address = $customer->getSector();
+        $claim->building_residential = $customer->getResidentialOrBuilding();
+        $claim->apartment_number = $customer->getBuildingOrHouseNumber();
+        $claim->city = $customer->getCity();
+        $claim->province = $customer->getProvince();
         $claim->is_closed = false;
         $claim->currency = $request->currency;
         $claim->amount = round($request->amount, 2);
@@ -94,9 +103,14 @@ class ClaimController extends Controller
         }
 
         $claim->claim_type = $claim_type->description;
+
+        if (!in_array($request->response_term, get_response_term())) {
+            return back()->with('error', 'El Plazo de Respuesta seleccionado no existe!');
+        }
+
         $claim->response_term = $request->response_term;
         $claim->response_place = get_offices($request->office);
-        $claim->response_date = $request->response_date;
+        $claim->response_date = (new DateTime)->modify('+' . $request->response_term . ' days');
         $claim->observations = $request->observations;
         $claim->rate_day = 0.00;
         $claim->is_signed = false;
@@ -123,16 +137,29 @@ class ClaimController extends Controller
         $claim->product_number = $product_number;
         $claim->product_code = $product_code;
 
+        if ($customer->isCompany()) {
+            $claim->agent_legal_name = $customer->agent->getLegalName();
+            $claim->agent_identification = $customer->agent->getIdentification();
+            $claim->agent_residential_phone = $request->residential_phone;
+            $claim->agent_office_phone = $request->office_phone;
+            $claim->agent_cell_phone = $customer->agent->getPhoneNumber();
+            $claim->agent_mail = $request->mail;
+            $claim->agent_fax_phone = $request->fax;
+        }
+
         $claim->created_by = session()->get('user');
         $claim->created_by_name = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
 
-        $last_claim = Claim::orderBy('created_at', 'desc')
-                            ->where('created_at', (new DateTime)->format('Y-m-d'))->first();
+        $last_claim = Claim::orderBy('created_at', 'desc')->first();
 
         $last_claim_number = $last_claim ? $last_claim->claim_number : null;
 
         $claim->claim_number = get_next_claim_number($last_claim_number);
         $claim->save();
+
+        session()->forget('customer_claim');
+
+        return redirect(route('customer.claim.index'))->with('success', 'La reclamación ha sido creada correctamente.');
     }
 
     public function destroy()
@@ -140,5 +167,44 @@ class ClaimController extends Controller
         session()->forget('customer_claim');
 
         return redirect(route('customer.claim.create'))->with('success', 'La reclamación ha sido cancelada correctamente.');
+    }
+
+    protected function validate_field($request)
+    {
+        $customer = session()->get('customer_claim');
+
+        $messages = collect();
+
+        if ($customer->isCompany()) {
+            if (empty($customer->agent->getLegalName())) {
+                $messages->push('El nmbre legal del representante es requerido.');
+            }
+
+            if (empty(clear_str($request->residential_phone)) && empty(clear_str($request->office_phone)) && empty(clear_str($customer->agent->getPhoneNumber()))) {
+                $messages->push('El representante debe tener un teléfono residencial, oficina o celular.');
+            }
+
+            if (empty(clear_str($request->mail))) {
+                $messages->push('El representante debe tener un correo.');
+            }
+        } else {
+            if (empty(clear_str($customer->getNames())) || empty(clear_str($customer->getLastNames()))) {
+                $messages->push('Los campos Nombres y Apellidos son requeridos.');
+            }
+
+            if (empty($customer->getMail())) {
+                $messages->push('El cliente debe tener un correo.');
+            }
+        }
+
+        if (empty($customer->getDocument()) && empty($customer->getPassport())) {
+            $messages->push('El cliente debe tener al menos una identificación.');
+        }
+
+        if (clear_str($customer->getResidentialPhone()) == '(0) ' || clear_str($customer->getCellPhone()) == '(0) ') {
+            $messages->push('El cliente debe tener un teléfono residencial o celular.');
+        }
+
+        return $messages;
     }
 }

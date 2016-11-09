@@ -2,6 +2,7 @@
 
 namespace Bame\Models\Customer;
 
+use DB;
 use Illuminate\Database\Eloquent\Model;
 use Bame\Models\Customer\Product\Account;
 use Bame\Models\Customer\Product\CreditCard;
@@ -40,7 +41,7 @@ class Customer extends Model
 
     public function getDocument()
     {
-        return cap_str($this->cusln3);
+        return clear_str($this->cusln3);
     }
 
     public function getFirstName()
@@ -119,14 +120,47 @@ class Customer extends Model
         return cap_str($this->cusna2);
     }
 
-    public function getHouse()
+    public function getResidentialOrBuilding()
     {
         return cap_str($this->cusna3);
     }
 
-    public function getBuilding()
+    public function getBuildingOrHouseNumber()
     {
         return cap_str($this->cusna4);
+    }
+
+    public function getProvince()
+    {
+        $province = DB::connection('ibs')->table('cnofc')->where('cnocfl', 'PV')->where('cnorcd', $this->cusste)->first();
+
+        if (!$province) {
+            return '';
+        }
+
+        return cap_str($province->cnodsc);
+    }
+
+    public function getCity()
+    {
+        $city = DB::connection('ibs')->table('cnofc')->where('cnocfl', 'PI')->where('cnorcd', $this->cusuc8)->first();
+
+        if (!$city) {
+            return '';
+        }
+
+        return cap_str($city->cnodsc);
+    }
+
+    public function getSector()
+    {
+        $city = DB::connection('ibs')->table('cnofc')->where('cnocfl', 'PE')->where('cnorcd', $this->cusuc7)->first();
+
+        if (!$city) {
+            return '';
+        }
+
+        return cap_str($city->cnodsc);
     }
 
     public function getResidentialPhone()

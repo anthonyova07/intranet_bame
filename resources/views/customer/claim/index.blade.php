@@ -17,10 +17,10 @@
         <div class="col-xs-8 col-xs-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Filtros de Búsqueda</h3>
+                    <h3 class="panel-title">Búscar Reclamación</h3>
                 </div>
                 <div class="panel-body">
-                    <form method="get" action="" id="form">
+                    <form method="get" action="{{ route('customer.claim.index') }}" id="form">
                         <div class="row">
                             <div class="col-xs-6">
                                 <div class="form-group{{ $errors->first('term') ? ' has-error':'' }}">
@@ -60,25 +60,43 @@
         <div class="col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.create') }}">Nuevo</a>
+                    <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.create') }}">Nuevo Reclamación</a>
                     <br>
                     <br>
                     <table class="table table-striped table-bordered table-hover table-condensed" order-by='2|desc'>
                         <thead>
                             <tr>
-                                <th>Nombre</th>
+                                <th># Reclamación</th>
+                                <th># Cliente</th>
+                                <th>Identificación</th>
+                                <th>Monto</th>
+                                <th>Fec. Respuesta</th>
+                                <th>Estado</th>
                                 <th style="width: 112px;">Fecha Creación</th>
+                                <th style="width: 112px;">Creado por</th>
                                 <th style="width: 52px"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($vacancies as $vacant)
+                            @foreach ($claims as $claim)
                                 <tr>
-                                    <td>{{ $vacant->name }}</td>
-                                    <td>{{ $vacant->created_at }}</td>
+                                    <td>{{ $claim->claim_number }}</td>
+                                    @if ($claim->is_company)
+                                        <td>{{ '(' . $claim->customer_number . ') ' . $claim->legal_name }}</td>
+                                    @else
+                                        <td>{{ '(' . $claim->customer_number . ') ' . $claim->names . ' ' . $claim->last_names }}</td>
+                                    @endif
+                                    <td>{{ ($claim->identification == '') ? $claim->passport : $claim->identification }}</td>
+                                    <td class="text-right">{{ $claim->currency . ' ' . number_format($claim->amount, 2) }}</td>
+                                    <td>{{ $claim->response_date->format('d/m/Y') }}</td>
+                                    <td>
+                                        <span class="label label-{{ $claim->is_closed ? 'success' : 'danger' }}">{{ $claim->is_closed ? 'Cerrada' : 'En Proceso' }}</span>
+                                    </td>
+                                    <td>{{ $claim->created_at->format('d/m/Y H:i:s') }}</td>
+                                    <td>{{ $claim->created_by_name }}</td>
                                     <td align="center">
                                         <a
-                                            href="{{ route('human_resources.vacant.edit', ['id' => $vacant->id]) }}"
+                                            href=""
                                             data-toggle="tooltip"
                                             data-placement="top"
                                             title="Editar"
@@ -86,7 +104,7 @@
                                             <i class="fa fa-edit fa-fw"></i>
                                         </a>
                                         <a
-                                            href="{{ route('human_resources.vacant.show', ['id' => $vacant->id]) }}"
+                                            href=""
                                             data-toggle="tooltip"
                                             data-placement="top"
                                             title="Ver Aplicantes">
@@ -94,11 +112,11 @@
                                         </a>
                                     </td>
                                 </tr>
-                            @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
 
-                    {{-- {{ $vacancies->links() }} --}}
+                    {{ $claims->links() }}
                 </div>
             </div>
         </div>

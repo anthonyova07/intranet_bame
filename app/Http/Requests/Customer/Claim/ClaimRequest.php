@@ -30,7 +30,6 @@ class ClaimRequest extends Request
             'amount' => 'required|numeric',
             'claim_type' => 'required',
             'response_term' => 'required|integer',
-            'response_date' => 'required|date_format:"Y-m-d"',
             'mail' => 'email',
             'observations' => 'max:10000',
         ];
