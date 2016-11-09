@@ -53,8 +53,8 @@ class NewsController extends Controller
         $new = new News;
 
         $new->id = uniqid(true);
-        $new->title = clear_tag($request->title);
-        $new->detail = clear_tag(nl2br($request->detail));
+        $new->title = clear_tag(htmlentities($request->title));
+        $new->detail = clear_tag(nl2br(htmlentities($request->detail)));
 
         if ($request->hasFile('image')) {
             $file_name_destination = $new->id . '.' . get_extensions_file($request->file('image')->getClientOriginalName());
@@ -72,7 +72,7 @@ class NewsController extends Controller
         do_log('Creó la Noticia ( titulo:' . strip_tags($request->title) . ' )');
 
         $noti = new Notification('global');
-        $noti->create('Nueva Noticia', $new->title, route('home.news', ['id' => $new->id]));
+        $noti->create('Nueva Noticia', $request->title, route('home.news', ['id' => $new->id]));
         $noti->save();
 
         return redirect(route('marketing.news.index'))->with('success', 'La noticia fue creada correctamente.');
@@ -104,8 +104,8 @@ class NewsController extends Controller
             return back()->with('warning', 'Esta noticia no existe!');
         }
 
-        $new->title = clear_tag($request->title);
-        $new->detail = clear_tag(nl2br($request->detail));
+        $new->title = clear_tag(htmlentities($request->title));
+        $new->detail = clear_tag(nl2br(htmlentities($request->detail)));
 
         if ($request->hasFile('image')) {
             $file_name = public_path() . str_replace('/', '\\', $new->image);

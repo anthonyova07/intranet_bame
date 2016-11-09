@@ -347,10 +347,9 @@ function get_extensions_file($file_name) {
 }
 
 function clear_tag($str) {
-    $str = str_replace('“', '"', $str);
-    $str = str_replace('”', '"', $str);
     $str = str_replace('―', '&#8213;', $str);
     $str = str_replace('•', '&#8226;', $str);
+    $str = str_replace('', '&#8226;', $str);
     return strip_tags($str, '<br><u><sub><sup><s><b><i><ol><ul><li>');
 }
 
