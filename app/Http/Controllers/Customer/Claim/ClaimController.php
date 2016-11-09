@@ -4,10 +4,13 @@ namespace Bame\Http\Controllers\Customer\Claim;
 
 use Illuminate\Http\Request;
 
+use DateTime;
 use Bame\Http\Requests;
 use Bame\Models\Customer\Customer;
 use Bame\Http\Controllers\Controller;
 use Bame\Models\Customer\CtDc\CtDc;
+use Bame\Models\Customer\Claim;
+use Bame\Http\Requests\Customer\Claim\ClaimRequest;
 
 class ClaimController extends Controller
 {
@@ -35,7 +38,7 @@ class ClaimController extends Controller
         if ($request->identification) {
 
             $this->validate($request, [
-                'identification' => 'required|max:15',
+                'identification' => 'required|alpha_num|max:15',
             ]);
 
             $identification = $request->identification;
@@ -46,13 +49,85 @@ class ClaimController extends Controller
                 return redirect(route('customer.claim.create'))->with('warning', 'La información suministrada no corresponde a ningún cliente en IBS.');
             }
 
-            $customer->is_legal = $request->is_legal ? true : false;
-
             session()->put('customer_claim', $customer);
         }
 
         return $view
             ->with('claim_types', $claim_types)
             ->with('distribution_channels', $distribution_channels);
+    }
+
+    public function store(ClaimRequest $request)
+    {
+        $claim = new Claim;
+
+        $customer = session()->get('customer_claim');
+
+        $claim->id = uniqid(true);
+        $claim->customer_number = $customer->getCode();
+        $claim->names = $customer->getNames();
+        $claim->last_names = $customer->getLastNames();
+        $claim->is_company = $customer->isCompany();
+        $claim->identification = $customer->getDocument();
+        $claim->passport = $customer->getPassport();
+        $claim->legal_name = $customer->getLegalName();
+        $claim->residential_phone = $customer->getResidentialPhone();
+        $claim->office_phone = $customer->getOfficePhone();
+        $claim->cell_phone = $customer->getCellPhone();
+        $claim->fax_phone = $customer->getFaxPhone();
+        $claim->mail = $customer->getMail();
+        $claim->street_address = $customer->getStreet();
+        $claim->street_number = null;
+        $claim->sector_address = null;
+        $claim->building_number = $customer->getHouse();
+        $claim->apartment_number = $customer->getBuilding();
+        $claim->city = null;
+        $claim->province = null;
+        $claim->is_closed = false;
+        $claim->currency = $request->currency;
+        $claim->amount = round($request->amount, 2);
+
+        $claim_type = CtDc::find($request->claim_type);
+
+        if (!$claim_type) {
+            return back()->with('error', 'El Tipo de Reclamación seleccionado no existe!');
+        }
+
+        $claim->claim_type = $claim_type->description;
+        $claim->response_term = $request->response_term;
+        $claim->response_place = get_offices($request->office);
+        $claim->response_date = $request->response_date;
+        $claim->observations = $request->observations;
+        $claim->rate_day = 0.00;
+        $claim->is_signed = false;
+
+        $distribution_channel = CtDc::find($request->channel);
+
+        if (!$distribution_channel) {
+            return back()->with('error', 'El Canal de Distribución seleccionado no existe!');
+        }
+
+        $claim->distribution_channel = $distribution_channel->description;
+        $claim->product_type = get_product_types($request->product_type);
+        $claim->product_number = $request->product;
+        $claim->product_code = null;
+
+        $claim->created_by = session()->get('user');
+        $claim->created_by_name = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+
+        $last_claim = Claim::orderBy('created_at', 'desc')
+                            ->where('created_at', (new DateTime)->format('Y-m-d'))->first();
+
+        $last_claim_number = $last_claim ? $last_claim->claim_number : null;
+
+        $claim->claim_number = get_next_claim_number($last_claim_number);
+        $claim->save();
+    }
+
+    public function destroy()
+    {
+        session()->forget('customer_claim');
+
+        return redirect(route('customer.claim.create'))->with('success', 'La reclamación ha sido cancelada correctamente.');
     }
 }

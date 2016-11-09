@@ -20,4 +20,9 @@ class Account extends Model
     {
         return clear_str($this->acmacc);
     }
+
+    public function getProductCode()
+    {
+        return $this->acmpro;
+    }
 }

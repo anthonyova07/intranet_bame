@@ -142,5 +142,12 @@ return [
       'name_last_name' => 'Nombre y Apellido',
       'mail' => 'Correo',
       'idea' => 'Idea',
+      'channel' => 'Canal de Distribución',
+      'product_type' => 'Tipo de Producto',
+      'product' => 'Producto',
+      'amount' => 'Monto',
+      'claim_type' => 'Tipo de Reclamación',
+      'response_term' => 'Plazo de Respuesta',
+      'response_date' => 'Fecha de Respuesta',
     ],
 ];

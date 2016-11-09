@@ -4,7 +4,7 @@ namespace Bame\Models\Customer\Product;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Loan extends Model
+class LoanMoneyMarket extends Model
 {
     protected $connection = 'ibs';
 
@@ -19,5 +19,10 @@ class Loan extends Model
     public function getNumber()
     {
         return clear_str($this->deaacc);
+    }
+
+    public function getProductCode()
+    {
+        return $this->deapro;
     }
 }

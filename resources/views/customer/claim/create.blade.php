@@ -14,38 +14,30 @@
 
     @if (session()->has('customer_claim'))
 
-        <form method="post" action="" name="form">
+        <form method="post" action="{{ route('customer.claim.store') }}" id="form">
 
             <div class="row">
                 <div class="col-xs-10 col-xs-offset-1">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">
-                                Datos del Reclamante ({{ session()->get('customer_claim')->is_legal ? 'Jurídico' : 'Físico' }})
+                                Datos del Reclamante ({{ session()->get('customer_claim')->isCompany() ? 'Jurídico' : 'Físico' }})
                                 <a
                                     class="btn btn-danger pull-right btn-xs"
-                                    href="javascript:void(0)"
-                                    onclick="action('eliminar_all', this)"
+                                    href="{{ route('customer.claim.destroy') }}"
                                     data-toggle="tooltip"
                                     data-placement="top"
                                     title="Cancelar Todo"
                                     style="margin-top: -3px;color: #FFFFFF;">
                                     <i class="fa fa-close"></i>
                                 </a>
-                                <form
-                                    style="display: none;"
-                                    action="{{ route('customer.ncf.divisa.new.destroy', ['id' => 'all']) }}"
-                                    method="post" id="form_eliminar_all">
-                                    {{ csrf_field() }}
-                                    {{ method_field('DELETE') }}
-                                </form>
                             </h3>
                         </div>
 
                         <div class="panel-body">
                             <table class="table table-bordered table-condensed table-striped">
                                 <tbody>
-                                    @if (!session()->get('customer_claim')->is_legal)
+                                    @if (!session()->get('customer_claim')->isCompany())
                                         <tr>
                                             <td colspan="2"><b>Nombres:</b> {{ session()->get('customer_claim')->getNames() }}</td>
                                             <td colspan="2"><b>Apellidos:</b> {{ session()->get('customer_claim')->getLastNames() }}</td>
@@ -56,7 +48,7 @@
                                         </tr>
                                     @endif
 
-                                    @if (session()->get('customer_claim')->is_legal)
+                                    @if (session()->get('customer_claim')->isCompany())
                                         <tr>
                                             <td colspan="2"><b>Razón Social:</b> {{ session()->get('customer_claim')->getLegalName() }}</td>
                                             <td colspan="2"><b>RNC:</b> {{ session()->get('customer_claim')->getDocument() }}</td>
@@ -64,18 +56,18 @@
                                     @endif
 
                                     <tr>
-                                        <td><b>Teléfonos:</b></td>
-                                        <td>
-                                            @if (!session()->get('customer_claim')->is_legal)
+                                        <td colspan="{{ session()->get('customer_claim')->isCompany() ? '2' : '' }}"><b>Teléfonos:</b></td>
+                                        @if (!session()->get('customer_claim')->isCompany())
+                                            <td>
                                                 <b>Residencia: </b> {{ session()->get('customer_claim')->getResidentialPhone() }}
-                                            @endif
-                                        </td>
-                                        <td><b>Oficina: </b> {{ session()->get('customer_claim')->getOfficePhone() }}</td>
-                                        <td>
-                                            @if (!session()->get('customer_claim')->is_legal)
+                                            </td>
+                                        @endif
+                                        <td colspan="{{ session()->get('customer_claim')->isCompany() ? '2' : '' }}"><b>Oficina: </b> {{ session()->get('customer_claim')->getOfficePhone() }}</td>
+                                        @if (!session()->get('customer_claim')->isCompany())
+                                            <td>
                                                 <b>Celular: </b> {{ session()->get('customer_claim')->getCellPhone() }}
-                                            @endif
-                                        </td>
+                                            </td>
+                                        @endif
                                     </tr>
                                     <tr>
                                         <td colspan="2"><b>Correo: </b> {{ session()->get('customer_claim')->getMail() }}</td>
@@ -98,7 +90,7 @@
                 </div>
             </div>
 
-            @if (session()->get('customer_claim')->is_legal)
+            @if (session()->get('customer_claim')->isCompany())
                 <div class="row">
                     <div class="col-xs-10 col-xs-offset-1">
                         <div class="panel panel-default">
@@ -115,13 +107,19 @@
                                         </tr>
                                         <tr>
                                             <td><b>Teléfonos:</b></td>
-                                            <td><b>Residencia: </b> <input type="text" name="residencial_phone" class="form-control input-sm"></td>
-                                            <td><b>Oficina: </b> <input type="text" name="office_phone" class="form-control input-sm"></td>
+                                            <td><b>Residencia: </b> <input type="text" name="residencial_phone" class="form-control input-sm" placeholder="000-000-0000"></td>
+                                            <td><b>Oficina: </b> <input type="text" name="office_phone" class="form-control input-sm" placeholder="000-000-0000"></td>
                                             <td><b>Celular: </b> <p class="form-control-static">{{ session()->get('customer_claim')->agent->getPhoneNumber() }}</p></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2"><b>Correo: </b> <input type="text" name="mail" class="form-control input-sm"></td>
-                                            <td colspan="2"><b>Fax: </b> <input type="text" name="fax" class="form-control input-sm"></td>
+                                            <td colspan="2">
+                                                <div class="{{ $errors->first('mail') ? 'has-error':'' }}">
+                                                    <b>Correo: </b>
+                                                    <input type="text" name="mail" class="form-control input-sm" placeholder="ejemplo@ejemplo.com">
+                                                    <span class="help-block">{{ $errors->first('mail') }}</span>
+                                                </div>
+                                            </td>
+                                            <td colspan="2"><b>Fax: </b> <input type="text" name="fax" class="form-control input-sm" placeholder="000-000-0000"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -140,12 +138,15 @@
                         </div>
 
                         <div class="panel-body">
-                            <select class="form-control input-sm">
-                                <option value="">Seleccione un Canal de Distribución</option>
-                                @foreach ($distribution_channels as $channel)
-                                    <option value="{{ $channel->id }}" {{ old('channel') == $channel->id ? 'selected':'' }}>{{ $channel->description }}</option>
-                                @endforeach
-                            </select>
+                            <div class="{{ $errors->first('channel') ? 'has-error':'' }}">
+                                <select class="form-control input-sm" name="channel">
+                                    <option value="">Seleccione un Canal de Distribución</option>
+                                    @foreach ($distribution_channels as $channel)
+                                        <option value="{{ $channel->id }}" {{ old('channel') == $channel->id ? 'selected':'' }}>{{ $channel->description }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="help-block">{{ $errors->first('channel') }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -157,13 +158,16 @@
 
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-xs-8">
-                                    <select class="form-control input-sm" name="product_type">
-                                        <option value="">Seleccione un tipo de producto</option>
-                                        @foreach (get_product_types() as $key => $product_type)
-                                            <option value="{{ $key }}" {{ old('product_type') == $key ? 'selected':'' }}>{{ $product_type }}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="{{ $errors->first('product_type') ? 'has-error':'' }}">
+                                    <div class="col-xs-8">
+                                        <select class="form-control input-sm" name="product_type">
+                                            <option value="">Seleccione un tipo de producto</option>
+                                            @foreach (get_product_types() as $key => $product_type)
+                                                <option value="{{ $key }}" {{ old('product_type') == $key ? 'selected':'' }}>{{ $product_type }}</option>
+                                            @endforeach
+                                        </select>
+                                        <span class="help-block">{{ $errors->first('product_type') }}</span>
+                                    </div>
                                 </div>
                                 <div class="col-xs-4">
                                     <select class="form-control input-sm" name="form_type" data-toggle="tooltip" title="Tipo de Formulario">
@@ -175,12 +179,32 @@
                             </div>
                             <div class="row" style="margin-top: 10px;">
                                 <div class="col-xs-12">
-                                    <select class="form-control input-sm" name="product" data-toggle="tooltip" title="Producto">
-                                        <option value="">Seleccione un producto del cliente</option>
-                                        @foreach (session()->get('customer_claim')->loans as $loan)
-                                            <option value="{{ $loan->getNumber() }}" {{ old('product') == $key ? 'selected':'' }}>Préstamo ({{ $loan->getNumber() }})</option>
-                                        @endforeach
-                                    </select>
+                                    <div class="{{ $errors->first('product') ? 'has-error':'' }}">
+                                        <select class="form-control input-sm" name="product" data-toggle="tooltip" title="Producto">
+                                            <option value="">Seleccione un producto del cliente</option>
+
+                                            @foreach (session()->get('customer_claim')->accounts_sav as $sav)
+                                                <option value="{{ $sav->getProductCode() . '|' . $sav->getNumber() }}" {{ old('product') == $sav->getNumber() ? 'selected':'' }}>Cuenta de Ahorro ({{ $sav->getNumber() }})</option>
+                                            @endforeach
+
+                                            @foreach (session()->get('customer_claim')->accounts_dda as $dda)
+                                                <option value="{{ $dda->getProductCode() . '|' . $dda->getNumber() }}" {{ old('product') == $dda->getNumber() ? 'selected':'' }}>Cuenta de Ahorro ({{ $dda->getNumber() }})</option>
+                                            @endforeach
+
+                                            @foreach (session()->get('customer_claim')->loans as $loan)
+                                                <option value="{{ $loan->getProductCode() . '|' . $loan->getNumber() }}" {{ old('product') == $loan->getNumber() ? 'selected':'' }}>Préstamo ({{ $loan->getNumber() }})</option>
+                                            @endforeach
+
+                                            @foreach (session()->get('customer_claim')->creditcards as $creditcard)
+                                                <option value="{{ $creditcard->getProductCode() . '|' . $creditcard->getNumber() }}" {{ old('product') == $creditcard->getNumber() ? 'selected':'' }}>Tarjeta de Credito ({{ $creditcard->getMaskedNumber() }})</option>
+                                            @endforeach
+
+                                            @foreach (session()->get('customer_claim')->money_markets as $money_market)
+                                                <option value="{{ $money_market->getProductCode() . '|' . $money_market->getNumber() }}" {{ old('product') == $money_market->getNumber() ? 'selected':'' }}>Certificado ({{ $money_market->getNumber() }})</option>
+                                            @endforeach
+                                        </select>
+                                        <span class="help-block">{{ $errors->first('product') }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -239,19 +263,20 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-3">
-                                    <div class="form-group{{ $errors->first('days') ? ' has-error':'' }}">
+                                    <div class="form-group{{ $errors->first('response_term') ? ' has-error':'' }}">
                                         <label class="control-label">Plazo de Respuesta</label>
                                         <div class="input-group">
-                                            <input type="number" class="form-control input-sm" name="days" value="30" min="1">
+                                            <input type="number" class="form-control input-sm" name="response_term" value="30" min="1">
                                             <span class="input-group-addon">días</span>
                                         </div>
-                                        <span class="help-block">{{ $errors->first('days') }}</span>
+                                        <span class="help-block">{{ $errors->first('response_term') }}</span>
                                     </div>
                                 </div>
                                 <div class="col-xs-3">
-                                    <div class="form-group">
+                                    <div class="form-group{{ $errors->first('response_date') ? ' has-error':'' }}">
                                         <label class="control-label">Fecha de Respuesa</label>
                                         <input type="date" class="form-control input-sm" name="response_date">
+                                        <span class="help-block">{{ $errors->first('response_date') }}</span>
                                     </div>
                                 </div>
                                 <div class="col-xs-3">
@@ -270,17 +295,17 @@
                                 <div class="col-xs-12">
                                     <div class="form-group">
                                         <label class="control-label">Observaciones</label>
-                                        <textarea class="form-control" name="observations"></textarea>
+                                        <textarea class="form-control" name="observations">{{ old('observations') }}</textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-2">
+                                <div class="col-xs-4">
                                     {{ csrf_field() }}
-                                    <a class="btn btn-info btn-xs" href="{{ route('marketing.news.index') }}"><i class="fa fa-arrow-left"></i> Atras</a>
+                                    <a class="btn btn-info btn-xs" href="{{ route('customer.claim.index') }}"><i class="fa fa-arrow-left"></i> Atras</a>
                                     <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Guardar</button>
                                 </div>
-                                <div class="col-xs-7"></div>
+                                <div class="col-xs-5"></div>
                                 <div class="col-xs-3 text-right">
                                     <span class="label label-danger">Creada el 15/05/2016 14:41</span>
                                 </div>
@@ -300,18 +325,11 @@
                     <div class="panel-body">
                         <form method="get" action="{{ route('customer.claim.create') }}" id="form">
                             <div class="row">
-                                <div class="col-xs-8">
+                                <div class="col-xs-12">
                                     <div class="form-group{{ $errors->first('identification') ? ' has-error':'' }}">
                                         <label class="control-label">Cédula/Pasaporte/RNC</label>
                                         <input type="text" class="form-control input-sm" name="identification" value="{{ old('identification') }}">
                                         <span class="help-block">{{ $errors->first('identification') }}</span>
-                                    </div>
-                                </div>
-                                <div class="col-xs-2">
-                                    <div class="checkbox">
-                                        <label style="margin-top: 18px;">
-                                            <input type="checkbox" name="is_legal" {{ old('is_legal') ? 'checked' : '' }}> Jurídico
-                                        </label>
                                     </div>
                                 </div>
                             </div>

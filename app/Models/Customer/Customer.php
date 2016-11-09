@@ -2,9 +2,10 @@
 
 namespace Bame\Models\Customer;
 
-use Bame\Models\Customer\Product\Loan;
 use Illuminate\Database\Eloquent\Model;
 use Bame\Models\Customer\Product\Account;
+use Bame\Models\Customer\Product\CreditCard;
+use Bame\Models\Customer\Product\LoanMoneyMarket;
 
 class Customer extends Model
 {
@@ -75,6 +76,11 @@ class Customer extends Model
     public function getName()
     {
         return $this->getFirstName() . ' ' . $this->getFirstLastName();
+    }
+
+    public function isCompany()
+    {
+        return $this->cuslgt == '1';
     }
 
     public function getLegalName()
@@ -166,21 +172,31 @@ class Customer extends Model
 
     public function agent()
     {
-        return $this->hasOne(Agent::class, 'cuscun', 'cumcun')->where('cumrtp', 5);
+        return $this->hasOne(Agent::class, 'cumcun', 'cuscun')->where('cumrtp', 5);
     }
 
     public function loans()
     {
-        return $this->hasMany(Loan::class, 'deacun');
+        return $this->hasMany(LoanMoneyMarket::class, 'deacun')->where('deaacd', '10')->where('deasts', '<>', 'C');
+    }
+
+    public function money_markets()
+    {
+        return $this->hasMany(LoanMoneyMarket::class, 'deacun')->where('deaacd', '11');
     }
 
     public function accounts_sav()
     {
-        return $this->hasMany(Account::class, 'acmcun')->where('acmacd', '04');
+        return $this->hasMany(Account::class, 'acmcun')->where('acmacd', '04')->where('acmast', 'A');
     }
 
     public function accounts_dda()
     {
-        return $this->hasMany(Account::class, 'acmcun')->where('acmacd', '<>', '04');
+        return $this->hasMany(Account::class, 'acmcun')->where('acmacd', '<>', '04')->where('acmast', 'A');
+    }
+
+    public function creditcards()
+    {
+        return $this->hasMany(CreditCard::class, 'codcl_mtar')->where('stsrd_mtar', 1);
     }
 }
