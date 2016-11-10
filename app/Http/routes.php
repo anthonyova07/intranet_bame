@@ -131,17 +131,22 @@ Route::group(['middleware' => 'auth'], function () {
             });
         });
 
-        Route::resource('claim', 'Customer\Claim\ClaimController', ['only' => [
-            'index', 'create', 'store'
-        ]]);
-
         Route::group(['prefix' => 'claim'], function () {
             Route::get('destroy', 'Customer\Claim\ClaimController@destroy')->name('customer.claim.destroy');
 
             Route::resource('{type}/ct_dc', 'Customer\Claim\CtDcController', ['only' => [
                 'create', 'store', 'edit', 'update'
             ]]);
+
+            Route::group(['prefix' => 'form'], function () {
+                Route::get('consumption/{id}', 'Customer\Claim\ClaimFormController@consumption')->name('customer.claim.form.consumption');
+                Route::post('consumption/{id}', 'Customer\Claim\ClaimFormController@storeConsumption');
+            });
         });
+
+        Route::resource('claim', 'Customer\Claim\ClaimController', ['only' => [
+            'index', 'create', 'store', 'show'
+        ]]);
     });
 
     Route::group(['prefix' => 'operation'], function () {

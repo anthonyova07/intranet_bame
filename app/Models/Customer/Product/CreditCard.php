@@ -37,4 +37,9 @@ class CreditCard extends Model
 
         return substr($tdc_1, 0, 4) . '-' . substr($tdc_1, 4, 6) . '**-****-' . $tdc_2;
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(CreditCardStatement::class, 'numta_dect', 'tcact_mtar');
+    }
 }

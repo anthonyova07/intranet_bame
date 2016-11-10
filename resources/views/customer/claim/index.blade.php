@@ -4,11 +4,11 @@
 
 @section('page_title', 'Reclamaciones')
 
-{{-- @if (can_not_do('human_resources_vacant'))
+@if (can_not_do('customer_claim'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 
@@ -104,10 +104,10 @@
                                             <i class="fa fa-edit fa-fw"></i>
                                         </a>
                                         <a
-                                            href=""
+                                            href="{{ route('customer.claim.show', array_merge(['id' => $claim->id], Request::all())) }}"
                                             data-toggle="tooltip"
                                             data-placement="top"
-                                            title="Ver Aplicantes">
+                                            title="Ver Reclamación">
                                             <i class="fa fa-share fa-fw"></i>
                                         </a>
                                     </td>
@@ -123,87 +123,90 @@
 
     </div>
 
-    <div class="row" style="border-top: 1px solid #777;margin-top: 8px;margin-bottom: 25px;border-width: 5px;"></div>
 
-    <div class="row">
+    @if (!can_not_do('customer_claim_ctdc'))
+        <div class="row" style="border-top: 1px solid #777;margin-top: 8px;margin-bottom: 25px;border-width: 5px;"></div>
 
-        <div class="col-xs-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Tipos de Reclamaciones</h3>
-                </div>
-                <div class="panel-body">
-                    <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.{type}.ct_dc.create', ['type' => 'CT']) }}">Nuevo</a>
-                    <br>
-                    <br>
-                    <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
-                        <thead>
-                            <tr>
-                                <th>Descripción</th>
-                                <th style="width: 2px"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($claim_types as $claim_type)
+        <div class="row">
+
+            <div class="col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Tipos de Reclamaciones</h3>
+                    </div>
+                    <div class="panel-body">
+                        <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.{type}.ct_dc.create', ['type' => 'CT']) }}">Nuevo</a>
+                        <br>
+                        <br>
+                        <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
+                            <thead>
                                 <tr>
-                                    <td>{{ $claim_type->description }}</td>
-                                    <td align="center">
-                                        <a
-                                            href="{{ route('customer.claim.{type}.ct_dc.edit', ['type' => 'CT', 'ct_dc' => $claim_type->id]) }}"
-                                            data-toggle="tooltip"
-                                            data-placement="top"
-                                            title="Editar"
-                                            class="naranja">
-                                            <i class="fa fa-edit fa-fw"></i>
-                                        </a>
-                                    </td>
+                                    <th>Descripción</th>
+                                    <th style="width: 2px"></th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($claim_types as $claim_type)
+                                    <tr>
+                                        <td>{{ $claim_type->description }}</td>
+                                        <td align="center">
+                                            <a
+                                                href="{{ route('customer.claim.{type}.ct_dc.edit', ['type' => 'CT', 'ct_dc' => $claim_type->id]) }}"
+                                                data-toggle="tooltip"
+                                                data-placement="top"
+                                                title="Editar"
+                                                class="naranja">
+                                                <i class="fa fa-edit fa-fw"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-xs-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Canales de Distribución</h3>
-                </div>
-                <div class="panel-body">
-                    <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.{type}.ct_dc.create', ['type' => 'DC']) }}">Nuevo</a>
-                    <br>
-                    <br>
-                    <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
-                        <thead>
-                            <tr>
-                                <th>Descripción</th>
-                                <th style="width: 2px"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($distribution_channels as $channel)
+            <div class="col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Canales de Distribución</h3>
+                    </div>
+                    <div class="panel-body">
+                        <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.{type}.ct_dc.create', ['type' => 'DC']) }}">Nuevo</a>
+                        <br>
+                        <br>
+                        <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
+                            <thead>
                                 <tr>
-                                    <td>{{ $channel->description }}</td>
-                                    <td align="center">
-                                        <a
-                                            href="{{ route('customer.claim.{type}.ct_dc.edit', ['type' => 'DC', 'ct_dc' => $channel->id]) }}"
-                                            data-toggle="tooltip"
-                                            data-placement="top"
-                                            title="Editar"
-                                            class="naranja">
-                                            <i class="fa fa-edit fa-fw"></i>
-                                        </a>
-                                    </td>
+                                    <th>Descripción</th>
+                                    <th style="width: 2px"></th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($distribution_channels as $channel)
+                                    <tr>
+                                        <td>{{ $channel->description }}</td>
+                                        <td align="center">
+                                            <a
+                                                href="{{ route('customer.claim.{type}.ct_dc.edit', ['type' => 'DC', 'ct_dc' => $channel->id]) }}"
+                                                data-toggle="tooltip"
+                                                data-placement="top"
+                                                title="Editar"
+                                                class="naranja">
+                                                <i class="fa fa-edit fa-fw"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
 
-    </div>
+        </div>
+    @endif
 
     <script type="text/javascript">
         $('#form').submit(function (vacant) {

@@ -14,9 +14,46 @@ use Bame\Http\Requests\Customer\Claim\ClaimRequest;
 
 class ClaimController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $claims = Claim::orderBy('claim_number', 'desc')->paginate();
+        $claims = Claim::orderBy('created_at', 'desc');
+
+        if ($request->term) {
+            $term = cap_str($request->term);
+
+            $claims = $claims->orWhere('claim_number', 'like', '%' . $term . '%')
+                        ->orWhere('customer_number', 'like', '%' . $term . '%')
+                        ->orWhere('names', 'like', '%' . $term . '%')
+                        ->orWhere('last_names', 'like', '%' . $term . '%')
+                        ->orWhere('identification', 'like', '%' . $term . '%')
+                        ->orWhere('passport', 'like', '%' . $term . '%')
+                        ->orWhere('passport', 'like', '%' . $term . '%')
+                        ->orWhere('legal_name', 'like', '%' . $term . '%')
+                        ->orWhere('residential_phone', 'like', '%' . $term . '%')
+                        ->orWhere('office_phone', 'like', '%' . $term . '%')
+                        ->orWhere('cell_phone', 'like', '%' . $term . '%')
+                        ->orWhere('fax_phone', 'like', '%' . $term . '%')
+                        ->orWhere('mail', 'like', '%' . $term . '%')
+                        ->orWhere('amount', 'like', '%' . $term . '%')
+                        ->orWhere('claim_type', 'like', '%' . $term . '%')
+                        ->orWhere('observations', 'like', '%' . $term . '%')
+                        ->orWhere('rate_day', 'like', '%' . $term . '%')
+                        ->orWhere('distribution_channel', 'like', '%' . $term . '%')
+                        ->orWhere('product_type', 'like', '%' . $term . '%')
+                        ->orWhere('product_number', 'like', '%' . $term . '%')
+                        ->orWhere('product_code', 'like', '%' . $term . '%');
+        }
+
+        if ($request->date_from) {
+            $claims->where('created_at', '>=', $request->date_from . ' 00:00:00');
+        }
+
+        if ($request->date_to) {
+            $claims->where('created_at', '<=', $request->date_to . ' 23:59:59');
+        }
+
+        $claims = $claims->paginate();
+
         $ct_dc = CtDc::all();
 
         $claim_types = $ct_dc->where('type', 'CT');
@@ -61,7 +98,15 @@ class ClaimController extends Controller
 
     public function store(ClaimRequest $request)
     {
-        $messages = $this->validate_field($request);
+        $messages = $this->validate_fields($request);
+
+        $product_parts = explode('|', $request->product);
+
+        if (count($product_parts) == 3) {
+            if ($request->form_type == 'NIN') {
+                $messages->push('Debe seleccionar un tipo de formulario.');
+            }
+        }
 
         if ($messages->count()) {
             $request->session()->flash('messages_claim', $messages->values());
@@ -124,8 +169,6 @@ class ClaimController extends Controller
         $claim->distribution_channel = $distribution_channel->description;
         $claim->product_type = get_product_types($request->product_type);
 
-        $product_parts = explode('|', $request->product);
-
         if (count($product_parts) == 3) {
             $product_number = $customer->creditcards->get($product_parts[0])->getNumber();
             $product_code = $product_parts[1];
@@ -159,7 +202,21 @@ class ClaimController extends Controller
 
         session()->forget('customer_claim');
 
-        return redirect(route('customer.claim.index'))->with('success', 'La reclamación ha sido creada correctamente.');
+        if ($request->form_type == 'CON') {
+            return redirect(route('customer.claim.form.consumption', ['id' => $claim->id]))
+                    ->with('success', 'La reclamación ha sido creada correctamente.')
+                    ->with('info', 'Ahora debe completar el formulario de consumo.');
+        }
+
+        return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación ha sido creada correctamente.');
+    }
+
+    public function show($id)
+    {
+        $claim = Claim::find($id);
+
+        return view('customer.claim.show')
+            ->with('claim', $claim);
     }
 
     public function destroy()
@@ -169,15 +226,23 @@ class ClaimController extends Controller
         return redirect(route('customer.claim.create'))->with('success', 'La reclamación ha sido cancelada correctamente.');
     }
 
-    protected function validate_field($request)
+    protected function validate_fields($request)
     {
         $customer = session()->get('customer_claim');
 
         $messages = collect();
 
         if ($customer->isCompany()) {
+            if (empty($customer->getLegalName())) {
+                $messages->push('La razón social de la empresa es requerido.');
+            }
+
             if (empty($customer->agent->getLegalName())) {
-                $messages->push('El nmbre legal del representante es requerido.');
+                $messages->push('El nombre legal del representante es requerido.');
+            }
+
+            if (empty($customer->agent->getIdentification())) {
+                $messages->push('La identificación del representante es requerido.');
             }
 
             if (empty(clear_str($request->residential_phone)) && empty(clear_str($request->office_phone)) && empty(clear_str($customer->agent->getPhoneNumber()))) {

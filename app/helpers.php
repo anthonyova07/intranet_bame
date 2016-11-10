@@ -503,6 +503,134 @@ function get_next_claim_number($last_claim_number)
 function get_response_term()
 {
     return [
-        30, 45, 60
+        30
     ];
+}
+
+function get_claim_types_visa($claim_type = null, $values = [])
+{
+    $_1 = new stdClass;
+    $_1->id = 1;
+    $_1->es_name = 'Solicito Copia del Voucher.';
+    $_1->es_detail = 'Información no Reconocida.';
+    $_1->en_name = 'I Request copy of the voucher.';
+    $_1->en_detail = 'Informaction Not Recognized.';
+
+    $_2 = new stdClass;
+    $_2->id = 2;
+    $_2->es_name = 'Transacción cargada más de una vez.';
+    $_2->es_detail = 'Solo autoricé una transacción, pero {field1} transacciones fueron cargadas a mi cuenta.';
+    $_2->en_name = 'Unauthorized charges.';
+    $_2->en_detail = 'I authorized only one transaction, but {field1} changes were billed to my account.';
+
+    $_3 = new stdClass;
+    $_3->id = 3;
+    $_3->es_name = 'Transacción pagada por otros medios.';
+    $_3->es_detail = 'La transacción fue pagada en cheque ({field1}), en efectivo ({field2}) con otra tarjeta ({field3}).';
+    $_3->es_detail_2 = '(Anexo copia del recibo de efectivo, o cheque cancelado, o estado de cuenta de otra tarjeta).';
+    $_3->en_name = 'Paid by other means';
+    $_3->en_detail = 'I paid for this charge by check ({field1}), by cash ({field2}) with other card ({field3}).';
+    $_3->en_detail_2 = '(Enclosed is copy of my cash receipt, or canceled check or my other card statement).';
+
+    $_4 = new stdClass;
+    $_4->id = 4;
+    $_4->es_name = 'No recibí el efectivo solicitado al ATM ({field1}), o sólo recibí una parte ({field2}).';
+    $_4->es_detail = '(Anexo copia de voucher nulo)';
+    $_4->en_name = 'Cash not received from ATM ({field1}), or not received the full requested amount ({field2}).';
+    $_4->en_detail = '(Enclose null voucher copy)';
+
+    $_5 = new stdClass;
+    $_5->id = 5;
+    $_5->es_name = 'No he participado, ni autorizado los consumos en cuestión y he tenido la tarjeta todo el tiempo en mi poder.';
+    $_5->es_detail = '(Anexo copia de estado de cuenta)';
+    $_5->en_name = 'I have not authorized or participated the items in dispute. I have always had the card in my power.';
+    $_5->en_detail = '(Enclose copy of account statement)';
+
+    $_6 = new stdClass;
+    $_6->id = 6;
+    $_6->es_name = 'No he recibido Mercancía o Servicio pedido en fecha {field1}.';
+    $_6->es_detail = '';
+    $_6->en_name = 'Merchandise or Service bought on date {field1} not received.';
+    $_6->en_detail = '';
+
+    $_7 = new stdClass;
+    $_7->id = 7;
+    $_7->es_name = 'Otros {field1}.';
+    $_7->es_detail = '';
+    $_7->en_name = 'Others {field1}.';
+    $_7->en_detail = '';
+
+    $claim_types = collect();
+
+    $claim_types->push($_1);
+    $claim_types->push($_2);
+    $claim_types->push($_3);
+    $claim_types->push($_4);
+    $claim_types->push($_5);
+    $claim_types->push($_6);
+    $claim_types->push($_7);
+
+    if (!$claim_type) {
+        return $claim_types;
+    }
+
+    $claim = $claim_types->where('id', $claim_type)->first();
+
+    if ($claim) {
+        switch ($claim->id) {
+            case 1:
+            case 5:
+                return $claim;
+                break;
+            case 2:
+                $claim->es_detail = strtr($claim->es_detail, [
+                    '{field1}' => $values[0]
+                ]);
+
+                $claim->en_detail = strtr($claim->en_detail, [
+                    '{field1}' => $values[0]
+                ]);
+                return $claim;
+                break;
+            case 3:
+                $claim->es_detail = strtr($claim->es_detail, [
+                    '{field1}' => $values[0],
+                    '{field2}' => $values[1],
+                    '{field3}' => $values[2],
+                ]);
+
+                $claim->en_detail = strtr($claim->en_detail, [
+                    '{field1}' => $values[0],
+                    '{field2}' => $values[1],
+                    '{field3}' => $values[2],
+                ]);
+                return $claim;
+                break;
+            case 4:
+                $claim->es_name = strtr($claim->es_name, [
+                    '{field1}' => $values[0],
+                    '{field2}' => $values[1],
+                ]);
+
+                $claim->en_name = strtr($claim->en_name, [
+                    '{field1}' => $values[0],
+                    '{field2}' => $values[1],
+                ]);
+                return $claim;
+                break;
+            case 6:
+            case 7:
+                $claim->es_name = strtr($claim->es_name, [
+                    '{field1}' => $values[0],
+                ]);
+
+                $claim->en_name = strtr($claim->en_name, [
+                    '{field1}' => $values[0],
+                ]);
+                return $claim;
+                break;
+        }
+    }
+
+    return 'Tipo de Reclamación Visa (Invalido)';
 }

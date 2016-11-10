@@ -4,11 +4,11 @@
 
 @section('page_title', 'Nuevo ' . get_ct_dc($ct_dc->type, false))
 
-{{-- @if (can_not_do('human_resources_vacant'))
+@if (can_not_do('customer_claim_ctdc'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 

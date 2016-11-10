@@ -4,11 +4,11 @@
 
 @section('page_title', 'Nueva Reclamación')
 
-{{-- @if (can_not_do('marketing_news'))
+@if (can_not_do('customer_claim'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 
@@ -17,9 +17,8 @@
         @if (session()->has('messages_claim'))
             @if (session()->get('messages_claim')->count())
                 <div class="row">
-                    <div class="col-xs-12">
-                        <div class="alert alert-danger {{-- alert-dismissible --}}">
-                            {{-- <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button> --}}
+                    <div class="col-xs-10 col-xs-offset-1">
+                        <div class="alert alert-danger">
                             <b>Campos Requeridos</b>
                             <ul>
                                 @foreach (session()->get('messages_claim') as $message)
@@ -57,8 +56,8 @@
                                 <tbody>
                                     @if (!session()->get('customer_claim')->isCompany())
                                         <tr>
-                                            <td colspan="2"><b>Nombres:</b> {{ session()->get('customer_claim')->getNames() }}</td>
-                                            <td colspan="2"><b>Apellidos:</b> {{ session()->get('customer_claim')->getLastNames() }}</td>
+                                            <td colspan="2" style="width: 50%"><b>Nombres:</b> {{ session()->get('customer_claim')->getNames() }}</td>
+                                            <td colspan="2" style="width: 50%"><b>Apellidos:</b> {{ session()->get('customer_claim')->getLastNames() }}</td>
                                         </tr>
                                         <tr>
                                             <td colspan="2"><b>No. Cédula:</b> {{ session()->get('customer_claim')->getDocument() }}</td>
@@ -68,8 +67,8 @@
 
                                     @if (session()->get('customer_claim')->isCompany())
                                         <tr>
-                                            <td colspan="2"><b>Razón Social:</b> {{ session()->get('customer_claim')->getLegalName() }}</td>
-                                            <td colspan="2"><b>RNC:</b> {{ session()->get('customer_claim')->getDocument() }}</td>
+                                            <td colspan="2" style="width: 50%"><b>Razón Social:</b> {{ session()->get('customer_claim')->getLegalName() }}</td>
+                                            <td colspan="2" style="width: 50%"><b>RNC:</b> {{ session()->get('customer_claim')->getDocument() }}</td>
                                         </tr>
                                     @endif
 
@@ -120,8 +119,8 @@
                                 <table class="table table-bordered table-condensed table-striped">
                                     <tbody>
                                         <tr>
-                                            <td colspan="2"><b>Nombre Legal:</b> {{ session()->get('customer_claim')->agent->getLegalName() }}</td>
-                                            <td colspan="2"><b>Cédula/Pasaporte:</b> {{ session()->get('customer_claim')->agent->getIdentification() }}</td>
+                                            <td colspan="2" style="width: 50%"><b>Nombre Legal:</b> {{ session()->get('customer_claim')->agent->getLegalName() }}</td>
+                                            <td colspan="2" style="width: 50%"><b>Cédula/Pasaporte:</b> {{ session()->get('customer_claim')->agent->getIdentification() }}</td>
                                         </tr>
                                         <tr>
                                             <td><b>Teléfonos:</b></td>
@@ -295,10 +294,9 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-3">
-                                    <div class="form-group{{ $errors->first('response_date') ? ' has-error':'' }}">
+                                    <div class="form-group">
                                         <label class="control-label">Fecha de Respuesa</label>
                                         <p class="form-control-static">--/--/----</p>
-                                        <span class="help-block">{{ $errors->first('response_date') }}</span>
                                     </div>
                                 </div>
                                 <div class="col-xs-3">
@@ -326,10 +324,6 @@
                                     {{ csrf_field() }}
                                     <a class="btn btn-info btn-xs" href="{{ route('customer.claim.index') }}"><i class="fa fa-arrow-left"></i> Atras</a>
                                     <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Guardar</button>
-                                </div>
-                                <div class="col-xs-5"></div>
-                                <div class="col-xs-3 text-right">
-                                    <span class="label label-danger">Creada el 15/05/2016 14:41</span>
                                 </div>
                             </div>
                         </div>
