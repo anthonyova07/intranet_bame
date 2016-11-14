@@ -19,7 +19,7 @@
                     <form>
                         <div class="row">
                             <div class="col-xs-2">
-                                <a class="btn btn-info btn-xs" href="{{ route('marketing.break_coco.ideas.index') }}"><i class="fa fa-arrow-left"></i> Atras</a>
+                                <a class="btn btn-info btn-xs" href="{{ route('marketing.break_coco.ideas.index') }}"><i class="fa fa-arrow-left"></i> Atrás</a>
                             </div>
                             <div class="col-xs-4">
                                 <div class="form-group">

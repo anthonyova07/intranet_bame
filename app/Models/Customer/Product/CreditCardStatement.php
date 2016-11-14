@@ -38,7 +38,7 @@ class CreditCardStatement extends Model
         return $this->fectr_dect;
     }
 
-    public function getFormatedDateTransaction()
+    public function getFormatedDateTransaction($toDate = false)
     {
         if (strlen($this->fectr_dect) == 7) {
             $day = substr($this->fectr_dect, 0, 1);
@@ -48,6 +48,10 @@ class CreditCardStatement extends Model
             $day = substr($this->fectr_dect, 0, 2);
             $month = substr($this->fectr_dect, 2, 2);
             $year = substr($this->fectr_dect, 4, 4);
+        }
+
+        if ($toDate) {
+            return $year . '-' . $month . '-' . $day;
         }
 
         return str_pad($day, 2, 0, STR_PAD_LEFT) . '/' . $month . '/' . $year;

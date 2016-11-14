@@ -12,6 +12,23 @@
 
 @section('contents')
 
+    @if (session()->has('messages_claim_consumption'))
+        @if (session()->get('messages_claim_consumption')->count())
+            <div class="row">
+                <div class="col-xs-10 col-xs-offset-1">
+                    <div class="alert alert-danger">
+                        <b>Campos Requeridos</b>
+                        <ul>
+                            @foreach (session()->get('messages_claim_consumption') as $message)
+                                <li>{{ $message }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        @endif
+    @endif
+
     <form method="post" action="{{ route('customer.claim.form.consumption', ['id' => $id]) }}" id="form">
 
         <div class="row">
@@ -25,24 +42,18 @@
 
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-xs-6">
+                            <div class="col-xs-6 text-center">
                                 <div class="form-group">
                                     <label class="control-label">Nombre Tarjetahabiente Principal</label>
                                     <p class="form-control-static">{{ $claim->names . ' ' . $claim->last_names }}</p>
                                 </div>
                             </div>
 
-                            <div class="col-xs-6">
+                            <div class="col-xs-6 text-center">
                                 <div class="form-group">
                                     <label class="control-label">Número de Contacto con el Tarjetahabiente</label>
                                     <p class="form-control-static">
-                                        @if ($claim->cell_phone)
-                                            {{ $claim->cell_phone }}
-                                        @elseif ($claim->residential_phone)
-                                            {{ $claim->residential_phone }}
-                                        @else
-                                            {{ $claim->office_phone }}
-                                        @endif
+                                        {{ $claim->getOnePhoneNumber() }}
                                     </p>
                                 </div>
                             </div>
@@ -154,7 +165,7 @@
                             @endforeach
                         </ul>
                         {{ csrf_field() }}
-                        <a class="btn btn-info btn-xs" href="{{ route('customer.claim.show', ['id' => $claim->id]) }}"><i class="fa fa-arrow-left"></i> Atras</a>
+                        <a class="btn btn-info btn-xs" href="{{ route('customer.claim.show', ['id' => $claim->id]) }}"><i class="fa fa-arrow-left"></i> Atrás</a>
                         <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Guardar</button>
                     </div>
                 </div>

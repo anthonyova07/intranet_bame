@@ -17,7 +17,15 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="col-xs-2" style="padding: 0 2px;">
-                        <a class="btn btn-info btn-xs" href="{{ route('customer.claim.index', Request::all()) }}"><i class="fa fa-arrow-left"></i> Atras</a>
+                        <a class="btn btn-info btn-xs" href="{{ route('customer.claim.index', Request::all()) }}"><i class="fa fa-arrow-left"></i> Atrás</a>
+                    </div>
+
+                    <div class="col-xs-10 text-right" style="padding: 0 2px;">
+                        @if ($claim->consumption)
+                            <a class="btn btn-default btn-xs" href="{{ route('customer.claim.consumption', ['id' => $claim->consumption->id]) }}"><i class="fa fa-wpforms"></i> Formulario de Consumo</a>
+                        @endif
+                        <a class="btn btn-default btn-xs" href=""><i class="fa fa-wpforms"></i> Formulario de Fraude</a>
+                        <a class="btn btn-default btn-xs" href=""><i class="fa fa-wpforms"></i> Formulario de Reverso</a>
                     </div>
                 </div>
             </div>
@@ -148,7 +156,7 @@
                         <div class="col-xs-5">
                             {{ $claim->product_type }}
                         </div>
-                        <div class="col-xs-5">
+                        <div class="col-xs-7">
                             <b>#</b> {{ $claim->getProduct() }}
                         </div>
                     </div>

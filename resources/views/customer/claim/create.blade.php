@@ -322,7 +322,7 @@
                             <div class="row">
                                 <div class="col-xs-4">
                                     {{ csrf_field() }}
-                                    <a class="btn btn-info btn-xs" href="{{ route('customer.claim.index') }}"><i class="fa fa-arrow-left"></i> Atras</a>
+                                    <a class="btn btn-info btn-xs" href="{{ route('customer.claim.index') }}"><i class="fa fa-arrow-left"></i> Atrás</a>
                                     <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Guardar</button>
                                 </div>
                             </div>
@@ -350,7 +350,7 @@
                                 </div>
                             </div>
                             {{ csrf_field() }}
-                            <a class="btn btn-info btn-xs" href="{{ route('customer.claim.index') }}"><i class="fa fa-arrow-left"></i> Atras</a>
+                            <a class="btn btn-info btn-xs" href="{{ route('customer.claim.index') }}"><i class="fa fa-arrow-left"></i> Atrás</a>
                             <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Buscando...">Buscar</button>
                         </form>
                     </div>

@@ -4,6 +4,8 @@ namespace Bame\Models\Customer\Claim;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Bame\Models\Customer\Claim\Form\Consumption;
+
 class Claim extends Model
 {
     protected $connection = 'ibs';
@@ -28,5 +30,20 @@ class Claim extends Model
         }
 
         return $this->product_number;
+    }
+
+    public function getOnePhoneNumber() {
+        if ($this->cell_phone) {
+            return $this->cell_phone;
+        } else if ($this->residential_phone) {
+            return $this->residential_phone;
+        } else {
+            return $this->office_phone;
+        }
+    }
+
+    public function consumption()
+    {
+        return $this->hasOne(Consumption::class, 'claim_id');
     }
 }

@@ -102,9 +102,9 @@ class ClaimController extends Controller
 
         $product_parts = explode('|', $request->product);
 
-        if (count($product_parts) == 3) {
-            if ($request->form_type == 'NIN') {
-                $messages->push('Debe seleccionar un tipo de formulario.');
+        if (in_array($request->product_type, ['TARCRE', 'TARDEB'])) {
+            if ($request->form_type == 'NIN' || count($product_parts) == 3) {
+                $messages->push('Debe seleccionar un tipo de formulario o un producto de tarjeta de crédito.');
             }
         }
 

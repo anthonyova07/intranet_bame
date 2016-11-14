@@ -138,6 +138,7 @@ Route::group(['middleware' => 'auth'], function () {
                 'create', 'store', 'edit', 'update'
             ]]);
 
+            Route::get('consumption/{id}', 'Customer\Claim\ClaimFormController@showConsumption')->name('customer.claim.consumption');
             Route::group(['prefix' => 'form'], function () {
                 Route::get('consumption/{id}', 'Customer\Claim\ClaimFormController@consumption')->name('customer.claim.form.consumption');
                 Route::post('consumption/{id}', 'Customer\Claim\ClaimFormController@storeConsumption');

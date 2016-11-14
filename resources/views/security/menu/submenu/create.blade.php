@@ -56,7 +56,7 @@
                             </label>
                         </div>
                         {{ csrf_field() }}
-                        <a class="btn btn-info btn-xs" href="{{ route('security.menu.{menu}.submenu.index', ['menu' => request()->menu]) }}"><i class="fa fa-arrow-left"></i> Atras</a>
+                        <a class="btn btn-info btn-xs" href="{{ route('security.menu.{menu}.submenu.index', ['menu' => request()->menu]) }}"><i class="fa fa-arrow-left"></i> Atrás</a>
                         <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Creando menú...">Crear</button>
                     </form>
                 </div>
