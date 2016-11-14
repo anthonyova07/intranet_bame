@@ -15,4 +15,14 @@ class CtDc extends Model
     public $incrementing = false;
 
     public $timestamps = true;
+
+    public function scopeActiveOnly($query)
+    {
+        return $query->where('is_active', true);
+    }
+
+    public function scopeVisaOnly($query)
+    {
+        return $query->where('type', 'VISA');
+    }
 }

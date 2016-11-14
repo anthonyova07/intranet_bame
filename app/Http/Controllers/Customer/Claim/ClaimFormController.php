@@ -32,7 +32,7 @@ class ClaimFormController extends Controller
             session()->put('tdc_transactions_claim', $creditcard_statements);
         }
 
-        $claim_types_visa = CtDc::where('type', 'VISA')->get();
+        $claim_types_visa = CtDc::activeOnly()->visaOnly()->get();
 
         foreach ($claim_types_visa as $claim_type_visa) {
 
@@ -59,7 +59,7 @@ class ClaimFormController extends Controller
     public function storeConsumption(Request $request, $id)
     {
         $claim = Claim::find($id);
-        $claim_type_visa = CtDc::where('type', 'VISA')->find($request->claim_type_visa);
+        $claim_type_visa = CtDc::visaOnly()->find($request->claim_type_visa);
 
         if (!$claim) {
             return redirect(route('customer.claim.index'))->with('warning', 'Esta reclamación no existe!');

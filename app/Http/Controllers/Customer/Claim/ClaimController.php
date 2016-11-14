@@ -69,7 +69,7 @@ class ClaimController extends Controller
 
     public function create(Request $request)
     {
-        $ct_dc = CtDc::where('is_active', true)->get();
+        $ct_dc = CtDc::activeOnly()->get();
 
         $claim_types = $ct_dc->where('type', 'CT');
         $distribution_channels = $ct_dc->where('type', 'DC');
