@@ -75,7 +75,7 @@ class ClaimFormController extends Controller
 
         $fields = array_merge($fields_name ?? [], $fields_detail ?? [], $fields_detail_2 ?? []);
 
-        $messages = $this->validate_fields($claim_type_visa, $fields, $request->transactions);
+        $messages = $this->validate_fields($claim_type_visa, $fields, $request->transactions, $request->form_type);
 
         if ($messages->count()) {
             $request->session()->flash('messages_claim_consumption', $messages->values());
@@ -131,7 +131,7 @@ class ClaimFormController extends Controller
         return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación de consumo ha sido creada correctamente.');
     }
 
-    public function validate_fields($claim_type_visa, $fields = [], $transactions = [])
+    public function validate_fields($claim_type_visa, $fields = [], $transactions = [], $form_type)
     {
         $messages = collect();
 
@@ -139,25 +139,27 @@ class ClaimFormController extends Controller
             $messages->push('Debe seleccionar al menos una transacción.');
         }
 
-        if ($claim_type_visa) {
-            $fields_count = substr_count($claim_type_visa->es_name, '{field') +
-                                substr_count($claim_type_visa->es_detail, '{field') +
-                                substr_count($claim_type_visa->es_detail_2, '{field');
+        if ($form_type == 'CON') {
+            if ($claim_type_visa) {
+                $fields_count = substr_count($claim_type_visa->es_name, '{field') +
+                                    substr_count($claim_type_visa->es_detail, '{field') +
+                                    substr_count($claim_type_visa->es_detail_2, '{field');
 
-            if ($fields_count > 0) {
-                if (!count($fields)) {
-                    $messages->push('Debe seleccionar un tipo de reclamación.');
-                } else {
-                    foreach ($fields as $field) {
-                        if (empty(clear_str($field))) {
-                            $messages->push('Debe completar los campos indicados en el tipo de reclamación seleccionado.');
-                            break;
+                if ($fields_count > 0) {
+                    if (!count($fields)) {
+                        $messages->push('Debe seleccionar un tipo de reclamación.');
+                    } else {
+                        foreach ($fields as $field) {
+                            if (empty(clear_str($field))) {
+                                $messages->push('Debe completar los campos indicados en el tipo de reclamación seleccionado.');
+                                break;
+                            }
                         }
                     }
                 }
+            } else {
+                $messages->push('Debe seleccionar un tipo de reclamación.');
             }
-        } else {
-            $messages->push('Debe seleccionar un tipo de reclamación.');
         }
 
         return $messages;
