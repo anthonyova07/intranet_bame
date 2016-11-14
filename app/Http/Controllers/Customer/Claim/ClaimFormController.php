@@ -28,7 +28,7 @@ class ClaimFormController extends Controller
         }
 
         if (!session()->has('tdc_transactions_claim')) {
-            $creditcard_statements = CreditCardStatement::where('numta_dect', $claim->product_number)->get();
+            $creditcard_statements = CreditCardStatement::byCreditcard($claim->product_number)->get();
             session()->put('tdc_transactions_claim', $creditcard_statements);
         }
 
@@ -113,8 +113,12 @@ class ClaimFormController extends Controller
 
             $transaction = new Transaction;
             $transaction->id = uniqid(true);
-            $transaction->transaction_date = $creditcard_statement->getFormatedDateTransaction(true);
-            $transaction->merchant_name = $creditcard_statement->getConcept();
+            $transaction->form_id = $consumption->id;
+            $transaction->form_type = 'CON';
+            $transaction->transaction_date = $creditcard_statement->getFormatedDateTimeTransaction(true);
+            $transaction->merchant_name = $creditcard_statement->getMerchantName();
+            $transaction->country = $creditcard_statement->getCountry();
+            $transaction->city = $creditcard_statement->getCity();
             $transaction->amount = $creditcard_statement->getAmount();
 
             $transactions->push($transaction);

@@ -134,14 +134,16 @@
                             <tr>
                                 <th>Fecha de la Transacción</th>
                                 <th>Comercio</th>
+                                <th>Ciudad</th>
                                 <th>Monto</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($consumption->transactions as $index => $transaction)
+                            @foreach ($consumption->transactions as $transaction)
                                 <tr>
-                                    <td>{{ $transaction->transaction_date->format('d/m/Y') }}</td>
+                                    <td>{{ $transaction->transaction_date->format('d/m/Y H:i:s') }}</td>
                                     <td>{{ $transaction->merchant_name }}</td>
+                                    <td>{{ $transaction->country . '_' . $transaction->city }}</td>
                                     <td>{{ number_format($transaction->amount, 2) }}</td>
                                 </tr>
                             @endforeach

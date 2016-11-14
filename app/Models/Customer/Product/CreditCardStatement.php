@@ -12,9 +12,9 @@ class CreditCardStatement extends Model
 {
     protected $connection = 'itc';
 
-    protected $table = 'satdect00';
+    protected $table = 'saumtra00';
 
-    protected $primaryKey = 'numta_dect';
+    protected $primaryKey = 'numta_mtra';
 
     public $incrementing = false;
 
@@ -22,60 +22,67 @@ class CreditCardStatement extends Model
 
     public function getNumber()
     {
-        return clear_str($this->numta_dect);
+        return clear_str($this->numta_mtra);
     }
 
     public function getMaskedNumber()
     {
-        $tdc_1 = substr($this->numta_dect, 0, 6);
-        $tdc_2 = substr($this->numta_dect, 12, 4);
+        $tdc_1 = substr($this->numta_mtra, 0, 6);
+        $tdc_2 = substr($this->numta_mtra, 12, 4);
 
         return substr($tdc_1, 0, 4) . '-' . substr($tdc_1, 4, 6) . '**-****-' . $tdc_2;
     }
 
     public function getDateTransaction()
     {
-        return $this->fectr_dect;
+        return $this->fecha_mtra;
     }
 
-    public function getFormatedDateTransaction($toDate = false)
+    public function getTimeTransaction()
     {
-        if (strlen($this->fectr_dect) == 7) {
-            $day = substr($this->fectr_dect, 0, 1);
-            $month = substr($this->fectr_dect, 1, 2);
-            $year = substr($this->fectr_dect, 3, 4);
-        } else {
-            $day = substr($this->fectr_dect, 0, 2);
-            $month = substr($this->fectr_dect, 2, 2);
-            $year = substr($this->fectr_dect, 4, 4);
-        }
+        return $this->horas_mtra;
+    }
+
+    public function getFormatedDateTimeTransaction($toDate = false)
+    {
+        $year = substr($this->fecha_mtra, 0, 4);
+        $month = substr($this->fecha_mtra, 4, 2);
+        $day = substr($this->fecha_mtra, 6, 2);
+
+        $time = str_pad($this->horas_mtra, 6, 0, STR_PAD_LEFT);
+
+        $hour = substr($time, 0, 2);
+        $minute = substr($time, 2, 2);
+        $second = substr($time, 4, 2);
 
         if ($toDate) {
-            return $year . '-' . $month . '-' . $day;
+            return "{$year}-{$month}-{$day} {$hour}:{$minute}:{$second}.0";
         }
 
-        return str_pad($day, 2, 0, STR_PAD_LEFT) . '/' . $month . '/' . $year;
+        return "{$day}/{$month}/{$year} {$hour}:{$minute}:{$second}";
     }
 
-    public function getConcept() {
-        return cap_str($this->conce_dect);
+    public function getCountry()
+    {
+        return substr($this->cdanl_mtra, 38, 2);
     }
 
-    public function isDebit() {
-        return boolval($this->debit_dect);
+    public function getCity()
+    {
+        return cap_str(substr($this->cdanl_mtra, 25, 13));
+    }
+
+    public function getMerchantName() {
+        return cap_str(substr($this->cdanl_mtra, 0, 25));
     }
 
     public function getAmount() {
-        if ($this->isDebit()) {
-            return $this->debit_dect;
-        }
-
-        return $this->credt_dect;
+        return $this->monta_mtra;
     }
 
     public function getCurrency()
     {
-        switch ($this->moned_dect) {
+        switch ($this->moned_mtra) {
             case 214:
                 return 'RD$';
                 break;
@@ -86,5 +93,10 @@ class CreditCardStatement extends Model
                 return 'Invalida';
                 break;
         }
+    }
+
+    public function scopeByCreditcard($query, $creditcard)
+    {
+        return $query->where('numta_mtra', $creditcard);
     }
 }

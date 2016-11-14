@@ -10,7 +10,7 @@ class Transaction extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intranet_claim_form_consumption_transactions';
+    protected $table = 'intranet_claim_form_transactions';
 
     protected $primaryKey = 'id';
 
@@ -22,6 +22,6 @@ class Transaction extends Model
 
     public function consumption()
     {
-        return $this->belongsTo(Consumption::class, 'consumption_id');
+        return $this->belongsTo(Consumption::class, 'form_id')->where('form_type', 'CON');
     }
 }

@@ -117,8 +117,8 @@
                                     <th></th>
                                     <th>Fecha de la Transacción</th>
                                     <th>Comercio</th>
-                                    <th>Débito</th>
-                                    <th>Crédito</th>
+                                    <th>Ciudad</th>
+                                    <th>Monto</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -128,15 +128,10 @@
                                             <td>
                                                 <input type="checkbox" name="transactions[]" value="{{ $index }}">
                                             </td>
-                                            <td>{{ $statement->getFormatedDateTransaction() }}</td>
-                                            <td>{{ $statement->getConcept() }}</td>
-                                            @if ($statement->isDebit())
-                                                <td class="input_money">{{ $statement->getCurrency() . ' ' . number_format($statement->getAmount(), 2) }}</td>
-                                                <td class="input_money">0.00</td>
-                                            @else
-                                                <td class="input_money">0.00</td>
-                                                <td class="input_money">{{ $statement->getCurrency() . ' ' . number_format($statement->getAmount(), 2) }}</td>
-                                            @endif
+                                            <td>{{ $statement->getFormatedDateTimeTransaction() }}</td>
+                                            <td>{{ $statement->getMerchantName() }}</td>
+                                            <td>{{ $statement->getCountry() . '_' . $statement->getCity() }}</td>
+                                            <td class="input_money">{{ $statement->getCurrency() . ' ' . number_format($statement->getAmount(), 2) }}</td>
                                         </tr>
                                     @endforeach
                                 @endif
