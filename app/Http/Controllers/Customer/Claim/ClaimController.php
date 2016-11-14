@@ -57,11 +57,13 @@ class ClaimController extends Controller
         $ct_dc = CtDc::all();
 
         $claim_types = $ct_dc->where('type', 'CT');
+        $claim_types_visa = $ct_dc->where('type', 'VISA');
         $distribution_channels = $ct_dc->where('type', 'DC');
 
         return view('customer.claim.index')
             ->with('claims', $claims)
             ->with('claim_types', $claim_types)
+            ->with('claim_types_visa', $claim_types_visa)
             ->with('distribution_channels', $distribution_channels);
     }
 

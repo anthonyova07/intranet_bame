@@ -8,7 +8,7 @@ class CtDc extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intranet_ct_dc';
+    protected $table = 'intranet_claim_ct_dc';
 
     protected $primaryKey = 'id';
 

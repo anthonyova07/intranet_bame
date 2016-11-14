@@ -149,5 +149,11 @@ return [
       'claim_type' => 'Tipo de Reclamación',
       'response_term' => 'Plazo de Respuesta',
       'response_date' => 'Fecha de Respuesta',
+      'es_name' => 'Nombre ES',
+      'es_detail' => 'Detalle ES',
+      'es_detail_2' => 'Detalle 2 ES',
+      'en_name' => 'Nombre EN',
+      'en_detail' => 'Detalle EN',
+      'en_detail_2' => 'Detalle 2 EN',
     ],
 ];

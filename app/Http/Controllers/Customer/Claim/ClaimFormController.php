@@ -8,6 +8,7 @@ use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
 use Bame\Models\Customer\Claim\Claim;
+use Bame\Models\Customer\Claim\CtDc;
 use Bame\Models\Customer\Product\CreditCardStatement;
 use Bame\Models\Customer\Claim\Form\Consumption;
 use Bame\Models\Customer\Claim\Form\Transaction;
@@ -31,8 +32,19 @@ class ClaimFormController extends Controller
             session()->put('tdc_transactions_claim', $creditcard_statements);
         }
 
+        $claim_types_visa = CtDc::where('type', 'VISA')->get();
+
+        foreach ($claim_types_visa as $claim_type_visa) {
+
+            $claim_type_visa->es_name = str_to_field($claim_type_visa->es_name, 'name_' . $claim_type_visa->id);
+            $claim_type_visa->es_detail = str_to_field($claim_type_visa->es_detail, 'detail_' . $claim_type_visa->id);
+            $claim_type_visa->es_detail_2 = str_to_field($claim_type_visa->es_detail_2, 'detail_2_' . $claim_type_visa->id);
+
+        }
+
         return view('customer.claim.form.consumption.index')
                 ->with('id', $id)
+                ->with('claim_types_visa', $claim_types_visa)
                 ->with('claim', $claim);
     }
 
@@ -47,6 +59,7 @@ class ClaimFormController extends Controller
     public function storeConsumption(Request $request, $id)
     {
         $claim = Claim::find($id);
+        $claim_type_visa = CtDc::where('type', 'VISA')->find($request->claim_type_visa);
 
         if (!$claim) {
             return redirect(route('customer.claim.index'))->with('warning', 'Esta reclamación no existe!');
@@ -56,9 +69,13 @@ class ClaimFormController extends Controller
             return redirect(route('customer.claim.consumption', ['id' => $claim->consumption->id]));
         }
 
-        $fields = $request->input('fields' . $request->claim_type);
+        $fields_name = $request->input('fields_name_' . $request->claim_type_visa);
+        $fields_detail = $request->input('fields_detail_' . $request->claim_type_visa);
+        $fields_detail_2 = $request->input('fields_detail_2_' . $request->claim_type_visa);
 
-        $messages = $this->validate_fields($request->claim_type, $fields, $request->transactions);
+        $fields = array_merge($fields_name ?? [], $fields_detail ?? [], $fields_detail_2 ?? []);
+
+        $messages = $this->validate_fields($claim_type_visa, $fields, $request->transactions);
 
         if ($messages->count()) {
             $request->session()->flash('messages_claim_consumption', $messages->values());
@@ -73,15 +90,13 @@ class ClaimFormController extends Controller
         $consumption->cc_number = $claim->product_number;
         $consumption->cardholder_contact_number = $claim->getOnePhoneNumber();
 
-        $claim_type = get_claim_types_visa($request->claim_type, $fields);
+        $consumption->claim_es_name = field_to_str($claim_type_visa->es_name, $fields_name);
+        $consumption->claim_es_detail = field_to_str($claim_type_visa->es_detail, $fields_detail);
+        $consumption->claim_es_detail_2 = field_to_str($claim_type_visa->es_detail_2, $fields_detail_2);
 
-        $consumption->claim_es_name = $claim_type->es_name;
-        $consumption->claim_es_detail = $claim_type->es_detail;
-        $consumption->claim_es_detail_2 = $claim_type->es_detail_2;
-
-        $consumption->claim_en_name = $claim_type->en_name;
-        $consumption->claim_en_detail = $claim_type->en_detail;
-        $consumption->claim_en_detail_2 = $claim_type->en_detail_2;
+        $consumption->claim_en_name = field_to_str($claim_type_visa->en_name, $fields_name);
+        $consumption->claim_en_detail = field_to_str($claim_type_visa->en_detail, $fields_detail);
+        $consumption->claim_en_detail_2 = field_to_str($claim_type_visa->en_detail_2, $fields_detail_2);
 
         $consumption->response_date = $claim->response_date;
 
@@ -112,7 +127,7 @@ class ClaimFormController extends Controller
         return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación de consumo ha sido creada correctamente.');
     }
 
-    public function validate_fields($claim, $fields = [], $transactions = [])
+    public function validate_fields($claim_type_visa, $fields = [], $transactions = [])
     {
         $messages = collect();
 
@@ -120,10 +135,12 @@ class ClaimFormController extends Controller
             $messages->push('Debe seleccionar al menos una transacción.');
         }
 
-        if ($claim) {
-            $claim = get_claim_types_visa($claim);
+        if ($claim_type_visa) {
+            $fields_count = substr_count($claim_type_visa->es_name, '{field') +
+                                substr_count($claim_type_visa->es_detail, '{field') +
+                                substr_count($claim_type_visa->es_detail_2, '{field');
 
-            if ($claim->required_fields) {
+            if ($fields_count > 0) {
                 if (!count($fields)) {
                     $messages->push('Debe seleccionar un tipo de reclamación.');
                 } else {

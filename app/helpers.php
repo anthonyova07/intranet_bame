@@ -471,6 +471,9 @@ function get_ct_dc($type, $plural = true)
         case 'DC':
             return ($plural ? 'Canales' : 'Canal') . ' de Distribución';
             break;
+        case 'VISA':
+            return ($plural ? 'Tipos ' : 'Tipo ') . 'de Reclamación VISA';
+            break;
     }
 }
 
@@ -660,4 +663,31 @@ function get_claim_types_visa($claim_type = null, $values = [])
     }
 
     return 'Tipo de Reclamación Visa (Invalido)';
+}
+
+function str_field($str, $fields, $to_str, $id)
+{
+    $total_fields = substr_count($str, '{field');
+
+    if ($total_fields > 0) {
+        for ($i = 0; $i < $total_fields; $i++) {
+            if ($to_str) {
+                $str = str_replace('{field' . ($i + 1) . '}', strtoupper($fields[$i]), $str);
+            } else {
+                $str = str_replace('{field' . ($i + 1) . '}', '<b><input type="text" name="fields_' . $id . '[]"></b>', $str);
+            }
+        }
+    }
+
+    return $str;
+}
+
+function field_to_str($str, $fields)
+{
+    return str_field($str, $fields, true, '');
+}
+
+function str_to_field($str, $id)
+{
+    return str_field($str, [], false, $id);
 }

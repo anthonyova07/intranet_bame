@@ -24,7 +24,19 @@ class CtDcController extends Controller
 
         $ct_dc->id = uniqid(true);
         $ct_dc->type = $type;
-        $ct_dc->description = cap_str($request->description);
+
+        if ($type == 'VISA') {
+            $ct_dc->es_name = ucfirst(str_replace('campo', 'field', $request->es_name));
+            $ct_dc->es_detail = ucfirst(str_replace('campo', 'field', $request->es_detail));
+            $ct_dc->es_detail_2 = ucfirst(str_replace('campo', 'field', $request->es_detail_2));
+
+            $ct_dc->en_name = ucfirst(str_replace('campo', 'field', $request->en_name));
+            $ct_dc->en_detail = ucfirst(str_replace('campo', 'field', $request->en_detail));
+            $ct_dc->en_detail_2 = ucfirst(str_replace('campo', 'field', $request->en_detail_2));
+        } else {
+            $ct_dc->description = cap_str($request->description);
+        }
+
         $ct_dc->is_active = $request->is_active ? true : false;
         $ct_dc->created_by = session()->get('user');
 
@@ -54,9 +66,20 @@ class CtDcController extends Controller
             return back()->with('warning', 'Este ' . get_ct_dc($type, false) . ' no existe!');
         }
 
-        $ct_dc->description = cap_str($request->description);
+        if ($type == 'VISA') {
+            $ct_dc->es_name = ucfirst(str_replace('campo', 'field', $request->es_name));
+            $ct_dc->es_detail = ucfirst(str_replace('campo', 'field', $request->es_detail));
+            $ct_dc->es_detail_2 = ucfirst(str_replace('campo', 'field', $request->es_detail_2));
+
+            $ct_dc->en_name = ucfirst(str_replace('campo', 'field', $request->en_name));
+            $ct_dc->en_detail = ucfirst(str_replace('campo', 'field', $request->en_detail));
+            $ct_dc->en_detail_2 = ucfirst(str_replace('campo', 'field', $request->en_detail_2));
+        } else {
+            $ct_dc->description = cap_str($request->description);
+        }
+
         $ct_dc->is_active = $request->is_active ? true : false;
-        $ct_dc->created_by = session()->get('user');
+        $ct_dc->updated_by = session()->get('user');
 
         $ct_dc->save();
 

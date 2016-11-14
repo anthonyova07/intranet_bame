@@ -158,15 +158,17 @@
 
                     <div class="panel-body">
                         <ul class="list-group">
-                            @foreach (get_claim_types_visa() as $claim_type)
+                            @foreach ($claim_types_visa as $claim_type_visa)
                                 <li class="list-group-item">
-                                    <input type="radio" name="claim_type" value="{{ $claim_type->id }}">
+                                    <input type="radio" name="claim_type_visa" value="{{ $claim_type_visa->id }}">
                                     <b>
-                                        {{ $claim_type->id }}.
-                                        {!! str_replace(['{field1}', '{field2}', '{field3}'], '<b><input type="text" name="fields' . $claim_type->id . '[]"></b>', $claim_type->es_name) !!}
+                                        {!! $claim_type_visa->es_name !!}
                                     </b>
                                     <p>
-                                        {!! str_replace(['{field1}', '{field2}', '{field3}'], '<b><input type="text" name="fields' . $claim_type->id . '[]"></b>', $claim_type->es_detail) !!}
+                                        {!! $claim_type_visa->es_detail !!}
+                                    </p>
+                                    <p>
+                                        {!! $claim_type_visa->es_detail_2 !!}
                                     </p>
                                 </li>
                             @endforeach

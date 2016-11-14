@@ -23,8 +23,19 @@ class CtDcRequest extends Request
      */
     public function rules()
     {
-        return [
-            'description' => 'required|max:255',
-        ];
+        if ($this->type == 'VISA') {
+            return [
+                'es_name' => 'required|max:500',
+                'es_detail' => 'required|max:500',
+                'es_detail_2' => 'max:500',
+                'en_name' => 'required|max:500',
+                'en_detail' => 'required|max:500',
+                'en_detail_2' => 'max:500',
+            ];
+        } else {
+            return [
+                'description' => 'required|max:255',
+            ];
+        }
     }
 }
