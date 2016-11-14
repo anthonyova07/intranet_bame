@@ -42,14 +42,21 @@
 
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-xs-6 text-center">
+                            <div class="col-xs-4 text-center">
+                                <div class="form-group">
+                                    <label class="control-label"># Reclamación</label>
+                                    <p class="form-control-static">{{ $claim->claim_number }}</p>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-4 text-center">
                                 <div class="form-group">
                                     <label class="control-label">Nombre Tarjetahabiente Principal</label>
                                     <p class="form-control-static">{{ $claim->names . ' ' . $claim->last_names }}</p>
                                 </div>
                             </div>
 
-                            <div class="col-xs-6 text-center">
+                            <div class="col-xs-4 text-center">
                                 <div class="form-group">
                                     <label class="control-label">Número de Contacto con el Tarjetahabiente</label>
                                     <p class="form-control-static">

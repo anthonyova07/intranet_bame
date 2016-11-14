@@ -26,6 +26,14 @@
                         <div class="col-xs-2">
                             <a class="btn btn-info btn-xs" href="{{ route('customer.claim.show', ['id' => $consumption->claim->id]) }}"><i class="fa fa-arrow-left"></i> Atrás</a>
                         </div>
+
+                        <div class="col-xs-4 text-center">
+                            <div class="form-group">
+                                <label class="control-label"># Reclamación</label>
+                                <p class="form-control-static">{{ $claim->claim_number }}</p>
+                            </div>
+                        </div>
+
                         <div class="col-xs-4 text-center">
                             <div class="form-group">
                                 <label class="control-label">Nombre Tarjetahabiente Principal</label>
@@ -33,7 +41,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xs-6 text-center">
+                        <div class="col-xs-4 text-center">
                             <div class="form-group">
                                 <label class="control-label">Número de Contacto con el Tarjetahabiente</label>
                                 <p class="form-control-static">
