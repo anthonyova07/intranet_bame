@@ -56,19 +56,19 @@
                                 <tbody>
                                     @if (!session()->get('customer_claim')->isCompany())
                                         <tr>
-                                            <td colspan="2" style="width: 50%"><b>Nombres:</b> {{ session()->get('customer_claim')->getNames() }}</td>
-                                            <td colspan="2" style="width: 50%"><b>Apellidos:</b> {{ session()->get('customer_claim')->getLastNames() }}</td>
+                                            <td colspan="2" style="width: 50%"><b class="required">Nombres:</b> {{ session()->get('customer_claim')->getNames() }}</td>
+                                            <td colspan="2" style="width: 50%"><b class="required">Apellidos:</b> {{ session()->get('customer_claim')->getLastNames() }}</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2"><b>No. Cédula:</b> {{ session()->get('customer_claim')->getDocument() }}</td>
-                                            <td colspan="2"><b>No. Pasaporte:</b> {{ session()->get('customer_claim')->getPassport() }}</td>
+                                            <td colspan="2"><b class="required">No. Cédula:</b> {{ session()->get('customer_claim')->getDocument() }}</td>
+                                            <td colspan="2"><b class="required">No. Pasaporte:</b> {{ session()->get('customer_claim')->getPassport() }}</td>
                                         </tr>
                                     @endif
 
                                     @if (session()->get('customer_claim')->isCompany())
                                         <tr>
-                                            <td colspan="2" style="width: 50%"><b>Razón Social:</b> {{ session()->get('customer_claim')->getLegalName() }}</td>
-                                            <td colspan="2" style="width: 50%"><b>RNC:</b> {{ session()->get('customer_claim')->getDocument() }}</td>
+                                            <td colspan="2" style="width: 50%"><b class="required">Razón Social:</b> {{ session()->get('customer_claim')->getLegalName() }}</td>
+                                            <td colspan="2" style="width: 50%"><b class="required">RNC:</b> {{ session()->get('customer_claim')->getDocument() }}</td>
                                         </tr>
                                     @endif
 
@@ -76,29 +76,29 @@
                                         <td colspan="{{ session()->get('customer_claim')->isCompany() ? '2' : '' }}"><b>Teléfonos:</b></td>
                                         @if (!session()->get('customer_claim')->isCompany())
                                             <td>
-                                                <b>Residencia: </b> {{ session()->get('customer_claim')->getResidentialPhone() }}
+                                                <b class="required">Residencia: </b> {{ session()->get('customer_claim')->getResidentialPhone() }}
                                             </td>
                                         @endif
-                                        <td colspan="{{ session()->get('customer_claim')->isCompany() ? '2' : '' }}"><b>Oficina: </b> {{ session()->get('customer_claim')->getOfficePhone() }}</td>
+                                        <td colspan="{{ session()->get('customer_claim')->isCompany() ? '2' : '' }}"><b class="required">Oficina: </b> {{ session()->get('customer_claim')->getOfficePhone() }}</td>
                                         @if (!session()->get('customer_claim')->isCompany())
                                             <td>
-                                                <b>Celular: </b> {{ session()->get('customer_claim')->getCellPhone() }}
+                                                <b class="required">Celular: </b> {{ session()->get('customer_claim')->getCellPhone() }}
                                             </td>
                                         @endif
                                     </tr>
                                     <tr>
-                                        <td colspan="2"><b>Correo: </b> {{ session()->get('customer_claim')->getMail() }}</td>
+                                        <td colspan="2"><b class="required">Correo: </b> {{ session()->get('customer_claim')->getMail() }}</td>
                                         <td colspan="2"><b>Fax: </b> {{ session()->get('customer_claim')->getFaxPhone() }}</td>
                                     </tr>
                                     <tr>
-                                        <td><b>Calle: </b> {{ session()->get('customer_claim')->getStreet() }}</td>
-                                        <td><b>Edificio/Residencial: </b> {{ session()->get('customer_claim')->getResidentialOrBuilding() }}</td>
-                                        <td><b>Apartamento/Casa: </b> {{ session()->get('customer_claim')->getBuildingOrHouseNumber() }}</td>
-                                        <td><b>Sector: </b> {{ session()->get('customer_claim')->getSector() }}</td>
+                                        <td><b class="required">Calle: </b> {{ session()->get('customer_claim')->getStreet() }}</td>
+                                        <td><b class="required">Edificio/Residencial: </b> {{ session()->get('customer_claim')->getResidentialOrBuilding() }}</td>
+                                        <td><b class="required">Apartamento/Casa: </b> {{ session()->get('customer_claim')->getBuildingOrHouseNumber() }}</td>
+                                        <td><b class="required">Sector: </b> {{ session()->get('customer_claim')->getSector() }}</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2"><b>Ciudad: </b> {{ session()->get('customer_claim')->getCity() }}</td>
-                                        <td colspan="2"><b>Provincia: </b> {{ session()->get('customer_claim')->getProvince() }}</td>
+                                        <td colspan="2"><b class="required">Ciudad: </b> {{ session()->get('customer_claim')->getCity() }}</td>
+                                        <td colspan="2"><b class="required">Provincia: </b> {{ session()->get('customer_claim')->getProvince() }}</td>
                                     </tr>
                                 </tbody>
                             </table>

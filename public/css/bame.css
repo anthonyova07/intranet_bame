@@ -282,3 +282,8 @@ form {
     font-size: 25px;
     text-align: center;
 }
+
+.required:after {
+    content: ' *';
+    color: red;
+}
