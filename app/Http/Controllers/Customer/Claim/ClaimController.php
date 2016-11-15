@@ -204,7 +204,7 @@ class ClaimController extends Controller
 
         session()->forget('customer_claim');
 
-        if ($request->form_type == 'CON') {
+        if (in_array($request->form_type, ['CON', 'FRA'])) {
             return redirect(route('customer.claim.{claim_id}.{form_type}.form.create', ['claim_id' => $claim->id, 'form_type' => $request->form_type]))
                     ->with('success', 'La reclamación ha sido creada correctamente.')
                     ->with('info', 'Ahora debe completar el formulario de consumo.');

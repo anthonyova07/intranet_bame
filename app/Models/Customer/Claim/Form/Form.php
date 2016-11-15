@@ -39,6 +39,6 @@ class Form extends Model
 
     public function transactions()
     {
-        return $this->hasMany(Transaction::class, 'form_id')->where('form_type', 'CON');
+        return $this->hasMany(Transaction::class, 'form_id');
     }
 }

@@ -42,8 +42,8 @@ class Claim extends Model
         }
     }
 
-    public function consumption()
+    public function forms()
     {
-        return $this->hasOne(Form::class, 'claim_id')->where('form_type', 'CON');
+        return $this->hasMany(Form::class, 'claim_id');
     }
 }
