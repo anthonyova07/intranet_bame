@@ -221,6 +221,7 @@
                             <thead>
                                 <tr>
                                     <th>Nombre ES</th>
+                                    <th>Nombre EN</th>
                                     <th style="width: 2px"></th>
                                 </tr>
                             </thead>
@@ -228,6 +229,7 @@
                                 @foreach ($claim_types_visa as $claim_type_visa)
                                     <tr>
                                         <td>{{ $claim_type_visa->es_name }}</td>
+                                        <td>{{ $claim_type_visa->en_name }}</td>
                                         <td align="center">
                                             <a
                                                 href="{{ route('customer.claim.{type}.ct_dc.edit', ['type' => 'VISA', 'ct_dc' => $claim_type_visa->id]) }}"
