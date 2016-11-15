@@ -4,7 +4,7 @@ namespace Bame\Models\Customer\Claim;
 
 use Illuminate\Database\Eloquent\Model;
 
-use Bame\Models\Customer\Claim\Form\Consumption;
+use Bame\Models\Customer\Claim\Form\Form;
 
 class Claim extends Model
 {
@@ -44,6 +44,6 @@ class Claim extends Model
 
     public function consumption()
     {
-        return $this->hasOne(Consumption::class, 'claim_id');
+        return $this->hasOne(Form::class, 'claim_id')->where('form_type', 'CON');
     }
 }

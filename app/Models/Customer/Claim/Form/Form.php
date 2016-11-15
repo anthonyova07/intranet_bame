@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 use Bame\Models\Customer\Claim\Claim;
 
-class Consumption extends Model
+class Form extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intranet_claim_form_consumption';
+    protected $table = 'intranet_claim_forms';
 
     protected $primaryKey = 'id';
 

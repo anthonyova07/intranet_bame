@@ -22,7 +22,7 @@
 
                     <div class="col-xs-10 text-right" style="padding: 0 2px;">
                         @if ($claim->consumption)
-                            <a class="btn btn-default btn-xs" href="{{ route('customer.claim.consumption', ['id' => $claim->consumption->id]) }}"><i class="fa fa-wpforms"></i> Formulario de Consumo</a>
+                            <a class="btn btn-default btn-xs" href="{{ route('customer.claim.{claim_id}.{form_type}.form.show', ['form' => $claim->consumption->id, 'claim_id' => $claim->id, 'form_type' => 'CON']) }}"><i class="fa fa-wpforms"></i> Formulario de Consumo</a>
                         @endif
                         <a class="btn btn-default btn-xs" href=""><i class="fa fa-wpforms"></i> Formulario de Fraude</a>
                         <a class="btn btn-default btn-xs" href=""><i class="fa fa-wpforms"></i> Formulario de Reverso</a>

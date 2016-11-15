@@ -2,7 +2,7 @@
 
 @section('title', 'Clientes - Reclamaciones')
 
-@section('page_title', 'Reclamación (Formulario de Consumo)')
+@section('page_title', 'Reclamación (Formulario de ' . get_form_types($form_type) . ')')
 
 @if (can_not_do('customer_claim'))
     @section('contents')
@@ -29,7 +29,7 @@
         @endif
     @endif
 
-    <form method="post" action="{{ route('customer.claim.form.consumption', ['id' => $id]) }}" id="form">
+    <form method="post" action="{{ route('customer.claim.{claim_id}.{form_type}.form.store', ['claim_id' => $claim->id, 'form_type' => $form_type]) }}" id="form">
 
         <div class="row">
             <div class="col-xs-8 col-xs-offset-2">
@@ -142,39 +142,41 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-xs-10 col-xs-offset-1">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            Tipo de Reclamo VISA
-                        </h3>
-                    </div>
+        @if ($form_type == 'CON')
+            <div class="row">
+                <div class="col-xs-10 col-xs-offset-1">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                Tipo de Reclamo VISA
+                            </h3>
+                        </div>
 
-                    <div class="panel-body">
-                        <ul class="list-group">
-                            @foreach ($claim_types_visa as $claim_type_visa)
-                                <li class="list-group-item">
-                                    <input type="radio" name="claim_type_visa" value="{{ $claim_type_visa->id }}">
-                                    <b>
-                                        {!! $claim_type_visa->es_name !!}
-                                    </b>
-                                    <p>
-                                        {!! $claim_type_visa->es_detail !!}
-                                    </p>
-                                    <p>
-                                        {!! $claim_type_visa->es_detail_2 !!}
-                                    </p>
-                                </li>
-                            @endforeach
-                        </ul>
-                        {{ csrf_field() }}
-                        <a class="btn btn-info btn-xs" href="{{ route('customer.claim.show', ['id' => $claim->id]) }}"><i class="fa fa-arrow-left"></i> Atrás</a>
-                        <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Guardar</button>
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                @foreach ($claim_types_visa as $claim_type_visa)
+                                    <li class="list-group-item">
+                                        <input type="radio" name="claim_type_visa" value="{{ $claim_type_visa->id }}">
+                                        <b>
+                                            {!! $claim_type_visa->es_name !!}
+                                        </b>
+                                        <p style="margin: 5px 0px;">
+                                            {!! $claim_type_visa->es_detail !!}
+                                        </p>
+                                        <p>
+                                            {!! $claim_type_visa->es_detail_2 !!}
+                                        </p>
+                                    </li>
+                                @endforeach
+                            </ul>
+                            {{ csrf_field() }}
+                            <a class="btn btn-info btn-xs" href="{{ route('customer.claim.show', ['id' => $claim->id]) }}"><i class="fa fa-arrow-left"></i> Atrás</a>
+                            <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Guardar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
 
     </form>
 
