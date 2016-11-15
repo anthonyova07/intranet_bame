@@ -140,26 +140,28 @@
                             </ul>
                         </div>
 
-                        <div class="panel-body text-center">
-                            <label class="control-label text-center label label-warning" style="font-size: 24px;">Premios</label>
-                            <ul class="list-group text-left" style="box-shadow: 0 0 0 0;margin-top: 20px;">
-                                @foreach ($coco->get()->awards->sortBy('order') as $award)
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <a href="javascript:void(0)">
-                                                <span class="badge btn-warning" style="font-size: 35px;width: 40px;">{{ $award->order }}</span>
-                                            </a>
+                        @if ($coco->get()->awards->count())
+                            <div class="panel-body text-center">
+                                <label class="control-label text-center label label-warning" style="font-size: 24px;">Premios</label>
+                                <ul class="list-group text-left" style="box-shadow: 0 0 0 0;margin-top: 20px;">
+                                    @foreach ($coco->get()->awards->sortBy('order') as $award)
+                                        <div class="media">
+                                            <div class="media-left">
+                                                <a href="javascript:void(0)">
+                                                    <span class="badge btn-warning" style="font-size: 35px;width: 40px;">{{ $award->order }}</span>
+                                                </a>
+                                            </div>
+                                            <div class="media-body" style="font-weight: bold;vertical-align: middle;">
+                                                {{ $award->award }}
+                                            </div>
                                         </div>
-                                        <div class="media-body" style="font-weight: bold;vertical-align: middle;">
-                                            {{ $award->award }}
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </ul>
-                        </div>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
                         <div class="panel-body text-right" style="margin-top: -38px;">
-                            <a href="{{ route('coco') }}" class="btn btn-success btn-sm" style="margin-top: -12px;">Enviar Idea...</a>
+                            <a href="{{ route('coco') }}" class="btn btn-success btn-sm">Enviar Idea...</a>
                         </div>
 
                     @else

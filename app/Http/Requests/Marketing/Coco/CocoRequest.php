@@ -26,7 +26,6 @@ class CocoRequest extends Request
         return [
             'title' => 'required',
             'descriptions' => 'required',
-            'awards' => 'required'
         ];
     }
 }
