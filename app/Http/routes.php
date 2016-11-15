@@ -14,6 +14,7 @@ Route::post('break_coco', 'Marketing\MarketingController@idea');
 Route::get('news/{id}', 'Marketing\MarketingController@news')->name('home.news');
 
 Route::get('event/{id}', 'HomeController@event')->name('home.event');
+Route::get('event/{id}/subscribers', 'HomeController@subscribers')->name('home.event.subscribers');
 
 Route::get('vacant/{id}', 'HumanResource\HumanResourceController@vacant')->name('home.vacant');
 
