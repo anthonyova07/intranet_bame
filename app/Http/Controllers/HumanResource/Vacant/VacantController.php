@@ -43,7 +43,10 @@ class VacantController extends Controller
 
         $vacancies = $vacancies->paginate();
 
+        $applicants_eligible = Applicant::where('is_eligible_for_vacancies', true)->get();
+
         return view('human_resources.vacant.index')
+            ->with('applicants_eligible', $applicants_eligible)
             ->with('vacancies', $vacancies);
     }
 
@@ -166,6 +169,7 @@ class VacantController extends Controller
             $applicant->username = session()->get('user');
             $applicant->names = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
             $applicant->file_name = $file_name_destination;
+            $applicant->is_eligible_for_vacancies = false;
 
             $applicant->save();
         }
@@ -175,5 +179,17 @@ class VacantController extends Controller
         }
 
         return back()->with('success', 'Usted ha aplicado a la vacante correctamente.');
+    }
+
+    public function eligible(Request $request, $vacant, $applicant)
+    {
+        Applicant::where('vacant_id', $vacant)
+                ->where('username', $applicant)
+                ->update([
+                    'is_eligible_for_vacancies' => true,
+                    'vacancies_posible' => substr($request->vacancies_posible, 0, 255),
+                ]);
+
+        return back()->with('success', 'La información ha sido actualizada correctamente.');
     }
 }

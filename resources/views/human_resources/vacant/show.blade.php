@@ -42,6 +42,28 @@
                                             title="Ver Curriculum">
                                             <i class="fa fa-eye fa-fw"></i>
                                         </a>
+                                        <a
+                                            href="javascript:void(0)"
+                                            data-toggle="popover"
+                                            data-placement="top"
+                                            title="Empleado elegible"
+                                            data-content="
+                                            <form action='{{ route('human_resources.vacant.eligible', ['vacant' => $applicant->vacant_id, 'applicant' => $applicant->username]) }}' method='post'>
+                                                <div class='row'>
+                                                    <div class='col-xs-12'>
+                                                        <div class='form-group'>
+                                                            <label class='control-label'>Posibles Vacantes</label>
+                                                            <input type='text' class='form-control input-sm' name='vacancies_posible'>
+                                                        </div>
+                                                        {{ str_replace('"', '\'', csrf_field()) }}
+                                                        <input type='submit' class='btn btn-danger btn-xs' value='Guardar' style='margin-top: 10px;'>
+                                                    </div>
+                                                </div>
+                                            </form>"
+                                            data-placement="left"
+                                            style="color: green;">
+                                            <i class="fa fa-plus-square"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach

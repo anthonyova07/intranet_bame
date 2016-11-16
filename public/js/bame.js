@@ -5,6 +5,10 @@ $(document).ready(function() {
 
     $('[data-toggle="tooltip"]').tooltip();
 
+    $('[data-toggle="popover"]').popover({
+        html: true
+    });
+
     $orderBy = $('.datatable').attr('order-by');
 
     if ($orderBy !== undefined) {
