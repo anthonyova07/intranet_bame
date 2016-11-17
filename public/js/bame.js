@@ -6,7 +6,13 @@ $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
 
     $('[data-toggle="popover"]').popover({
-        html: true
+        html: true,
+        trigger: 'click',
+        template: '<div class="popover awesome-popover-class mipopover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
+    });
+
+    $('td').on('click', '.close-popover', function () {
+        $('.popover').popover('hide');
     });
 
     $orderBy = $('.datatable').attr('order-by');
