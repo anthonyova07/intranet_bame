@@ -30,4 +30,9 @@ class LoanMoneyMarket extends Model
     {
         return $this->deaccy;
     }
+
+    public function payments_plan()
+    {
+        return $this->hasMany(LoanPaymentPlan::class, 'dlpacc', 'deaacc');
+    }
 }

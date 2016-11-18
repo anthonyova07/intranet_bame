@@ -437,7 +437,7 @@ function get_form_types($form_type = null)
         'NIN' => 'Ninguno',
         'CON' => 'Consumo',
         'FRA' => 'Fraude',
-        'REV' => 'Reverso',
+        'CAI' => 'Cargos Internos',
     ]);
 
     if (!$form_type) {

@@ -110,6 +110,12 @@ class ClaimController extends Controller
             }
         }
 
+        if (in_array($request->product_type, ['PRECOM', 'PRECON', 'PREHIP'])) {
+            if ($request->form_type != 'CAI' || $product_parts[0][0] != 'P') {
+                $messages->push('Debe seleccionar un formulario de ' . get_form_types('CAI') . ' o un producto de préstamo.');
+            }
+        }
+
         if ($messages->count()) {
             $request->session()->flash('messages_claim', $messages->values());
             return back()->withInput();
@@ -181,6 +187,7 @@ class ClaimController extends Controller
 
         $claim->product_number = $product_number;
         $claim->product_code = $product_code;
+        $claim->product_intranet = $request->product_type;
 
         if ($customer->isCompany()) {
             $claim->agent_legal_name = $customer->agent->getLegalName();
@@ -204,10 +211,10 @@ class ClaimController extends Controller
 
         session()->forget('customer_claim');
 
-        if (in_array($request->form_type, ['CON', 'FRA'])) {
+        if (in_array($request->form_type, ['CON', 'FRA', 'CAI'])) {
             return redirect(route('customer.claim.{claim_id}.{form_type}.form.create', ['claim_id' => $claim->id, 'form_type' => $request->form_type]))
                     ->with('success', 'La reclamación ha sido creada correctamente.')
-                    ->with('info', 'Ahora debe completar el formulario de consumo.');
+                    ->with('info', 'Ahora debe completar el Formulario de ' . get_form_types($request->form_type) . '.');
         }
 
         return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación ha sido creada correctamente.');

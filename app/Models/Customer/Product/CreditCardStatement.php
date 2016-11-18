@@ -4,10 +4,6 @@ namespace Bame\Models\Customer\Product;
 
 use Illuminate\Database\Eloquent\Model;
 
-use Bame\Models\Customer\Customer;
-use Bame\Models\Operation\Tdc\Itc\RequestDescription;
-use Bame\Models\Operation\Tdc\Itc\TdcBinDescription;
-
 class CreditCardStatement extends Model
 {
     protected $connection = 'itc';

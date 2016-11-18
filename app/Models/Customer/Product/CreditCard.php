@@ -42,4 +42,9 @@ class CreditCard extends Model
     {
         return $this->hasMany(CreditCardStatement::class, 'numta_dect', 'tcact_mtar');
     }
+
+    public function balance($currency = 214)
+    {
+        return $this->hasOne(CreditCardBalance::class, 'tcact_msal', 'tcact_mtar')->where('moned_msal', $currency);
+    }
 }
