@@ -4,11 +4,11 @@ namespace Bame\Models\Customer\Claim;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CtDc extends Model
+class Param extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intranet_claim_ct_dc';
+    protected $table = 'intranet_claim_param';
 
     protected $primaryKey = 'id';
 
@@ -21,8 +21,8 @@ class CtDc extends Model
         return $query->where('is_active', true);
     }
 
-    public function scopeVisaOnly($query)
+    public function scopeTdcOnly($query)
     {
-        return $query->where('type', 'VISA');
+        return $query->where('type', 'TDC');
     }
 }

@@ -52,6 +52,7 @@
                         </div>
 
                         <div class="panel-body">
+
                             <table class="table table-bordered table-condensed table-striped">
                                 <tbody>
                                     @if (!session()->get('customer_claim')->isCompany())
@@ -102,6 +103,7 @@
                                     </tr>
                                 </tbody>
                             </table>
+
                         </div>
                     </div>
                 </div>
@@ -151,11 +153,13 @@
                 <div class="col-xs-5">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Canal de Distribución</h3>
+                            <h3 class="panel-title">Canal de Distribución / Tipo de Persona</h3>
                         </div>
 
                         <div class="panel-body">
+
                             <div class="{{ $errors->first('channel') ? 'has-error':'' }}">
+                                <label class="control-label">Canal de Distribución</label>
                                 <select class="form-control input-sm" name="channel">
                                     <option value="">Seleccione un Canal de Distribución</option>
                                     @foreach ($distribution_channels as $channel)
@@ -164,19 +168,32 @@
                                 </select>
                                 <span class="help-block">{{ $errors->first('channel') }}</span>
                             </div>
+
+                            <div class="form-group {{ $errors->first('kind_person') ? 'has-error':'' }}">
+                                <label class="control-label">Tipo de Persona</label>
+                                <select class="form-control input-sm" name="kind_person">
+                                    <option value="">Seleccione un Tipo de Persona</option>
+                                    @foreach ($kind_persons as $kind_person)
+                                        <option value="{{ $kind_person->id }}" {{ old('kind_person') == $kind_person->id ? 'selected':'' }}>{{ $kind_person->description }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="help-block">{{ $errors->first('kind_person') }}</span>
+                            </div>
+
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-5">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Tipo de Producto</h3>
+                            <h3 class="panel-title">Datos del Producto</h3>
                         </div>
 
                         <div class="panel-body">
                             <div class="row">
                                 <div class="{{ $errors->first('product_type') ? 'has-error':'' }}">
                                     <div class="col-xs-8">
+                                        <label class="control-label">Tipo de Producto</label>
                                         <select class="form-control input-sm" name="product_type">
                                             <option value="">Seleccione un tipo de producto</option>
                                             @foreach (get_product_types() as $key => $product_type)
@@ -187,16 +204,18 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-4">
-                                    <select class="form-control input-sm" name="form_type" data-toggle="tooltip" title="Tipo de Formulario">
+                                    <label class="control-label">Tipo de Formulario</label>
+                                    <select class="form-control input-sm" name="form_type">
                                         @foreach (get_form_types() as $key => $form_type)
                                             <option value="{{ $key }}" {{ old('form_type') == $key ? 'selected':'' }}>{{ $form_type }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-                            <div class="row" style="margin-top: 10px;">
+                            <div class="row">
                                 <div class="col-xs-12">
                                     <div class="{{ $errors->first('product') ? 'has-error':'' }}">
+                                        <label class="control-label">Productos del Cliente</label>
                                         <select class="form-control input-sm" name="product" data-toggle="tooltip" title="Producto">
                                             <option value="">Seleccione un producto del cliente</option>
 

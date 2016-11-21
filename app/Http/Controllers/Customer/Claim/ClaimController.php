@@ -8,7 +8,7 @@ use DateTime;
 use Bame\Http\Requests;
 use Bame\Models\Customer\Customer;
 use Bame\Http\Controllers\Controller;
-use Bame\Models\Customer\Claim\CtDc;
+use Bame\Models\Customer\Claim\Param;
 use Bame\Models\Customer\Claim\Claim;
 use Bame\Http\Requests\Customer\Claim\ClaimRequest;
 
@@ -54,25 +54,28 @@ class ClaimController extends Controller
 
         $claims = $claims->paginate();
 
-        $ct_dc = CtDc::all();
+        $param = Param::all();
 
-        $claim_types = $ct_dc->where('type', 'CT');
-        $claim_types_visa = $ct_dc->where('type', 'VISA');
-        $distribution_channels = $ct_dc->where('type', 'DC');
+        $claim_types = $param->where('type', 'CT');
+        $claim_types_visa = $param->where('type', 'TDC');
+        $distribution_channels = $param->where('type', 'DC');
+        $kind_persons = $param->where('type', 'KP');
 
         return view('customer.claim.index')
             ->with('claims', $claims)
             ->with('claim_types', $claim_types)
             ->with('claim_types_visa', $claim_types_visa)
-            ->with('distribution_channels', $distribution_channels);
+            ->with('distribution_channels', $distribution_channels)
+            ->with('kind_persons', $kind_persons);
     }
 
     public function create(Request $request)
     {
-        $ct_dc = CtDc::activeOnly()->get();
+        $param = Param::activeOnly()->get();
 
-        $claim_types = $ct_dc->where('type', 'CT');
-        $distribution_channels = $ct_dc->where('type', 'DC');
+        $claim_types = $param->where('type', 'CT');
+        $distribution_channels = $param->where('type', 'DC');
+        $kind_persons = $param->where('type', 'KP');
 
         $view = view('customer.claim.create');
 
@@ -95,7 +98,8 @@ class ClaimController extends Controller
 
         return $view
             ->with('claim_types', $claim_types)
-            ->with('distribution_channels', $distribution_channels);
+            ->with('distribution_channels', $distribution_channels)
+            ->with('kind_persons', $kind_persons);
     }
 
     public function store(ClaimRequest $request)
@@ -149,7 +153,7 @@ class ClaimController extends Controller
         $claim->currency = $request->currency;
         $claim->amount = round($request->amount, 2);
 
-        $claim_type = CtDc::find($request->claim_type);
+        $claim_type = Param::find($request->claim_type);
 
         if (!$claim_type) {
             return back()->with('error', 'El Tipo de Reclamación seleccionado no existe!');
@@ -168,7 +172,16 @@ class ClaimController extends Controller
         $claim->rate_day = 0.00;
         $claim->is_signed = false;
 
-        $distribution_channel = CtDc::find($request->channel);
+        $kind_person = Param::find($request->kind_person);
+
+        if (!$kind_person) {
+            return back()->with('error', 'El Tipo de Persona seleccionado no existe!');
+        }
+
+        $claim->kind_person_code = $kind_person->code;
+        $claim->kind_person_description = $kind_person->description;
+
+        $distribution_channel = Param::find($request->channel);
 
         if (!$distribution_channel) {
             return back()->with('error', 'El Canal de Distribución seleccionado no existe!');

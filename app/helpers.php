@@ -462,7 +462,7 @@ function get_currencies($currency = null)
     return $channels->get($currency);
 }
 
-function get_ct_dc($type, $plural = true)
+function get_param($type, $plural = true)
 {
     switch ($type) {
         case 'CT':
@@ -471,8 +471,11 @@ function get_ct_dc($type, $plural = true)
         case 'DC':
             return ($plural ? 'Canales' : 'Canal') . ' de Distribución';
             break;
-        case 'VISA':
-            return ($plural ? 'Tipos ' : 'Tipo ') . 'de Reclamación VISA';
+        case 'TDC':
+            return ($plural ? 'Tipos ' : 'Tipo ') . 'de Reclamación Tarjeta';
+            break;
+        case 'KP':
+            return ($plural ? 'Tipos ' : 'Tipo ') . 'de Persona';
             break;
     }
 }

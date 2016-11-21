@@ -158,18 +158,26 @@
         <div class="col-xs-5">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Canal de Distribución</h3>
+                    <h3 class="panel-title">Canal de Distribución / Tipo de Persona</h3>
                 </div>
 
                 <div class="panel-body">
-                    {{ $claim->distribution_channel }}
+                    <div class="form-group">
+                        <label class="control-label">Canal de Distribución</label>
+                        <p class="form-control-static">{{ $claim->distribution_channel }}</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Tipo de Persona</label>
+                        <p class="form-control-static">{{ $claim->kind_person_description }}</p>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-xs-5">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Tipo de Producto</h3>
+                    <h3 class="panel-title">Datos del Producto</h3>
                 </div>
 
                 <div class="panel-body">

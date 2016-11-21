@@ -122,7 +122,7 @@
     </div>
 
 
-    @if (!can_not_do('customer_claim_ctdc'))
+    @if (!can_not_do('customer_claim_param'))
         <div class="row" style="border-top: 1px solid #777;margin-top: 8px;margin-bottom: 25px;border-width: 5px;"></div>
 
         <div class="row">
@@ -133,12 +133,13 @@
                         <h3 class="panel-title">Tipos de Reclamaciones</h3>
                     </div>
                     <div class="panel-body">
-                        <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.{type}.ct_dc.create', ['type' => 'CT']) }}">Nuevo</a>
+                        <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.{type}.param.create', ['type' => 'CT']) }}">Nuevo</a>
                         <br>
                         <br>
                         <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
                             <thead>
                                 <tr>
+                                    <th style="width: 36px;">Código</th>
                                     <th>Descripción</th>
                                     <th style="width: 2px"></th>
                                 </tr>
@@ -146,10 +147,11 @@
                             <tbody>
                                 @foreach ($claim_types as $claim_type)
                                     <tr>
+                                        <td>{{ $claim_type->code }}</td>
                                         <td>{{ $claim_type->description }}</td>
                                         <td align="center">
                                             <a
-                                                href="{{ route('customer.claim.{type}.ct_dc.edit', ['type' => 'CT', 'ct_dc' => $claim_type->id]) }}"
+                                                href="{{ route('customer.claim.{type}.param.edit', ['type' => 'CT', 'param' => $claim_type->id]) }}"
                                                 data-toggle="tooltip"
                                                 data-placement="top"
                                                 title="Editar"
@@ -171,12 +173,13 @@
                         <h3 class="panel-title">Canales de Distribución</h3>
                     </div>
                     <div class="panel-body">
-                        <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.{type}.ct_dc.create', ['type' => 'DC']) }}">Nuevo</a>
+                        <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.{type}.param.create', ['type' => 'DC']) }}">Nuevo</a>
                         <br>
                         <br>
                         <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
                             <thead>
                                 <tr>
+                                    <th style="width: 36px;">Código</th>
                                     <th>Descripción</th>
                                     <th style="width: 2px"></th>
                                 </tr>
@@ -184,10 +187,11 @@
                             <tbody>
                                 @foreach ($distribution_channels as $channel)
                                     <tr>
+                                        <td>{{ $channel->code }}</td>
                                         <td>{{ $channel->description }}</td>
                                         <td align="center">
                                             <a
-                                                href="{{ route('customer.claim.{type}.ct_dc.edit', ['type' => 'DC', 'ct_dc' => $channel->id]) }}"
+                                                href="{{ route('customer.claim.{type}.param.edit', ['type' => 'DC', 'param' => $channel->id]) }}"
                                                 data-toggle="tooltip"
                                                 data-placement="top"
                                                 title="Editar"
@@ -206,13 +210,14 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-12">
+
+            <div class="col-xs-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Tipos de Reclamaciones VISA</h3>
+                        <h3 class="panel-title">Tipos de Reclamaciones Tarjeta</h3>
                     </div>
                     <div class="panel-body">
-                        <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.{type}.ct_dc.create', ['type' => 'VISA']) }}">Nuevo</a>
+                        <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.{type}.param.create', ['type' => 'TDC']) }}">Nuevo</a>
                         <br>
                         <br>
                         <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
@@ -230,7 +235,7 @@
                                         <td>{{ $claim_type_visa->en_name }}</td>
                                         <td align="center">
                                             <a
-                                                href="{{ route('customer.claim.{type}.ct_dc.edit', ['type' => 'VISA', 'ct_dc' => $claim_type_visa->id]) }}"
+                                                href="{{ route('customer.claim.{type}.param.edit', ['type' => 'TDC', 'param' => $claim_type_visa->id]) }}"
                                                 data-toggle="tooltip"
                                                 data-placement="top"
                                                 title="Editar"
@@ -245,6 +250,47 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Tipos de Persona</h3>
+                    </div>
+                    <div class="panel-body">
+                        <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.{type}.param.create', ['type' => 'KP']) }}">Nuevo</a>
+                        <br>
+                        <br>
+                        <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
+                            <thead>
+                                <tr>
+                                    <th style="width: 36px;">Código</th>
+                                    <th>Descripción</th>
+                                    <th style="width: 2px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($kind_persons as $kind_person)
+                                    <tr>
+                                        <td>{{ $kind_person->code }}</td>
+                                        <td>{{ $kind_person->description }}</td>
+                                        <td align="center">
+                                            <a
+                                                href="{{ route('customer.claim.{type}.param.edit', ['type' => 'KP', 'param' => $kind_person->id]) }}"
+                                                data-toggle="tooltip"
+                                                data-placement="top"
+                                                title="Editar"
+                                                class="naranja">
+                                                <i class="fa fa-edit fa-fw"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     @endif

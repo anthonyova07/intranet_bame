@@ -166,5 +166,7 @@ return [
       'others_charges' => 'Otros Cargos',
       'others_charges_discount_percent' => '% Descuento',
       'comment' => 'Comentario',
+      'code' => 'Código',
+      'kind_person' => 'Tipo de Persona',
     ],
 ];

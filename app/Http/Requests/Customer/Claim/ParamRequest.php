@@ -4,7 +4,7 @@ namespace Bame\Http\Requests\Customer\Claim;
 
 use Bame\Http\Requests\Request;
 
-class CtDcRequest extends Request
+class ParamRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,7 @@ class CtDcRequest extends Request
      */
     public function rules()
     {
-        if ($this->type == 'VISA') {
+        if ($this->type == 'TDC') {
             return [
                 'es_name' => 'required|max:500',
                 'es_detail' => 'required|max:500',
@@ -34,6 +34,7 @@ class CtDcRequest extends Request
             ];
         } else {
             return [
+                'code' => 'required|max:255',
                 'description' => 'required|max:255',
             ];
         }

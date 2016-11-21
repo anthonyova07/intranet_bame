@@ -373,23 +373,23 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">
-                                Tipo de Reclamo VISA
+                                Tipo de Reclamo Tarjeta
                             </h3>
                         </div>
 
                         <div class="panel-body">
                             <ul class="list-group">
-                                @foreach ($claim_types_visa as $claim_type_visa)
+                                @foreach ($claim_types_tdc as $claim_type_tdc)
                                     <li class="list-group-item">
-                                        <input type="radio" name="claim_type_visa" value="{{ $claim_type_visa->id }}">
+                                        <input type="radio" name="claim_type_tdc" value="{{ $claim_type_tdc->id }}">
                                         <b>
-                                            {!! $claim_type_visa->es_name !!}
+                                            {!! $claim_type_tdc->es_name !!}
                                         </b>
                                         <p style="margin: 5px 0px;">
-                                            {!! $claim_type_visa->es_detail !!}
+                                            {!! $claim_type_tdc->es_detail !!}
                                         </p>
                                         <p>
-                                            {!! $claim_type_visa->es_detail_2 !!}
+                                            {!! $claim_type_tdc->es_detail_2 !!}
                                         </p>
                                     </li>
                                 @endforeach

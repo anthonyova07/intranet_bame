@@ -8,7 +8,7 @@ use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
 use Bame\Models\Customer\Claim\Claim;
-use Bame\Models\Customer\Claim\CtDc;
+use Bame\Models\Customer\Claim\Param;
 use Bame\Models\Customer\Product\CreditCardStatement;
 use Bame\Models\Customer\Product\LoanMoneyMarket;
 use Bame\Models\Customer\Product\CreditCard;
@@ -41,17 +41,17 @@ class ClaimFormController extends Controller
                 ->with('claim', $claim);
 
         if ($form_type == 'CON') {
-            $claim_types_visa = CtDc::activeOnly()->visaOnly()->get();
+            $claim_types_tdc = Param::activeOnly()->tdcOnly()->get();
 
-            foreach ($claim_types_visa as $claim_type_visa) {
+            foreach ($claim_types_tdc as $claim_type_tdc) {
 
-                $claim_type_visa->es_name = str_to_field($claim_type_visa->es_name, 'name_' . $claim_type_visa->id);
-                $claim_type_visa->es_detail = str_to_field($claim_type_visa->es_detail, 'detail_' . $claim_type_visa->id);
-                $claim_type_visa->es_detail_2 = str_to_field($claim_type_visa->es_detail_2, 'detail_2_' . $claim_type_visa->id);
+                $claim_type_tdc->es_name = str_to_field($claim_type_tdc->es_name, 'name_' . $claim_type_tdc->id);
+                $claim_type_tdc->es_detail = str_to_field($claim_type_tdc->es_detail, 'detail_' . $claim_type_tdc->id);
+                $claim_type_tdc->es_detail_2 = str_to_field($claim_type_tdc->es_detail_2, 'detail_2_' . $claim_type_tdc->id);
 
             }
 
-            $view->with('claim_types_visa', $claim_types_visa);
+            $view->with('claim_types_tdc', $claim_types_tdc);
         }
 
         if ($form_type == 'CAI') {
@@ -78,7 +78,7 @@ class ClaimFormController extends Controller
         $messages = collect();
 
         $claim = Claim::find($id);
-        $claim_type_visa = CtDc::visaOnly()->find($request->claim_type_visa);
+        $claim_type_tdc = Param::tdcOnly()->find($request->claim_type_tdc);
 
         if (!$claim) {
             return redirect(route('customer.claim.index'))->with('warning', 'Esta reclamación no existe!');
@@ -94,21 +94,21 @@ class ClaimFormController extends Controller
         $form->form_type = $form_type;
 
         if ($form_type == 'CON') {
-            $fields_name = $request->input('fields_name_' . $request->claim_type_visa);
-            $fields_detail = $request->input('fields_detail_' . $request->claim_type_visa);
-            $fields_detail_2 = $request->input('fields_detail_2_' . $request->claim_type_visa);
+            $fields_name = $request->input('fields_name_' . $request->claim_type_tdc);
+            $fields_detail = $request->input('fields_detail_' . $request->claim_type_tdc);
+            $fields_detail_2 = $request->input('fields_detail_2_' . $request->claim_type_tdc);
 
             $fields = array_merge($fields_name ?? [], $fields_detail ?? [], $fields_detail_2 ?? []);
 
-            $messages = $this->validate_fields($claim_type_visa, $fields, $request->transactions, $form_type);
+            $messages = $this->validate_fields($claim_type_tdc, $fields, $request->transactions, $form_type);
 
-            $form->claim_es_name = field_to_str($claim_type_visa->es_name, $fields_name);
-            $form->claim_es_detail = field_to_str($claim_type_visa->es_detail, $fields_detail);
-            $form->claim_es_detail_2 = field_to_str($claim_type_visa->es_detail_2, $fields_detail_2);
+            $form->claim_es_name = field_to_str($claim_type_tdc->es_name, $fields_name);
+            $form->claim_es_detail = field_to_str($claim_type_tdc->es_detail, $fields_detail);
+            $form->claim_es_detail_2 = field_to_str($claim_type_tdc->es_detail_2, $fields_detail_2);
 
-            $form->claim_en_name = field_to_str($claim_type_visa->en_name, $fields_name);
-            $form->claim_en_detail = field_to_str($claim_type_visa->en_detail, $fields_detail);
-            $form->claim_en_detail_2 = field_to_str($claim_type_visa->en_detail_2, $fields_detail_2);
+            $form->claim_en_name = field_to_str($claim_type_tdc->en_name, $fields_name);
+            $form->claim_en_detail = field_to_str($claim_type_tdc->en_detail, $fields_detail);
+            $form->claim_en_detail_2 = field_to_str($claim_type_tdc->en_detail_2, $fields_detail_2);
         }
 
         if ($form_type == 'CAI') {
@@ -217,7 +217,7 @@ class ClaimFormController extends Controller
                 ->with('form', $form);
     }
 
-    public function validate_fields($claim_type_visa, $fields = [], $transactions = [], $form_type)
+    public function validate_fields($claim_type_tdc, $fields = [], $transactions = [], $form_type)
     {
         $messages = collect();
 
@@ -226,10 +226,10 @@ class ClaimFormController extends Controller
         }
 
         if ($form_type == 'CON') {
-            if ($claim_type_visa) {
-                $fields_count = substr_count($claim_type_visa->es_name, '{field') +
-                                    substr_count($claim_type_visa->es_detail, '{field') +
-                                    substr_count($claim_type_visa->es_detail_2, '{field');
+            if ($claim_type_tdc) {
+                $fields_count = substr_count($claim_type_tdc->es_name, '{field') +
+                                    substr_count($claim_type_tdc->es_detail, '{field') +
+                                    substr_count($claim_type_tdc->es_detail_2, '{field');
 
                 if ($fields_count > 0) {
                     if (!count($fields)) {

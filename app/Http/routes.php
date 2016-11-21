@@ -134,7 +134,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::group(['prefix' => 'claim'], function () {
             Route::get('destroy', 'Customer\Claim\ClaimController@destroy')->name('customer.claim.destroy');
 
-            Route::resource('{type}/ct_dc', 'Customer\Claim\CtDcController', ['only' => [
+            Route::resource('{type}/param', 'Customer\Claim\ParamController', ['only' => [
                 'create', 'store', 'edit', 'update'
             ]]);
 
