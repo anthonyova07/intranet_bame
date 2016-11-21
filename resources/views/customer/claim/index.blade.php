@@ -92,25 +92,15 @@
                                     <td>
                                         @if ($claim->is_approved == null)
                                             @if ($claim->is_approved == 0)
-                                                <span class="label label-danger">No Aprobada</span>
-                                            @else
-                                                <span class="label label-success">Aprobada</span>
+                                                <span style="letter-spacing: 1px;" class="label label-danger">No Aprobada</span>
                                             @endif
                                         @else
-                                            <span class="label label-{{ $claim->is_closed ? 'success' : 'danger' }}">{{ $claim->is_closed ? 'Cerrada' : 'En Proceso' }}</span>
+                                            <span style="letter-spacing: 1px;" class="label label-{{ $claim->is_closed ? 'success' : 'danger' }}">{{ $claim->is_closed ? 'Cerrada' : 'En Proceso' }}</span>
                                         @endif
                                     </td>
                                     <td>{{ $claim->created_at->format('d/m/Y H:i:s') }}</td>
                                     <td>{{ $claim->created_by_name }}</td>
                                     <td align="center">
-                                        <a
-                                            href=""
-                                            data-toggle="tooltip"
-                                            data-placement="top"
-                                            title="Editar"
-                                            class="naranja">
-                                            <i class="fa fa-edit fa-fw"></i>
-                                        </a>
                                         <a
                                             href="{{ route('customer.claim.show', array_merge(['id' => $claim->id], Request::all())) }}"
                                             data-toggle="tooltip"

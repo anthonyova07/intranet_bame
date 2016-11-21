@@ -31,10 +31,23 @@
                                 <a class="btn btn-warning btn-xs" href="{{ route('customer.claim.approve', ['claim_id' => $claim->id, 'to_approve' => 0]) }}"><i class="fa fa-close"></i> Rechazar</a>
                             @endif
                         @else
-                            <span style="font-size: 14px;" class="label label-{{ $claim->is_approved == 1 ? 'success' : 'warning' }}">
+                            <span style="font-size: 13px;margin: 0 5px;" class="label label-{{ $claim->is_approved == 1 ? 'success' : 'warning' }}">
                                 {{ $claim->is_approved == 1 ? 'Aprobada' : 'Rechazada' }}
                                 por {{ $claim->approved_by_name }}
                             </span>
+                        @endif
+
+                        @if ($claim->is_closed)
+                            <span style="font-size: 13px;" class="label label-info">
+                                {{ $claim->is_closed ? 'Cerrada' : '' }}
+                                por {{ $claim->closed_by_name }}
+                            </span>
+                        @else
+                            @if ($claim->is_approved != null)
+                                @if (!can_not_do('customer_claim_reject'))
+                                    <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.reject', ['claim_id' => $claim->id]) }}"><i class="fa fa-mail-reply-all"></i> Terminar</a>
+                                @endif
+                            @endif
                         @endif
                     </div>
                 </div>
@@ -207,22 +220,28 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="col-xs-3">
+                        <div class="col-xs-2">
                             <div class="form-group{{ $errors->first('response_term') ? ' has-error':'' }}">
                                 <label class="control-label">Plazo de Respuesta</label>
                                 <p class="form-control-static">{{ $claim->response_term }}</p>
                             </div>
                         </div>
-                        <div class="col-xs-3">
+                        <div class="col-xs-2">
                             <div class="form-group">
                                 <label class="control-label">Fecha de Respuesa</label>
                                 <p class="form-control-static">{{ $claim->response_date->format('d/m/Y') }}</p>
                             </div>
                         </div>
-                        <div class="col-xs-3">
+                        <div class="col-xs-2">
                             <div class="form-group">
                                 <label class="control-label">Lugar de Respuesta</label>
                                 <p class="form-control-static">{{ $claim->response_place }}</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <div class="form-group">
+                                <label class="control-label">Creado el</label>
+                                <p class="form-control-static">{{ $claim->created_at->format('d/m/Y H:i:s') }}</p>
                             </div>
                         </div>
                     </div>
@@ -281,6 +300,45 @@
                                 <div class="form-group">
                                     <label class="control-label">Comentario</label>
                                     <p class="form-control-static">{{ $claim->approved_comments }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    @if ($claim->is_closed)
+        <div class="row">
+            <div class="col-xs-10 col-xs-offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Datos de Finalización</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label">Finalizada por</label>
+                                    <p class="form-control-static">
+                                        {{ $claim->closed_by_name }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label">Fecha de Finalización</label>
+                                    <p class="form-control-static">{{ $claim->closed_date->format('d/m/Y H:i:s') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label">Comentario</label>
+                                    <p class="form-control-static">{{ $claim->closed_comments }}</p>
                                 </div>
                             </div>
                         </div>

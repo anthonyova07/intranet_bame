@@ -272,12 +272,44 @@ class ClaimController extends Controller
 
         $claim->proceed_credit = $request->proceed_credit ? true : false;
 
-        $claim->created_by = session()->get('user');
-        $claim->created_by_name = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
-
         $claim->save();
 
         return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación ha sido aprobada correctamente.');
+    }
+
+    public function getReject(Request $request, $claim_id)
+    {
+        $claim = Claim::find($claim_id);
+
+        if ($claim->is_closed) {
+            return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('info', 'La reclamación ya ha sido Terminada anteriormente.');
+        }
+
+        return view('customer.claim.reject')
+            ->with('claim', $claim);
+    }
+
+    public function postReject(Request $request, $claim_id)
+    {
+        $this->validate($request, [
+            'comment' => 'required|max:500',
+        ]);
+
+        $claim = Claim::find($claim_id);
+
+        if ($claim->is_closed || can_not_do('customer_claim_reject')) {
+            return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('warning', 'La reclamación ya ha sido Terminada anteriormente o no tiene los permisos requeridos.');
+        }
+
+        $claim->is_closed = true;
+        $claim->closed_by = session()->get('user');
+        $claim->closed_by_name = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+        $claim->closed_comments = $request->comment;
+        $claim->closed_date = new DateTime;
+
+        $claim->save();
+
+        return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación ha sido terminada correctamente.');
     }
 
     protected function validate_fields($request)

@@ -18,7 +18,7 @@ class Claim extends Model
 
     public $timestamps = true;
 
-    protected $dates = ['response_date', 'solved_date', 'received_at', 'approved_date'];
+    protected $dates = ['response_date', 'solved_date', 'received_at', 'approved_date', 'closed_date'];
 
     public function getProduct()
     {
