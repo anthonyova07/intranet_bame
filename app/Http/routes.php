@@ -145,8 +145,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('approve/{claim_id}/{to_approve}', 'Customer\Claim\ClaimController@getApprove')->name('customer.claim.approve');
             Route::post('approve/{claim_id}/{to_approve}', 'Customer\Claim\ClaimController@postApprove');
 
-            Route::get('reject/{claim_id}', 'Customer\Claim\ClaimController@getReject')->name('customer.claim.reject');
-            Route::post('reject/{claim_id}', 'Customer\Claim\ClaimController@postReject');
+            Route::get('complete/{claim_id}', 'Customer\Claim\ClaimController@getComplete')->name('customer.claim.complete');
+            Route::post('complete/{claim_id}', 'Customer\Claim\ClaimController@postComplete');
         });
 
         Route::resource('claim', 'Customer\Claim\ClaimController', ['only' => [

@@ -31,21 +31,19 @@
                                 <a class="btn btn-warning btn-xs" href="{{ route('customer.claim.approve', ['claim_id' => $claim->id, 'to_approve' => 0]) }}"><i class="fa fa-close"></i> Rechazar</a>
                             @endif
                         @else
-                            <span style="font-size: 13px;margin: 0 5px;" class="label label-{{ $claim->is_approved == 1 ? 'success' : 'warning' }}">
+                            <span style="font-size: 13px;margin: 0 5px;" class="label label-{{ $claim->is_approved == 1 ? 'info' : 'warning' }}">
                                 {{ $claim->is_approved == 1 ? 'Aprobada' : 'Rechazada' }}
-                                por {{ $claim->approved_by_name }}
                             </span>
                         @endif
 
                         @if ($claim->is_closed)
-                            <span style="font-size: 13px;" class="label label-info">
+                            <span style="font-size: 13px;" class="label label-success">
                                 {{ $claim->is_closed ? 'Cerrada' : '' }}
-                                por {{ $claim->closed_by_name }}
                             </span>
                         @else
                             @if ($claim->is_approved != null)
                                 @if (!can_not_do('customer_claim_reject'))
-                                    <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.reject', ['claim_id' => $claim->id]) }}"><i class="fa fa-mail-reply-all"></i> Terminar</a>
+                                    <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.complete', ['claim_id' => $claim->id]) }}"><i class="fa fa-mail-reply-all"></i> Terminar</a>
                                 @endif
                             @endif
                         @endif

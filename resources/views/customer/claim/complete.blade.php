@@ -16,11 +16,11 @@
         <div class="col-xs-8 col-xs-offset-2">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form method="post" action="{{ route('customer.claim.reject', ['claim_id' => $claim->id]) }}" id="form" novalidate>
+                    <form method="post" action="{{ route('customer.claim.complete', ['claim_id' => $claim->id]) }}" id="form" novalidate>
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group{{ $errors->first('comment') ? ' has-error':'' }}">
-                                    <label class="control-label">Comentario</label>
+                                    <label class="control-label">Comentario/Solución</label>
                                     <input type="text" class="form-control input-sm" name="comment" maxlength="500" value="{{ old('comment') }}">
                                     <span class="help-block">{{ $errors->first('comment') }}</span>
                                 </div>

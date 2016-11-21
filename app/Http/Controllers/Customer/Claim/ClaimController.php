@@ -277,7 +277,7 @@ class ClaimController extends Controller
         return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación ha sido aprobada correctamente.');
     }
 
-    public function getReject(Request $request, $claim_id)
+    public function getComplete(Request $request, $claim_id)
     {
         $claim = Claim::find($claim_id);
 
@@ -285,11 +285,11 @@ class ClaimController extends Controller
             return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('info', 'La reclamación ya ha sido Terminada anteriormente.');
         }
 
-        return view('customer.claim.reject')
+        return view('customer.claim.complete')
             ->with('claim', $claim);
     }
 
-    public function postReject(Request $request, $claim_id)
+    public function postComplete(Request $request, $claim_id)
     {
         $this->validate($request, [
             'comment' => 'required|max:500',
