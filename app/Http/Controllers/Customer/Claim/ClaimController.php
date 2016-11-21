@@ -235,6 +235,51 @@ class ClaimController extends Controller
         return redirect(route('customer.claim.create'))->with('success', 'La reclamación ha sido cancelada correctamente.');
     }
 
+    public function getApprove(Request $request, $claim_id, $to_approve)
+    {
+        $to_approve = boolval($to_approve);
+
+        $claim = Claim::find($claim_id);
+
+        if ($claim->is_approved == 1) {
+            return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('info', 'La reclamación ya ha sido Aprobada/Rechazada anteriormente.');
+        }
+
+        return view('customer.claim.approve')
+            ->with('to_approve', $to_approve)
+            ->with('claim', $claim);
+    }
+
+    public function postApprove(Request $request, $claim_id, $to_approve)
+    {
+        $this->validate($request, [
+            'comment' => 'required|max:500',
+        ]);
+
+        $to_approve = boolval($to_approve);
+
+        $claim = Claim::find($claim_id);
+
+        if ($claim->is_approved == 1 || can_not_do('customer_claim_approve')) {
+            return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('warning', 'La reclamación ya ha sido Aprobada/Rechazada anteriormente o no tiene los permisos requeridos.');
+        }
+
+        $claim->is_approved = $to_approve;
+        $claim->approved_by = session()->get('user');
+        $claim->approved_by_name = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+        $claim->approved_comments = $request->comment;
+        $claim->approved_date = new DateTime;
+
+        $claim->proceed_credit = $request->proceed_credit ? true : false;
+
+        $claim->created_by = session()->get('user');
+        $claim->created_by_name = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+
+        $claim->save();
+
+        return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación ha sido aprobada correctamente.');
+    }
+
     protected function validate_fields($request)
     {
         $customer = session()->get('customer_claim');

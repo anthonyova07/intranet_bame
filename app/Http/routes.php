@@ -141,6 +141,9 @@ Route::group(['middleware' => 'auth'], function () {
             Route::resource('{claim_id}/{form_type}/form', 'Customer\Claim\ClaimFormController', ['only' => [
                 'create', 'store', 'show'
             ]]);
+
+            Route::get('approve/{claim_id}/{to_approve}', 'Customer\Claim\ClaimController@getApprove')->name('customer.claim.approve');
+            Route::post('approve/{claim_id}/{to_approve}', 'Customer\Claim\ClaimController@postApprove');
         });
 
         Route::resource('claim', 'Customer\Claim\ClaimController', ['only' => [

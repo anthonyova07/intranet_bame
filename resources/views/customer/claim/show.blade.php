@@ -22,10 +22,20 @@
 
                     <div class="col-xs-10 text-right" style="padding: 0 2px;">
                         @foreach ($claim->forms as $form)
-                            <a class="btn btn-default btn-xs" href="{{ route('customer.claim.{claim_id}.{form_type}.form.show', ['form' => $form->id, 'claim_id' => $claim->id, 'form_type' => $form->form_type]) }}"><i class="fa fa-wpforms"></i> Formulario de {{ get_form_types($form->form_type) }}</a>
+                            <a class="btn btn-primary btn-xs" href="{{ route('customer.claim.{claim_id}.{form_type}.form.show', ['form' => $form->id, 'claim_id' => $claim->id, 'form_type' => $form->form_type]) }}"><i class="fa fa-wpforms"></i> Formulario de {{ get_form_types($form->form_type) }}</a>
                         @endforeach
 
-                        {{-- <a class="btn btn-default btn-xs" href=""><i class="fa fa-wpforms"></i> Formulario de Reverso</a> --}}
+                        @if ($claim->is_approved == null)
+                            @if (!can_not_do('customer_claim_approve'))
+                                <a class="btn btn-success btn-xs" href="{{ route('customer.claim.approve', ['claim_id' => $claim->id, 'to_approve' => 1]) }}"><i class="fa fa-check"></i> Aprobar</a>
+                                <a class="btn btn-warning btn-xs" href="{{ route('customer.claim.approve', ['claim_id' => $claim->id, 'to_approve' => 0]) }}"><i class="fa fa-close"></i> Rechazar</a>
+                            @endif
+                        @else
+                            <span style="font-size: 14px;" class="label label-{{ $claim->is_approved == 1 ? 'success' : 'warning' }}">
+                                {{ $claim->is_approved == 1 ? 'Aprobada' : 'Rechazada' }}
+                                por {{ $claim->approved_by_name }}
+                            </span>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -228,5 +238,56 @@
             </div>
         </div>
     </div>
+
+    @if ($claim->is_approved != null)
+        <div class="row">
+            <div class="col-xs-10 col-xs-offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Datos de Aprobación</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label">{{ $claim->is_approved == 1 ? 'Aprobada' : 'Rechazada' }}</label>
+                                    <p class="form-control-static">{{ $claim->is_approved == 1 ? 'Si' : 'No' }}</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label">Procede Crédito</label>
+                                    <p class="form-control-static">{{ $claim->proceed_credit == 1 ? 'Si' : 'No' }}</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label">{{ $claim->is_approved == 1 ? 'Aprobada' : 'Rechazada' }} por</label>
+                                    <p class="form-control-static">
+                                        {{ $claim->approved_by_name }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label">Fecha de {{ $claim->is_approved == 1 ? 'Aprobación' : 'Rechazo' }}</label>
+                                    <p class="form-control-static">{{ $claim->approved_date->format('d/m/Y H:i:s') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label">Comentario</label>
+                                    <p class="form-control-static">{{ $claim->approved_comments }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 
 @endsection

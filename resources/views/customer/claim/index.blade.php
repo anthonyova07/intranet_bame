@@ -90,7 +90,15 @@
                                     <td class="text-right">{{ $claim->currency . ' ' . number_format($claim->amount, 2) }}</td>
                                     <td>{{ $claim->response_date->format('d/m/Y') }}</td>
                                     <td>
-                                        <span class="label label-{{ $claim->is_closed ? 'success' : 'danger' }}">{{ $claim->is_closed ? 'Cerrada' : 'En Proceso' }}</span>
+                                        @if ($claim->is_approved == null)
+                                            @if ($claim->is_approved == 0)
+                                                <span class="label label-danger">No Aprobada</span>
+                                            @else
+                                                <span class="label label-success">Aprobada</span>
+                                            @endif
+                                        @else
+                                            <span class="label label-{{ $claim->is_closed ? 'success' : 'danger' }}">{{ $claim->is_closed ? 'Cerrada' : 'En Proceso' }}</span>
+                                        @endif
                                     </td>
                                     <td>{{ $claim->created_at->format('d/m/Y H:i:s') }}</td>
                                     <td>{{ $claim->created_by_name }}</td>

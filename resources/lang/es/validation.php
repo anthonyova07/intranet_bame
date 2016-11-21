@@ -165,5 +165,6 @@ return [
       'charges_discount_percent' => '% Descuento',
       'others_charges' => 'Otros Cargos',
       'others_charges_discount_percent' => '% Descuento',
+      'comment' => 'Comentario',
     ],
 ];
