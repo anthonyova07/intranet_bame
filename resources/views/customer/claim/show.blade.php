@@ -53,6 +53,8 @@
                                 @endif
                             @endif
                         @endif
+
+                        <a data-toggle="tooltip" title="Ver Historico de Estados" class="btn btn-warning btn-xs" style="margin-left: 8px;" href="{{ route('customer.claim.statuses', ['claim_id' => $claim->id]) }}"><i class="fa fa-bars"></i></a>
                     </div>
                 </div>
             </div>

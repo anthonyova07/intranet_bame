@@ -10,6 +10,7 @@ use Bame\Models\Customer\Customer;
 use Bame\Http\Controllers\Controller;
 use Bame\Models\Customer\Claim\Param;
 use Bame\Models\Customer\Claim\Claim;
+use Bame\Models\Customer\Claim\Status;
 use Bame\Models\Notification\Notification;
 use Bame\Http\Requests\Customer\Claim\ClaimRequest;
 
@@ -326,6 +327,10 @@ class ClaimController extends Controller
 
             $claim->claim_status_code = $claim_status->code;
             $claim->claim_status_description = $claim_status->description;
+
+            $claim->createStatus($claim_status, $request->comment);
+        } else {
+            $claim->createStatus('Aprobada', $request->comment);
         }
 
         $claim->save();
@@ -387,11 +392,28 @@ class ClaimController extends Controller
 
         $claim->save();
 
+        $claim->createStatus($claim_status, $request->comment);
+
         $noti = new Notification($claim->created_by);
         $noti->create('Reclamaciones', 'La reclamación ' . $claim->claim_number . ' ha sido cerrada', route('customer.claim.show', ['id' => $claim->id]));
         $noti->save();
 
         return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación ha sido cerrada correctamente.');
+    }
+
+    public function statuses($id)
+    {
+        $claim = Claim::find($id);
+
+        if (!$claim) {
+            return back()->with('warning', 'Esta reclamación no existe!');
+        }
+
+        $claim_statuses = Status::where('claim_id', $id)->lastestFirst()->get();
+
+        return view('customer.claim.statuses')
+                ->with('claim', $claim)
+                ->with('claim_statuses', $claim_statuses);
     }
 
     protected function validate_fields($request)

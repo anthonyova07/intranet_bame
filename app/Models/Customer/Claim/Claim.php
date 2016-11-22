@@ -46,4 +46,33 @@ class Claim extends Model
     {
         return $this->hasMany(Form::class, 'claim_id');
     }
+
+    public function statuses()
+    {
+        return $this->hasMany(Status::class, 'claim_id');
+    }
+
+    public function createStatus($claim_status, $comment)
+    {
+        if (is_string($claim_status)) {
+            $str = $claim_status;
+
+            $claim_status = new \stdClass;
+            $claim_status->code = '';
+            $claim_status->description = $str;
+        }
+
+        $status = new Status;
+
+        $status->id = uniqid(true);
+        $status->claim_id = $this->id;
+        $status->code = $claim_status->code;
+        $status->description = $claim_status->description;
+        $status->comment = $comment;
+
+        $status->created_by = session()->get('user');
+        $status->created_by_name = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+
+        $status->save();
+    }
 }
