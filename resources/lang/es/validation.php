@@ -170,5 +170,6 @@ return [
       'kind_person' => 'Tipo de Persona',
       'rate_day' => 'Tasa del Día',
       'claim_status' => 'Estatus de Reclamación',
+      'product_service' => 'Producto y Servicio',
     ],
 ];

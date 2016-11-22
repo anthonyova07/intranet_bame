@@ -150,7 +150,7 @@
 
             <div class="row">
                 <div class="col-xs-1"></div>
-                <div class="col-xs-5">
+                <div class="col-xs-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Canal de Distribución / Tipo de Persona</h3>
@@ -183,7 +183,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-5">
+                <div class="col-xs-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Datos del Producto</h3>
@@ -213,7 +213,8 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-12">
+
+                                <div class="col-xs-6">
                                     <div class="{{ $errors->first('product') ? 'has-error':'' }}">
                                         <label class="control-label">Productos del Cliente</label>
                                         <select class="form-control input-sm" name="product" data-toggle="tooltip" title="Producto">
@@ -242,6 +243,20 @@
                                         <span class="help-block">{{ $errors->first('product') }}</span>
                                     </div>
                                 </div>
+
+                                <div class="col-xs-6">
+                                    <div class="{{ $errors->first('product_service') ? 'has-error':'' }}">
+                                        <label class="control-label">Producto y Servicio</label>
+                                        <select class="form-control input-sm" name="product_service">
+                                            <option value="">Seleccione un Producto y Servicio</option>
+                                            @foreach ($products_services as $product_service)
+                                                <option value="{{ $product_service->id }}" {{ old('product_service') == $product_service->id ? 'selected':'' }}>{{ $product_service->description }}</option>
+                                            @endforeach
+                                        </select>
+                                        <span class="help-block">{{ $errors->first('product_service') }}</span>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>

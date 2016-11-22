@@ -191,10 +191,24 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-xs-5">
-                            {{ $claim->product_type }}
+                            <div class="form-group">
+                                <label class="control-label">Tipo de Producto</label>
+                                <p class="form-control-static">{{ $claim->product_type }}</p>
+                            </div>
                         </div>
                         <div class="col-xs-7">
-                            <b>#</b> {{ $claim->getProduct() }}
+                            <div class="form-group">
+                                <label class="control-label">Producto</label>
+                                <p class="form-control-static">{{ $claim->getProduct() }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label">Producto y Servicio</label>
+                                <p class="form-control-static">{{ $claim->product_service_description }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -223,14 +237,14 @@
                         <div class="col-xs-6">
                             <div class="form-group">
                                 <label class="control-label">Tipo de Reclamación</label>
-                                <p class="form-control-static">{{ $claim->claim_type_description }}</p>
+                                <p class="form-control-static">{{ $claim->type_description }}</p>
                             </div>
                         </div>
 
                         <div class="col-xs-4">
                             <div class="form-group">
                                 <label class="control-label">Estatus de la Reclamación</label>
-                                <p class="form-control-static">{{ $claim->claim_status_description }}</p>
+                                <p class="form-control-static">{{ $claim->status_description }}</p>
                             </div>
                         </div>
                     </div>

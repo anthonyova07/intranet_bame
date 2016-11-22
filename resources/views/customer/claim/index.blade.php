@@ -311,7 +311,47 @@
                                         <td>{{ $claim_status->description }}</td>
                                         <td align="center">
                                             <a
-                                                href="{{ route('customer.claim.{type}.param.edit', ['type' => 'KP', 'param' => $claim_status->id]) }}"
+                                                href="{{ route('customer.claim.{type}.param.edit', ['type' => 'CS', 'param' => $claim_status->id]) }}"
+                                                data-toggle="tooltip"
+                                                data-placement="top"
+                                                title="Editar"
+                                                class="naranja">
+                                                <i class="fa fa-edit fa-fw"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Productos y Servicios</h3>
+                    </div>
+                    <div class="panel-body">
+                        <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.{type}.param.create', ['type' => 'PS']) }}">Nuevo</a>
+                        <br>
+                        <br>
+                        <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
+                            <thead>
+                                <tr>
+                                    <th style="width: 36px;">Código</th>
+                                    <th>Descripción</th>
+                                    <th style="width: 2px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($products_services as $product_service)
+                                    <tr>
+                                        <td>{{ $product_service->code }}</td>
+                                        <td>{{ $product_service->description }}</td>
+                                        <td align="center">
+                                            <a
+                                                href="{{ route('customer.claim.{type}.param.edit', ['type' => 'PS', 'param' => $product_service->id]) }}"
                                                 data-toggle="tooltip"
                                                 data-placement="top"
                                                 title="Editar"

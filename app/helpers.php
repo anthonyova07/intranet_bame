@@ -495,6 +495,9 @@ function get_param($type, $plural = true)
         case 'CS': //claim_status
             return ($plural ? 'Estatus ' : 'Estatus ') . 'de Reclamaciones';
             break;
+        case 'PS': //products_services
+            return 'Productos y Servicios';
+            break;
     }
 }
 

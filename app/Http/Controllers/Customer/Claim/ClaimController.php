@@ -63,6 +63,7 @@ class ClaimController extends Controller
         $distribution_channels = $param->where('type', 'DC');
         $kind_persons = $param->where('type', 'KP');
         $claim_statuses = $param->where('type', 'CS');
+        $products_services = $param->where('type', 'PS');
 
         return view('customer.claim.index')
             ->with('claims', $claims)
@@ -70,7 +71,8 @@ class ClaimController extends Controller
             ->with('claim_types_visa', $claim_types_visa)
             ->with('distribution_channels', $distribution_channels)
             ->with('kind_persons', $kind_persons)
-            ->with('claim_statuses', $claim_statuses);
+            ->with('claim_statuses', $claim_statuses)
+            ->with('products_services', $products_services);
     }
 
     public function create(Request $request)
@@ -80,6 +82,7 @@ class ClaimController extends Controller
         $claim_types = $param->where('type', 'CT');
         $distribution_channels = $param->where('type', 'DC');
         $kind_persons = $param->where('type', 'KP');
+        $products_services = $param->where('type', 'PS');
 
         $view = view('customer.claim.create');
 
@@ -103,7 +106,8 @@ class ClaimController extends Controller
         return $view
             ->with('claim_types', $claim_types)
             ->with('distribution_channels', $distribution_channels)
-            ->with('kind_persons', $kind_persons);
+            ->with('kind_persons', $kind_persons)
+            ->with('products_services', $products_services);
     }
 
     public function store(ClaimRequest $request)
@@ -163,8 +167,8 @@ class ClaimController extends Controller
             return back()->with('error', 'El Tipo de Reclamación seleccionado no existe!');
         }
 
-        $claim->claim_type_code = $claim_type->code;
-        $claim->claim_type_description = $claim_type->description;
+        $claim->type_code = $claim_type->code;
+        $claim->type_description = $claim_type->description;
 
         $claim->claim_result = 'P';
 
@@ -195,7 +199,17 @@ class ClaimController extends Controller
         }
 
         $claim->distribution_channel = $distribution_channel->description;
+
         $claim->product_type = get_product_types($request->product_type);
+
+        $product_service = Param::find($request->product_service);
+
+        if (!$product_service) {
+            return back()->with('error', 'El Producto y Servicio seleccionado no existe!');
+        }
+
+        $claim->product_service_code = $product_service->code;
+        $claim->product_service_description = $product_service->description;
 
         if (count($product_parts) == 3) {
             $product_number = $customer->creditcards->get($product_parts[0])->getNumber();
@@ -266,14 +280,16 @@ class ClaimController extends Controller
         if ($to_approve == 'reopen') {
             $claim->is_approved = null;
 
-            $claim->claim_status_code = '';
-            $claim->claim_status_description = '';
+            $claim->status_code = '';
+            $claim->status_description = '';
 
             $claim->save();
 
             $noti = new Notification($claim->approved_by);
             $noti->create('Reclamaciones', 'La reclamación ' . $claim->claim_number . ' ha sido reabierta', route('customer.claim.show', ['id' => $claim->id]));
             $noti->save();
+
+            $claim->createStatus('Reabierta', 'Reclamación Reabierta.');
 
             return back()->with('info', 'La reclamación ha sido abierta nuevamente');
         }
@@ -325,8 +341,8 @@ class ClaimController extends Controller
                 return back()->with('warning', 'El estatus de reclamación no existe.');
             }
 
-            $claim->claim_status_code = $claim_status->code;
-            $claim->claim_status_description = $claim_status->description;
+            $claim->status_code = $claim_status->code;
+            $claim->status_description = $claim_status->description;
 
             $claim->createStatus($claim_status, $request->comment);
         } else {
@@ -377,8 +393,8 @@ class ClaimController extends Controller
             return back()->with('warning', 'El estatus de reclamación no existe.');
         }
 
-        $claim->claim_status_code = $claim_status->code;
-        $claim->claim_status_description = $claim_status->description;
+        $claim->status_code = $claim_status->code;
+        $claim->status_description = $claim_status->description;
 
         $claim->is_closed = true;
         $claim->closed_by = session()->get('user');

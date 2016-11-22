@@ -26,6 +26,7 @@ class ClaimRequest extends Request
         return [
             'channel' => 'required',
             'kind_person' => 'required',
+            'product_service' => 'required',
             'product_type' => 'required',
             'product' => 'required',
             'amount' => 'required|numeric',
