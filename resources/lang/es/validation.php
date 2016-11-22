@@ -169,5 +169,6 @@ return [
       'code' => 'Código',
       'kind_person' => 'Tipo de Persona',
       'rate_day' => 'Tasa del Día',
+      'claim_status' => 'Estatus de Reclamación',
     ],
 ];

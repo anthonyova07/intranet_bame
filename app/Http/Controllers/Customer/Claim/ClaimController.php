@@ -10,6 +10,7 @@ use Bame\Models\Customer\Customer;
 use Bame\Http\Controllers\Controller;
 use Bame\Models\Customer\Claim\Param;
 use Bame\Models\Customer\Claim\Claim;
+use Bame\Models\Notification\Notification;
 use Bame\Http\Requests\Customer\Claim\ClaimRequest;
 
 class ClaimController extends Controller
@@ -60,13 +61,15 @@ class ClaimController extends Controller
         $claim_types_visa = $param->where('type', 'TDC');
         $distribution_channels = $param->where('type', 'DC');
         $kind_persons = $param->where('type', 'KP');
+        $claim_statuses = $param->where('type', 'CS');
 
         return view('customer.claim.index')
             ->with('claims', $claims)
             ->with('claim_types', $claim_types)
             ->with('claim_types_visa', $claim_types_visa)
             ->with('distribution_channels', $distribution_channels)
-            ->with('kind_persons', $kind_persons);
+            ->with('kind_persons', $kind_persons)
+            ->with('claim_statuses', $claim_statuses);
     }
 
     public function create(Request $request)
@@ -240,6 +243,10 @@ class ClaimController extends Controller
     {
         $claim = Claim::find($id);
 
+        if (!$claim) {
+            return redirect(route('customer.claim.index'));
+        }
+
         return view('customer.claim.show')
             ->with('claim', $claim);
     }
@@ -253,26 +260,48 @@ class ClaimController extends Controller
 
     public function getApprove(Request $request, $claim_id, $to_approve)
     {
-        $to_approve = boolval($to_approve);
-
         $claim = Claim::find($claim_id);
+
+        if ($to_approve == 'reopen') {
+            $claim->is_approved = null;
+
+            $claim->claim_status_code = '';
+            $claim->claim_status_description = '';
+
+            $claim->save();
+
+            $noti = new Notification($claim->approved_by);
+            $noti->create('Reclamaciones', 'La reclamación ' . $claim->claim_number . ' ha sido reabierta', route('customer.claim.show', ['id' => $claim->id]));
+            $noti->save();
+
+            return back()->with('info', 'La reclamación ha sido abierta nuevamente');
+        }
+
+        $to_approve = boolval($to_approve);
 
         if ($claim->is_approved == 1) {
             return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('info', 'La reclamación ya ha sido Aprobada/Rechazada anteriormente.');
         }
 
+        $claim_statuses = Param::where('type', 'CS')->get();
+
         return view('customer.claim.approve')
             ->with('to_approve', $to_approve)
+            ->with('claim_statuses', $claim_statuses)
             ->with('claim', $claim);
     }
 
     public function postApprove(Request $request, $claim_id, $to_approve)
     {
-        $this->validate($request, [
-            'comment' => 'required|max:500',
-        ]);
-
         $to_approve = boolval($to_approve);
+
+        $rules['comment'] = 'required|max:500';
+
+        if ($to_approve == 0) {
+            $rules['claim_status'] = 'required';
+        }
+
+        $this->validate($request, $rules);
 
         $claim = Claim::find($claim_id);
 
@@ -288,7 +317,22 @@ class ClaimController extends Controller
 
         $claim->proceed_credit = $request->proceed_credit ? true : false;
 
+        if ($to_approve == 0) {
+            $claim_status = Param::find($request->claim_status);
+
+            if (!$claim_status) {
+                return back()->with('warning', 'El estatus de reclamación no existe.');
+            }
+
+            $claim->claim_status_code = $claim_status->code;
+            $claim->claim_status_description = $claim_status->description;
+        }
+
         $claim->save();
+
+        $noti = new Notification($claim->created_by);
+        $noti->create('Reclamaciones', 'La reclamación ' . $claim->claim_number . ' ha sido ' . ($to_approve ? 'Aprobada' : 'Rechazada'), route('customer.claim.show', ['id' => $claim->id]));
+        $noti->save();
 
         return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación ha sido aprobada correctamente.');
     }

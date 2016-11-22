@@ -480,17 +480,20 @@ function get_currencies($currency = null)
 function get_param($type, $plural = true)
 {
     switch ($type) {
-        case 'CT':
+        case 'CT': //claim_type
             return ($plural ? 'Tipos ' : 'Tipo ') . 'de Reclamación';
             break;
-        case 'DC':
-            return ($plural ? 'Canales' : 'Canal') . ' de Distribución';
+        case 'DC': //distribution_channel
+            return ($plural ? 'Canales ' : 'Canal ') . 'de Distribución';
             break;
-        case 'TDC':
+        case 'TDC': //claim_type_tdc
             return ($plural ? 'Tipos ' : 'Tipo ') . 'de Reclamación Tarjeta';
             break;
-        case 'KP':
+        case 'KP': // kind_person
             return ($plural ? 'Tipos ' : 'Tipo ') . 'de Persona';
+            break;
+        case 'CS': //claim_status
+            return ($plural ? 'Estatus ' : 'Estatus ') . 'de Reclamaciones';
             break;
     }
 }

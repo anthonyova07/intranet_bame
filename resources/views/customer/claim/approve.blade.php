@@ -17,6 +17,22 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form method="post" action="{{ route('customer.claim.approve', ['claim_id' => $claim->id, 'to_approve' => ($to_approve ? 1 : 0)]) }}" id="form" novalidate>
+                        @if ($to_approve == 0)
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="form-group{{ $errors->first('claim_status') ? ' has-error':'' }}">
+                                        <label class="control-label">Estatus de la Reclamación</label>
+                                        <select class="form-control input-sm" name="claim_status">
+                                            <option value="">Seleccione un Estatus para la Reclamación</option>
+                                            @foreach ($claim_statuses as $claim_status)
+                                                <option value="{{ $claim_status->id }}" {{ old('claim_status') == $claim_status->id ? 'selected':'' }}>{{ $claim_status->description }}</option>
+                                            @endforeach
+                                        </select>
+                                        <span class="help-block">{{ $errors->first('claim_status') }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                         <div class="row">
                             <div class="col-xs-9">
                                 <div class="form-group{{ $errors->first('comment') ? ' has-error':'' }}">

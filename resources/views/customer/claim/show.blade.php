@@ -36,6 +36,10 @@
                             </span>
                         @endif
 
+                        @if ($claim->is_approved == '0' && $claim->created_by == session()->get('user'))
+                            <a class="btn btn-info btn-xs" href="{{ route('customer.claim.approve', ['claim_id' => $claim->id, 'to_approve' => 'reopen']) }}"><i class="fa fa-retweet"></i> Reabrir</a>
+                        @endif
+
                         @if ($claim->is_closed)
                             <span style="font-size: 13px;" class="label label-success">
                                 {{ $claim->is_closed ? 'Cerrada' : '' }}
@@ -204,16 +208,25 @@
 
                 <div class="panel-body">
                     <div class="row">
+
                         <div class="col-xs-2">
                             <div class="form-group">
                                 <label class="control-label">Monto Reclamado</label>
                                 <p class="form-control-static">{{ $claim->currency . ' ' . number_format($claim->amount, 2) }}</p>
                             </div>
                         </div>
-                        <div class="col-xs-10">
+
+                        <div class="col-xs-6">
                             <div class="form-group">
                                 <label class="control-label">Tipo de Reclamación</label>
                                 <p class="form-control-static">{{ $claim->claim_type_description }}</p>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label class="control-label">Estatus de la Reclamación</label>
+                                <p class="form-control-static">{{ $claim->claim_status_description }}</p>
                             </div>
                         </div>
                     </div>
