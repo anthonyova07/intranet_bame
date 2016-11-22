@@ -168,5 +168,6 @@ return [
       'comment' => 'Comentario',
       'code' => 'Código',
       'kind_person' => 'Tipo de Persona',
+      'rate_day' => 'Tasa del Día',
     ],
 ];

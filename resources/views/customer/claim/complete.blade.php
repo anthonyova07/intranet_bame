@@ -18,11 +18,27 @@
                 <div class="panel-body">
                     <form method="post" action="{{ route('customer.claim.complete', ['claim_id' => $claim->id]) }}" id="form" novalidate>
                         <div class="row">
-                            <div class="col-xs-12">
+                            <div class="col-xs-8">
                                 <div class="form-group{{ $errors->first('comment') ? ' has-error':'' }}">
                                     <label class="control-label">Comentario/Solución</label>
                                     <input type="text" class="form-control input-sm" name="comment" maxlength="500" value="{{ old('comment') }}">
                                     <span class="help-block">{{ $errors->first('comment') }}</span>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-2">
+                                <div class="form-group{{ $errors->first('rate_day') ? ' has-error':'' }}">
+                                    <label class="control-label">Tasa del Día</label>
+                                    <input type="text" class="form-control input-sm" name="rate_day" value="{{ old('rate_day') }}">
+                                    <span class="help-block">{{ $errors->first('rate_day') }}</span>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-2">
+                                <div class="checkbox" data-toggle="tooltip" title="Favorable para el Cliente">
+                                    <label style="margin-top: 18px;">
+                                        <input type="checkbox" name="claim_result" {{ old('claim_result') ? 'checked' : '' }}> Favorable
+                                    </label>
                                 </div>
                             </div>
                         </div>

@@ -213,7 +213,7 @@
                         <div class="col-xs-10">
                             <div class="form-group">
                                 <label class="control-label">Tipo de Reclamación</label>
-                                <p class="form-control-static">{{ $claim->claim_type }}</p>
+                                <p class="form-control-static">{{ $claim->claim_type_description }}</p>
                             </div>
                         </div>
                     </div>
@@ -339,11 +339,23 @@
                                     <p class="form-control-static">{{ $claim->closed_date->format('d/m/Y H:i:s') }}</p>
                                 </div>
                             </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label">Tasa del Día</label>
+                                    <p class="form-control-static">{{ $claim->rate_day }}</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group">
+                                    <label class="control-label">Estado para el Cliente</label>
+                                    <p class="form-control-static">{{ get_claim_results($claim->claim_result) }}</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label">Comentario</label>
+                                    <label class="control-label">Comentario/Solución</label>
                                     <p class="form-control-static">{{ $claim->closed_comments }}</p>
                                 </div>
                             </div>

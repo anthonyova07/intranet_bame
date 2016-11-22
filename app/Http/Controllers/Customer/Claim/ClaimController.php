@@ -159,7 +159,10 @@ class ClaimController extends Controller
             return back()->with('error', 'El Tipo de Reclamación seleccionado no existe!');
         }
 
-        $claim->claim_type = $claim_type->description;
+        $claim->claim_type_code = $claim_type->code;
+        $claim->claim_type_description = $claim_type->description;
+
+        $claim->claim_result = 'P';
 
         if (!in_array($request->response_term, get_response_term())) {
             return back()->with('error', 'El Plazo de Respuesta seleccionado no existe!');
@@ -306,6 +309,7 @@ class ClaimController extends Controller
     {
         $this->validate($request, [
             'comment' => 'required|max:500',
+            'rate_day' => 'numeric',
         ]);
 
         $claim = Claim::find($claim_id);
@@ -319,6 +323,10 @@ class ClaimController extends Controller
         $claim->closed_by_name = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
         $claim->closed_comments = $request->comment;
         $claim->closed_date = new DateTime;
+
+        $claim->claim_result = $request->claim_result ? 'F' : 'D';
+
+        $claim->rate_day = $request->rate_day;
 
         $claim->save();
 

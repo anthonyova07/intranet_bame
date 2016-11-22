@@ -78,7 +78,6 @@ class ClaimFormController extends Controller
         $messages = collect();
 
         $claim = Claim::find($id);
-        $claim_type_tdc = Param::tdcOnly()->find($request->claim_type_tdc);
 
         if (!$claim) {
             return redirect(route('customer.claim.index'))->with('warning', 'Esta reclamación no existe!');
@@ -94,6 +93,13 @@ class ClaimFormController extends Controller
         $form->form_type = $form_type;
 
         if ($form_type == 'CON') {
+
+            if (!$request->claim_type_tdc) {
+                return back()->with('warning', 'Debe seleccionar un tipo de reclamación de tarjeta.');
+            }
+
+            $claim_type_tdc = Param::tdcOnly()->find($request->claim_type_tdc);
+
             $fields_name = $request->input('fields_name_' . $request->claim_type_tdc);
             $fields_detail = $request->input('fields_detail_' . $request->claim_type_tdc);
             $fields_detail_2 = $request->input('fields_detail_2_' . $request->claim_type_tdc);

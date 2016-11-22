@@ -447,6 +447,21 @@ function get_form_types($form_type = null)
     return $form_types->get($form_type);
 }
 
+function get_claim_results($claim_result = null)
+{
+    $claim_results = collect([
+        'F' => 'Favorable',
+        'D' => 'Desfavorable',
+        'P' => 'Pendiente',
+    ]);
+
+    if (!$claim_result) {
+        return $claim_results;
+    }
+
+    return $claim_results->get($claim_result);
+}
+
 function get_currencies($currency = null)
 {
     $channels = collect([
