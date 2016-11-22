@@ -345,15 +345,19 @@ class ClaimController extends Controller
             return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('info', 'La reclamación ya ha sido Terminada anteriormente.');
         }
 
+        $claim_statuses = Param::where('type', 'CS')->get();
+
         return view('customer.claim.complete')
+            ->with('claim_statuses', $claim_statuses)
             ->with('claim', $claim);
     }
 
     public function postComplete(Request $request, $claim_id)
     {
         $this->validate($request, [
+            'claim_status' => 'required',
             'comment' => 'required|max:500',
-            'rate_day' => 'numeric',
+            'rate_day' => 'required|numeric',
         ]);
 
         $claim = Claim::find($claim_id);
@@ -361,6 +365,15 @@ class ClaimController extends Controller
         if ($claim->is_closed || can_not_do('customer_claim_reject')) {
             return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('warning', 'La reclamación ya ha sido Terminada anteriormente o no tiene los permisos requeridos.');
         }
+
+        $claim_status = Param::find($request->claim_status);
+
+        if (!$claim_status) {
+            return back()->with('warning', 'El estatus de reclamación no existe.');
+        }
+
+        $claim->claim_status_code = $claim_status->code;
+        $claim->claim_status_description = $claim_status->description;
 
         $claim->is_closed = true;
         $claim->closed_by = session()->get('user');
@@ -374,7 +387,11 @@ class ClaimController extends Controller
 
         $claim->save();
 
-        return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación ha sido terminada correctamente.');
+        $noti = new Notification($claim->created_by);
+        $noti->create('Reclamaciones', 'La reclamación ' . $claim->claim_number . ' ha sido cerrada', route('customer.claim.show', ['id' => $claim->id]));
+        $noti->save();
+
+        return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación ha sido cerrada correctamente.');
     }
 
     protected function validate_fields($request)
