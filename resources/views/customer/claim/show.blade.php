@@ -308,16 +308,22 @@
 
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-xs-3">
+                            <div class="col-xs-2">
                                 <div class="form-group">
                                     <label class="control-label">{{ $claim->is_approved == 1 ? 'Aprobada' : 'Rechazada' }}</label>
                                     <p class="form-control-static">{{ $claim->is_approved == 1 ? 'Si' : 'No' }}</p>
                                 </div>
                             </div>
-                            <div class="col-xs-3">
+                            <div class="col-xs-2">
                                 <div class="form-group">
                                     <label class="control-label">Procede Crédito</label>
                                     <p class="form-control-static">{{ $claim->proceed_credit == 1 ? 'Si' : 'No' }}</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div class="form-group">
+                                    <label class="control-label">Firmada</label>
+                                    <p class="form-control-static">{{ $claim->is_signed == 1 ? 'Si' : 'No' }}</p>
                                 </div>
                             </div>
                             <div class="col-xs-3">

@@ -16,6 +16,11 @@ class PrintController extends Controller
     {
         $claim = Claim::find($id);
 
+        if (!$claim->is_signed) {
+            $claim->is_signed = true;
+            $claim->save();
+        }
+
         return view('customer.claim.print.claim')
             ->with('datetime', new DateTime)
             ->with('claim', $claim);
