@@ -2,7 +2,7 @@
 
 @section('title', 'Clientes - Reclamaciones')
 
-@section('page_title', 'Reclamación #' . $claim->claim_number)
+@section('page_title', 'Reclamación ' . $claim->claim_number)
 
 @if (can_not_do('customer_claim'))
     @section('contents')

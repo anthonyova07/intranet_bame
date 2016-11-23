@@ -4,7 +4,7 @@
 
 @section('page_title', 'Comentario para Cerrar la Reclamación')
 
-@if (can_not_do('customer_claim_approve'))
+@if (can_not_do('customer_claim'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
@@ -51,10 +51,14 @@
                             </div>
 
                             <div class="col-xs-2">
-                                <div class="checkbox" data-toggle="tooltip" title="Favorable para el Cliente">
-                                    <label style="margin-top: 18px;">
-                                        <input type="checkbox" name="claim_result" {{ old('claim_result') ? 'checked' : '' }}> Favorable
-                                    </label>
+                                <div class="form-group{{ $errors->first('claim_result') ? ' has-error':'' }}">
+                                    <label class="control-label">Resultado</label>
+                                    <select class="form-control input-sm" name="claim_result">
+                                        @foreach (get_claim_results() as $key => $claim_result)
+                                            <option value="{{ $key }}" {{ old('claim_result') == $key ? 'selected':'' }}>{{ $claim_result }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="help-block">{{ $errors->first('claim_result') }}</span>
                                 </div>
                             </div>
                         </div>

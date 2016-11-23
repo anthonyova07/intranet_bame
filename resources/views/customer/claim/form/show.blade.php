@@ -2,7 +2,7 @@
 
 @section('title', 'Clientes - Reclamaciones')
 
-@section('page_title', 'Reclamación #' . $form->claim->claim_number . ' (Formulario de ' . get_form_types($form->form_type) . ')')
+@section('page_title', 'Reclamación ' . $form->claim->claim_number . ' (Formulario de ' . get_form_types($form->form_type) . ')')
 
 @if (can_not_do('customer_claim'))
     @section('contents')

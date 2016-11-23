@@ -2,9 +2,9 @@
 
 @section('title', 'Clientes - Reclamaciones')
 
-@section('page_title', 'Historico de Estatus de la Reclamaciones #' . $claim->claim_number)
+@section('page_title', 'Historico de Estatus de la Reclamaciones ' . $claim->claim_number)
 
-@if (can_not_do('customer_claim_approve'))
+@if (can_not_do('customer_claim'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection

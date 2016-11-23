@@ -355,7 +355,7 @@ class ClaimController extends Controller
         $noti->create('Reclamaciones', 'La reclamación ' . $claim->claim_number . ' ha sido ' . ($to_approve ? 'Aprobada' : 'Rechazada'), route('customer.claim.show', ['id' => $claim->id]));
         $noti->save();
 
-        return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación ha sido aprobada correctamente.');
+        return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación ha sido ' . ($to_approve ? 'Aprobada' : 'Rechazada') . ' correctamente.');
     }
 
     public function getComplete(Request $request, $claim_id)
