@@ -54,7 +54,10 @@
                             @endif
                         @endif
 
+                        <a style="font-size: 13px;" class="label btn-warning" target="__blank" href="{{ route('customer.claim.print.claim', ['id' => $claim->id]) }}">Imprimir</a>
+
                         <a data-toggle="tooltip" title="Ver Historico de Estados" class="btn btn-warning btn-xs" style="margin-left: 8px;" href="{{ route('customer.claim.statuses', ['claim_id' => $claim->id]) }}"><i class="fa fa-bars"></i></a>
+
                     </div>
                 </div>
             </div>

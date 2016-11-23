@@ -149,6 +149,10 @@ Route::group(['middleware' => 'auth'], function () {
 
             Route::get('complete/{claim_id}', 'Customer\Claim\ClaimController@getComplete')->name('customer.claim.complete');
             Route::post('complete/{claim_id}', 'Customer\Claim\ClaimController@postComplete');
+
+            Route::group(['prefix' => 'print'], function () {
+                Route::get('claim/{id}', 'Customer\Claim\PrintController@claim')->name('customer.claim.print.claim');
+            });
         });
 
         Route::resource('claim', 'Customer\Claim\ClaimController', ['only' => [
