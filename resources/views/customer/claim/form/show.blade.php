@@ -50,18 +50,22 @@
                                 </div>
                             </div>
 
-                            <div class="col-xs-2 text-center">
+                            <div class="col-xs-1 text-center">
                                 <div class="form-group">
                                     <label class="control-label">Tipo de Moneda</label>
                                     <p class="form-control-static">{{ $form->claim->currency }}</p>
                                 </div>
                             </div>
 
-                            <div class="col-xs-3 text-center">
+                            <div class="col-xs-2 text-center">
                                 <div class="form-group">
                                     <label class="control-label"># Producto</label>
                                     <p class="form-control-static">{{ $form->claim->product_number }}</p>
                                 </div>
+                            </div>
+
+                            <div class="col-xs-1">
+                                <a style="font-size: 13px;" class="label btn-warning" target="__blank" href="{{ route('customer.claim.print.form', ['claim_id' => $form->claim->id, 'form_type' => $form->form_type, 'form_id' => $form->id]) }}">Imprimir</a>
                             </div>
                         </div>
                     </div>
@@ -228,7 +232,7 @@
 
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-xs-3">
+                            <div class="col-xs-1">
                                 <a class="btn btn-info btn-xs" href="{{ route('customer.claim.show', ['id' => $form->claim->id]) }}"><i class="fa fa-arrow-left"></i> Atrás</a>
                             </div>
 
@@ -253,6 +257,10 @@
                                         {{ $form->claim->getOnePhoneNumber() }}
                                     </p>
                                 </div>
+                            </div>
+
+                            <div class="col-xs-1">
+                                <a style="font-size: 13px;" class="label btn-warning" target="__blank" href="{{ route('customer.claim.print.form', ['claim_id' => $form->claim->id, 'form_type' => $form->form_type, 'form_id' => $form->id]) }}">Imprimir</a>
                             </div>
                         </div>
 

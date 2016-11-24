@@ -9,6 +9,7 @@ use Bame\Http\Controllers\Controller;
 
 use DateTime;
 use Bame\Models\Customer\Claim\Claim;
+use Bame\Models\Customer\Claim\Form\Form;
 
 class PrintController extends Controller
 {
@@ -24,5 +25,14 @@ class PrintController extends Controller
         return view('customer.claim.print.claim')
             ->with('datetime', new DateTime)
             ->with('claim', $claim);
+    }
+
+    public function form(Request $request, $claim_id, $form_type, $form_id)
+    {
+        $form = Form::where('claim_id', $claim_id)->where('form_type', $form_type)->find($form_id);
+
+        return view('customer.claim.print.form')
+                ->with('datetime', new DateTime)
+                ->with('form', $form);
     }
 }

@@ -152,6 +152,7 @@ Route::group(['middleware' => 'auth'], function () {
 
             Route::group(['prefix' => 'print'], function () {
                 Route::get('claim/{id}', 'Customer\Claim\PrintController@claim')->name('customer.claim.print.claim');
+                Route::get('claim/{claim_id}/{form_type}/form/{form_id}', 'Customer\Claim\PrintController@form')->name('customer.claim.print.form');
             });
         });
 
