@@ -306,7 +306,7 @@
                     <tr>
                         <td class="sign_field" style="" colspan="2" style="width: 50%">
                             <b>IMPORTANTE:</b>
-                            <ol>
+                            <ol style="margin-top: 0px;margin-bottom: 0px;">
                                 <li>Este reclamo no lo exime de sus obligaciones, pagos o cargos, sucedidos con posterioridad al mismo.</li>
                                 <li>En caso de que la respuesta no sea favorable o no haya sido entregada dentro de los 30 días siguientes a la reclamación, usted tiene derecho a presentar la misma, ante la Oficina de Servicio y Protección al Usuario (PROUSUARIO).</li>
                                 <li>Esta reclamación esta libre de costos por parte del cliente.</li>
@@ -316,7 +316,7 @@
                     <tr>
                         <td class="sign_field" style="" colspan="2" style="width: 50%">
                             <b>IMPORTANT:</b>
-                            <ol>
+                            <ol style="margin-top: 0px;">
                                 <li>The interposition of a claim does not exempt you from the fulfillment of your obligations, payments or charges made subsequently to the claim.</li>
                                 <li>In case the response is not favorable or has not been delivered in 30 days fallowing the claim, you have the right to present it, to the Users Protection and Service Office (PROUSUARIO).</li>
                                 <li>Claims are free of charge.</li>
