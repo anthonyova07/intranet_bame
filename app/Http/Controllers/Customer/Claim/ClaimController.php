@@ -37,7 +37,8 @@ class ClaimController extends Controller
                         ->orWhere('fax_phone', 'like', '%' . $term . '%')
                         ->orWhere('mail', 'like', '%' . $term . '%')
                         ->orWhere('amount', 'like', '%' . $term . '%')
-                        ->orWhere('claim_type', 'like', '%' . $term . '%')
+                        ->orWhere('type_code', 'like', '%' . $term . '%')
+                        ->orWhere('type_description', 'like', '%' . $term . '%')
                         ->orWhere('observations', 'like', '%' . $term . '%')
                         ->orWhere('rate_day', 'like', '%' . $term . '%')
                         ->orWhere('distribution_channel', 'like', '%' . $term . '%')
@@ -463,9 +464,9 @@ class ClaimController extends Controller
                 $messages->push('Los campos Nombres y Apellidos son requeridos.');
             }
 
-            if (empty($customer->getMail())) {
-                $messages->push('El cliente debe tener un correo.');
-            }
+            // if (empty($customer->getMail())) {
+            //     $messages->push('El cliente debe tener un correo.');
+            // }
         }
 
         if (empty($customer->getDocument()) && empty($customer->getPassport())) {

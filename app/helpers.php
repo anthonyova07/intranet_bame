@@ -415,7 +415,7 @@ function get_product_types($product = null)
 {
     $product_types = collect([
         'TARCRE' => 'Tarjeta de Crédito',
-        'TARDEB' => 'Tarjeta de Débito',
+        // 'TARDEB' => 'Tarjeta de Débito',
         'CUECOR' => 'Cuenta Corriente',
         'CUEAHO' => 'Cuenta Ahorro',
         'CERDEP' => 'Certificado de Depósitos',
@@ -467,7 +467,7 @@ function get_currencies($currency = null)
     $channels = collect([
         'RD$' => 'Pesos Dominicanos',
         'US$' => 'Dólares Estado Unidenses',
-        'EU$' => 'Euros',
+        // 'EU$' => 'Euros',
     ]);
 
     if (!$currency) {

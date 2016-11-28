@@ -345,7 +345,7 @@
                                         @foreach (session()->get('tdc_transactions_claim') as $index => $statement)
                                             <tr>
                                                 <td>
-                                                    <input type="checkbox" name="transactions[]" value="{{ $index }}">
+                                                    <input type="checkbox" class="transaction_checkboxes" value="{{ $index }}">
                                                 </td>
                                                 <td>{{ $statement->getFormatedDateTimeTransaction() }}</td>
                                                 <td>{{ $statement->getMerchantName() }}</td>
@@ -408,6 +408,16 @@
     <script type="text/javascript">
         $('#form').submit(function (event) {
             $('#btn_submit').button('loading');
+        });
+
+        $('.transaction_checkboxes').change(function (e) {
+            $(this).each(function (index, value) {
+                if ($(this).is(':checked')) {
+                    $('#form').append('<input type="hidden" name="transactions[]" value="' + $(this).val() + '">');
+                } else {
+                    $('input[type=hidden][value="' + $(this).val() + '"]').remove();
+                }
+            });
         });
     </script>
 

@@ -88,12 +88,12 @@
                                         @endif
                                     </tr>
                                     <tr>
-                                        <td colspan="2"><b class="required">Correo: </b> {{ session()->get('customer_claim')->getMail() }}</td>
+                                        <td colspan="2"><b>Correo: </b> {{ session()->get('customer_claim')->getMail() }}</td>
                                         <td colspan="2"><b>Fax: </b> {{ session()->get('customer_claim')->getFaxPhone() }}</td>
                                     </tr>
                                     <tr>
                                         <td><b class="required">Calle: </b> {{ session()->get('customer_claim')->getStreet() }}</td>
-                                        <td><b class="required">Edificio/Residencial: </b> {{ session()->get('customer_claim')->getResidentialOrBuilding() }}</td>
+                                        <td><b>Edificio/Residencial: </b> {{ session()->get('customer_claim')->getResidentialOrBuilding() }}</td>
                                         <td><b class="required">Apartamento/Casa: </b> {{ session()->get('customer_claim')->getBuildingOrHouseNumber() }}</td>
                                         <td><b class="required">Sector: </b> {{ session()->get('customer_claim')->getSector() }}</td>
                                     </tr>
@@ -221,23 +221,23 @@
                                             <option value="">Seleccione un producto del cliente</option>
 
                                             @foreach (session()->get('customer_claim')->accounts_sav as $sav)
-                                                <option value="{{ $sav->getProductCode() . '|' . $sav->getNumber() }}" {{ old('product') == $sav->getProductCode() . '|' . $sav->getNumber() ? 'selected':'' }}>Cuenta de Ahorro ({{ $sav->getCurrency() . '|' . $sav->getNumber() }})</option>
+                                                <option type="account_sav" value="{{ $sav->getProductCode() . '|' . $sav->getNumber() }}" {{ old('product') == $sav->getProductCode() . '|' . $sav->getNumber() ? 'selected':'' }}>Cuenta de Ahorro ({{ $sav->getCurrency() . '|' . $sav->getNumber() }})</option>
                                             @endforeach
 
                                             @foreach (session()->get('customer_claim')->accounts_dda as $dda)
-                                                <option value="{{ $dda->getProductCode() . '|' . $dda->getNumber() }}" {{ old('product') == $dda->getProductCode() . '|' . $dda->getNumber() ? 'selected':'' }}>Cuenta de Ahorro ({{ $dda->getCurrency() . '|' . $dda->getNumber() }})</option>
+                                                <option type="account_dda" value="{{ $dda->getProductCode() . '|' . $dda->getNumber() }}" {{ old('product') == $dda->getProductCode() . '|' . $dda->getNumber() ? 'selected':'' }}>Cuenta de Ahorro ({{ $dda->getCurrency() . '|' . $dda->getNumber() }})</option>
                                             @endforeach
 
                                             @foreach (session()->get('customer_claim')->loans as $loan)
-                                                <option value="{{ $loan->getProductCode() . '|' . $loan->getNumber() }}" {{ old('product') == $loan->getProductCode() . '|' . $loan->getNumber() ? 'selected':'' }}>Préstamo ({{ $loan->getCurrency() . '|' . $loan->getNumber() }})</option>
+                                                <option type="loan" value="{{ $loan->getProductCode() . '|' . $loan->getNumber() }}" {{ old('product') == $loan->getProductCode() . '|' . $loan->getNumber() ? 'selected':'' }}>Préstamo ({{ $loan->getCurrency() . '|' . $loan->getNumber() }})</option>
                                             @endforeach
 
                                             @foreach (session()->get('customer_claim')->creditcards as $key => $creditcard)
-                                                <option value="{{ $key . '|' . $creditcard->getProductCode() . '|' . $creditcard->getMaskedNumber() }}" {{ old('product') == ($key . '|' . $creditcard->getProductCode() . '|' . $creditcard->getMaskedNumber()) ? 'selected':'' }}>Tarjeta de Credito ({{ $creditcard->getMaskedNumber() }})</option>
+                                                <option type="tdc" value="{{ $key . '|' . $creditcard->getProductCode() . '|' . $creditcard->getMaskedNumber() }}" {{ old('product') == ($key . '|' . $creditcard->getProductCode() . '|' . $creditcard->getMaskedNumber()) ? 'selected':'' }}>Tarjeta de Credito ({{ $creditcard->getMaskedNumber() }})</option>
                                             @endforeach
 
                                             @foreach (session()->get('customer_claim')->money_markets as $money_market)
-                                                <option value="{{ $money_market->getProductCode() . '|' . $money_market->getNumber() }}" {{ old('product') == $money_market->getProductCode() . '|' . $money_market->getNumber() ? 'selected':'' }}>Certificado ({{ $money_market->getNumber() }})</option>
+                                                <option type="money_market" value="{{ $money_market->getProductCode() . '|' . $money_market->getNumber() }}" {{ old('product') == $money_market->getProductCode() . '|' . $money_market->getNumber() ? 'selected':'' }}>Certificado ({{ $money_market->getNumber() }})</option>
                                             @endforeach
                                         </select>
                                         <span class="help-block">{{ $errors->first('product') }}</span>
@@ -397,6 +397,82 @@
     <script type="text/javascript">
         $('#form').submit(function (event) {
             $('#btn_submit').button('loading');
+        });
+
+        $('select[name=product_type]').change(function (e) {
+            var product_type = $(this).val();
+
+            $('select[name=form_type] option').each(function (index, value) {
+                var form = $(this).val();
+
+                if (product_type == 'TARCRE') {
+                    if (form == 'NIN') {
+                        $(this).hide();
+                    } else {
+                        $(this).show();
+                    }
+                }
+
+                if (product_type == 'PRECOM' || product_type == 'PRECON' || product_type == 'PREHIP') {
+                    if (form == 'CAI') {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                }
+
+                if (product_type == 'CUECOR' || product_type == 'CUEAHO' || product_type == 'CERDEP') {
+                    if (form == 'NIN') {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                }
+            });
+
+            $('select[name=product] option').each(function (index, value) {
+                var type = $(this).attr('type');
+
+                if (product_type == 'TARCRE') {
+                    if (type == 'tdc') {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                }
+
+                if (product_type == 'CUECOR') {
+                    if (type == 'account_dda') {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                }
+
+                if (product_type == 'CUEAHO') {
+                    if (type == 'account_sav') {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                }
+
+                if (product_type == 'CERDEP') {
+                    if (type == 'money_market') {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                }
+
+                if (product_type == 'PRECOM' || product_type == 'PRECON' || product_type == 'PREHIP') {
+                    if (type == 'loan') {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                }
+            });
         });
     </script>
 
