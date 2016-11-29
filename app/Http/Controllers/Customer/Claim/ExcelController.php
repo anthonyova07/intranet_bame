@@ -16,6 +16,7 @@ class ExcelController extends Controller
     public function claim(Request $request)
     {
         $claims = Claim::orderBy('created_at', 'asc');
+
         if ($request->date_from) {
             $claims->where('created_at', '>=', $request->date_from . ' 00:00:00');
         }
@@ -24,9 +25,16 @@ class ExcelController extends Controller
             $claims->where('created_at', '<=', $request->date_to . ' 23:59:59');
         }
 
-        $claims = $claims->get();
-        // dd($claims);
-        return view('customer.claim.excel.claim')
-            ->with('claims', $claims);
+        if ($request->claim_result) {
+            $claims = $claims->where('claim_result', $request->claim_result)->get();
+
+            return view('customer.claim.excel.daily')
+                ->with('claims', $claims);
+        } else {
+            $claims = $claims->get();
+
+            return view('customer.claim.excel.claim')
+                ->with('claims', $claims);
+        }
     }
 }
