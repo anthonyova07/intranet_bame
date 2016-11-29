@@ -4,7 +4,7 @@
 
 @section('page_title', 'Comentario para Cerrar la Reclamación')
 
-@if (can_not_do('customer_claim'))
+@if (can_not_do('customer_claim_close'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
@@ -16,7 +16,7 @@
         <div class="col-xs-8 col-xs-offset-2">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form method="post" action="{{ route('customer.claim.complete', ['claim_id' => $claim->id]) }}" id="form" novalidate>
+                    <form method="post" action="{{ route('customer.claim.close', ['claim_id' => $claim->id]) }}" id="form" novalidate>
 
                         <div class="row">
                             <div class="col-xs-12">

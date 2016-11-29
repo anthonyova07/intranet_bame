@@ -147,12 +147,16 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('approve/{claim_id}/{to_approve}', 'Customer\Claim\ClaimController@getApprove')->name('customer.claim.approve');
             Route::post('approve/{claim_id}/{to_approve}', 'Customer\Claim\ClaimController@postApprove');
 
-            Route::get('complete/{claim_id}', 'Customer\Claim\ClaimController@getComplete')->name('customer.claim.complete');
-            Route::post('complete/{claim_id}', 'Customer\Claim\ClaimController@postComplete');
+            Route::get('complete/{claim_id}', 'Customer\Claim\ClaimController@getClose')->name('customer.claim.close');
+            Route::post('complete/{claim_id}', 'Customer\Claim\ClaimController@postClose');
 
             Route::group(['prefix' => 'print'], function () {
                 Route::get('claim/{id}', 'Customer\Claim\PrintController@claim')->name('customer.claim.print.claim');
                 Route::get('claim/{claim_id}/{form_type}/form/{form_id}', 'Customer\Claim\PrintController@form')->name('customer.claim.print.form');
+            });
+
+            Route::group(['prefix' => 'excel'], function () {
+                Route::get('claim', 'Customer\Claim\ExcelController@claim')->name('customer.claim.excel.claim');
             });
         });
 

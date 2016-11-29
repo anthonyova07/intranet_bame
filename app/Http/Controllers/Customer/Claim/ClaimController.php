@@ -41,7 +41,8 @@ class ClaimController extends Controller
                         ->orWhere('type_description', 'like', '%' . $term . '%')
                         ->orWhere('observations', 'like', '%' . $term . '%')
                         ->orWhere('rate_day', 'like', '%' . $term . '%')
-                        ->orWhere('distribution_channel', 'like', '%' . $term . '%')
+                        ->orWhere('distribution_channel_code', 'like', '%' . $term . '%')
+                        ->orWhere('distribution_channel_description', 'like', '%' . $term . '%')
                         ->orWhere('product_type', 'like', '%' . $term . '%')
                         ->orWhere('product_number', 'like', '%' . $term . '%')
                         ->orWhere('product_code', 'like', '%' . $term . '%');
@@ -178,7 +179,8 @@ class ClaimController extends Controller
         }
 
         $claim->response_term = $request->response_term;
-        $claim->response_place = get_offices($request->office);
+        $claim->response_place_code = $request->office;
+        $claim->response_place_description = get_offices($request->office);
         $claim->response_date = (new DateTime)->modify('+' . $request->response_term . ' days');
         $claim->observations = $request->observations;
         $claim->rate_day = 0.00;
@@ -199,7 +201,8 @@ class ClaimController extends Controller
             return back()->with('error', 'El Canal de Distribución seleccionado no existe!');
         }
 
-        $claim->distribution_channel = $distribution_channel->description;
+        $claim->distribution_channel_code = $distribution_channel->code;
+        $claim->distribution_channel_description = $distribution_channel->description;
 
         $claim->product_type = get_product_types($request->product_type);
 
@@ -359,7 +362,7 @@ class ClaimController extends Controller
         return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación ha sido ' . ($to_approve ? 'Aprobada' : 'Rechazada') . ' correctamente.');
     }
 
-    public function getComplete(Request $request, $claim_id)
+    public function getClose(Request $request, $claim_id)
     {
         $claim = Claim::find($claim_id);
 
@@ -369,12 +372,12 @@ class ClaimController extends Controller
 
         $claim_statuses = Param::where('type', 'CS')->get();
 
-        return view('customer.claim.complete')
+        return view('customer.claim.close')
             ->with('claim_statuses', $claim_statuses)
             ->with('claim', $claim);
     }
 
-    public function postComplete(Request $request, $claim_id)
+    public function postClose(Request $request, $claim_id)
     {
         $this->validate($request, [
             'claim_status' => 'required',
@@ -384,7 +387,7 @@ class ClaimController extends Controller
 
         $claim = Claim::find($claim_id);
 
-        if ($claim->is_closed || can_not_do('customer_claim_reject')) {
+        if ($claim->is_closed || can_not_do('customer_claim_close')) {
             return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('warning', 'La reclamación ya ha sido Terminada anteriormente o no tiene los permisos requeridos.');
         }
 

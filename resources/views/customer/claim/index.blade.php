@@ -61,6 +61,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.create') }}">Nuevo Reclamación</a>
+                    <a style="font-size: 13px;" download class="label btn-success pull-right" target="__blank" href="{{ route('customer.claim.excel.claim', Request::except(['term'])) }}">Exportar Excel</a>
                     <br>
                     <br>
                     <table class="table table-striped table-bordered table-hover table-condensed" order-by='2|desc'>

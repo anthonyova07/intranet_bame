@@ -48,13 +48,13 @@
                             </span>
                         @else
                             @if ($claim->is_approved != null)
-                                @if (!can_not_do('customer_claim_reject'))
-                                    <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.complete', ['claim_id' => $claim->id]) }}"><i class="fa fa-mail-reply-all"></i> Cerrar</a>
+                                @if (!can_not_do('customer_claim_close'))
+                                    <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.close', ['claim_id' => $claim->id]) }}"><i class="fa fa-mail-reply-all"></i> Cerrar</a>
                                 @endif
                             @endif
                         @endif
 
-                        <a style="font-size: 13px;" class="label btn-warning" target="__blank" href="{{ route('customer.claim.print.claim', ['id' => $claim->id]) }}">Imprimir</a>
+                        <a style="font-size: 13px;margin: 3px;" class="label btn-warning" target="__blank" href="{{ route('customer.claim.print.claim', ['id' => $claim->id]) }}">Imprimir</a>
 
                         <a data-toggle="tooltip" title="Ver Historico de Estados" class="btn btn-warning btn-xs" style="margin-left: 8px;" href="{{ route('customer.claim.statuses', ['claim_id' => $claim->id]) }}"><i class="fa fa-bars"></i></a>
 
@@ -175,7 +175,7 @@
                 <div class="panel-body">
                     <div class="form-group">
                         <label class="control-label">Canal de Distribución</label>
-                        <p class="form-control-static">{{ $claim->distribution_channel }}</p>
+                        <p class="form-control-static">{{ $claim->distribution_channel_description }}</p>
                     </div>
 
                     <div class="form-group">
@@ -275,7 +275,7 @@
                         <div class="col-xs-2">
                             <div class="form-group">
                                 <label class="control-label">Lugar de Respuesta</label>
-                                <p class="form-control-static">{{ $claim->response_place }}</p>
+                                <p class="form-control-static">{{ $claim->response_place_description }}</p>
                             </div>
                         </div>
                         <div class="col-xs-2">
