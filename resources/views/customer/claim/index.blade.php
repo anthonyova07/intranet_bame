@@ -87,7 +87,8 @@
                                 <th>Identificación</th>
                                 <th>Monto</th>
                                 <th>Fec. Respuesta</th>
-                                <th>Estado</th>
+                                <th>Estatus</th>
+                                <th>Resultado</th>
                                 <th style="width: 112px;">Fecha Creación</th>
                                 <th style="width: 112px;">Creado por</th>
                                 <th style="width: 52px"></th>
@@ -122,6 +123,7 @@
                                             @endif
                                         @endif
                                     </td>
+                                    <td>{{ get_claim_results($claim->claim_result) }}</td>
                                     <td>{{ $claim->created_at->format('d/m/Y H:i:s') }}</td>
                                     <td>{{ $claim->created_by_name }}</td>
                                     <td align="center">

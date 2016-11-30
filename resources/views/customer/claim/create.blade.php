@@ -329,7 +329,7 @@
                                 </div>
                                 <div class="col-xs-3">
                                     <div class="form-group">
-                                        <label class="control-label">Fecha de Respuesa</label>
+                                        <label class="control-label">Fecha de Respuesta</label>
                                         <p class="form-control-static">--/--/----</p>
                                     </div>
                                 </div>
