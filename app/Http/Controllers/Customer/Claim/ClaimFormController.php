@@ -189,25 +189,29 @@ class ClaimFormController extends Controller
         $form->save();
 
         if (in_array($form_type, ['CON', 'FRA'])) {
-            $transactions = collect();
 
-            foreach ($request->transactions as $index) {
-                $creditcard_statement = session()->get('tdc_transactions_claim')->get($index);
+            if ($request->transactions){
+                $transactions = collect();
 
-                $transaction = new Transaction;
-                $transaction->id = uniqid(true);
-                $transaction->form_id = $form->id;
-                $transaction->form_type = $form_type;
-                $transaction->transaction_date = $creditcard_statement->getFormatedDateTimeTransaction(true);
-                $transaction->merchant_name = $creditcard_statement->getMerchantName();
-                $transaction->country = $creditcard_statement->getCountry();
-                $transaction->city = $creditcard_statement->getCity();
-                $transaction->amount = $creditcard_statement->getAmount();
+                foreach ($request->transactions as $index) {
+                    $creditcard_statement = session()->get('tdc_transactions_claim')->get($index);
 
-                $transactions->push($transaction);
+                    $transaction = new Transaction;
+                    $transaction->id = uniqid(true);
+                    $transaction->form_id = $form->id;
+                    $transaction->form_type = $form_type;
+                    $transaction->transaction_date = $creditcard_statement->getFormatedDateTimeTransaction(true);
+                    $transaction->merchant_name = $creditcard_statement->getMerchantName();
+                    $transaction->country = $creditcard_statement->getCountry();
+                    $transaction->city = $creditcard_statement->getCity();
+                    $transaction->amount = $creditcard_statement->getAmount();
+
+                    $transactions->push($transaction);
+                }
+
+                $form->transactions()->saveMany($transactions->all());
             }
 
-            $form->transactions()->saveMany($transactions->all());
         }
 
         session()->forget('tdc_transactions_claim');
@@ -227,9 +231,9 @@ class ClaimFormController extends Controller
     {
         $messages = collect();
 
-        if (!count($transactions) || !$transactions){
-            $messages->push('Debe seleccionar al menos una transacción.');
-        }
+        // if (!count($transactions) || !$transactions){
+        //     $messages->push('Debe seleccionar al menos una transacción.');
+        // }
 
         if ($form_type == 'CON') {
             if ($claim_type_tdc) {

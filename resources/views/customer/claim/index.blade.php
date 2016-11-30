@@ -75,7 +75,7 @@
                     <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.create') }}">Nuevo Reclamación</a>
 
                     @if (!can_not_do('customer_claim_param'))
-                        <a style="font-size: 13px;" download class="label btn-success pull-right" target="__blank" href="{{ route('customer.claim.excel.claim', Request::except(['term'])) }}">Exportar Excel</a>
+                        <a style="font-size: 13px;" download class="label btn-success pull-right" target="__blank" href="{{ route('customer.claim.excel.claim', Request::except(['term', 'page'])) }}">Exportar Excel</a>
                     @endif
                     <br>
                     <br>
@@ -107,11 +107,19 @@
                                     <td>{{ $claim->response_date->format('d/m/Y') }}</td>
                                     <td>
                                         @if ($claim->is_approved == null)
-                                            @if ($claim->is_approved == 0)
-                                                <span style="letter-spacing: 1px;" class="label label-danger">No Aprobada</span>
-                                            @endif
+                                            <span style="letter-spacing: 1px;" class="label label-warning">Pendiente de Aprobación</span>
                                         @else
-                                            <span style="letter-spacing: 1px;" class="label label-{{ $claim->is_closed ? 'success' : 'danger' }}">{{ $claim->is_closed ? 'Cerrada' : 'En Proceso' }}</span>
+                                            @if ($claim->is_approved == 1)
+                                                @if ($claim->is_closed)
+                                                    <span style="letter-spacing: 1px;" class="label label-{{ $claim->is_closed ? 'success' : 'danger' }}">{{ $claim->is_closed ? 'Cerrada' : 'En Proceso' }}</span>
+                                                @else
+                                                    <span style="letter-spacing: 1px;" class="label label-primary">Aprobada</span>
+                                                @endif
+                                            @endif
+
+                                            @if ($claim->is_approved == 0)
+                                                <span style="letter-spacing: 1px;" class="label label-danger">Rechazada</span>
+                                            @endif
                                         @endif
                                     </td>
                                     <td>{{ $claim->created_at->format('d/m/Y H:i:s') }}</td>

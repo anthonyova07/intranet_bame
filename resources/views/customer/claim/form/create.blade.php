@@ -347,7 +347,7 @@
                                                 <td>
                                                     <input type="checkbox" class="transaction_checkboxes" value="{{ $index }}">
                                                 </td>
-                                                <td>{{ $statement->getFormatedDateTimeTransaction() }}</td>
+                                                <td>{{ $statement->getFormatedDateTimeTransaction(true) }}</td>
                                                 <td>{{ $statement->getMerchantName() }}</td>
                                                 <td>{{ $statement->getCountry() . '_' . $statement->getCity() }}</td>
                                                 <td class="input_money">{{ $statement->getCurrency() . ' ' . number_format($statement->getAmount(), 2) }}</td>

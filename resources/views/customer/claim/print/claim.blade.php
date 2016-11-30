@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Reclamación No. {{ $claim->claim_number }}</title>
+    <title>Reclamación No {{ $claim->claim_number }}</title>
     <style>
         body {
             font-family: 'Juhl';
@@ -171,7 +171,7 @@
         <table style="font-size: 80%;">
             <tbody>
                 <tr>
-                    <td colspan="2" style="width: 50%"><b>Canal de Distribución:</b> {{ $claim->distribution_channel }}</td>
+                    <td colspan="2" style="width: 50%"><b>Canal de Distribución:</b> {{ $claim->distribution_channel_description }}</td>
                     <td colspan="2" style="width: 50%"><b>Tipo de Producto:</b> {{ $claim->product_type }}</td>
                 </tr>
             </tbody>

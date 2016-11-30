@@ -56,6 +56,10 @@ class ClaimController extends Controller
             $claims->where('created_at', '<=', $request->date_to . ' 23:59:59');
         }
 
+        if (!can_not_do('customer_claim_close')) {
+            $claims->where('is_approved', true);
+        }
+
         $claims = $claims->paginate();
 
         $param = Param::all();
@@ -406,7 +410,7 @@ class ClaimController extends Controller
         $claim->closed_comments = $request->comment;
         $claim->closed_date = new DateTime;
 
-        $claim->claim_result = $request->claim_result ? 'F' : 'D';
+        $claim->claim_result = $request->claim_result;
 
         $claim->rate_day = $request->rate_day;
 

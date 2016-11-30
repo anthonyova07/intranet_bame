@@ -8,7 +8,7 @@ class CreditCardStatement extends Model
 {
     protected $connection = 'itc';
 
-    protected $table = 'saumtra00';
+    protected $table = 'saumtra00';//saumcta00 cargos flotante
 
     protected $primaryKey = 'numta_mtra';
 
