@@ -45,7 +45,7 @@
         }
     </style>
 </head>
-    <body style="font-size: 80%">
+    <body style="font-size: 80%;">
         <table width="100%" border="0">
             <tbody>
                 <tr valign="top">
@@ -80,7 +80,7 @@
             </tbody>
         </table>
 
-        <table style="font-size: 80%;">
+        <table style="font-size: 100%;">
             <tbody>
                 <tr>
                     <td class="table_td" colspan="4" style="text-align: center;font-size: 13px;background-color: #CCC;">
@@ -139,7 +139,7 @@
         @if ($claim->is_company)
             <br>
 
-            <table style="font-size: 80%;">
+            <table style="font-size: 100%;">
                 <tbody>
                     <tr>
                         <td class="table_td" colspan="4" style="text-align: center;font-size: 13px;background-color: #CCC;">
@@ -168,7 +168,7 @@
 
         <br>
 
-        <table style="font-size: 80%;">
+        <table style="font-size: 100%;">
             <tbody>
                 <tr>
                     <td colspan="2" style="width: 50%"><b>Canal de Distribución:</b> {{ $claim->distribution_channel_description }}</td>
@@ -179,7 +179,7 @@
 
         <br>
 
-        <table style="font-size: 80%;">
+        <table style="font-size: 100%;">
             <tbody>
                 <tr>
                     <td class="table_td" colspan="4" style="text-align: center;font-size: 13px;background-color: #CCC;">
@@ -206,16 +206,16 @@
         <br>
         <br>
 
-        <table style="font-size: 80%;">
+        <table style="font-size: 100%;">
             <tbody>
                 <tr style="text-align: center;">
                     <td class="sign_field" colspan="2" style="width: 50%;">
-                        <b>__________________________________________________</b>
+                        <b>____________________________________________</b>
                         <br>
                         <span style="font-size: 15px;">Firma del Oficial</span>
                     </td>
                     <td class="sign_field" colspan="2" style="width: 50%;">
-                        <b>__________________________________________________</b>
+                        <b>____________________________________________</b>
                         <br>
                         <span style="font-size: 15px;">Firma del Cliente</span>
                     </td>
@@ -225,19 +225,53 @@
 
         <br>
 
-        <table style="font-size: 80%;">
+        <table style="font-size: 100%; text-align: justify;">
             <tbody>
                 <tr>
-                    <td class="sign_field" style="font-size: 10px;" colspan="2" style="width: 50%">
+                    <td class="sign_field" style="font-size: 14px;" colspan="2" style="width: 50%">
                         <b>Nota 1:</b>
                         Documentos a adjuntar: Copia de cédula, poder otorgado por el titular (en caso de que se trate de un apoderado), otros documentos que sustenten la reclamación.
                     </td>
                 </tr>
+                <tr><td class="sign_field"></td></tr>
+                <tr><td class="sign_field"></td></tr>
                 <tr>
-                    <td class="sign_field" style="font-size: 10px;" colspan="2" style="width: 50%">
+                    <td class="sign_field" style="font-size: 14px;" colspan="2" style="width: 50%">
                         <b>Nota 2:</b>
                         La interposición de una reclamación frente al Banco, no exime al reclamante de cumplir con sus obligaciones de pagar por concepto de consumos o de servicios, los intereses y moras generados con anterioridad o posterioridad al reclamo, ni cualquier otro cargo que haya contrato expresamente con el Banco.
                     </td>
+                </tr>
+                <tr><td class="sign_field"></td></tr>
+                <tr><td class="sign_field"></td></tr>
+                <tr>
+                    <td class="sign_field" style="font-size: 14px;" colspan="2" style="width: 50%">
+                        <b>Nota 3:</b>
+                        Los datos que se detallaron anteriormente son declaraciones suministradas por el interesado, quien garantiza la exactitud y veracidad de las mismas.
+                    </td>
+                </tr>
+                <tr><td class="sign_field"></td></tr>
+                <tr><td class="sign_field"></td></tr>
+                <tr>
+                    <td class="sign_field" style="font-size: 14px;" colspan="2" style="width: 50%">
+                        <b>Nota 4:</b>
+                        Todo cliente tiene derecho a canalizar sus reclamaciones ante Bancamérica.
+                    </td>
+                </tr>
+                <tr><td class="sign_field"></td></tr>
+                <tr><td class="sign_field"></td></tr>
+                <tr>
+                    <td class="sign_field" style="font-size: 14px;" colspan="2" style="width: 50%">
+                        <b>Nota 5:</b>
+                        Esta reclamación está libre de costos por parte del cliente.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table>
+            <tbody>
+                <tr style="text-align: right;">
+                    <td class="sign_field">001-USR-FR<br><span>V3</span></td>
                 </tr>
             </tbody>
         </table>
