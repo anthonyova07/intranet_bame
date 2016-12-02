@@ -14,6 +14,7 @@ Route::post('break_coco', 'Marketing\MarketingController@idea');
 Route::get('news/{id}', 'Marketing\MarketingController@news')->name('home.news');
 
 Route::get('event/{id}', 'HomeController@event')->name('home.event');
+Route::get('event/{id}/subscribers', 'HomeController@subscribers')->name('home.event.subscribers');
 
 Route::get('vacant/{id}', 'HumanResource\HumanResourceController@vacant')->name('home.vacant');
 
@@ -83,6 +84,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::group(['prefix' => 'vacant'], function () {
             Route::post('apply/{id}', 'HumanResource\Vacant\VacantController@apply')->name('human_resources.vacant.apply');
+            Route::post('eligible/{vacant}/{applicant}', 'HumanResource\Vacant\VacantController@eligible')->name('human_resources.vacant.eligible');
         });
 
         Route::resource('vacant', 'HumanResource\Vacant\VacantController');

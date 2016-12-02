@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a data-toggle="tooltip" title="Click para contactar empleado" href="mailto:{{ $idea->mail }}?Subject=Idea de Rompete el Coco">Contactar Empleado</a>
+                        <a data-toggle="tooltip" title="Click para contactar empleado" href="mailto:{{ $idea->mail }}?Subject=Idea de Rompete el Coco&body=Idea del Empleado: ({{ $idea->idea }})">Contactar Empleado</a>
                     </form>
                 </div>
             </div>

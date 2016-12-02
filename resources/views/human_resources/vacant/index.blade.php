@@ -116,6 +116,45 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-xs-8 col-xs-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Empleados para Posibles Vacantes</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|asc'>
+                        <thead>
+                            <tr>
+                                <th>Empleado</th>
+                                <th>Posibles Vacantes</th>
+                                <th style="width: 52px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($applicants_eligible as $applicant)
+                                <tr>
+                                    <td>{{ $applicant->names }}</td>
+                                    <td>{{ $applicant->vacancies_posible }}</td>
+                                    <td align="center">
+                                        <a
+                                            href="{{ route('home') . '/files/human_resources/curriculums/' . $applicant->file_name }}"
+                                            target="__blank"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="Ver Curriculum">
+                                            <i class="fa fa-eye fa-fw"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script type="text/javascript">
         $('#form').submit(function (vacant) {
             $('#btn_submit').button('loading');

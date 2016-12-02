@@ -5,6 +5,16 @@ $(document).ready(function() {
 
     $('[data-toggle="tooltip"]').tooltip();
 
+    $('[data-toggle="popover"]').popover({
+        html: true,
+        trigger: 'click',
+        template: '<div class="popover awesome-popover-class mipopover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>'
+    });
+
+    $('td').on('click', '.close-popover', function () {
+        $('.popover').popover('hide');
+    });
+
     $orderBy = $('.datatable').attr('order-by');
 
     if ($orderBy !== undefined) {
@@ -35,6 +45,9 @@ $(document).ready(function() {
     var bame_tada = $('.bame_tada');
     var bame_wobble = $('.bame_wobble');
     var bame_hinge = $('.bame_hinge');
+    var bame_flash = $('.bame_flash');
+    var bame_shake = $('.bame_shake');
+    var bame_bounce = $('.bame_bounce');
 
     headerBar.each(function (index, value) {
         $(this).animateCSS('slideInDown', {
@@ -81,6 +94,21 @@ $(document).ready(function() {
             callback: function () {
                 $(this).remove();
             }
+        });
+    });
+    bame_flash.each(function (index, value) {
+        $(this).animateCSS('flash', {
+            delay: 1000
+        });
+    });
+    bame_shake.each(function (index, value) {
+        $(this).animateCSS('shake', {
+            delay: 1000
+        });
+    });
+    bame_bounce.each(function (index, value) {
+        $(this).animateCSS('bounce', {
+            delay: 1000
         });
     });
     headerPage.animateCSS('slideInLeft');

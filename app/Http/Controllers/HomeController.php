@@ -10,6 +10,8 @@ use Bame\Models\Event\Event;
 use Bame\Models\Marketing\News\News;
 use Bame\Models\Marketing\Coco\Coco;
 use Bame\Models\HumanResource\Vacant\Vacant;
+use Bame\Models\Event\Subscription\Subscription;
+use Bame\Models\Event\Subscription\Accompanist as SubscriptionAccompanist;
 
 class HomeController extends Controller {
 
@@ -52,7 +54,33 @@ class HomeController extends Controller {
     {
         $event = Event::find($id);
 
-        return view('home.event')
+        return view('home.event.index')
+            ->with('event', $event);
+    }
+
+    public function subscribers($id)
+    {
+        $event = Event::find($id);
+
+        if (!$event) {
+            return redirect()->with('warning', 'Este evento no existe!');
+        }
+
+        $subscriptions = Subscription::where('event_id', $event->id)
+                                        ->where('is_subscribe', '1')
+                                        ->get();
+
+        $accompanist_subscriptions = SubscriptionAccompanist::with('accompanist')
+                                        ->where('event_id', $event->id)
+                                        ->where('is_subscribe', '1')
+                                        ->get();
+
+        return view('home.event.subscribers')
+            ->with('event', $event)
+            ->with('subscriptions', $subscriptions)
+            ->with('accompanist_subscriptions', $accompanist_subscriptions);
+
+        return view('home.event.subscribers')
             ->with('event', $event);
     }
 }

@@ -17,7 +17,10 @@
             <div class="panel panel-default">
                 <div class="panel-body">
 
-                    {{-- <a class="pull-right label label-warning" style="font-size: 13px;" target="__blank" href="{{ route('home', ['vacant' => $vacant->id, 'format' => 'pdf']) }}">Imprimir</a> --}}
+                    <a class="btn btn-info btn-xs" href="{{ route('human_resources.vacant.index') }}"><i class="fa fa-arrow-left"></i> Atrás</a>
+
+                    <br>
+                    <br>
 
                     <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='1|desc'>
                         <thead>
@@ -25,6 +28,7 @@
                                 <th>Correo</th>
                                 <th>Nombre</th>
                                 <th style="width: 68px">Curriculum</th>
+                                <th style="width: 68px">Elegible para</th>
                                 {{-- <th style="width: 52px"></th> --}}
                             </tr>
                         </thead>
@@ -41,6 +45,29 @@
                                             data-placement="top"
                                             title="Ver Curriculum">
                                             <i class="fa fa-eye fa-fw"></i>
+                                        </a>
+                                    </td>
+                                    <td align="center">
+                                        <a
+                                            href="javascript:void(0)"
+                                            data-toggle="popover"
+                                            data-placement="right"
+                                            title="Empleado elegible para <i class='fa fa-close close-popover' style='color:red;cursor:pointer;'></i>"
+                                            data-content="
+                                            <form action='{{ route('human_resources.vacant.eligible', ['vacant' => $applicant->vacant_id, 'applicant' => $applicant->username]) }}' method='post'>
+                                                <div class='row'>
+                                                    <div class='col-xs-12'>
+                                                        <div class='form-group'>
+                                                            <label class='control-label'>Posibles Vacantes</label>
+                                                            <input type='text' class='form-control input-sm' name='vacancies_posible'>
+                                                        </div>
+                                                        {{ str_replace('"', '\'', csrf_field()) }}
+                                                        <input type='submit' class='btn btn-danger btn-xs' value='Guardar' style='margin-top: 10px;'>
+                                                    </div>
+                                                </div>
+                                            </form>"
+                                            style="color: green;">
+                                            <i class="fa fa-plus-square"></i>
                                         </a>
                                     </td>
                                 </tr>

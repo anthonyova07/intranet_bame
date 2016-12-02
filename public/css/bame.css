@@ -117,6 +117,10 @@ form {
     background-color: #008000;
 }
 
+.btn-info {
+    background-color: #5bc0de;
+}
+
 .rojo {
     color: #ff0000;
 }
