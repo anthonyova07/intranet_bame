@@ -4,11 +4,11 @@
 
 @section('page_title', 'Transacciones ITC')
 
-{{-- @if (can_not_do('customer_claim'))
+@if (can_not_do('op_tdc_trx_days'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 
