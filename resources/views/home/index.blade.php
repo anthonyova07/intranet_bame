@@ -123,13 +123,12 @@
                         </div>
 
                         <div class="panel-body text-center">
-                            <label class="control-label text-center label label-info" style="font-size: 24px;">Descripción</label>
                             <ul class="list-group text-left" style="box-shadow: 0 0 0 0;margin-top: 20px;">
                                 @foreach ($coco->get()->descriptions->sortBy('order') as $description)
                                     <div class="media">
                                         <div class="media-left">
                                             <a href="javascript:void(0)">
-                                                <span class="badge btn-info" style="font-size: 35px;width: 40px;">{{ $description->order }}</span>
+                                                <span class="badge btn-info" style="font-size: 35px;width: 40px;background-color: #4f616b;">{{ $description->order }}</span>
                                             </a>
                                         </div>
                                         <div class="media-body" style="font-weight: bold;">
@@ -161,7 +160,7 @@
                         @endif
 
                         <div class="panel-body text-right" style="margin-top: -38px;">
-                            <a href="{{ route('coco') }}" class="btn btn-success btn-sm">Enviar Idea...</a>
+                            <a href="{{ route('coco') }}" class="btn btn-default btn-sm" style="background-color: #4f616b;color: #ffffff;">Enviar Idea...</a>
                         </div>
 
                     @else

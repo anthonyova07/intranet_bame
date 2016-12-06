@@ -12,23 +12,23 @@
                     @if (session()->has('user'))
                         @if ($event->isSubscribe())
                             <a href="{{ route('event.unsubscribe_reason', ['id' => $event->id]) }}" class="btn btn-danger btn-block bame_shake">Cancelar Suscripción</a>
-                            <a href="{{ route('events.accompanist.index', ['event' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Ver mis invitados</a>
+                            <a href="{{ route('events.accompanist.index', ['event' => $event->id]) }}" class="btn btn-default btn-block bame_tada" style="background-color: #4f616b;color: #ffffff;">Ver mis invitados</a>
                         @else
                             @if ($event->canSubscribe())
-                                <a href="{{ route('event.subscribe', ['id' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Suscribirse</a>
+                                <a href="{{ route('event.subscribe', ['id' => $event->id]) }}" class="btn btn-default btn-block bame_tada" style="background-color: #4f616b;color: #ffffff;">Suscribirse</a>
                             @else
                                 <button class="btn btn-default btn-block bame_bounce" style="font-weight: bold;" disabled>No hay cupo disponible</button>
                             @endif
                         @endif
                     @else
                         @if ($event->canSubscribe())
-                            <a href="{{ route('event.subscribe', ['id' => $event->id]) }}" class="btn btn-success btn-block bame_tada">Suscribirse</a>
+                            <a href="{{ route('event.subscribe', ['id' => $event->id]) }}" class="btn btn-default btn-block bame_tada" style="background-color: #4f616b;color: #ffffff;">Suscribirse</a>
                         @else
                             <button class="btn btn-default btn-block bame_bounce" style="font-weight: bold;" disabled>No hay cupo disponible</button>
                         @endif
                     @endif
 
-                    <a href="{{ route('home.event.subscribers', ['id' => $event->id]) }}" class="btn btn-info btn-block bame_flash">Lista de Inscritos</a>
+                    <a href="{{ route('home.event.subscribers', ['id' => $event->id]) }}" class="btn btn-default btn-block bame_flash" style="background-color: #4f616b;color: #ffffff;">Lista de Inscritos</a>
 
                     <br>
 
