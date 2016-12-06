@@ -49,8 +49,8 @@ class Notification
     {
         $notificacion = new \stdClass;
         $notificacion->id = uniqid();
-        $notificacion->titulo = cap_str($titulo);
-        $notificacion->texto = cap_str($texto);
+        $notificacion->titulo = $titulo;
+        $notificacion->texto = $texto;
         $notificacion->url = $url;
         $notificacion->creado = (new DateTime)->format('d/m/Y H:i:s');
         $notificacion->notificado = false;
