@@ -83,7 +83,7 @@ class ClaimController extends Controller
 
     public function create(Request $request)
     {
-        $param = Param::activeOnly()->get();
+        $param = Param::activeOnly()->orderByDescription()->get();
 
         $claim_types = $param->where('type', 'CT');
         $distribution_channels = $param->where('type', 'DC');
@@ -318,6 +318,8 @@ class ClaimController extends Controller
 
     public function postApprove(Request $request, $claim_id, $to_approve)
     {
+        $claim = Claim::find($claim_id);
+
         $to_approve = boolval($to_approve);
 
         $rules['comment'] = 'required|max:500';
@@ -326,9 +328,9 @@ class ClaimController extends Controller
             $rules['claim_status'] = 'required';
         }
 
-        $this->validate($request, $rules);
+        $rules['rate_day'] = 'numeric' . ($claim->currency == 'US$' ? '|required' : '');
 
-        $claim = Claim::find($claim_id);
+        $this->validate($request, $rules);
 
         if ($claim->is_approved == 1 || can_not_do('customer_claim_approve')) {
             return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('warning', 'La reclamación ya ha sido Aprobada/Rechazada anteriormente o no tiene los permisos requeridos.');
@@ -339,6 +341,8 @@ class ClaimController extends Controller
         $claim->approved_by_name = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
         $claim->approved_comments = $request->comment;
         $claim->approved_date = new DateTime;
+
+        $claim->rate_day = $request->rate_day;
 
         $claim->proceed_credit = $request->proceed_credit ? true : false;
 
@@ -383,13 +387,12 @@ class ClaimController extends Controller
 
     public function postClose(Request $request, $claim_id)
     {
+        $claim = Claim::find($claim_id);
+
         $this->validate($request, [
             'claim_status' => 'required',
             'comment' => 'required|max:500',
-            'rate_day' => 'required|numeric',
         ]);
-
-        $claim = Claim::find($claim_id);
 
         if ($claim->is_closed || can_not_do('customer_claim_close')) {
             return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('warning', 'La reclamación ya ha sido Terminada anteriormente o no tiene los permisos requeridos.');
@@ -411,8 +414,6 @@ class ClaimController extends Controller
         $claim->closed_date = new DateTime;
 
         $claim->claim_result = $request->claim_result;
-
-        $claim->rate_day = $request->rate_day;
 
         $claim->save();
 

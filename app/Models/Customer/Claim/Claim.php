@@ -32,6 +32,20 @@ class Claim extends Model
         return $this->product_number;
     }
 
+    public function getFormatIdentification()
+    {
+        if ($this->identification) {
+            if (strlen($this->identification) == 11) {
+                $id = $this->identification;
+                return substr($id, 0, 3) . '-' . substr($id, 3, 7) . '-' . substr($id, 10, 1);
+            } else if (strlen($this->identification) == 9) {
+                return $this->identification;
+            }
+        } else {
+            return strtoupper($this->passport);
+        }
+    }
+
     public function getOnePhoneNumber() {
         if ($this->cell_phone) {
             return $this->cell_phone;

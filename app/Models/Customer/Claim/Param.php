@@ -25,4 +25,9 @@ class Param extends Model
     {
         return $query->where('type', 'TDC');
     }
+
+    public function scopeOrderByDescription($query)
+    {
+        return $query->orderBy('description', 'asc');
+    }
 }

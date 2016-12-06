@@ -41,16 +41,7 @@
                                     <span class="help-block">{{ $errors->first('comment') }}</span>
                                 </div>
                             </div>
-
-                            <div class="col-xs-2">
-                                <div class="form-group{{ $errors->first('rate_day') ? ' has-error':'' }}">
-                                    <label class="control-label">Tasa del Día</label>
-                                    <input type="text" class="form-control input-sm" name="rate_day" value="{{ old('rate_day') }}">
-                                    <span class="help-block">{{ $errors->first('rate_day') }}</span>
-                                </div>
-                            </div>
-
-                            <div class="col-xs-2">
+                            <div class="col-xs-4">
                                 <div class="form-group{{ $errors->first('claim_result') ? ' has-error':'' }}">
                                     <label class="control-label">Resultado</label>
                                     <select class="form-control input-sm" name="claim_result">
