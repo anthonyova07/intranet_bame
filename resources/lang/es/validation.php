@@ -142,5 +142,6 @@ return [
       'name_last_name' => 'Nombre y Apellido',
       'mail' => 'Correo',
       'idea' => 'Idea',
+      'images' => 'Imágenes',
     ],
 ];

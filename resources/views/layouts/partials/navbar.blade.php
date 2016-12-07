@@ -119,6 +119,21 @@
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-download fa-fw"></i>
+                        Mercadeo
+                        <span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level animated zoomInLeft" style="animation-duration: 0.5s;">
+                        <li>
+                            <a href="{{ route('home.gallery') }}">
+                                <i class="fa fa-files-o fa-fw"></i>
+                                Galería
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 @if (session()->has('menus'))
                     @foreach (session()->get('menus') as $menu)
                         <li>
