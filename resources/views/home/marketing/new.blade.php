@@ -13,12 +13,12 @@
 
                 <div class="panel-body">
 
-                    <h3 style="text-align: center;margin-top: 0px;margin-bottom: 16px;">{{ $new->title }}</h3>
+                    <h3 style="text-align: center;margin-top: 0px;margin-bottom: 16px;">{{ html_entity_decode($new->title) }}</h3>
 
                     <img class="img-thumbnail pull-left" src="{{ route('home') . $new->image }}" style="max-height: 380px;margin: 0px 15px 15px 0px;">
 
                     <p style="color: #616365;" class="text-justify">
-                        {!! $new->detail !!}
+                        {!! html_entity_decode($new->detail) !!}
                     </p>
 
                 </div>

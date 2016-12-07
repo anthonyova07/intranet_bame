@@ -2,7 +2,7 @@
 
 @section('title', 'Home')
 
-@section('page_title', $vacant->name)
+@section('page_title', html_entity_decode($vacant->name))
 
 @section('contents')
     <div class="row">
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="col-xs-8">
-                    <p  style="color: #616365;" class="text-justify">{!! $vacant->detail !!}</p>
+                    <p  style="color: #616365;" class="text-justify">{!! html_entity_decode($vacant->detail) !!}</p>
                 </div>
             </div>
         </div>

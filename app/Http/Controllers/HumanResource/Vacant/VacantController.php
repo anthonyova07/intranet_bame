@@ -60,8 +60,8 @@ class VacantController extends Controller
         $vacant = new Vacant;
 
         $vacant->id = uniqid(true);
-        $vacant->name = clear_tag($request->name);
-        $vacant->detail = clear_tag(nl2br($request->detail));
+        $vacant->name = clear_tag(htmlentities($request->name));
+        $vacant->detail = clear_tag(nl2br(htmlentities($request->detail)));
         $vacant->is_active = $request->is_active ? true : false;
         $vacant->created_by = session()->get('user');
 
@@ -111,8 +111,8 @@ class VacantController extends Controller
             return back()->with('warning', 'Esta vacante no existe!');
         }
 
-        $vacant->name = clear_tag($request->name);
-        $vacant->detail = clear_tag(nl2br($request->detail));
+        $vacant->name = clear_tag(htmlentities($request->name));
+        $vacant->detail = clear_tag(nl2br(htmlentities($request->detail)));
         $vacant->is_active = $request->is_active ? true : false;
         $vacant->updated_by = session()->get('user');
 
