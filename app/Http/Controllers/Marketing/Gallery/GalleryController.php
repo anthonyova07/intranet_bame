@@ -42,9 +42,9 @@ class GalleryController extends Controller
         do_log('Creó el álbum ( nombre:' . strip_tags($request->name) . ' )');
 
         if ($gallery->is_active) {
-            // $noti = new Notification('global');
-            // $noti->create('Nuevo Álbum', $event->title, route('home.event', ['id' => $event->id]));
-            // $noti->save();
+            $noti = new Notification('global');
+            $noti->create('Nuevo Álbum', $gallery->name, route('home.gallery', ['gallery' => $gallery->id]));
+            $noti->save();
         }
 
         return redirect(route('marketing.gallery.show', ['gallery' => $gallery->id]))->with('success', 'La galería fue creado correctamente.');
@@ -94,9 +94,9 @@ class GalleryController extends Controller
         do_log('Modificó el álbum ( nombre:' . strip_tags($request->name) . ' )');
 
         if ($gallery->is_active) {
-            // $noti = new Notification('global');
-            // $noti->create('Álbum Actualizado', $event->title, route('home.event', ['id' => $event->id]));
-            // $noti->save();
+            $noti = new Notification('global');
+            $noti->create('Álbum Actualizado', $gallery->name, route('home.gallery', ['gallery' => $gallery->id]));
+            $noti->save();
         }
 
         return redirect(route('marketing.gallery.show', ['gallery' => $gallery->id]))->with('success', 'La galería fue modificada correctamente.');
