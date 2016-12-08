@@ -92,7 +92,7 @@ class MarketingController extends Controller
                 return back()->with('warning', 'Esta galería no existe!');
             }
         } else {
-            $galleries = Gallery::onlyActive()->get();
+            $galleries = Gallery::onlyActive()->lastestFirst()->get();
         }
 
         return view('home.marketing.gallery')

@@ -15,7 +15,7 @@ class GalleryController extends Controller
 {
     public function index(Request $request)
     {
-        $galleries = Gallery::get();
+        $galleries = Gallery::lastestFirst()->get();
 
         return view('marketing.gallery.index')
             ->with('galleries', $galleries);
@@ -28,12 +28,18 @@ class GalleryController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, ['name' => 'required|max:150']);
+        $this->validate($request, [
+            'name' => 'required|max:150',
+            'image' => 'required|max:150',
+            'galdate' => 'required|date_format:"Y-m-d"',
+        ]);
 
         $gallery = new Gallery;
 
         $gallery->id = uniqid(true);
         $gallery->name = $request->name;
+        $gallery->image = $request->image;
+        $gallery->galdate = $request->galdate;
         $gallery->is_active = $request->is_active ? true : false;
         $gallery->created_by = session()->get('user');
 
@@ -77,7 +83,11 @@ class GalleryController extends Controller
 
     public function update(Request $request, $gallery)
     {
-        $this->validate($request, ['name' => 'required|max:150']);
+        $this->validate($request, [
+            'name' => 'required|max:150',
+            'image' => 'required|max:150',
+            'galdate' => 'required|date_format:"Y-m-d"',
+        ]);
 
         $gallery = Gallery::find($gallery);
 
@@ -86,6 +96,8 @@ class GalleryController extends Controller
         }
 
         $gallery->name = $request->name;
+        $gallery->image = $request->image;
+        $gallery->galdate = $request->galdate;
         $gallery->is_active = $request->is_active ? true : false;
         $gallery->updated_by = session()->get('user');
 

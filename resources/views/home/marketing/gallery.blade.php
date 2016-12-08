@@ -13,17 +13,21 @@
                 <div class="col-xs-8 col-xs-offset-2">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|asc'>
+                            <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='2|desc'>
                                 <thead>
                                     <tr>
+                                        <th style="width: 85px;">Portada</th>
                                         <th>Galería</th>
+                                        <th style="width: 40px;">Fecha</th>
                                         <th style="width: 25px;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($galleries as $gallery)
                                         <tr>
+                                            <td><img style="width: 100px;" alt="No encontrada" src="{{ route('home') . '/files/gallery/' . $gallery->id . '/' . $gallery->image }}"></td>
                                             <td>{{ $gallery->name }}</td>
+                                            <td>{{ $gallery->galdate->format('Y-m-d') }}</td>
                                             <td align="center">
                                                 <a
                                                     href="{{ route('home.gallery', ['gallery' => $gallery->id]) }}"

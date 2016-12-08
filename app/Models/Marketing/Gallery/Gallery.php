@@ -16,6 +16,8 @@ class Gallery extends Model
 
     public $timestamps = true;
 
+    protected $dates = ['galdate'];
+
     public static function getFiles($id)
     {
         $url_files = public_path('files\\gallery\\'. $id);
@@ -45,6 +47,11 @@ class Gallery extends Model
     public function scopeOnlyActive($query)
     {
         return $query->where('is_active', true);
+    }
+
+    public function scopeLastestFirst($query)
+    {
+        return $query->orderBy('galdate', 'desc');
     }
 
     public static function deleteImage($gallery, $image)

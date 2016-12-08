@@ -19,10 +19,11 @@
                     <a class="btn btn-danger btn-xs" href="{{ route('marketing.gallery.create') }}">Nueva Galería</a>
                     <br>
                     <br>
-                    <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|asc'>
+                    <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='2|desc'>
                         <thead>
                             <tr>
                                 <th>Galería</th>
+                                <th style="width: 40px;">Fecha</th>
                                 <th style="width: 50px;">Estatus</th>
                                 <th style="width: 25px;"></th>
                             </tr>
@@ -31,6 +32,7 @@
                             @foreach ($galleries as $gallery)
                                 <tr>
                                     <td>{{ $gallery->name }}</td>
+                                    <td>{{ $gallery->galdate->format('Y-m-d') }}</td>
                                     <td>
                                         <label style="font-size: 12px;letter-spacing: 1px;" class="label label-{{ $gallery->is_active ? 'success' : 'danger' }}">{{ $gallery->is_active ? 'Activa' : 'Inactiva' }}</label>
                                     </td>
