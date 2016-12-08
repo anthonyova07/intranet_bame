@@ -30,7 +30,7 @@ class GalleryController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:150',
-            'image' => 'required|max:150',
+            'image' => 'required',
             'galdate' => 'required|date_format:"Y-m-d"',
         ]);
 
@@ -38,12 +38,21 @@ class GalleryController extends Controller
 
         $gallery->id = uniqid(true);
         $gallery->name = $request->name;
-        $gallery->image = $request->image;
+
+        $image = $request->image;
+        $parts = explode('.', $image->getClientOriginalName());
+        $ext = array_pop($parts);
+        $gallery->image = 'portada.' . $ext;
+
         $gallery->galdate = $request->galdate;
         $gallery->is_active = $request->is_active ? true : false;
         $gallery->created_by = session()->get('user');
 
         $gallery->save();
+
+        $path = public_path('files\\gallery\\' . $gallery->id);
+
+        $image->move($path, 'portada.' . $ext);
 
         do_log('Creó el álbum ( nombre:' . strip_tags($request->name) . ' )');
 
@@ -85,7 +94,7 @@ class GalleryController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|max:150',
-            'image' => 'required|max:150',
+            'image' => 'required',
             'galdate' => 'required|date_format:"Y-m-d"',
         ]);
 
@@ -96,12 +105,21 @@ class GalleryController extends Controller
         }
 
         $gallery->name = $request->name;
-        $gallery->image = $request->image;
+
+        $image = $request->image;
+        $parts = explode('.', $image->getClientOriginalName());
+        $ext = array_pop($parts);
+        $gallery->image = 'portada.' . $ext;
+
         $gallery->galdate = $request->galdate;
         $gallery->is_active = $request->is_active ? true : false;
         $gallery->updated_by = session()->get('user');
 
         $gallery->save();
+
+        $path = public_path('files\\gallery\\' . $gallery->id);
+
+        $image->move($path, 'portada.' . $ext);
 
         do_log('Modificó el álbum ( nombre:' . strip_tags($request->name) . ' )');
 

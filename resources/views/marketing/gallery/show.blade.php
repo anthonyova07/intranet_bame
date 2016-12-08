@@ -58,39 +58,41 @@
                         </thead>
                         <tbody>
                             @foreach ($images as $index => $image)
-                                <tr>
-                                    <td>
-                                        <img style="width: 100px;" src="{{ $image->url }}">
-                                    </td>
-                                    <td>{{ $image->file }}</td>
-                                    <td style="vertical-align: middle;text-align: center;font-size: 20px;">
-                                        <a
-                                            download
-                                            href="{{ $image->url }}"
-                                            target="_blank"
-                                            data-toggle="tooltip"
-                                            data-placement="top"
-                                            title="Descargar {{ str_replace('_', ' ', $image->file) }}">
-                                            <i class="fa fa-download fa-fw"></i>
-                                        </a>
-                                        <a
-                                            onclick="cancel('{{ $index }}', this)"
-                                            href="javascript:void(0)"
-                                            data-toggle="tooltip"
-                                            data-placement="top"
-                                            title="Eliminar {{ str_replace('_', ' ', $image->file) }}"
-                                            class="rojo link_delete">
-                                            <i class="fa fa-trash fa-fw"></i>
-                                        </a>
-                                        <form
-                                            action="{{ route('marketing.gallery.delete_image', ['gallery' => $gallery->id, 'image' => $image->file]) }}"
-                                            method="post" id="form_eliminar_{{ $index }}">
-                                            <input type="hidden" name="folder" value="{{ Request::get('folder') }}">
-                                            {{ csrf_field() }}
-                                            {{ method_field('DELETE') }}
-                                        </form>
-                                    </td>
-                                </tr>
+                                @if (strpos($image->file, 'portada') === false)
+                                    <tr>
+                                        <td>
+                                            <img style="width: 100px;" src="{{ $image->url }}">
+                                        </td>
+                                        <td>{{ $image->file }}</td>
+                                        <td style="vertical-align: middle;text-align: center;font-size: 20px;">
+                                            <a
+                                                download
+                                                href="{{ $image->url }}"
+                                                target="_blank"
+                                                data-toggle="tooltip"
+                                                data-placement="top"
+                                                title="Descargar {{ str_replace('_', ' ', $image->file) }}">
+                                                <i class="fa fa-download fa-fw"></i>
+                                            </a>
+                                            <a
+                                                onclick="cancel('{{ $index }}', this)"
+                                                href="javascript:void(0)"
+                                                data-toggle="tooltip"
+                                                data-placement="top"
+                                                title="Eliminar {{ str_replace('_', ' ', $image->file) }}"
+                                                class="rojo link_delete">
+                                                <i class="fa fa-trash fa-fw"></i>
+                                            </a>
+                                            <form
+                                                action="{{ route('marketing.gallery.delete_image', ['gallery' => $gallery->id, 'image' => $image->file]) }}"
+                                                method="post" id="form_eliminar_{{ $index }}">
+                                                <input type="hidden" name="folder" value="{{ Request::get('folder') }}">
+                                                {{ csrf_field() }}
+                                                {{ method_field('DELETE') }}
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endif
                             @endforeach
                         </tbody>
                     </table>

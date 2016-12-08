@@ -32,7 +32,7 @@
                             <div class="col-xs-4">
                                 <div class="form-group{{ $errors->first('image') ? ' has-error':'' }}">
                                     <label class="control-label">Imagen de la Galería</label>
-                                    <input type="text" class="form-control input-sm" name="image" maxlength="150" value="{{ old('image') }}">
+                                    <input type="file" class="input-sm" name="image">
                                     <span class="help-block">{{ $errors->first('image') }}</span>
                                 </div>
                             </div>

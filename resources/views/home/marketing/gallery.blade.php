@@ -49,14 +49,22 @@
 
         @else
 
+            <div class="panel panel-default">
+                <div class="panel-body">
+                <a class="btn btn-info btn-xs" href="{{ route('home.gallery') }}"><i class="fa fa-arrow-left"></i> Atras</a>
+                </div>
+            </div>
+
             @foreach ($images as $index => $image)
-                <div class="col-xs-4">
-                    <div class="panel panel-default">
-                        <div class="panel-body" style="padding: 0px;">
-                            <img style="cursor: -webkit-zoom-in;" style="" class="img-thumbnail image" index="{{ $index }}" src="{{ $image->url }}">
+                @if (strpos($image->file, 'portada') === false)
+                    <div class="col-xs-4">
+                        <div class="panel panel-default">
+                            <div class="panel-body" style="padding: 0px;">
+                                <img style="cursor: -webkit-zoom-in;" style="" class="img-thumbnail image" index="{{ $index }}" src="{{ $image->url }}">
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
             @endforeach
 
             @if ($gallery)
@@ -82,19 +90,19 @@
 
             <script type="text/javascript">
                 $('.image').click(function (event) {
-                    $('#image').attr('src', $(this).attr('src'));
-                    $('#image').attr('index', $(this).attr('index')).click(function (e) {
+                    $('#image')
+                    .attr('src', $(this).attr('src'))
+                    .attr('index', $(this).attr('index'))
+                    .click(function (e) {
                         var index = parseInt($('#image').attr('index'));
 
-                        var image = $('.image').get(index + 1);
+                        var image = $('.image').get(index);
 
-                        if (image != undefined) {
-                            $('#image').attr('src', $(image).attr('src'));
+                        $('#image').attr('src', $(image).attr('src'));
 
-                            $('#link-download').attr('href', $(image).attr('src'));
+                        $('#link-download').attr('href', $(image).attr('src'));
 
-                            $('#image').attr('index', parseInt($('#image').attr('index')) + 1);
-                        }
+                        $('#image').attr('index', index + 1);
                     });
                     $('#link-download').attr('href', $(this).attr('src'));
                     $('.modal').modal();
