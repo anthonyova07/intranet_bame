@@ -55,24 +55,26 @@
                 </div>
             @endforeach
 
-            <div class="modal fade">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header" style="padding: 0 0 0 10px;">
-                            <button style="margin: -1px 10px 0 0;font-size: 40px;" type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                            <a data-toggle="tooltip" title="Descargar" href="" download style="margin: 8px 10px 0 0;font-size: 27px;font-weight: 700;line-height: 1;text-shadow: 0 1px 0 #fff;" class="pull-right" id="link-download"><i class="fa fa-download" style="color: #d82f27;"></i></a>
-                            <h4>{{ $gallery->name }}</h4>
-                        </div>
-                        <div class="modal-body" style="padding: 0px;">
-                            <div class="row">
-                                <div class="col-xs-12 text-center" style="padding: 0px;">
-                                    <img class="img-thumbnail" id="image">
+            @if ($gallery)
+                <div class="modal fade">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header" style="padding: 0 0 0 10px;">
+                                <button style="margin: -1px 10px 0 0;font-size: 40px;" type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                <a data-toggle="tooltip" title="Descargar" href="" download style="margin: 8px 10px 0 0;font-size: 27px;font-weight: 700;line-height: 1;text-shadow: 0 1px 0 #fff;" class="pull-right" id="link-download"><i class="fa fa-download" style="color: #d82f27;"></i></a>
+                                <h4>{{ $gallery->name }}</h4>
+                            </div>
+                            <div class="modal-body" style="padding: 0px;">
+                                <div class="row">
+                                    <div class="col-xs-12 text-center" style="padding: 0px;">
+                                        <img class="img-thumbnail" id="image">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
 
             <script type="text/javascript">
                 $('.image').click(function (event) {
