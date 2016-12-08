@@ -122,6 +122,10 @@ class GalleryController extends Controller
 
                 $image->move($path, remove_accents($file_name_destination));
             });
+
+            $noti = new Notification('global');
+            $noti->create('Álbum Actualizado', $gallery->name, route('home.gallery', ['gallery' => $gallery->id]));
+            $noti->save();
         }
 
         return back()->with('success', 'Las imágenes han sido cargadas correctamente.');

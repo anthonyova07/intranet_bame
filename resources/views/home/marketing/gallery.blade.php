@@ -46,10 +46,10 @@
         @else
 
             @foreach ($images as $index => $image)
-                <div class="col-xs-3">
+                <div class="col-xs-4">
                     <div class="panel panel-default">
-                        <div class="panel-body">
-                            <img style="cursor: -webkit-zoom-in;" class="img-thumbnail image" index="{{ $index }}" src="{{ $image->url }}">
+                        <div class="panel-body" style="padding: 0px;">
+                            <img style="cursor: -webkit-zoom-in;" style="" class="img-thumbnail image" index="{{ $index }}" src="{{ $image->url }}">
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,19 @@
             <script type="text/javascript">
                 $('.image').click(function (event) {
                     $('#image').attr('src', $(this).attr('src'));
-                    $('#image').attr('index', $(this).attr('index'));
+                    $('#image').attr('index', $(this).attr('index')).click(function (e) {
+                        var index = parseInt($('#image').attr('index'));
+
+                        var image = $('.image').get(index + 1);
+
+                        if (image != undefined) {
+                            $('#image').attr('src', $(image).attr('src'));
+
+                            $('#link-download').attr('href', $(image).attr('src'));
+
+                            $('#image').attr('index', parseInt($('#image').attr('index')) + 1);
+                        }
+                    });
                     $('#link-download').attr('href', $(this).attr('src'));
                     $('.modal').modal();
                 });
