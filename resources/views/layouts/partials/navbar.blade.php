@@ -93,6 +93,12 @@
                     <a href="{{ route('home') }}"><i class="fa fa-home fa-fw"></i> Inicio</a>
                 </li>
                 <li>
+                    <a href="{{ route('home.gallery') }}">
+                        <i class="fa fa-image fa-fw"></i>
+                        Galería de Fotos
+                    </a>
+                </li>
+                <li>
                     <a href="#">
                         <i class="fa fa-download fa-fw"></i>
                         GestiDoc
@@ -115,21 +121,6 @@
                             <a href="{{ route('gestidoc.process') }}">
                                 <i class="fa fa-files-o fa-fw"></i>
                                 Procesos
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-newspaper-o  fa-fw"></i>
-                        Mercadeo
-                        <span class="fa arrow"></span>
-                    </a>
-                    <ul class="nav nav-second-level animated zoomInLeft" style="animation-duration: 0.5s;">
-                        <li>
-                            <a href="{{ route('home.gallery') }}">
-                                <i class="fa fa-image fa-fw"></i>
-                                Galería de Fotos
                             </a>
                         </li>
                     </ul>
