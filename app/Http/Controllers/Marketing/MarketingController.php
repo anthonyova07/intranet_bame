@@ -83,8 +83,6 @@ class MarketingController extends Controller
 
     public function gallery(Request $request, $gallery = null)
     {
-        $view = view('home.marketing.gallery');
-
         $galleries = collect();
 
         if ($gallery) {
@@ -97,7 +95,7 @@ class MarketingController extends Controller
             $galleries = Gallery::onlyActive()->get();
         }
 
-        return $view
+        return view('home.marketing.gallery')
             ->with('gallery', $gallery)
             ->with('images', $gallery ? Gallery::getFiles($gallery->id) : collect())
             ->with('galleries', $galleries);

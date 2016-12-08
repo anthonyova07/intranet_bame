@@ -126,4 +126,11 @@ class GalleryController extends Controller
 
         return back()->with('success', 'Las imágenes han sido cargadas correctamente.');
     }
+
+    public function delete_image(Request $request, $gallery, $image)
+    {
+        Gallery::deleteImage($gallery, $image);
+
+        return back()->with('success', 'La imagen ha sido eliminada correctamente.');
+    }
 }

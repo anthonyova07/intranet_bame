@@ -4,11 +4,11 @@
 
 @section('page_title', 'Nueva Galería')
 
-{{-- @if (can_not_do('process_gestidoc'))
+@if (can_not_do('marketing_gallery'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 

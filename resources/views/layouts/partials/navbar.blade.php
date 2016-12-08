@@ -121,15 +121,15 @@
                 </li>
                 <li>
                     <a href="#">
-                        <i class="fa fa-download fa-fw"></i>
+                        <i class="fa fa-newspaper-o  fa-fw"></i>
                         Mercadeo
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level animated zoomInLeft" style="animation-duration: 0.5s;">
                         <li>
                             <a href="{{ route('home.gallery') }}">
-                                <i class="fa fa-files-o fa-fw"></i>
-                                Galería
+                                <i class="fa fa-image fa-fw"></i>
+                                Galería de Fotos
                             </a>
                         </li>
                     </ul>

@@ -4,11 +4,11 @@
 
 @section('page_title', 'Fotos de la Galería: ' . $gallery->name)
 
-{{-- @if (can_not_do('process_gestidoc'))
+@if (can_not_do('marketing_gallery'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 
@@ -53,11 +53,11 @@
                             <tr>
                                 <th style="width: 85px;">Imagen</th>
                                 <th>Nombre</th>
-                                <th style="width: 12px;"></th>
+                                <th style="width: 50px;"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($images as $image)
+                            @foreach ($images as $index => $image)
                                 <tr>
                                     <td>
                                         <img style="width: 100px;" src="{{ $image->url }}">
@@ -73,6 +73,22 @@
                                             title="Descargar {{ str_replace('_', ' ', $image->file) }}">
                                             <i class="fa fa-download fa-fw"></i>
                                         </a>
+                                        <a
+                                            onclick="cancel('{{ $index }}', this)"
+                                            href="javascript:void(0)"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="Eliminar {{ str_replace('_', ' ', $image->file) }}"
+                                            class="rojo link_delete">
+                                            <i class="fa fa-trash fa-fw"></i>
+                                        </a>
+                                        <form
+                                            action="{{ route('marketing.gallery.delete_image', ['gallery' => $gallery->id, 'image' => $image->file]) }}"
+                                            method="post" id="form_eliminar_{{ $index }}">
+                                            <input type="hidden" name="folder" value="{{ Request::get('folder') }}">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

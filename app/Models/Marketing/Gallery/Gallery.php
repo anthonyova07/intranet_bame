@@ -46,4 +46,13 @@ class Gallery extends Model
     {
         return $query->where('is_active', true);
     }
+
+    public static function deleteImage($gallery, $image)
+    {
+        $file_name = public_path('files\\gallery\\' . $gallery . '\\' . $image);
+
+        if (file_exists($file_name)) {
+            unlink($file_name);
+        }
+    }
 }
