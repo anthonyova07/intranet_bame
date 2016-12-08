@@ -22,6 +22,7 @@
                     <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='2|desc'>
                         <thead>
                             <tr>
+                                <th style="width: 85px;">Portada</th>
                                 <th>Galería</th>
                                 <th style="width: 40px;">Fecha</th>
                                 <th style="width: 50px;">Estatus</th>
@@ -31,6 +32,7 @@
                         <tbody>
                             @foreach ($galleries as $gallery)
                                 <tr>
+                                    <td><img style="width: 100px;" alt="No encontrada" src="{{ route('home') . '/files/gallery/' . $gallery->id . '/' . $gallery->image }}"></td>
                                     <td>{{ $gallery->name }}</td>
                                     <td>{{ $gallery->galdate->format('Y-m-d') }}</td>
                                     <td>
