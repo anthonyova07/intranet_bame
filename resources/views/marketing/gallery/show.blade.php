@@ -2,7 +2,7 @@
 
 @section('title', 'Galería de Fotos')
 
-@section('page_title', 'Fotos de la Galería: ' . $gallery->name)
+@section('page_title', 'Fotos de la Álbum: ' . $gallery->name)
 
 @if (can_not_do('marketing_gallery'))
     @section('contents')

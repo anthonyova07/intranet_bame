@@ -2,7 +2,7 @@
 
 @section('title', 'Galería de Fotos')
 
-@section('page_title', 'Mantenimiento de Galería de Fotos')
+@section('page_title', 'Mantenimiento de Álbum de Fotos')
 
 @if (can_not_do('marketing_gallery'))
     @section('contents')
@@ -16,14 +16,14 @@
         <div class="col-xs-8 col-xs-offset-2">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <a class="btn btn-danger btn-xs" href="{{ route('marketing.gallery.create') }}">Nueva Galería</a>
+                    <a class="btn btn-danger btn-xs" href="{{ route('marketing.gallery.create') }}">Nuevo Álbum</a>
                     <br>
                     <br>
                     <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='2|desc'>
                         <thead>
                             <tr>
                                 <th style="width: 85px;">Portada</th>
-                                <th>Galería</th>
+                                <th>Álbum</th>
                                 <th style="width: 40px;">Fecha</th>
                                 <th style="width: 50px;">Estatus</th>
                                 <th style="width: 25px;"></th>

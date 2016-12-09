@@ -2,7 +2,7 @@
 
 @section('title', 'Galería de Fotos')
 
-@section('page_title', 'Nueva Galería')
+@section('page_title', 'Nueva Álbum')
 
 @if (can_not_do('marketing_gallery'))
     @section('contents')
@@ -31,7 +31,7 @@
                         <div class="row">
                             <div class="col-xs-4">
                                 <div class="form-group{{ $errors->first('image') ? ' has-error':'' }}">
-                                    <label class="control-label">Imagen de la Galería</label>
+                                    <label class="control-label">Imagen de la Álbum</label>
                                     <input type="file" class="input-sm" name="image">
                                     <span class="help-block">{{ $errors->first('image') }}</span>
                                 </div>

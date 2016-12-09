@@ -62,7 +62,7 @@ class GalleryController extends Controller
             $noti->save();
         }
 
-        return redirect(route('marketing.gallery.show', ['gallery' => $gallery->id]))->with('success', 'La galería fue creado correctamente.');
+        return redirect(route('marketing.gallery.show', ['gallery' => $gallery->id]))->with('success', 'La álbum fue creado correctamente.');
     }
 
     public function show(Request $request, $gallery)
@@ -70,7 +70,7 @@ class GalleryController extends Controller
         $gallery = Gallery::find($gallery);
 
         if (!$gallery) {
-            return back()->with('warning', 'Esta galería no existe!');
+            return back()->with('warning', 'Esta álbum no existe!');
         }
 
         return view('marketing.gallery.show')
@@ -83,7 +83,7 @@ class GalleryController extends Controller
         $gallery = Gallery::find($gallery);
 
         if (!$gallery) {
-            return back()->with('warning', 'Esta galería no existe!');
+            return back()->with('warning', 'Esta álbum no existe!');
         }
 
         return view('marketing.gallery.edit')
@@ -100,7 +100,7 @@ class GalleryController extends Controller
         $gallery = Gallery::find($gallery);
 
         if (!$gallery) {
-            return back()->with('warning', 'Esta galería no existe!');
+            return back()->with('warning', 'Esta álbum no existe!');
         }
 
         $gallery->name = $request->name;
@@ -130,7 +130,7 @@ class GalleryController extends Controller
             $noti->save();
         }
 
-        return redirect(route('marketing.gallery.show', ['gallery' => $gallery->id]))->with('success', 'La galería fue modificada correctamente.');
+        return redirect(route('marketing.gallery.show', ['gallery' => $gallery->id]))->with('success', 'La álbum fue modificada correctamente.');
     }
 
     public function upload(Request $request, $gallery)
@@ -140,7 +140,7 @@ class GalleryController extends Controller
         $gallery = Gallery::find($gallery);
 
         if (!$gallery) {
-            return back()->with('warning', 'Esta galería no existe!');
+            return back()->with('warning', 'Esta álbum no existe!');
         }
 
         if ($request->hasFile('images')) {
