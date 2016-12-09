@@ -59,7 +59,7 @@
                 @if (strpos($image->file, 'portada') === false)
                     <div class="col-xs-4">
                         <div class="panel panel-default">
-                            <div class="panel-body" style="padding: 0px;">
+                            <div class="panel-body" style="padding: 0px;overflow: hidden;height: 214px;">
                                 <img style="cursor: -webkit-zoom-in;" style="" class="img-thumbnail image" index="{{ $index }}" src="{{ $image->url }}">
                             </div>
                         </div>
@@ -92,20 +92,23 @@
                 $('.image').click(function (event) {
                     $('#image')
                     .attr('src', $(this).attr('src'))
-                    .attr('index', $(this).attr('index'))
-                    .click(function (e) {
-                        var index = parseInt($('#image').attr('index'));
+                    .attr('index', $(this).attr('index'));
 
-                        var image = $('.image').get(index);
+                    $('#link-download').attr('href', $(this).attr('src'));
+                    $('.modal').modal();
+                });
 
-                        $('#image').attr('src', $(image).attr('src'));
+                $('#image').click(function (e) {
+                    var index = parseInt($(this).attr('index'));
+
+                    var image = $('.image').get(index + 1);
+                    if (image !== undefined) {
+                        $(this).attr('src', $(image).attr('src'));
 
                         $('#link-download').attr('href', $(image).attr('src'));
 
-                        $('#image').attr('index', index + 1);
-                    });
-                    $('#link-download').attr('href', $(this).attr('src'));
-                    $('.modal').modal();
+                        $(this).attr('index', index + 1);
+                    }
                 });
 
                 $('body').keyup(function (e) {
