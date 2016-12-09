@@ -93,7 +93,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
 
-                    <a style="font-size: 13px;" class="label btn-success pull-right" target="__blank" href="{{ route('operation.tdc.transactions.days.index', array_merge(Request::except(['page']), ['format' => 'excel']) ) }}">Exportar Excel</a>
+                    <a style="font-size: 13px;" download class="label btn-success pull-right" target="__blank" href="{{ route('operation.tdc.transactions.days.index', array_merge(Request::except(['page']), ['format' => 'excel']) ) }}">Exportar Excel</a>
 
                     <br>
                     <br>
