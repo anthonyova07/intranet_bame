@@ -58,7 +58,7 @@ class Notification
 
         if ($sub_menu) {
             $users = \Bame\Models\Security\Access::where('acc_codmen', $sub_menu->sub_codmen)
-                ->where('acc_submen', $sub_menu->sub_codigo)->get();
+                ->where('acc_submen', $sub_menu->sub_codigo)->where('acc_estado', 'A')->get();
 
             foreach ($users as $user) {
                 self::notify($title, $body, $url, $user->acc_user);
