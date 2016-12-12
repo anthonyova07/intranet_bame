@@ -48,7 +48,8 @@ class Claim extends Model
                 $id = $this->identification;
                 return substr($id, 0, 3) . '-' . substr($id, 3, 7) . '-' . substr($id, 10, 1);
             } else if (strlen($this->identification) == 9) {
-                return $this->identification;
+                $id = $this->identification;
+                return substr($id, 0, 1) . '-' . substr($id, 1, 2) . '-' . substr($id, 3, 5) . '-' . substr($id, 8, 1);
             }
         } else {
             return strtoupper($this->passport);
