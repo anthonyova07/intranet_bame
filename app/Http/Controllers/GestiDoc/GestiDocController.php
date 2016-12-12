@@ -8,6 +8,7 @@ use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
 use Bame\Models\GestiDoc\GestiDoc;
+use Bame\Models\Notification\Notification;
 
 class GestiDocController extends Controller
 {
@@ -39,13 +40,20 @@ class GestiDocController extends Controller
 
         if ($request->hasFile('files')) {
             $files = collect($request->file('files'));
-            $files->each(function ($file, $index) use ($department, $request) {
+
+            $folder = $request->folder ? '\\' . str_replace(' ', '_', remove_accents($request->folder)) : '';
+
+            $files->each(function ($file, $index) use ($department, $request, $folder) {
                 $file_name_destination = str_replace(' ', '_', $file->getClientOriginalName());
 
-                $path = public_path('files\\gesti_doc\\' . $department . ($request->folder ? '\\' . str_replace(' ', '_', remove_accents($request->folder)) : ''));
-                // dd($path);
+                $path = public_path('files\\gesti_doc\\' . $department . $folder);
+
                 $file->move($path, remove_accents($file_name_destination));
             });
+
+            $noti = new Notification('global');
+            $noti->create('GestiDoc', 'GestiDoc ' . get_department_name($department) . ' Actualizado', route('gestidoc.' . $department, ['folder' => $folder]));
+            $noti->save();
         }
 
         return back()->with('success', 'Los archivos han sido cargados correctamente.');
