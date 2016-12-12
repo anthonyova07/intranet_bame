@@ -13,6 +13,8 @@ Route::post('break_coco', 'Marketing\MarketingController@idea');
 
 Route::get('news/{id}', 'Marketing\MarketingController@news')->name('home.news');
 
+Route::get('gallery/{gallery?}', 'Marketing\MarketingController@gallery')->name('home.gallery');
+
 Route::get('event/{id}', 'HomeController@event')->name('home.event');
 Route::get('event/{id}/subscribers', 'HomeController@subscribers')->name('home.event.subscribers');
 
@@ -75,6 +77,11 @@ Route::group(['middleware' => 'auth'], function () {
         ]]);
 
         Route::resource('event', 'Event\EventController');
+
+        Route::resource('gallery', 'Marketing\Gallery\GalleryController');
+
+        Route::post('gallery/upload/{gallery}', 'Marketing\Gallery\GalleryController@upload')->name('marketing.gallery.upload');
+        Route::delete('gallery/delete_image/{gallery}/{image}', 'Marketing\Gallery\GalleryController@delete_image')->name('marketing.gallery.delete_image');
     });
 
     Route::group(['prefix' => 'human_resources'], function () {

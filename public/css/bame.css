@@ -117,8 +117,10 @@ form {
     background-color: #008000;
 }
 
-.btn-info {
-    background-color: #5bc0de;
+.btn-info, .btn-info:focus, .btn-info:hover, .btn-info:active, .btn-info.active.focus, .btn-info.active:focus, .btn-info.active:hover, .btn-info:active.focus, .btn-info:active:focus, .btn-info:active:hover, .open>.dropdown-toggle.btn-info.focus, .open>.dropdown-toggle.btn-info:focus, .open>.dropdown-toggle.btn-info:hover {
+    color: #fff;
+    background-color: #4f616b;
+    border-color: #4f616b;
 }
 
 .rojo {
@@ -273,7 +275,8 @@ form {
 }
 
 .panel-default {
-    border-color: #ff0000;
+    /*border-color: #ff0000;*/
+    border-color: #ddd;
 }
 
 .form-control:focus {
