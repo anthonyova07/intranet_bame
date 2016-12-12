@@ -45,6 +45,13 @@ class Notification
         });
     }
 
+    public static function notify($title, $body, $url = '', $user = null)
+    {
+        $noti = new self($user);
+        $noti->create($title, $body, $url);
+        $noti->save();
+    }
+
     public function create($titulo, $texto, $url = '')
     {
         $notificacion = new \stdClass;
