@@ -37,7 +37,7 @@
                             <div class="col-xs-2 text-center">
                                 <div class="form-group">
                                     <label class="control-label">Nombre del Cliente</label>
-                                    <p class="form-control-static">{{ $form->claim->names . ' ' . $form->claim->last_names }}</p>
+                                    <p class="form-control-static">{{ $form->claim->getFullName() }}</p>
                                 </div>
                             </div>
 
@@ -246,7 +246,7 @@
                             <div class="col-xs-3 text-center">
                                 <div class="form-group">
                                     <label class="control-label">Nombre Tarjetahabiente Principal</label>
-                                    <p class="form-control-static">{{ $form->claim->names . ' ' . $form->claim->last_names }}</p>
+                                    <p class="form-control-static">{{ $form->claim->getFullName() }}</p>
                                 </div>
                             </div>
 

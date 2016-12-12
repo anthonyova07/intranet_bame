@@ -25,7 +25,7 @@
                     <tr>
                         <td>{{ $claim->claim_number }}</td>
                         <td>{{ number_format($claim->amount, 2) }}</td>
-                        <td>{{ $claim->names . ' ' . $claim->last_names}}</td>
+                        <td>{{ $claim->getFullName() }}</td>
                         <td>{{ $claim->identification ?? $claim->passport }}</td>
                         <td>{{ $claim->created_at->format('d/m/Y') }}</td>
                         <td>{{ $claim->closed_date ? $claim->closed_date->format('d/m/Y') : '' }}</td>

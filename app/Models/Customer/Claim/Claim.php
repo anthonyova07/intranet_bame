@@ -32,6 +32,15 @@ class Claim extends Model
         return $this->product_number;
     }
 
+    public function getFullName()
+    {
+        if ($this->is_company) {
+            return $this->legal_name;
+        }
+
+        return $this->names . ' ' . $this->last_names;
+    }
+
     public function getFormatIdentification()
     {
         if ($this->identification) {

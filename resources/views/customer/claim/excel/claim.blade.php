@@ -35,7 +35,7 @@
                         <td>{{ $claim->response_place_code }}</td>
                         <td>{{ $claim->kind_person_code }}</td>
                         <td>{{ $claim->getFormatIdentification() }}</td>
-                        <td>{{ $claim->names }}</td>
+                        <td>{{ $claim->is_company ? $claim->legal_name : $claim->names }}</td>
                         <td>{{ $claim->last_names }}</td>
                         <td>{{ $claim->is_closed ? 'TR' : 'PR' }}</td>
                         <td>{{ $claim->product_service_code }}</td>

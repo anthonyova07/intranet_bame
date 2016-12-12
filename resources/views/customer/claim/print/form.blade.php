@@ -115,7 +115,7 @@
             <table style="width: 100%;margin-left: 10px;">
                 <tbody>
                     <tr>
-                        <td colspan="2"><b>Nombre del Cliente: </b> {{ $form->claim->names . ' ' . $form->claim->last_names }}</td>
+                        <td colspan="2"><b>Nombre del Cliente: </b> {{ $form->claim->getFullName() }}</td>
                         <td colspan="2"><b>Tipo de Producto:</b> {{ $form->claim->product_type }}</td>
                         <td colspan="2"><b>Producto:</b> {{ $form->claim->getProduct() }}</td>
                         <td colspan="2"><b>Tipo de Moneda:</b> {{ $form->claim->currency }}</td>
@@ -202,7 +202,7 @@
                 <h3>Datos del Cliente / Client Information</h3>
                 <ul>
                     <li>
-                        Nombre del Tarjetahabiente Principal (Principal Cardholder Name): <span>{{ $form->claim->names . ' ' . $form->claim->last_names }}</span>
+                        Nombre del Tarjetahabiente Principal (Principal Cardholder Name): <span>{{ $form->claim->getFullName() }}</span>
                     </li>
                     <li>
                         Número de Tarjeta de Crédito (CC Number): <span>{{ $form->claim->getProduct() }}</span>

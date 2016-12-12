@@ -154,7 +154,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2"><b>Correo: </b> {{ $claim->agent_mail }}</td>
-                                    <td colspan="2"><b>Fax: </b> {{ $claim->agent_fax_phone }}></td>
+                                    <td colspan="2"><b>Fax: </b> {{ $claim->agent_fax_phone }}</td>
                                 </tr>
                             </tbody>
                         </table>
