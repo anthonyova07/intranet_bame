@@ -85,13 +85,13 @@
                         <h3 class="panel-title">
                             Transacciones para el NCF de {{ session()->get('customer_no_ibs')->to_name }}
                             <a
-                                class="btn btn-warning pull-right btn-xs"
+                                class="label btn-warning pull-right btn-xs"
                                 href="javascript:void(0)"
                                 onclick="action('eliminar_all', this)"
                                 data-toggle="tooltip"
                                 data-placement="top"
                                 title="Cancelar Todo"
-                                style="margin-top: -3px;color: #FFFFFF;">
+                                style="color: #FFFFFF;">
                                 <i class="fa fa-close"></i>
                             </a>
                             <form
