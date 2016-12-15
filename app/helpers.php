@@ -413,7 +413,7 @@ function sab_payment_methods($payment_method = false)
 
 function sab_currencies($currency = false)
 {
-    $currencies = collect(['214' => 'DOP','840' => 'USD']);
+    $currencies = collect(['DOP' => 'DOP','USD' => 'USD']);
 
     if (!$currency) {
         return $currencies;

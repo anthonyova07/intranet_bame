@@ -29,6 +29,26 @@ class SabController extends Controller
         return view('ib.ws.sab');
     }
 
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'amount' => 'required|numeric|min:1|max:9999999999999.99',
+            'transaction_type' => 'required|in:' . sab_transaction_types()->keys()->implode(','),
+            'payment_method' => 'required|in:' . sab_payment_methods()->keys()->implode(','),
+            'comment' => 'max:80',
+        ]);
+
+        $sab = new Sab;
+
+        $sab->postAccountTransaction(session()->get('customer_ib_sab')->account, $request->amount, $request->transaction_type, $request->payment_method, $request->comment);
+
+        if ($sab->err()) {
+            return back()->with('error', $sab->getResponseDescription());
+        }
+
+        return redirect(route('ib.ws.sab.index'))->with('success', $sab->getResponseDescription());
+    }
+
     public function destroy($id)
     {
         session()->forget('customer_ib_sab');

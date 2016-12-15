@@ -162,7 +162,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::group(['prefix' => 'ws'], function () {
             Route::resource('sab', 'IB\WS\SabController', ['only' => [
-                'index', 'destroy'
+                'index', 'store', 'destroy'
             ]]);
         });
     });

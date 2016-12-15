@@ -2,6 +2,7 @@
 
 namespace Bame\Models\IB\WS;
 
+use DateTime;
 use SoapClient;
 
 class Sab
@@ -68,11 +69,52 @@ class Sab
         $this->response = $this->client->ValidateAccount($this->params);
     }
 
+    public function postAccountTransaction($account, $amount, $transaction_type, $payment_method, $comment = '')
+    {
+        $datetime = new DateTime;
+
+        $this->function = 'postAccountTransaction';
+
+        $this->params['postAccountTransactionRQ'] = array_merge($this->headers, [
+            'SessionId' => '',
+            'Account' => [
+                'AccountNumber' => $account->AccountNumber,
+                'Type' => $account->Type,
+                'Currency' => $account->Currency,
+                'ProductType' => $account->ProductType,
+                'CurrentBalance' => $account->CurrentBalance,
+                'AvailableBalance' => $account->AvailableBalance,
+                'DuePayment' => $account->DuePayment,
+                'OverDueAmount' => $account->OverDueAmount,
+                'MinPayment' => $account->MinPayment,
+                'AllowPartialPayments' => $account->AllowPartialPayments,
+                'DueDate' => $account->DueDate,
+                'CreationDate' => $account->CreationDate ?? '',
+                'CycleDate' => $account->CycleDate ?? '',
+                'Comment' => '',
+                'LoanPayoffAmount' => $account->LoanPayoffAmount,
+                'CreditCardExpDate' => $account->CreditCardExpDate ?? '',
+            ],
+            'Amount' => $amount,
+            'PartnerAuthNumber' => 12345678,
+            'TransactionDate' => $datetime->format('Ymd His'),
+            'TransactionType' => $transaction_type,
+            'PaymentMethod' => $payment_method,
+            'ReferenceInfo' => uniqid(true),
+            'Comment' => $comment,
+        ]);
+
+        $this->response = $this->client->PostAccountTransaction($this->params);
+    }
+
     public function getResponse()
     {
         switch ($this->function) {
             case 'validateAccount':
                 return $this->response->ValidateAccountResult;
+                break;
+            case 'postAccountTransaction':
+                return $this->response->PostAccountTransactionResult;
                 break;
 
             default:
