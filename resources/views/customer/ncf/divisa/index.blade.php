@@ -79,13 +79,13 @@
                         <h3 class="panel-title">
                             Transacciones Encontradas de {{ (session()->get('customer_divisa')->getName() == ' ') ? session()->get('customer_divisa')->getLegalName() : session()->get('customer_divisa')->getName() }}
                             <a
-                                class="btn btn-danger pull-right btn-xs"
+                                class="label btn-warning pull-right btn-xs"
                                 href="javascript:void(0)"
                                 onclick="action('eliminar_all', this)"
                                 data-toggle="tooltip"
                                 data-placement="top"
                                 title="Cancelar Todo"
-                                style="margin-top: -3px;color: #FFFFFF;">
+                                style="color: #FFFFFF;">
                                 <i class="fa fa-close"></i>
                             </a>
                             <form
