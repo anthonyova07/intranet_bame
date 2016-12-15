@@ -388,3 +388,69 @@ function remove_n_r($str, $use_nl2br = true) {
 
     return str_ireplace($buscar, $reemplazar, $str);
 }
+
+function sab_channels($channel = false)
+{
+    $channels = collect(['1' => 'POS','2' => 'Computador','3' => 'Kiosko']);
+
+    if (!$channel) {
+        return $channels;
+    }
+
+    return $channels->get($channel);
+}
+
+function sab_payment_methods($payment_method = false)
+{
+    $payment_methods = collect(['CASH' => 'Efectivo','CHECK' => 'Cheque']);
+
+    if (!$payment_method) {
+        return $payment_methods;
+    }
+
+    return $payment_methods->get($payment_method);
+}
+
+function sab_currencies($currency = false)
+{
+    $currencies = collect(['214' => 'DOP','840' => 'USD']);
+
+    if (!$currency) {
+        return $currencies;
+    }
+
+    return $currencies->get($currency);
+}
+
+function sab_account_types($account_type = false)
+{
+    $account_types = collect(['SAV' => 'Cuenta de ahorro','DDA' => 'Cuenta Corriente', 'CREDITCARD' => 'Tarjeta de Crédito', 'LOAN' => 'Préstamo']);
+
+    if (!$account_type) {
+        return $account_types;
+    }
+
+    return $account_types->get($account_type);
+}
+
+function sab_identification_types($identification_type = false)
+{
+    $identification_types = collect(['CEDULA' => 'Cédula','PASAPORTE' => 'Pasaporte', 'RNC' => 'RNC', 'CIF' => 'CIF']);
+
+    if (!$identification_type) {
+        return $identification_types;
+    }
+
+    return $identification_types->get($identification_type);
+}
+
+function sab_transaction_types($transaction_type = false)
+{
+    $transaction_types = collect(['DEPOSIT' => 'Deposito a Cuentas','PAYCREDITCARD' => 'Pago a Tarjetas de Créditos', 'PAYLOAN' => 'Pago de Prestamos', 'WITHDRAWAL' => 'Retiros']);
+
+    if (!$transaction_type) {
+        return $transaction_types;
+    }
+
+    return $transaction_types->get($transaction_type);
+}

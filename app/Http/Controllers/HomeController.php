@@ -16,13 +16,6 @@ use Bame\Models\Event\Subscription\Accompanist as SubscriptionAccompanist;
 class HomeController extends Controller {
 
     public function index(Request $request) {
-        $sab = new \Bame\Models\IB\WS\Sab;
-
-        $sab->setParam(3, 'sii001', 20, 'Others', 'siiweb\a.cabral')
-            ->validateAccount('1201003171');
-
-        dd('stop');
-
         $column_new = News::where('type', 'C')
             ->orderBy('created_at', 'desc')->first();
 

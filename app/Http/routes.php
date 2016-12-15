@@ -159,6 +159,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('transactions', 'IB\Transaction\TransactionController', ['only' => [
             'index'
         ]]);
+
+        Route::group(['prefix' => 'ws'], function () {
+            Route::resource('sab', 'IB\WS\SabController', ['only' => [
+                'index', 'destroy'
+            ]]);
+        });
     });
 
 });
