@@ -143,5 +143,6 @@ return [
       'mail' => 'Correo',
       'idea' => 'Idea',
       'images' => 'Imágenes',
+      'folder_name' => 'Nombre de Carpeta',
     ],
 ];
