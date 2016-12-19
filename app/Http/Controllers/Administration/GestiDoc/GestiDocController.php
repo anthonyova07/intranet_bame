@@ -14,7 +14,13 @@ class GestiDocController extends Controller
 {
     public function download(Request $request, $folder, $file)
     {
-        $gestidoc = GestiDoc::where('id', $folder)->where('usrsaccess', 'like', '%'.session()->get('user').'%')->first();
+        $gestidoc = GestiDoc::where('id', $folder);
+
+        if (can_not_do('adm_gestidoc_maintenance')) {
+            $gestidoc = $gestidoc->where('usrsaccess', 'like', '%'.session()->get('user').'%');
+        }
+
+        $gestidoc = $gestidoc->first();
 
         if (!$gestidoc) {
             return back()->with('warning', 'La carpeta indicada no existe o no tiene acceso a la misma.');

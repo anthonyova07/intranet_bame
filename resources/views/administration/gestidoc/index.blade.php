@@ -2,7 +2,7 @@
 
 @section('title', 'GestiDoc')
 
-@section('page_title', ($can_not_do ? '' : 'Mantenimiento ') . 'GestiDoc - Administrativo')
+@section('page_title', ($can_not_do ? '' : 'Mantenimiento ') . 'GestiDoc - Administrativo' . ($gestidoc ? ' ('.$gestidoc->name.')' : ''))
 
 @if (can_not_do('adm_gestidoc'))
     @section('contents')
