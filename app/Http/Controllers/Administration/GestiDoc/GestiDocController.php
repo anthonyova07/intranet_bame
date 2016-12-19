@@ -27,15 +27,23 @@ class GestiDocController extends Controller
 
     public function index(Request $request)
     {
-        $gestidoc = GestiDoc::where('id', $request->folder)->where('usrsaccess', 'like', '%'.session()->get('user').'%')->first();
+        $can_not_do = can_not_do('adm_gestidoc_maintenance');
+
+        $gestidoc = GestiDoc::where('id', $request->folder);
+
+        if ($can_not_do) {
+            $gestidoc = $gestidoc->where(function ($query) {
+                $query->where('usrsaccess', 'like', '%'.session()->get('user').'%')->orWhere('usrsaccess', null)->orWhere('usrsaccess', '');
+            });
+        }
+
+        $gestidoc = $gestidoc->first();
 
         $files = $gestidoc ? $gestidoc->getFiles() : collect();
 
-        $can_not_do = can_not_do('adm_gestidoc_maintenance');
-
         if ($can_not_do) {
             $gestidocs = GestiDoc::where('parent_id', $request->folder ?? '')->where(function ($query) {
-                $query->where('usrsaccess', 'like', '%'.session()->get('user').'%')->orWhere('usrsaccess', '');
+                $query->where('usrsaccess', 'like', '%'.session()->get('user').'%')->orWhere('usrsaccess', null)->orWhere('usrsaccess', '');
             })->get();
         } else {
             $gestidocs = GestiDoc::where('parent_id', $request->folder ?? '')->get();
