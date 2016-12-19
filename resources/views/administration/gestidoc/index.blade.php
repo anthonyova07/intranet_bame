@@ -124,7 +124,7 @@
                                                     <div class='col-xs-12'>
                                                         <div class='form-group'>
                                                             <label class='control-label'>Usuarios (separados por coma)</label>
-                                                            <input type='text' class='form-control input-sm' value='{{ $gestidoc->usrsaccess }}' name='usrsaccess'>
+                                                            <textarea rows='15' cols='24' class='form-control input-sm' name='usrsaccess'>{{ $gestidoc->usrsaccess }}</textarea>
                                                         </div>
                                                         {{ str_replace('"', '\'', csrf_field()) }}
                                                         {{ str_replace('"', '\'', method_field("PUT")) }}
