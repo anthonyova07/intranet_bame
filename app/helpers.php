@@ -60,6 +60,10 @@ function get_file_icon($ext)
         case 'mp3':
             $name = 'music';
             break;
+        case 'mp4':
+        case 'avi':
+            $name = 'video';
+            break;
         case 'mpp':
             $name = 'project';
             break;
