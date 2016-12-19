@@ -43,4 +43,13 @@ class GestiDoc extends Model
 
         return $files;
     }
+
+    public function deleteFile($file)
+    {
+        $file_name = storage_path('app\\gesti_doc\\' . $this->id . '\\' . $file);
+
+        if (file_exists($file_name)) {
+            unlink($file_name);
+        }
+    }
 }

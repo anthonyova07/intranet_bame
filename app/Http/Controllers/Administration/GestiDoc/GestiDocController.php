@@ -139,4 +139,21 @@ class GestiDocController extends Controller
 
         return back();
     }
+
+    public function destroy(Request $request, $gestidoc)
+    {
+        if (can_not_do('adm_gestidoc_maintenance')) {
+            return back()->with('error', 'Usted no tiene permiso para realizar esta acción.');
+        }
+
+        $gestidoc = GestiDoc::find($gestidoc);
+
+        if (!$gestidoc) {
+            return back()->with('warning', 'La carpeta indicada no existe.');
+        }
+
+        $gestidoc->deleteFile($request->file);
+
+        return back()->with('success', 'El archivo ha sido eliminado correctamente.');
+    }
 }

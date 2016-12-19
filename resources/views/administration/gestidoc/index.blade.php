@@ -166,7 +166,7 @@
                                             <i class="fa fa-trash fa-fw"></i>
                                         </a>
                                         <form
-                                            action=""
+                                            action="{{ route('administration.gestidoc.destroy', ['gestidoc' => $gestidoc->id, 'file' => $file->file]) }}"
                                             method="post" id="form_eliminar_{{ $file->name }}">
                                             <input type="hidden" name="folder" value="{{ $gestidoc->id }}">
                                             {{ csrf_field() }}
