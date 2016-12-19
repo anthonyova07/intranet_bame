@@ -14,10 +14,10 @@ class GestiDocController extends Controller
 {
     public function download(Request $request, $folder, $file)
     {
-        $gestidoc = GestiDoc::find($folder);
+        $gestidoc = GestiDoc::where('id', $folder)->where('usrsaccess', 'like', '%'.session()->get('user').'%')->first();
 
         if (!$gestidoc) {
-            return back()->with('warning', 'La carpeta indicada no existe.');
+            return back()->with('warning', 'La carpeta indicada no existe o no tiene acceso a la misma.');
         }
 
         $path = storage_path('app\\gesti_doc\\' . $folder. '\\' . $file);
@@ -27,25 +27,34 @@ class GestiDocController extends Controller
 
     public function index(Request $request)
     {
-        $gestidoc = GestiDoc::find($request->folder);
+        $gestidoc = GestiDoc::where('id', $request->folder)->where('usrsaccess', 'like', '%'.session()->get('user').'%')->first();
+
         $files = $gestidoc ? $gestidoc->getFiles() : collect();
-        /**
-         * validar los permisos
-         * si tiene permiso de mantenimiento listar todo sin filtros de usuarios.
-        */
-        $gestidocs = GestiDoc::where('parent_id', $request->folder)->where(function ($query) {
-            $query->where('usrsaccess', 'like', '%'.session()->get('user').'%')->orWhere('usrsaccess', '');
-        })->get();
+
+        $can_not_do = can_not_do('adm_gestidoc_maintenance');
+
+        if ($can_not_do) {
+            $gestidocs = GestiDoc::where('parent_id', $request->folder ?? '')->where(function ($query) {
+                $query->where('usrsaccess', 'like', '%'.session()->get('user').'%')->orWhere('usrsaccess', '');
+            })->get();
+        } else {
+            $gestidocs = GestiDoc::where('parent_id', $request->folder ?? '')->get();
+        }
 
         return view('administration.gestidoc.index')
             ->with('gestidoc', $gestidoc)
             ->with('files', $files)
             ->with('gestidocs', $gestidocs)
-            ->with('folder', $request->folder);
+            ->with('folder', $request->folder)
+            ->with('can_not_do', $can_not_do);
     }
 
     public function store(Request $request)
     {
+        if (can_not_do('adm_gestidoc_maintenance')) {
+            return back()->with('error', 'Usted no tiene permiso para realizar esta acción.');
+        }
+
         if ($request->type) {
             if ($request->type == 'folder') {
                 $this->validate($request, [
@@ -92,6 +101,10 @@ class GestiDocController extends Controller
 
     public function update(Request $request, $gestidoc)
     {
+        if (can_not_do('adm_gestidoc_maintenance')) {
+            return back()->with('error', 'Usted no tiene permiso para realizar esta acción.');
+        }
+
         if ($request->type) {
             $gestidoc = GestiDoc::find($gestidoc);
 
