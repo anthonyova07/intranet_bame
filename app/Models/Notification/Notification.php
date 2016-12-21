@@ -45,6 +45,28 @@ class Notification
         });
     }
 
+    public static function notify($title, $body, $url = '', $user = null)
+    {
+        $noti = new self($user);
+        $noti->create($title, $body, $url);
+        $noti->save();
+    }
+
+    public static function notifyUsersByPermission($permission, $title, $body, $url = '')
+    {
+        $sub_menu = \Bame\Models\Security\SubMenu::where('sub_coduni', $permission)->first();
+
+        if ($sub_menu) {
+            $users = \Bame\Models\Security\Access::where('acc_codmen', $sub_menu->sub_codmen)
+                ->where('acc_submen', $sub_menu->sub_codigo)->where('acc_estado', 'A')->get();
+
+            foreach ($users as $user) {
+                self::notify($title, $body, $url, $user->acc_user);
+            }
+        }
+
+    }
+
     public function create($titulo, $texto, $url = '')
     {
         $notificacion = new \stdClass;

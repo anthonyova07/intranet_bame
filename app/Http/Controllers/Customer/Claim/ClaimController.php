@@ -253,6 +253,10 @@ class ClaimController extends Controller
 
         session()->forget('customer_claim');
 
+        do_log('Creó la Reclamación ( número:' . strip_tags($claim->claim_number) . ' )');
+
+        Notification::notifyUsersByPermission('customer_claim_approve', 'Reclamaciones', 'Nueva reclamación creada (' . $claim->claim_number . ') pendiente de aprobación.', route('customer.claim.show', ['id' => $claim->id]));
+
         if (in_array($request->form_type, ['CON', 'FRA', 'CAI'])) {
             return redirect(route('customer.claim.{claim_id}.{form_type}.form.create', ['claim_id' => $claim->id, 'form_type' => $request->form_type]))
                     ->with('success', 'La reclamación ha sido creada correctamente.')
@@ -366,6 +370,10 @@ class ClaimController extends Controller
         $noti = new Notification($claim->created_by);
         $noti->create('Reclamaciones', 'La reclamación ' . $claim->claim_number . ' ha sido ' . ($to_approve ? 'Aprobada' : 'Rechazada'), route('customer.claim.show', ['id' => $claim->id]));
         $noti->save();
+
+        if ($to_approve) {
+            Notification::notifyUsersByPermission('customer_claim_close', 'Reclamaciones', 'Nueva reclamación creada y aprobada (' . $claim->claim_number . ') pendiente de trabajar.', route('customer.claim.show', ['id' => $claim->id]));
+        }
 
         return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación ha sido ' . ($to_approve ? 'Aprobada' : 'Rechazada') . ' correctamente.');
     }
