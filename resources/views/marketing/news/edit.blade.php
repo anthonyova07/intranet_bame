@@ -63,6 +63,31 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="form-group{{ $errors->first('link_name') ? ' has-error':'' }}">
+                                    <label class="control-label">Nombre del Hipervínculo</label>
+                                    <input type="text" class="form-control input-sm" name="link_name" value="{{ $new->link_name }}">
+                                    <span class="help-block">{{ $errors->first('link_name') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="form-group{{ $errors->first('link') ? ' has-error':'' }}">
+                                    <label class="control-label">Hipervínculo</label>
+                                    <input type="text" class="form-control input-sm" name="link" value="{{ $new->link }}">
+                                    <span class="help-block">{{ $errors->first('link') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group{{ $errors->first('link_video') ? ' has-error':'' }}">
+                                    <label class="control-label">Hipervínculo de Video</label>
+                                    <input type="text" class="form-control input-sm" name="link_video" value="{{ $new->link_video }}">
+                                    <span class="help-block">{{ $errors->first('link_video') }}</span>
+                                </div>
+                            </div>
+                        </div>
                         {{ method_field('PUT') }}
                         {{ csrf_field() }}
                         <a class="btn btn-info btn-xs" href="{{ route('marketing.news.index') }}"><i class="fa fa-arrow-left"></i> Atras</a>

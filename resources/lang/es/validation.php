@@ -143,5 +143,7 @@ return [
       'mail' => 'Correo',
       'idea' => 'Idea',
       'images' => 'Imágenes',
+      'link' => 'Hipervínculo',
+      'link_video' => 'Hipervínculo del Video',
     ],
 ];

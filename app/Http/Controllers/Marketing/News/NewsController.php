@@ -65,6 +65,9 @@ class NewsController extends Controller
         }
 
         $new->type = $request->type;
+        $new->link_name = $request->link_name;
+        $new->link = $request->link;
+        $new->link_video = $request->link_video;
         $new->created_by = session()->get('user');
 
         $new->save();
@@ -122,6 +125,9 @@ class NewsController extends Controller
         }
 
         $new->type = $request->type;
+        $new->link_name = $request->link_name;
+        $new->link = $request->link;
+        $new->link_video = $request->link_video;
         $new->updated_by = session()->get('user');
 
         if ($request->repost) {
