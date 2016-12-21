@@ -13,7 +13,7 @@
                 <div class="panel-body">
                     @if (Request::get('folder'))
                         <a class="btn btn-info btn-xs"
-                            href="{{ route('gestidoc.' . $department, ['folder' => gesti_doc_back_folder(Request::get('folder'))]) }}"><i class="fa fa-arrow-left"></i> Atras</a>
+                            href="{{ route('gestidoc.' . $department, ['folder' => gesti_doc_back_folder(Request::get('folder'))]) }}"><i class="fa fa-arrow-left"></i> Atrás</a>
                         <br>
                         <br>
                     @endif

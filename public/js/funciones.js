@@ -44,7 +44,7 @@ function check_notifications() {
         url: ruta_base + '/notification/all',
         success: function (data,status) {
             $.each(data, function (index, notificacion) {
-                desktop_noty(notificacion.titulo, notificacion.texto);
+                desktop_noty(notificacion.titulo, notificacion.texto, notificacion.url);
                 $.ajax({
                     url: ruta_base + '/notification/notified/' + notificacion.id,
                 });

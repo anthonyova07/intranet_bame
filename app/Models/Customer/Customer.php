@@ -2,7 +2,11 @@
 
 namespace Bame\Models\Customer;
 
+use DB;
 use Illuminate\Database\Eloquent\Model;
+use Bame\Models\Customer\Product\Account;
+use Bame\Models\Customer\Product\CreditCard;
+use Bame\Models\Customer\Product\LoanMoneyMarket;
 
 class Customer extends Model
 {
@@ -37,7 +41,7 @@ class Customer extends Model
 
     public function getDocument()
     {
-        return cap_str($this->cusln3);
+        return clear_str($this->cusln3);
     }
 
     public function getFirstName()
@@ -73,6 +77,11 @@ class Customer extends Model
     public function getName()
     {
         return $this->getFirstName() . ' ' . $this->getFirstLastName();
+    }
+
+    public function isCompany()
+    {
+        return $this->cuslgt == '1';
     }
 
     public function getLegalName()
@@ -111,14 +120,47 @@ class Customer extends Model
         return cap_str($this->cusna2);
     }
 
-    public function getHouse()
+    public function getResidentialOrBuilding()
     {
         return cap_str($this->cusna3);
     }
 
-    public function getBuilding()
+    public function getBuildingOrHouseNumber()
     {
         return cap_str($this->cusna4);
+    }
+
+    public function getProvince()
+    {
+        $province = DB::connection('ibs')->table('cnofc')->where('cnocfl', 'PV')->where('cnorcd', $this->cusste)->first();
+
+        if (!$province) {
+            return '';
+        }
+
+        return cap_str($province->cnodsc);
+    }
+
+    public function getCity()
+    {
+        $city = DB::connection('ibs')->table('cnofc')->where('cnocfl', 'PI')->where('cnorcd', $this->cusuc8)->first();
+
+        if (!$city) {
+            return '';
+        }
+
+        return cap_str($city->cnodsc);
+    }
+
+    public function getSector()
+    {
+        $city = DB::connection('ibs')->table('cnofc')->where('cnocfl', 'PE')->where('cnorcd', $this->cusuc7)->first();
+
+        if (!$city) {
+            return '';
+        }
+
+        return cap_str($city->cnodsc);
     }
 
     public function getResidentialPhone()
@@ -136,6 +178,16 @@ class Customer extends Model
         return '(' . cod_tel($this->cusph1) . ') ' . tel($this->cusph1);
     }
 
+    public function getFaxPhone()
+    {
+        return '(' . cod_tel($this->cusfax) . ') ' . tel($this->cusfax);
+    }
+
+    public function getMail()
+    {
+        return clear_str($this->cusiad);
+    }
+
     public static function getPhoto($identification)
     {
         $identification = clear_str($identification);
@@ -150,5 +202,35 @@ class Customer extends Model
             $photo = base_path('\\public\\images\\noFoto.jpg');
         }
         return $photo;
+    }
+
+    public function agent()
+    {
+        return $this->hasOne(Agent::class, 'cumcun', 'cuscun')->where('cumrtp', 5);
+    }
+
+    public function loans()
+    {
+        return $this->hasMany(LoanMoneyMarket::class, 'deacun')->where('deaacd', '10')->where('deasts', '<>', 'C');
+    }
+
+    public function money_markets()
+    {
+        return $this->hasMany(LoanMoneyMarket::class, 'deacun')->where('deaacd', '11');
+    }
+
+    public function accounts_sav()
+    {
+        return $this->hasMany(Account::class, 'acmcun')->where('acmacd', '04')->where('acmast', 'A');
+    }
+
+    public function accounts_dda()
+    {
+        return $this->hasMany(Account::class, 'acmcun')->where('acmacd', '<>', '04')->where('acmast', 'A');
+    }
+
+    public function creditcards()
+    {
+        return $this->hasMany(CreditCard::class, 'codcl_mtar')->where('stsrd_mtar', 1);
     }
 }

@@ -33,7 +33,7 @@
                         </div>
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
-                        <a class="btn btn-info btn-xs" href="{{ route('security.menu.index') }}"><i class="fa fa-arrow-left"></i> Atras</a>
+                        <a class="btn btn-info btn-xs" href="{{ route('security.menu.index') }}"><i class="fa fa-arrow-left"></i> Atrás</a>
                         <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Editando menú...">Editar</button>
                     </form>
                 </div>

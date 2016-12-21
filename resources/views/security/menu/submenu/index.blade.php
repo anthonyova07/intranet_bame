@@ -15,7 +15,7 @@
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-body">
-                <a class="btn btn-info btn-xs" href="{{ route('security.menu.index') }}"><i class="fa fa-arrow-left"></i> Atras</a>
+                <a class="btn btn-info btn-xs" href="{{ route('security.menu.index') }}"><i class="fa fa-arrow-left"></i> Atrás</a>
                 <a class="btn btn-danger btn-xs" href="{{ route('security.menu.{menu}.submenu.create', ['menu' => request()->menu]) }}">Nuevo</a>
                 <br>
                 <br>

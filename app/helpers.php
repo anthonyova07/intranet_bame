@@ -392,3 +392,174 @@ function remove_n_r($str, $use_nl2br = true) {
 
     return str_ireplace($buscar, $reemplazar, $str);
 }
+
+function get_offices($office = null)
+{
+    $offices = collect([
+        '1' => 'Oficina Principal',
+        // '2' => 'No Existe',
+        '3' => 'Bella Vista',
+        '4' => 'Blue Mall',
+        '5' => 'Lope de Vega',
+        '6' => 'San Vicente',
+        '7' => 'Barahona',
+        '8' => 'Neyba',
+        '9' => 'Vicente Noble',
+    ]);
+
+    if (!$office) {
+        return $offices;
+    }
+
+    return $offices->get($office);
+}
+
+function get_product_types($product = null)
+{
+    $product_types = collect([
+        'TARCRE' => 'Tarjeta de Crédito',
+        // 'TARDEB' => 'Tarjeta de Débito',
+        'CUECOR' => 'Cuenta Corriente',
+        'CUEAHO' => 'Cuenta Ahorro',
+        'CERDEP' => 'Certificado de Depósitos',
+        'PRECOM' => 'Préstamo Comercial',
+        'PRECON' => 'Préstamo Consumo',
+        'PREHIP' => 'Préstamo Hipotecario',
+    ]);
+
+    if (!$product) {
+        return $product_types;
+    }
+
+    return $product_types->get($product);
+}
+
+function get_form_types($form_type = null)
+{
+    $form_types = collect([
+        'NIN' => 'Ninguno',
+        'CON' => 'Consumo',
+        'FRA' => 'Fraude',
+        'CAI' => 'Cargos Internos',
+    ]);
+
+    if (!$form_type) {
+        return $form_types;
+    }
+
+    return $form_types->get($form_type);
+}
+
+function get_claim_results($claim_result = null)
+{
+    $claim_results = collect([
+        'F' => 'Favorable',
+        'D' => 'Desfavorable',
+        'P' => 'Pendiente',
+    ]);
+
+    if (!$claim_result) {
+        return $claim_results;
+    }
+
+    return $claim_results->get($claim_result);
+}
+
+function get_currencies($currency = null)
+{
+    $channels = collect([
+        'RD$' => 'Pesos Dominicanos',
+        'US$' => 'Dólares Estado Unidenses',
+        // 'EU$' => 'Euros',
+    ]);
+
+    if (!$currency) {
+        return $channels;
+    }
+
+    return $channels->get($currency);
+}
+
+function get_param($type, $plural = true)
+{
+    switch ($type) {
+        case 'CT': //claim_type
+            return ($plural ? 'Tipos ' : 'Tipo ') . 'de Reclamación';
+            break;
+        case 'DC': //distribution_channel
+            return ($plural ? 'Canales ' : 'Canal ') . 'de Distribución';
+            break;
+        case 'TDC': //claim_type_tdc
+            return ($plural ? 'Tipos ' : 'Tipo ') . 'de Reclamación Tarjeta';
+            break;
+        case 'KP': // kind_person
+            return ($plural ? 'Tipos ' : 'Tipo ') . 'de Persona';
+            break;
+        case 'CS': //claim_status
+            return ($plural ? 'Estatus ' : 'Estatus ') . 'de Reclamaciones';
+            break;
+        case 'PS': //products_services
+            return 'Productos y Servicios';
+            break;
+    }
+}
+
+function get_next_claim_number($last_claim_number)
+{
+    $date = null;
+
+    if ($last_claim_number) {
+        $parts = explode('-', $last_claim_number);
+
+        $year = $parts[0];
+        $month = $parts[1];
+        $day = $parts[2];
+        $sequence = $parts[3];
+
+        $date = $year . '-' . $month . '-' . $day;
+    }
+
+    $date_current = (new \DateTime)->format('Y-m-d');
+
+    if ($date == $date_current) {
+        $number = $date_current . '-' . (str_pad((intval($sequence) + 1), 2, '0', STR_PAD_LEFT));
+    } else {
+        $number = $date_current . '-01';
+    }
+
+    return $number;
+}
+
+function get_response_term()
+{
+    return [
+        30
+    ];
+}
+
+function str_field($str, $fields, $to_str, $id)
+{
+    $total_fields = substr_count($str, '{field');
+
+    if ($total_fields > 0) {
+        for ($i = 0; $i < $total_fields; $i++) {
+            if ($to_str) {
+                $str = str_replace('{field' . ($i + 1) . '}', strtoupper($fields[$i]), $str);
+            } else {
+                $str = str_replace('{field' . ($i + 1) . '}', '<b><input type="text" name="fields_' . $id . '[]"></b>', $str);
+            }
+        }
+    }
+
+    return $str;
+}
+
+function field_to_str($str, $fields)
+{
+    return str_field($str, $fields, true, '');
+}
+
+function str_to_field($str, $id)
+{
+    return str_field($str, [], false, $id);
+}
