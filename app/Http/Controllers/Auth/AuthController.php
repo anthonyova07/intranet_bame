@@ -50,7 +50,9 @@ class AuthController extends Controller
     }
 
     public function getLogout(Request $request) {
-        do_log('Cerro sesión');
+        if (session()->has('user')) {
+            do_log('Cerro sesión');
+        }
         $request->session()->flush();
         Auth::logout();
         return redirect()->route('home');

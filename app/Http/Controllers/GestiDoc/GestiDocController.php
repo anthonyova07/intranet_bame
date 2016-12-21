@@ -46,7 +46,7 @@ class GestiDocController extends Controller
             $files->each(function ($file, $index) use ($department, $request, $folder) {
                 $file_name_destination = str_replace(' ', '_', $file->getClientOriginalName());
 
-                $path = public_path('files\\gesti_doc\\' . $department . $folder);
+                $path = public_path('files\\gesti_doc\\' . $department . ($request->folder ? '\\' . str_replace(' ', '_', remove_accents($request->folder)) : ''));
 
                 $file->move($path, remove_accents($file_name_destination));
             });
