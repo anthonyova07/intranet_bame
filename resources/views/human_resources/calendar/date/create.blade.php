@@ -2,7 +2,7 @@
 
 @section('title', 'Recursos Humanos -> Calendario')
 
-@section('page_title', 'Nuevo Grupo de Calendario')
+@section('page_title', 'Nuevo Fecha')
 
 {{-- @if (can_not_do('human_resources_vacant'))
     @section('contents')

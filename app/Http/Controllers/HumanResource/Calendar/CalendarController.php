@@ -11,10 +11,18 @@ use DateTime;
 use Bame\Models\Notification\Notification;
 use Bame\Models\HumanResource\Calendar\Calendar;
 
+use Bame\Models\HumanResource\Calendar\Group;
+use Bame\Models\HumanResource\Calendar\Date;
+
 class CalendarController extends Controller
 {
     public function index(Request $request)
     {
-        return view('human_resources.calendar.index');
+        $groups = Group::get();
+        $dates = Date::get();
+
+        return view('human_resources.calendar.index')
+            ->with('groups', $groups)
+            ->with('dates', $dates);
     }
 }

@@ -143,5 +143,9 @@ return [
       'mail' => 'Correo',
       'idea' => 'Idea',
       'images' => 'Imágenes',
+      'color' => 'Color',
+      'backcolor' => 'Fondo',
+      'bordcolor' => 'Borde',
+      'textcolor' => 'Texto',
     ],
 ];

@@ -93,6 +93,10 @@ Route::group(['middleware' => 'auth'], function () {
             Route::resource('group', 'HumanResource\Calendar\GroupController', ['only' => [
                 'create', 'store', 'edit', 'update'
             ]]);
+
+            Route::resource('date', 'HumanResource\Calendar\DateController', ['only' => [
+                'create', 'store', 'edit', 'update'
+            ]]);
         });
 
         Route::resource('calendar', 'HumanResource\Calendar\CalendarController', ['only' => [
