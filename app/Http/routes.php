@@ -89,6 +89,16 @@ Route::group(['middleware' => 'auth'], function () {
             'index', 'store', 'destroy'
         ]]);
 
+        Route::group(['prefix' => 'calendar'], function () {
+            Route::resource('group', 'HumanResource\Calendar\GroupController', ['only' => [
+                'create', 'store', 'edit', 'update'
+            ]]);
+        });
+
+        Route::resource('calendar', 'HumanResource\Calendar\CalendarController', ['only' => [
+            'index'
+        ]]);
+
         Route::group(['prefix' => 'vacant'], function () {
             Route::post('apply/{id}', 'HumanResource\Vacant\VacantController@apply')->name('human_resources.vacant.apply');
             Route::post('eligible/{vacant}/{applicant}', 'HumanResource\Vacant\VacantController@eligible')->name('human_resources.vacant.eligible');
