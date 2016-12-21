@@ -253,6 +253,8 @@ class ClaimController extends Controller
 
         session()->forget('customer_claim');
 
+        do_log('Creó la Reclamación ( número:' . strip_tags($claim->claim_number) . ' )');
+
         if (in_array($request->form_type, ['CON', 'FRA', 'CAI'])) {
             return redirect(route('customer.claim.{claim_id}.{form_type}.form.create', ['claim_id' => $claim->id, 'form_type' => $request->form_type]))
                     ->with('success', 'La reclamación ha sido creada correctamente.')
