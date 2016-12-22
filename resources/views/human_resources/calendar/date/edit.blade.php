@@ -16,7 +16,7 @@
         <div class="col-xs-6 col-xs-offset-3">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form method="post" action="{{ route('human_resources.calendar.group.update', ['id' => $group->id]) }}" id="form" novalidate>
+                    <form method="post" action="{{ route('human_resources.calendar.date.update', ['id' => $group->id]) }}" id="form" novalidate>
                         <div class="row">
                             <div class="col-xs-10">
                                 <div class="form-group{{ $errors->first('name') ? ' has-error':'' }}">

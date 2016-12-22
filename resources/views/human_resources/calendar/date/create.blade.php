@@ -16,50 +16,40 @@
         <div class="col-xs-6 col-xs-offset-3">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form method="post" action="{{ route('human_resources.calendar.group.store') }}" id="form" novalidate>
+                    <form method="post" action="{{ route('human_resources.calendar.date.store') }}" id="form" novalidate>
                         <div class="row">
-                            <div class="col-xs-10">
-                                <div class="form-group{{ $errors->first('name') ? ' has-error':'' }}">
-                                    <label class="control-label">Nombre</label>
-                                    <input type="text" class="form-control input-sm" name="name" value="{{ old('name') }}">
-                                    <span class="help-block">{{ $errors->first('name') }}</span>
+                            <div class="col-xs-4">
+                                <div class="form-group{{ $errors->first('group_id') ? ' has-error':'' }}">
+                                    <label class="control-label">Grupo</label>
+                                    <select class="form-control input-sm" name="group_id">
+                                        @foreach ($groups as $group)
+                                            <option value="{{ $group->id }}" {{ old('group_id') == $group->id ? 'selected':'' }}>{{ $group->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="help-block">{{ $errors->first('group_id') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-2">
-                                <div class="checkbox">
-                                    <label style="margin-top: 18px;">
-                                        <input type="checkbox" name="is_active" {{ old('is_active') ? 'checked' : '' }}> Activo
-                                    </label>
+                            <div class="col-xs-8">
+                                <div class="form-group{{ $errors->first('title') ? ' has-error':'' }}">
+                                    <label class="control-label">Titulo</label>
+                                    <input type="text" class="form-control input-sm" name="title" value="{{ old('title') }}">
+                                    <span class="help-block">{{ $errors->first('title') }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-3">
-                                <div class="form-group{{ $errors->first('color') ? ' has-error':'' }}">
-                                    <label class="control-label">Color</label>
-                                    <input type="color" class="form-control input-sm" name="color" value="{{ old('color') }}">
-                                    <span class="help-block">{{ $errors->first('color') }}</span>
+                            <div class="col-xs-6">
+                                <div class="form-group{{ $errors->first('startdate') ? ' has-error':'' }}">
+                                    <label class="control-label">Fecha de Inicio</label>
+                                    <input type="datetime-local" class="form-control input-sm" name="startdate" value="">
+                                    <span class="help-block">{{ $errors->first('startdate') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-3">
-                                <div class="form-group{{ $errors->first('backcolor') ? ' has-error':'' }}">
-                                    <label class="control-label">Fondo</label>
-                                    <input type="color" class="form-control input-sm" name="backcolor" value="{{ old('backcolor') }}">
-                                    <span class="help-block">{{ $errors->first('backcolor') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-xs-3">
-                                <div class="form-group{{ $errors->first('bordcolor') ? ' has-error':'' }}">
-                                    <label class="control-label">Borde</label>
-                                    <input type="color" class="form-control input-sm" name="bordcolor" value="{{ old('bordcolor') }}">
-                                    <span class="help-block">{{ $errors->first('bordcolor') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-xs-3">
-                                <div class="form-group{{ $errors->first('textcolor') ? ' has-error':'' }}">
-                                    <label class="control-label">Texto</label>
-                                    <input type="color" class="form-control input-sm" name="textcolor" value="{{ old('textcolor') }}">
-                                    <span class="help-block">{{ $errors->first('textcolor') }}</span>
+                            <div class="col-xs-6">
+                                <div class="form-group{{ $errors->first('enddate') ? ' has-error':'' }}">
+                                    <label class="control-label">Fecha Final</label>
+                                    <input type="datetime-local" class="form-control input-sm" name="enddate" value="">
+                                    <span class="help-block">{{ $errors->first('enddate') }}</span>
                                 </div>
                             </div>
                         </div>

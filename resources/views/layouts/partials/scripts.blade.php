@@ -1,7 +1,13 @@
 <!-- jQuery -->
 <script src="{{ route('home') }}/js/jquery.min.js"></script>
+<script src="{{ route('home') }}/js/jquery-ui.min.js"></script>
 <script src="{{ route('home') }}/js/jquery.dataTables.min.js"></script>
 <script src="{{ route('home') }}/js/dataTables.bootstrap.min.js"></script>
+
+<!-- FullCalendar -->
+<script src="{{ route('home') }}/js/moment.min.js"></script>
+<script src="{{ route('home') }}/js/fullcalendar.min.js"></script>
+<script src="{{ route('home') }}/js/es.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
 <script src="{{ route('home') }}/js/bootstrap.min.js"></script>

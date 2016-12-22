@@ -9,6 +9,7 @@ use Bame\Http\Controllers\Controller;
 
 use DateTime;
 use Bame\Models\Notification\Notification;
+use Bame\Models\HumanResource\Calendar\Group;
 use Bame\Models\HumanResource\Calendar\Date;
 use Bame\Http\Requests\HumanResource\Calendar\DateRequest;
 
@@ -16,7 +17,10 @@ class DateController extends Controller
 {
     public function create(Request $request)
     {
-        return view('human_resources.calendar.date.create');
+        $groups = Group::get();
+
+        return view('human_resources.calendar.date.create')
+            ->with('groups', $groups);
     }
 
     public function store(DateRequest $request)
@@ -26,8 +30,8 @@ class DateController extends Controller
         $date->id = uniqid(true);
         $date->group_id = $request->group_id;
         $date->title = $request->title;
-        $date->startdate = $request->startdate;
-        $date->enddate = $request->enddate;
+        $date->startdate = new DateTime($request->startdate);
+        $date->enddate = new DateTime($request->enddate);
         $date->created_by = session()->get('user');
 
         $date->save();

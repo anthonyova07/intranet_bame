@@ -22,13 +22,13 @@
                     <a class="btn btn-danger btn-xs" href="{{ route('human_resources.calendar.date.create') }}">Nuevo</a>
                     <br>
                     <br>
-                    <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
+                    <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='1|desc'>
                         <thead>
                             <tr>
                                 <th>Grupo</th>
                                 <th>Nombre</th>
-                                <th>Fecha Inicio</th>
-                                <th>Fecha Final</th>
+                                <th style="width: 85px">Fecha Inicio</th>
+                                <th style="width: 85px">Fecha Final</th>
                                 <th style="width: 52px"></th>
                             </tr>
                         </thead>
@@ -37,8 +37,8 @@
                                 <tr>
                                     <td>{{ $date->group->name }}</td>
                                     <td>{{ $date->title }}</td>
-                                    <td>{{ $date->startdate }}</td>
-                                    <td>{{ $date->enddate }}</td>
+                                    <td>{{ $date->startdate->format('Y-m-d H:i:s') }}</td>
+                                    <td>{{ $date->enddate->format('Y-m-d H:i:s') }}</td>
                                     <td align="center">
                                         <a
                                             href="{{ route('human_resources.calendar.date.edit', ['id' => $date->id]) }}"
@@ -59,7 +59,7 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-8 col-xs-offset-2">
+        <div class="col-xs-6 col-xs-offset-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Grupos</h3>

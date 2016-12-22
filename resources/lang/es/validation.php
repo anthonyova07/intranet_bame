@@ -147,5 +147,7 @@ return [
       'backcolor' => 'Fondo',
       'bordcolor' => 'Borde',
       'textcolor' => 'Texto',
+      'startdate' => 'Fecha de Inicio',
+      'enddate' => 'Fecha Final',
     ],
 ];

@@ -10,12 +10,15 @@ use Bame\Models\Event\Event;
 use Bame\Models\Marketing\News\News;
 use Bame\Models\Marketing\Coco\Coco;
 use Bame\Models\HumanResource\Vacant\Vacant;
+use Bame\Models\HumanResource\Calendar\Date;
 use Bame\Models\Event\Subscription\Subscription;
 use Bame\Models\Event\Subscription\Accompanist as SubscriptionAccompanist;
 
 class HomeController extends Controller {
 
     public function index(Request $request) {
+        $datetime = new DateTime;
+
         $column_new = News::where('type', 'C')
             ->orderBy('created_at', 'desc')->first();
 
@@ -40,6 +43,8 @@ class HomeController extends Controller {
             ->orderBy('created_at', 'desc')
             ->get();
 
+        $dates = Date::get();
+
         return view('home.index', [
             'column_new' => $column_new,
             'banners_news' => $banners_news,
@@ -47,6 +52,8 @@ class HomeController extends Controller {
             'coco' => $coco,
             'events' => $events,
             'vacancies' => $vacancies,
+            'datetime' => $datetime,
+            'dates' => $dates,
         ]);
     }
 

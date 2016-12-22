@@ -74,3 +74,24 @@ function delete_notification(id) {
         url: ruta_base + '/notification/delete/' + id
     });
 }
+
+function calendar(defaultDate, events) {
+    $('#calendar').fullCalendar({
+        theme: true,
+        defaultDate: defaultDate,
+        defaultView: 'listMonth',
+        fixedWeekCount: true,
+        nowIndicator: true,
+        firstDay: 1,
+        weekNumbers: true,
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay,listMonth'
+        },
+        navLinks: true, // can click day/week names to navigate views
+        editable: false,
+        // eventLimit: true, // allow "more" link when too many events
+        events: events
+    });
+}

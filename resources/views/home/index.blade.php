@@ -174,6 +174,17 @@
                 </div>
             </div>
 
+            <div class="col-xs-8">
+                <div class="panel panel-default panel-wiget" style="display: block;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Eventos</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div id="calendar"></div>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-xs-4">
 
                 <div class="panel panel-default panel-wiget">
@@ -244,4 +255,28 @@
 
         </div>
     </div>
+
+    <script>
+        calendar('{{ $datetime->format('Y-m') }}', [
+            @foreach ($dates as $date)
+            {
+                title: '{!! $date->title !!}',
+                start: '{{ $date->startdate->format('Y-m-d') }}',
+                end: '{{ $date->startdate->format('Y-m-d') }}',
+                color: '{{ $date->group->color }}',
+                backgroundColor: '{{ $date->group->backcolor }}',
+                borderColor: '{{ $date->group->bordcolor }}',
+                textColor: '{{ $date->group->textcolor }}',
+            },
+            @endforeach
+            @foreach ($events as $event)
+            {
+                title: '{!! $event->title !!}',
+                start: '{{ $event->start_event->format('Y-m-d\TH:i:s') }}',
+                url: '{{ route('home.event', ['id' => $event->id]) }}',
+            },
+            @endforeach
+        ]);
+    </script>
+
 @endsection

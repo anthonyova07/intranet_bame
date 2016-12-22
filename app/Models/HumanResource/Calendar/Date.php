@@ -15,4 +15,11 @@ class Date extends Model
     public $incrementing = false;
 
     public $timestamps = true;
+
+    protected $dates = ['startdate', 'enddate'];
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class, 'group_id', 'id');
+    }
 }

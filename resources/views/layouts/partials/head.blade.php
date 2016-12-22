@@ -13,6 +13,9 @@
     <link href="{{ route('home') }}/css/bootstrap.min.css" rel="stylesheet">
     {{-- <link href="{{ route('home') }}/css/bootstrap-theme.min.css" rel="stylesheet"> --}}
     <link href="{{ route('home') }}/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="{{ route('home') }}/css/jquery-ui.min.css" rel="stylesheet">
+    <link href="{{ route('home') }}/css/jquery-ui.theme.min.css" rel="stylesheet">
+    <link href="{{ route('home') }}/css/fullcalendar.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
     <link href="{{ route('home') }}/css/metisMenu.min.css" rel="stylesheet">
