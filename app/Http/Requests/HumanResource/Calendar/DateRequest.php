@@ -26,8 +26,8 @@ class DateRequest extends Request
         return [
             'group_id' => 'required',
             'title' => 'required|max:200',
-            'startdate' => 'required|date_format:"Y-m-d\TH:i"',
-            'enddate' => 'required|date_format:"Y-m-d\TH:i"',
+            'startdate' => 'required|date_format:"Y-m-d"',
+            'enddate' => 'required|date_format:"Y-m-d"',
         ];
     }
 }

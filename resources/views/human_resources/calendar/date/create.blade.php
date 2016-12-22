@@ -41,14 +41,14 @@
                             <div class="col-xs-6">
                                 <div class="form-group{{ $errors->first('startdate') ? ' has-error':'' }}">
                                     <label class="control-label">Fecha de Inicio</label>
-                                    <input type="datetime-local" class="form-control input-sm" name="startdate" value="">
+                                    <input type="date" class="form-control input-sm" name="startdate" value="">
                                     <span class="help-block">{{ $errors->first('startdate') }}</span>
                                 </div>
                             </div>
                             <div class="col-xs-6">
                                 <div class="form-group{{ $errors->first('enddate') ? ' has-error':'' }}">
                                     <label class="control-label">Fecha Final</label>
-                                    <input type="datetime-local" class="form-control input-sm" name="enddate" value="">
+                                    <input type="date" class="form-control input-sm" name="enddate" value="">
                                     <span class="help-block">{{ $errors->first('enddate') }}</span>
                                 </div>
                             </div>

@@ -45,12 +45,15 @@ class DateController extends Controller
     {
         $date = Date::find($id);
 
+        $groups = Group::get();
+
         if (!$date) {
             return back()->with('warning', 'Esta fecha no existe!');
         }
 
         return view('human_resources.calendar.date.edit')
-            ->with('date', $date);
+            ->with('date', $date)
+            ->with('groups', $groups);
     }
 
     public function update(DateRequest $request, $id)

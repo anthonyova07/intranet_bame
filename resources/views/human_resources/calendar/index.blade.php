@@ -37,8 +37,8 @@
                                 <tr>
                                     <td>{{ $date->group->name }}</td>
                                     <td>{{ $date->title }}</td>
-                                    <td>{{ $date->startdate->format('Y-m-d H:i:s') }}</td>
-                                    <td>{{ $date->enddate->format('Y-m-d H:i:s') }}</td>
+                                    <td>{{ $date->startdate->format('Y-m-d') }}</td>
+                                    <td>{{ $date->enddate->format('Y-m-d') }}</td>
                                     <td align="center">
                                         <a
                                             href="{{ route('human_resources.calendar.date.edit', ['id' => $date->id]) }}"

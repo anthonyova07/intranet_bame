@@ -262,7 +262,7 @@
             {
                 title: '{!! $date->title !!}',
                 start: '{{ $date->startdate->format('Y-m-d') }}',
-                end: '{{ $date->startdate->format('Y-m-d') }}',
+                end: '{{ $date->enddate->format('Y-m-d') }}',
                 color: '{{ $date->group->color }}',
                 backgroundColor: '{{ $date->group->backcolor }}',
                 borderColor: '{{ $date->group->bordcolor }}',
