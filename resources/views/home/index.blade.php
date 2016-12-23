@@ -109,9 +109,9 @@
 
     <div class="row" style="border-top: 1px solid #777;margin-top: 8px;border-width: 5px;">
         <div class="col-xs-12">
-            <div class="panel panel-default panel-wiget" style="display: block;">
+            <div class="panel panel-default panel-wiget" style="display: block;margin-top: 8px;">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Eventos</h3>
+                    <h3 class="panel-title">Calendario Virtual</h3>
                 </div>
                 <div class="panel-body">
                     <div class="col-xs-6"></div>
@@ -123,10 +123,10 @@
         </div>
     </div>
 
-    <div class="row" style="border-top: 1px solid #777;margin-top: 8px;border-width: 5px;">
+    <div class="row" style="border-top: 1px solid #777;margin-top: -10px;border-width: 5px;">
 
-        <div class="col-xs-4" style="padding-left: 0;">
-            <div class="panel panel-default" style="margin-top: 16px;">
+        <div class="col-xs-4">
+            <div class="panel panel-default" style="margin-top: 5px;">
 
                 <div class="panel-body text-center">
                     <img src="{{ route('home') . '/marketing/coco/rompete_el_coco.png' }}" style="width: 220px;">
@@ -192,7 +192,7 @@
 
         <div class="col-xs-4">
 
-            <div class="panel panel-default panel-wiget">
+            <div class="panel panel-default panel-wiget" style="margin-top: 5px;">
                 <div class="panel-heading">
                     <h3 class="panel-title">Eventos</h3>
                 </div>
@@ -226,7 +226,7 @@
 
         <div class="col-xs-4">
 
-            <div class="panel panel-default  panel-wiget">
+            <div class="panel panel-default panel-wiget" style="margin-top: 5px;">
                 <div class="panel-heading">
                     <h3 class="panel-title">Vacantes</h3>
                 </div>
