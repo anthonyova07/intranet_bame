@@ -46,14 +46,19 @@ class Birthdate extends Model
             $birthdates->push($birthdate);
         }
 
-        $path = storage_path('app\\birthdates.json');
+        $path = storage_path('app\\calendar\\birthdates.json');
+
+        if (!file_exists(storage_path('app\\calendar'))) {
+            mkdir(storage_path('app\\calendar'));
+        }
+
         file_put_contents($path, $birthdates->toJson());
     }
 
     public static function getFile()
     {
-        if (file_exists(storage_path('app\\birthdates.json'))) {
-            $birthdates = collect(json_decode(file_get_contents(storage_path('app\\birthdates.json'))));
+        if (file_exists(storage_path('app\\calendar\\birthdates.json'))) {
+            $birthdates = collect(json_decode(file_get_contents(storage_path('app\\calendar\\birthdates.json'))));
         } else {
             $birthdates = collect();
         }
