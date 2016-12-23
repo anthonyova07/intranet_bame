@@ -12,6 +12,7 @@ use Bame\Models\Notification\Notification;
 use Bame\Models\HumanResource\Calendar\Calendar;
 
 use Bame\Models\HumanResource\Calendar\Group;
+use Bame\Models\HumanResource\Calendar\Birthdate;
 use Bame\Models\HumanResource\Calendar\Date;
 
 class CalendarController extends Controller
@@ -20,9 +21,11 @@ class CalendarController extends Controller
     {
         $groups = Group::get();
         $dates = Date::get();
+        $birthdates = Birthdate::getFile();
 
         return view('human_resources.calendar.index')
             ->with('groups', $groups)
-            ->with('dates', $dates);
+            ->with('dates', $dates)
+            ->with('birthdates', $birthdates);
     }
 }

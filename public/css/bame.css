@@ -293,6 +293,10 @@ form {
     background-color: #acc0c6 !important;
 }
 
+.fc-row:hover {
+    cursor: pointer;
+}
+
 .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
     border: 1px solid #acc0c6 !important;
     background: #acc0c6 !important;

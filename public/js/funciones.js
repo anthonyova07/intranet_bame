@@ -92,6 +92,10 @@ function calendar(defaultDate, events) {
         navLinks: true, // can click day/week names to navigate views
         editable: false,
         // eventLimit: true, // allow "more" link when too many events
-        events: events
+        events: events,
+        dayClick: function (date, jsEvent, view) {
+            var day = date.toDate().getDate() + 1;
+            var month = date.toDate().getMonth() + 1;
+        }
     });
 }

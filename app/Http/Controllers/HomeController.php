@@ -12,6 +12,7 @@ use Bame\Models\Marketing\Coco\Coco;
 use Bame\Models\HumanResource\Vacant\Vacant;
 use Bame\Models\HumanResource\Calendar\Calendar;
 use Bame\Models\HumanResource\Calendar\Date;
+use Bame\Models\HumanResource\Calendar\Birthdate;
 use Bame\Models\Event\Subscription\Subscription;
 use Bame\Models\Event\Subscription\Accompanist as SubscriptionAccompanist;
 
@@ -55,6 +56,7 @@ class HomeController extends Controller {
             'vacancies' => $vacancies,
             'datetime' => $datetime,
             'payments_days' => Calendar::getPaymentsDays(),
+            'birthdates' => Birthdate::getFile(),
             'dates' => $dates,
         ]);
     }

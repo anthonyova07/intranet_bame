@@ -4,11 +4,11 @@
 
 @section('page_title', 'Mantenimiento de Calendario ')
 
-{{-- @if (can_not_do('human_resources_vacant'))
+@if (can_not_do('human_resources_calendar'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 
@@ -59,7 +59,7 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-6 col-xs-offset-3">
+        <div class="col-xs-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Grupos</h3>
@@ -89,6 +89,50 @@
                                             <i class="fa fa-edit fa-fw"></i>
                                         </a>
                                     </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Carga de Cumpleaños de Empleados</h3>
+                </div>
+                <div class="panel-body">
+                    <form method="post" action="{{ route('human_resources.calendar.birthdate.store') }}" id="form" enctype="multipart/form-data" novalidate>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group{{ $errors->first('birthdate_file') ? ' has-error':'' }}">
+                                    <label class="control-label">Cargar Archivo de Empleados<small style="font-size: 11px;" class="label label-warning">MAX 10MB</small></label>
+                                    <input type="file" name="birthdate_file">
+                                    <span class="help-block">{{ $errors->first('birthdate_file') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        {{ csrf_field() }}
+                        <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Cargando...">Cargar</button>
+                    </form>
+                    <br>
+                    <br>
+                    <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($birthdates as $birthdate)
+                                <tr>
+                                    <td>{{ $birthdate->code }}</td>
+                                    <td>{{ $birthdate->first_name }}</td>
+                                    <td>{{ $birthdate->last_name }}</td>
+                                    <td>{{ $birthdate->day . '/' . $birthdate->month }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

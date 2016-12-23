@@ -4,11 +4,11 @@
 
 @section('page_title', 'Nuevo Grupo de Calendario')
 
-{{-- @if (can_not_do('human_resources_vacant'))
+@if (can_not_do('human_resources_calendar'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 

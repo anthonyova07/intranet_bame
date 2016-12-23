@@ -97,6 +97,10 @@ Route::group(['middleware' => 'auth'], function () {
             Route::resource('date', 'HumanResource\Calendar\DateController', ['only' => [
                 'create', 'store', 'edit', 'update'
             ]]);
+
+            Route::resource('birthdate', 'HumanResource\Calendar\BirthdateController', ['only' => [
+                'store'
+            ]]);
         });
 
         Route::resource('calendar', 'HumanResource\Calendar\CalendarController', ['only' => [
