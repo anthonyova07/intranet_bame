@@ -109,148 +109,151 @@
 
     <div class="row" style="border-top: 1px solid #777;margin-top: 8px;border-width: 5px;">
         <div class="col-xs-12">
-            <div class="col-xs-4" style="padding-left: 0;">
-                <div class="panel panel-default" style="margin-top: 16px;">
+            <div class="panel panel-default panel-wiget" style="display: block;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Eventos</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="col-xs-6"></div>
+                    <div class="col-xs-6">
+                        <div id="calendar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="border-top: 1px solid #777;margin-top: 8px;border-width: 5px;">
+
+        <div class="col-xs-4" style="padding-left: 0;">
+            <div class="panel panel-default" style="margin-top: 16px;">
+
+                <div class="panel-body text-center">
+                    <img src="{{ route('home') . '/marketing/coco/rompete_el_coco.png' }}" style="width: 220px;">
+                </div>
+
+                @if ($coco->get()->active)
 
                     <div class="panel-body text-center">
-                        <img src="{{ route('home') . '/marketing/coco/rompete_el_coco.png' }}" style="width: 220px;">
+                        <h3 style="padding-top: 0;color: #da291c;">{{ $coco->get()->title }}</h3>
                     </div>
 
-                    @if ($coco->get()->active)
+                    <div class="panel-body text-center">
+                        <ul class="list-group text-left" style="box-shadow: 0 0 0 0;margin-top: 20px;">
+                            @foreach ($coco->get()->descriptions->sortBy('order') as $description)
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="javascript:void(0)">
+                                            <span class="badge btn-info" style="font-size: 35px;width: 40px;background-color: #4f616b;">{{ $description->order }}</span>
+                                        </a>
+                                    </div>
+                                    <div class="media-body" style="font-weight: bold;">
+                                        {{ $description->description }}
+                                    </div>
+                                </div>
+                            @endforeach
+                        </ul>
+                    </div>
 
+                    @if ($coco->get()->awards->count())
                         <div class="panel-body text-center">
-                            <h3 style="padding-top: 0;color: #da291c;">{{ $coco->get()->title }}</h3>
-                        </div>
-
-                        <div class="panel-body text-center">
+                            <label class="control-label text-center label label-warning" style="font-size: 24px;">Premios</label>
                             <ul class="list-group text-left" style="box-shadow: 0 0 0 0;margin-top: 20px;">
-                                @foreach ($coco->get()->descriptions->sortBy('order') as $description)
+                                @foreach ($coco->get()->awards->sortBy('order') as $award)
                                     <div class="media">
                                         <div class="media-left">
                                             <a href="javascript:void(0)">
-                                                <span class="badge btn-info" style="font-size: 35px;width: 40px;background-color: #4f616b;">{{ $description->order }}</span>
+                                                <span class="badge btn-warning" style="font-size: 35px;width: 40px;">{{ $award->order }}</span>
                                             </a>
                                         </div>
-                                        <div class="media-body" style="font-weight: bold;">
-                                            {{ $description->description }}
+                                        <div class="media-body" style="font-weight: bold;vertical-align: middle;">
+                                            {{ $award->award }}
                                         </div>
                                     </div>
                                 @endforeach
                             </ul>
                         </div>
-
-                        @if ($coco->get()->awards->count())
-                            <div class="panel-body text-center">
-                                <label class="control-label text-center label label-warning" style="font-size: 24px;">Premios</label>
-                                <ul class="list-group text-left" style="box-shadow: 0 0 0 0;margin-top: 20px;">
-                                    @foreach ($coco->get()->awards->sortBy('order') as $award)
-                                        <div class="media">
-                                            <div class="media-left">
-                                                <a href="javascript:void(0)">
-                                                    <span class="badge btn-warning" style="font-size: 35px;width: 40px;">{{ $award->order }}</span>
-                                                </a>
-                                            </div>
-                                            <div class="media-body" style="font-weight: bold;vertical-align: middle;">
-                                                {{ $award->award }}
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
-                        <div class="panel-body text-right" style="margin-top: -38px;">
-                            <a href="{{ route('coco') }}" class="btn btn-default btn-sm" style="background-color: #4f616b;color: #ffffff;">Enviar Idea...</a>
-                        </div>
-
-                    @else
-
-                        <div class="panel-body text-center">
-                            <label class="control-label text-center label label-danger" style="font-size: 24px;">Concurso no Disponible</label>
-                        </div>
-
                     @endif
 
+                    <div class="panel-body text-right" style="margin-top: -38px;">
+                        <a href="{{ route('coco') }}" class="btn btn-default btn-sm" style="background-color: #4f616b;color: #ffffff;">Enviar Idea...</a>
+                    </div>
+
+                @else
+
+                    <div class="panel-body text-center">
+                        <label class="control-label text-center label label-danger" style="font-size: 24px;">Concurso no Disponible</label>
+                    </div>
+
+                @endif
+
+            </div>
+        </div>
+
+        <div class="col-xs-4">
+
+            <div class="panel panel-default panel-wiget">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Eventos</h3>
+                </div>
+                <div class="panel-body">
+                    @if ($events->count())
+                        <div class="list-group">
+                            @foreach($events as $event)
+                                <a href="{{ route('home.event', ['id' => $event->id]) }}" class="list-group-item">
+                                    <h4 class="list-group-item-heading">
+                                        {{ substr($event->title, 0, 70) . '...' }}
+                                        <br>
+                                        <span class="text-muted small">
+                                            <em>{{ $event->start_event->format('d/m/Y h:i:s A') }}</em>
+                                        </span>
+                                    </h4>
+                                    <p class="list-group-item-text">
+                                        {!! substr(str_replace('<br />', ' ', $event->detail), 0, 170)  . '...' !!}
+                                    </p>
+                                </a>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="panel-body text-center">
+                            <label class="control-label text-center label label-danger" style="font-size: 18px;">No Hay Eventos</label>
+                        </div>
+                    @endif
                 </div>
             </div>
 
-            <div class="col-xs-8">
-                <div class="panel panel-default panel-wiget" style="display: block;">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Eventos</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div id="calendar"></div>
-                    </div>
+        </div>
+
+        <div class="col-xs-4">
+
+            <div class="panel panel-default  panel-wiget">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Vacantes</h3>
                 </div>
-            </div>
-
-            <div class="col-xs-4">
-
-                <div class="panel panel-default panel-wiget">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Eventos</h3>
-                    </div>
-                    <div class="panel-body">
-                        @if ($events->count())
-                            <div class="list-group">
-                                @foreach($events as $event)
-                                    <a href="{{ route('home.event', ['id' => $event->id]) }}" class="list-group-item">
-                                        <h4 class="list-group-item-heading">
-                                            {{ substr($event->title, 0, 70) . '...' }}
-                                            <br>
-                                            <span class="text-muted small">
-                                                <em>{{ $event->start_event->format('d/m/Y h:i:s A') }}</em>
-                                            </span>
-                                        </h4>
-                                        <p class="list-group-item-text">
-                                            {!! substr(str_replace('<br />', ' ', $event->detail), 0, 170)  . '...' !!}
-                                        </p>
-                                    </a>
-                                @endforeach
-                            </div>
-                        @else
-                            <div class="panel-body text-center">
-                                <label class="control-label text-center label label-danger" style="font-size: 18px;">No Hay Eventos</label>
-                            </div>
-                        @endif
-                    </div>
+                <div class="panel-body">
+                    @if ($vacancies->count())
+                        <div class="list-group">
+                            @foreach($vacancies as $vacant)
+                                <a href="{{ route('home.vacant', ['id' => $vacant->id]) }}" class="list-group-item">
+                                    <h4 class="list-group-item-heading">
+                                        {{ substr($vacant->name, 0, 70) . '...' }}
+                                        <br>
+                                        <span class="text-muted small">
+                                            <em>{{ $vacant->created_at->format('d/m/Y h:i:s A') }}</em>
+                                        </span>
+                                    </h4>
+                                    <p class="list-group-item-text">
+                                        {!! substr(str_replace('<br />', ' ', $vacant->detail), 0, 170)  . '...' !!}
+                                    </p>
+                                </a>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="panel-body text-center">
+                            <label class="control-label text-center label label-danger" style="font-size: 18px;">No Hay Vacantes</label>
+                        </div>
+                    @endif
                 </div>
-
-            </div>
-
-            <div class="col-xs-4">
-
-                <div class="panel panel-default  panel-wiget">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Vacantes</h3>
-                    </div>
-                    <div class="panel-body">
-                        @if ($vacancies->count())
-                            <div class="list-group">
-                                @foreach($vacancies as $vacant)
-                                    <a href="{{ route('home.vacant', ['id' => $vacant->id]) }}" class="list-group-item">
-                                        <h4 class="list-group-item-heading">
-                                            {{ substr($vacant->name, 0, 70) . '...' }}
-                                            <br>
-                                            <span class="text-muted small">
-                                                <em>{{ $vacant->created_at->format('d/m/Y h:i:s A') }}</em>
-                                            </span>
-                                        </h4>
-                                        <p class="list-group-item-text">
-                                            {!! substr(str_replace('<br />', ' ', $vacant->detail), 0, 170)  . '...' !!}
-                                        </p>
-                                    </a>
-                                @endforeach
-                            </div>
-                        @else
-                            <div class="panel-body text-center">
-                                <label class="control-label text-center label label-danger" style="font-size: 18px;">No Hay Vacantes</label>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-
             </div>
 
         </div>
@@ -259,22 +262,28 @@
     <script>
         calendar('{{ $datetime->format('Y-m') }}', [
             @foreach ($dates as $date)
-            {
-                title: '{!! $date->title !!}',
-                start: '{{ $date->startdate->format('Y-m-d') }}',
-                end: '{{ $date->enddate->format('Y-m-d') }}',
-                color: '{{ $date->group->color }}',
-                backgroundColor: '{{ $date->group->backcolor }}',
-                borderColor: '{{ $date->group->bordcolor }}',
-                textColor: '{{ $date->group->textcolor }}',
-            },
+                {
+                    title: '{!! $date->title !!}',
+                    start: '{{ $date->startdate->format('Y-m-d') }}',
+                    end: '{{ $date->enddate->format('Y-m-d') }}',
+                    color: '{{ $date->group->color }}',
+                    backgroundColor: '{{ $date->group->backcolor }}',
+                    borderColor: '{{ $date->group->bordcolor }}',
+                    textColor: '{{ $date->group->textcolor }}',
+                },
             @endforeach
             @foreach ($events as $event)
-            {
-                title: '{!! $event->title !!}',
-                start: '{{ $event->start_event->format('Y-m-d\TH:i:s') }}',
-                url: '{{ route('home.event', ['id' => $event->id]) }}',
-            },
+                {
+                    title: '{!! $event->title !!}',
+                    start: '{{ $event->start_event->format('Y-m-d\TH:i:s') }}',
+                    url: '{{ route('home.event', ['id' => $event->id]) }}',
+                },
+            @endforeach
+            @foreach ($payments_days as $payments_day)
+                    {
+                        title: 'Día de Pago',
+                        start: '{{ $payments_day }}',
+                    },
             @endforeach
         ]);
     </script>

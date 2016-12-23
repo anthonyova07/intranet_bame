@@ -83,7 +83,7 @@ function calendar(defaultDate, events) {
         fixedWeekCount: true,
         nowIndicator: true,
         firstDay: 1,
-        weekNumbers: true,
+        weekNumbers: false,
         header: {
             left: 'prev,next today',
             center: 'title',
