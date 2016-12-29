@@ -102,13 +102,13 @@
                                     <div class="col-xs-6">
                                         <div class="form-group">
                                             <label class="control-label">Casa</label>
-                                            <input type="text" class="form-control input-sm" value="{{ $customer->getHouse() }}" readonly="readonly">
+                                            <input type="text" class="form-control input-sm" value="{{ $customer->getBuildingOrHouseNumber() }}" readonly="readonly">
                                         </div>
                                     </div>
                                     <div class="col-xs-6">
                                         <div class="form-group">
                                             <label class="control-label">Edificio</label>
-                                            <input type="text" class="form-control input-sm" value="{{ $customer->getBuilding() }}" readonly="readonly">
+                                            <input type="text" class="form-control input-sm" value="{{ $customer->getBuildingOrHouseNumber() }}" readonly="readonly">
                                         </div>
                                     </div>
                                 </div>
