@@ -79,7 +79,7 @@ function calendar(defaultDate, events) {
     $('#calendar').fullCalendar({
         theme: true,
         defaultDate: defaultDate,
-        defaultView: 'listMonth',
+        defaultView: 'month',
         fixedWeekCount: true,
         nowIndicator: true,
         firstDay: 1,
