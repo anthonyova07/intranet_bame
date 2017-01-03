@@ -294,3 +294,7 @@ form {
     content: ' *';
     color: red;
 }
+
+.textarea {
+    height: 350px !important;
+}

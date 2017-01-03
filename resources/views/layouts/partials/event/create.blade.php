@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-xs-8">
+    <div class="col-xs-10 col-xs-offset-1">
         <div class="panel panel-default">
             <div class="panel-body">
                 <form method="post" action="{{ route($department . '.event.store') }}" id="form" enctype="multipart/form-data" novalidate>
@@ -16,7 +16,7 @@
                         <div class="col-xs-12">
                             <div class="form-group{{ $errors->first('detail') ? ' has-error':'' }}">
                                 <label class="control-label">Detalle</label>
-                                <textarea class="form-control input-sm" name="detail" rows="10">{{ old('detail') }}</textarea>
+                                <textarea class="form-control input-sm textarea" name="detail" rows="10">{{ old('detail') }}</textarea>
                                 <span class="help-block">{{ $errors->first('detail') }}</span>
                             </div>
                         </div>
@@ -89,10 +89,6 @@
                 </form>
             </div>
         </div>
-    </div>
-
-    <div class="col-xs-4">
-        @include('layouts.partials.edition_help')
     </div>
 </div>
 

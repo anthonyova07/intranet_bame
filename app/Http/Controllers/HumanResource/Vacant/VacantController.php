@@ -61,7 +61,7 @@ class VacantController extends Controller
 
         $vacant->id = uniqid(true);
         $vacant->name = clear_tag(htmlentities($request->name));
-        $vacant->detail = clear_tag(nl2br(htmlentities($request->detail)));
+        $vacant->detail = $request->detail;
         $vacant->is_active = $request->is_active ? true : false;
         $vacant->created_by = session()->get('user');
 
@@ -112,7 +112,7 @@ class VacantController extends Controller
         }
 
         $vacant->name = clear_tag(htmlentities($request->name));
-        $vacant->detail = clear_tag(nl2br(htmlentities($request->detail)));
+        $vacant->detail = $request->detail;
         $vacant->is_active = $request->is_active ? true : false;
         $vacant->updated_by = session()->get('user');
 
