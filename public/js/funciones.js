@@ -13,7 +13,7 @@ function desktop_noty(title, body, url) {
         // If it's okay let's create a notification
         var notification = new Notification('Bancamérica Intranet - ' + title, options);
         notification.onclick = function () {
-            if (url !== undefined) {
+            if (url !== undefined && url !== '') {
                 window.open(url);
             }
         };

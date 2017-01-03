@@ -178,6 +178,8 @@ class VacantController extends Controller
             $request->file('curriculum')->move($curriculum_path, $file_name_destination);
         }
 
+        Notification::notifyUsersByPermission('human_resources_vacant', 'Vacante ' . $vacant->name, $applicant->names . ' ha aplicado a esta vacante.');
+
         return back()->with('success', 'Usted ha aplicado a la vacante correctamente.');
     }
 
