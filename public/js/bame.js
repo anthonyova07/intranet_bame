@@ -34,8 +34,8 @@ $(document).ready(function() {
 
     $('.carousel').carousel();
 
-    var animateNameIn = 'zoomInDown';
-    var animateNameOut = 'zoomOut';
+    var animateNameIn = 'fadeInDown';
+    var animateNameOut = 'fadeOutUp';
 
     var headerBar = $('.row-top');
     var panel = $('.panel');
