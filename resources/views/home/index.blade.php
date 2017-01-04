@@ -192,7 +192,7 @@
                                                 <em>{{ $event->start_event->format('d/m/Y h:i:s A') }}</em>
                                             </span>
                                         </h4>
-                                        <p class="list-group-item-text">
+                                        <p class="list-group-item-text" style="word-wrap: break-word;">
                                             {!! substr(strip_tags($event->detail), 0, 170)  . '...' !!}
                                         </p>
                                     </a>
@@ -226,7 +226,7 @@
                                                 <em>{{ $vacant->created_at->format('d/m/Y h:i:s A') }}</em>
                                             </span>
                                         </h4>
-                                        <p class="list-group-item-text">
+                                        <p class="list-group-item-text" style="word-wrap: break-word;">
                                             {!! substr(strip_tags($vacant->detail), 0, 170)  . '...' !!}
                                         </p>
                                     </a>
