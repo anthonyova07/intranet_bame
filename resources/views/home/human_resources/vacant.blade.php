@@ -31,7 +31,9 @@
                 </div>
 
                 <div class="col-xs-8">
-                    <p  style="color: #616365;" class="text-justify">{!! html_entity_decode($vacant->detail) !!}</p>
+                    <div style="color: #616365;">
+                        {!! $vacant->detail !!}
+                    </div>
                 </div>
             </div>
         </div>
