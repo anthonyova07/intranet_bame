@@ -3,6 +3,39 @@ $(document).ready(function() {
         cache: false
     });
 
+    var myCustomTemplates = {
+        emphasis : function(locale) {
+            return "<li>" +
+                "<div class='btn-group'>" +
+                "<button data-wysihtml5-command='bold' title='Negrita' class='btn btn-default' ><span style='font-weight:700'>B</span></button>" +
+                "<button data-wysihtml5-command='italic' title='Itálica' class='btn btn-default' ><span style='font-style:italic'>I</span></button>" +
+                "<button data-wysihtml5-command='underline' title='Subrayado' class='btn btn-default' ><span style='text-decoration:underline'>U</span></button>" +
+                "</div>" +
+                "</li>";
+        },
+        lists : function(locale) {
+            return "<li>" +
+                "<div class='btn-group'>" +
+                "<button data-wysihtml5-command='insertUnorderedList' title='Lista desordenada' class='btn btn-default' ><span class='fa fa-list-ul'></span></button>" +
+                "<button data-wysihtml5-command='insertOrderedList' title='Lista ordenada' class='btn btn-default' ><span class='fa fa-list-ol'></span></button>" +
+                // "<button data-wysihtml5-command='Outdent' title='Anular sangría' class='btn btn-default' ><span class='fa fa-outdent'></span></button>" +
+                // "<button data-wysihtml5-command='Indent' title='Añadir Sangria' class='btn btn-default'><span class='fa fa-indent'></span></button>" +
+                "</div>" +
+                "</li>";
+        }
+    };
+
+    $('.textarea').wysihtml5({
+        toolbar: {
+            fa: true,
+            image: false,
+            blockquote: false,
+            link: false,
+            "font-styles": false
+        },
+        customTemplates: myCustomTemplates
+    });
+
     $('[data-toggle="tooltip"]').tooltip();
 
     $('[data-toggle="popover"]').popover({

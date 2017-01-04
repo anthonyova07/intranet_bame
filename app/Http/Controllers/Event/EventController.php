@@ -66,7 +66,7 @@ class EventController extends Controller
 
         $event->id = uniqid(true);
         $event->title = clear_tag($request->title);
-        $event->detail = clear_tag(nl2br($request->detail));
+        $event->detail = $request->detail;
 
         if ($request->hasFile('image')) {
             $file_name_destination = $event->id . '.' . get_extensions_file($request->file('image')->getClientOriginalName());
@@ -154,7 +154,7 @@ class EventController extends Controller
         }
 
         $event->title = clear_tag($request->title);
-        $event->detail = clear_tag(nl2br($request->detail));
+        $event->detail = $request->detail;
 
         if ($request->hasFile('image')) {
             $file_name = public_path() . str_replace('/', '\\', $event->image);

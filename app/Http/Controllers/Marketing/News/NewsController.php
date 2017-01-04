@@ -51,10 +51,9 @@ class NewsController extends Controller
     public function store(NewsRequest $request)
     {
         $new = new News;
-
         $new->id = uniqid(true);
         $new->title = clear_tag(htmlentities($request->title));
-        $new->detail = clear_tag(nl2br(htmlentities($request->detail)));
+        $new->detail = $request->detail;
 
         if ($request->hasFile('image')) {
             $file_name_destination = $new->id . '.' . get_extensions_file($request->file('image')->getClientOriginalName());
@@ -105,7 +104,7 @@ class NewsController extends Controller
         }
 
         $new->title = clear_tag(htmlentities($request->title));
-        $new->detail = clear_tag(nl2br(htmlentities($request->detail)));
+        $new->detail = $request->detail;
 
         if ($request->hasFile('image')) {
             $file_name = public_path() . str_replace('/', '\\', $new->image);

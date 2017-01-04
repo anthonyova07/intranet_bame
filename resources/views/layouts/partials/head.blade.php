@@ -14,6 +14,9 @@
     {{-- <link href="{{ route('home') }}/css/bootstrap-theme.min.css" rel="stylesheet"> --}}
     <link href="{{ route('home') }}/css/dataTables.bootstrap.min.css" rel="stylesheet">
 
+    <!-- Editor HTML5 -->
+    <link href="{{ route('home') }}/css/bootstrap3-wysihtml5.min.css" rel="stylesheet">
+
     <!-- MetisMenu CSS -->
     <link href="{{ route('home') }}/css/metisMenu.min.css" rel="stylesheet">
     <link href="{{ route('home') }}/css/animate.css" rel="stylesheet">
