@@ -287,7 +287,7 @@
             @endforeach
             @foreach ($birthdates as $birthdate)
                     {
-                        title: '{!! html_entity_decode($birthdate->first_name) . ' ' . html_entity_decode($birthdate->last_name) !!} (Cumpleaños)',
+                        title: '{{ $birthdate->first_name . ' ' . $birthdate->last_name }} (Cumpleaños)',
                         start: '{{ $datetime->format('Y') .'-'. (str_pad($birthdate->month, 2, '0', STR_PAD_LEFT)) .'-'. (str_pad($birthdate->day, 2, '0', STR_PAD_LEFT)) }}',
                     },
             @endforeach
