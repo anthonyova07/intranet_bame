@@ -32,7 +32,7 @@
 
                 <div class="col-xs-8">
                     <div style="color: #616365;">
-                        {!! $vacant->detail !!}
+                        {!! html_entity_decode($vacant->detail) !!}
                     </div>
                 </div>
             </div>

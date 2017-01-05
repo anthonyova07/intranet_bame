@@ -18,7 +18,7 @@
                     <img class="img-thumbnail pull-left" src="{{ route('home') . $new->image }}" style="max-height: 380px;margin: 0px 30px 15px 0px;">
 
                     <div style="color: #616365;">
-                        {!! $new->detail !!}
+                        {!! html_entity_decode($new->detail) !!}
                     </div>
 
                 </div>

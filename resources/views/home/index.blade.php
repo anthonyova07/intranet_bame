@@ -17,7 +17,7 @@
                         <img class="img-thumbnail" style="max-width: 280px" src="{{ route('home') . $column_new->image }}">
                     </div>
                     <div class="row parrafo-columna text-justify">
-                        <p style="height: 220px;max-height: 220px;"><b>{{ substr(strip_tags($column_new->title), 0, 80) . '...' }}</b> {!! substr(strip_tags($column_new->detail), 0, 600)  . '...' !!}</p>
+                        <p style="height: 220px;max-height: 220px;"><b>{{ substr(strip_tags($column_new->title), 0, 80) . '...' }}</b> {!! substr(strip_tags(html_entity_decode($column_new->detail)), 0, 600)  . '...' !!}</p>
                     </div>
                     <div class="row text-center">
                         <a href="{{ route('home.news', ['id' => $column_new->id]) }}" class="link_noticias">Ver Más</a>
@@ -193,7 +193,7 @@
                                             </span>
                                         </h4>
                                         <p class="list-group-item-text" style="word-wrap: break-word;">
-                                            {!! substr(strip_tags($event->detail), 0, 170)  . '...' !!}
+                                            {!! substr(strip_tags(html_entity_decode($event->detail)), 0, 170)  . '...' !!}
                                         </p>
                                     </a>
                                 @endforeach
@@ -227,7 +227,7 @@
                                             </span>
                                         </h4>
                                         <p class="list-group-item-text" style="word-wrap: break-word;">
-                                            {!! substr(strip_tags($vacant->detail), 0, 170)  . '...' !!}
+                                            {!! substr(strip_tags(html_entity_decode($vacant->detail)), 0, 170)  . '...' !!}
                                         </p>
                                     </a>
                                 @endforeach
