@@ -53,7 +53,7 @@ class NewsController extends Controller
         $new = new News;
         $new->id = uniqid(true);
         $new->title = clear_tag(htmlentities($request->title));
-        $new->detail = $request->detail;
+        $new->detail = htmlentities($request->detail);
 
         if ($request->hasFile('image')) {
             $file_name_destination = $new->id . '.' . get_extensions_file($request->file('image')->getClientOriginalName());
@@ -104,7 +104,7 @@ class NewsController extends Controller
         }
 
         $new->title = clear_tag(htmlentities($request->title));
-        $new->detail = $request->detail;
+        $new->detail = htmlentities($request->detail);
 
         if ($request->hasFile('image')) {
             $file_name = public_path() . str_replace('/', '\\', $new->image);

@@ -82,7 +82,7 @@
                 <div class="col-xs-8">
                     <img src="{{ route('home') . $event->image }}" style="max-height: 280px;margin: 0px 30px 15px 0px;" class="img-thumbnail pull-left">
                     <div style="color: #616365;">
-                        {!! $event->detail !!}
+                        {!! html_entity_decode($event->detail) !!}
                     </div>
                 </div>
             </div>
