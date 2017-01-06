@@ -23,7 +23,7 @@
                                     <label class="control-label">Grupo</label>
                                     <select class="form-control input-sm" name="group_id">
                                         @foreach ($groups as $group)
-                                            <option value="{{ $group->id }}" {{ $date->group_id == $date->group->id ? 'selected':'' }}>{{ $group->name }}</option>
+                                            <option value="{{ $group->id }}" {{ $group->id == $date->group_id ? 'selected':'' }}>{{ $group->name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('group_id') }}</span>

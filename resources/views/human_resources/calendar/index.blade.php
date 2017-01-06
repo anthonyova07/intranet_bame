@@ -123,7 +123,7 @@
                                 <th>Código</th>
                                 <th>Nombre</th>
                                 <th>Apellido</th>
-                                <th>Fecha</th>
+                                <th>Fecha M/D</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -15,4 +15,14 @@ class Group extends Model
     public $incrementing = false;
 
     public $timestamps = true;
+
+    public function scopeBirthdate($query)
+    {
+        return $query->where('name', 'Cumpleaños');
+    }
+
+    public function scopePayment($query)
+    {
+        return $query->where('name', 'Días de Pago');
+    }
 }

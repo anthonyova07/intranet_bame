@@ -113,9 +113,8 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">Calendario Virtual</h3>
                 </div>
-                <div class="panel-body">
-                    <div class="col-xs-6"></div>
-                    <div class="col-xs-6">
+                <div class="panel-body" style="background-color: #cccccc;">
+                    <div class="col-xs-10 col-xs-offset-1 text-center">
                         <div id="calendar"></div>
                     </div>
                 </div>
@@ -266,7 +265,7 @@
                     title: '{!! $date->title !!}',
                     start: '{{ $date->startdate->format('Y-m-d') }}',
                     end: '{{ $date->enddate->format('Y-m-d') }}',
-                    color: '{{ $date->group->color }}',
+                    // color: '{{ $date->group->color }}',
                     backgroundColor: '{{ $date->group->backcolor }}',
                     borderColor: '{{ $date->group->bordcolor }}',
                     textColor: '{{ $date->group->textcolor }}',
@@ -279,18 +278,30 @@
                     url: '{{ route('home.event', ['id' => $event->id]) }}',
                 },
             @endforeach
-            @foreach ($payments_days as $payments_day)
-                    {
-                        title: 'Día de Pago',
-                        start: '{{ $payments_day }}',
-                    },
-            @endforeach
-            @foreach ($birthdates as $birthdate)
-                    {
-                        title: '{{ $birthdate->first_name . ' ' . $birthdate->last_name }} (Cumpleaños)',
-                        start: '{{ $datetime->format('Y') .'-'. (str_pad($birthdate->month, 2, '0', STR_PAD_LEFT)) .'-'. (str_pad($birthdate->day, 2, '0', STR_PAD_LEFT)) }}',
-                    },
-            @endforeach
+            @if ($payments_group)
+                @foreach ($payments_days as $payments_day)
+                        {
+                            title: 'Día de Pago',
+                            start: '{{ $payments_day }}',
+                            // color: '{{ $payments_group->color }}',
+                            backgroundColor: '{{ $payments_group->backcolor }}',
+                            borderColor: '{{ $payments_group->bordcolor }}',
+                            textColor: '{{ $payments_group->textcolor }}',
+                        },
+                @endforeach
+            @endif
+            @if ($birthdates_group)
+                @foreach ($birthdates as $birthdate)
+                        {
+                            title: '{!! $birthdate->first_name . ' ' . $birthdate->last_name !!} (Cumpleaños)',
+                            start: '{{ $datetime->format('Y') .'-'. (str_pad($birthdate->month, 2, '0', STR_PAD_LEFT)) .'-'. (str_pad($birthdate->day, 2, '0', STR_PAD_LEFT)) }}',
+                            // color: '{{ $birthdates_group->color }}',
+                            backgroundColor: '{{ $birthdates_group->backcolor }}',
+                            borderColor: '{{ $birthdates_group->bordcolor }}',
+                            textColor: '{{ $birthdates_group->textcolor }}',
+                        },
+                @endforeach
+            @endif
         ]);
     </script>
 

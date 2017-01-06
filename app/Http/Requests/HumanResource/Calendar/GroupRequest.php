@@ -25,7 +25,7 @@ class GroupRequest extends Request
     {
         return [
             'name' => 'required|max:150',
-            'color' => 'required',
+            // 'color' => 'required',
             'backcolor' => 'required',
             'bordcolor' => 'required',
             'textcolor' => 'required',

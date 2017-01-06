@@ -25,7 +25,7 @@ class GroupController extends Controller
 
         $group->id = uniqid(true);
         $group->name = $request->name;
-        $group->color = $request->color;
+        // $group->color = $request->color;
         $group->backcolor = $request->backcolor;
         $group->bordcolor = $request->bordcolor;
         $group->textcolor = $request->textcolor;
@@ -60,7 +60,7 @@ class GroupController extends Controller
         }
 
         $group->name = $request->name;
-        $group->color = $request->color;
+        // $group->color = $request->color;
         $group->backcolor = $request->backcolor;
         $group->bordcolor = $request->bordcolor;
         $group->textcolor = $request->textcolor;

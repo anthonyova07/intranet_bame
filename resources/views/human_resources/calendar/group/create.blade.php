@@ -35,11 +35,11 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-3">
-                                <div class="form-group{{ $errors->first('color') ? ' has-error':'' }}">
+                                {{-- <div class="form-group{{ $errors->first('color') ? ' has-error':'' }}">
                                     <label class="control-label">Color</label>
                                     <input type="color" class="form-control input-sm" name="color" value="{{ old('color') }}">
                                     <span class="help-block">{{ $errors->first('color') }}</span>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('backcolor') ? ' has-error':'' }}">
