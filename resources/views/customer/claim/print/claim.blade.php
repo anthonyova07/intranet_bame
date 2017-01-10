@@ -194,7 +194,7 @@
                     <td width="25%"><b>Oficial de la Reclamación:</b> <br> {{ $claim->created_by_name }}</td>
                     <td width="25%"><b>Plazo Estimado de Respuesta:</b> <br> {{ $claim->response_term . ' días' }}</td>
                     <td width="25%"><b>Fecha de Respuesta:</b> <br> {{ $claim->response_date->format('d/m/Y') }}</td>
-                    <td width="25%"><b>Lugar para Procurar Respuesta:</b> <br> {{ $claim->response_place }}</td>
+                    <td width="25%"><b>Lugar para Procurar Respuesta:</b> <br> {{ $claim->response_place_description }}</td>
                 </tr>
                 <tr>
                     <td colspan="4"><b>Observaciones:</b> {{ $claim->observations }}</td>
