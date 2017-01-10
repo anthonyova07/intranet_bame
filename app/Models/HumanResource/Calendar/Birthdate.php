@@ -37,11 +37,9 @@ class Birthdate extends Model
             $birthdate = new \stdClass;
 
             $birthdate->code = $parts[1];
-            $birthdate->first_name = utf8_encode($parts[3]);
-            $birthdate->last_name = utf8_encode($parts[2]);
+            $birthdate->full_name = utf8_encode($parts[3]) . ' ' . utf8_encode($parts[2]);
             $birthdate->gender = $parts[4];
-            $birthdate->day = $parts['5'];
-            $birthdate->month = $parts['6'];
+            $birthdate->month_day = str_pad($parts['6'], 2, '0', STR_PAD_LEFT) .'-'. str_pad($parts['5'], 2, '0', STR_PAD_LEFT);
 
             $birthdates->push($birthdate);
         }

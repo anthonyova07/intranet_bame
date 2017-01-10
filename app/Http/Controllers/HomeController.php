@@ -57,9 +57,7 @@ class HomeController extends Controller {
             'vacancies' => $vacancies,
             'datetime' => $datetime,
             'payments_days' => Calendar::getPaymentsDays(),
-            'payments_group' => Group::payment()->first(),
             'birthdates' => Birthdate::getFile(),
-            'birthdates_group' => Group::birthdate()->first(),
             'dates' => $dates,
         ]);
     }

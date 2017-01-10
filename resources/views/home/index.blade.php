@@ -114,8 +114,8 @@
                     <h3 class="panel-title">Calendario Virtual</h3>
                 </div>
                 <div class="panel-body" style="background-color: #cccccc;">
-                    <div class="col-xs-10 col-xs-offset-1 text-center">
-                        <div id="calendar"></div>
+                    <div class="col-xs-12">
+                        <div id="calendar" style="width: 100%;"></div>
                     </div>
                 </div>
             </div>
@@ -278,30 +278,20 @@
                     url: '{{ route('home.event', ['id' => $event->id]) }}',
                 },
             @endforeach
-            @if ($payments_group)
-                @foreach ($payments_days as $payments_day)
-                        {
-                            title: 'Día de Pago',
-                            start: '{{ $payments_day }}',
-                            // color: '{{ $payments_group->color }}',
-                            backgroundColor: '{{ $payments_group->backcolor }}',
-                            borderColor: '{{ $payments_group->bordcolor }}',
-                            textColor: '{{ $payments_group->textcolor }}',
-                        },
-                @endforeach
-            @endif
-            @if ($birthdates_group)
-                @foreach ($birthdates as $birthdate)
-                        {
-                            title: '{!! $birthdate->first_name . ' ' . $birthdate->last_name !!} (Cumpleaños)',
-                            start: '{{ $datetime->format('Y') .'-'. (str_pad($birthdate->month, 2, '0', STR_PAD_LEFT)) .'-'. (str_pad($birthdate->day, 2, '0', STR_PAD_LEFT)) }}',
-                            // color: '{{ $birthdates_group->color }}',
-                            backgroundColor: '{{ $birthdates_group->backcolor }}',
-                            borderColor: '{{ $birthdates_group->bordcolor }}',
-                            textColor: '{{ $birthdates_group->textcolor }}',
-                        },
-                @endforeach
-            @endif
+            @foreach ($payments_days as $payments_day)
+                    {
+                        title: '',
+                        start: '{{ $payments_day }}',
+                        className: 'payment_days',
+                    },
+            @endforeach
+            @foreach ($birthdates->unique('month_day') as $birthdate)
+                {
+                    title: '',
+                    start: '{{ $datetime->format('Y') .'-'. $birthdate->month_day }}',
+                    className: 'birthdate ' + '{!! str_replace(' ', '|', $birthdates->where('month_day', $birthdate->month_day)->implode('full_name', ',')) !!}',
+                },
+            @endforeach
         ]);
     </script>
 

@@ -121,18 +121,16 @@
                         <thead>
                             <tr>
                                 <th>Código</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Fecha M/D</th>
+                                <th>Nombre y Apellido</th>
+                                <th>Fecha M-D</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($birthdates as $birthdate)
                                 <tr>
                                     <td>{{ $birthdate->code }}</td>
-                                    <td>{{ $birthdate->first_name }}</td>
-                                    <td>{{ $birthdate->last_name }}</td>
-                                    <td>{{ $birthdate->day . '/' . $birthdate->month }}</td>
+                                    <td>{{ $birthdate->full_name }}</td>
+                                    <td>{{ $birthdate->month_day }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -87,7 +87,7 @@ function calendar(defaultDate, events) {
         header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'month,agendaWeek,agendaDay,listMonth'
+            right: 'month'
         },
         navLinks: true, // can click day/week names to navigate views
         editable: false,
@@ -98,4 +98,38 @@ function calendar(defaultDate, events) {
             var month = date.toDate().getMonth() + 1;
         }
     });
+
+    $('#calendar').on({
+        mouseenter: function () {
+            var content = '<ul class="list-group">';
+            $(this).addClass('show_popover').attr('class').split(' ').forEach(function (item, index) {
+                if (item != 'fc-day-grid-event'
+                    && item != 'fc-h-event'
+                    && item != 'fc-event'
+                    && item != 'fc-start'
+                    && item != 'fc-end'
+                    && item != 'show_popover'
+                    && item != 'birthdate') {
+                    var names = item.split(',');
+                    names.forEach(function (item, index) {
+                        var name = item.split('|').join(' ');
+                        content += '<li class="list-group-item">' + name + '</li>';
+                    });
+                }
+            });
+            content += '</ul>';
+
+            $('.show_popover').popover({
+                title: 'Cumpleaños del Día',
+                content: content,
+                html: true,
+                placement: 'top',
+                container: 'body',
+            }).popover('show');
+        },
+        mouseleave: function () {
+            $('.show_popover').popover('hide');
+            $(this).removeClass('show_popover');
+        }
+    }, '.birthdate');
 }
