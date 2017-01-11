@@ -132,4 +132,32 @@ function calendar(defaultDate, events) {
             $(this).removeClass('show_popover');
         }
     }, '.birthdate');
+
+    $('#calendar').on({
+        mouseenter: function () {
+            var title = '';
+            $(this).addClass('show_tooltip').attr('class').split(' ').forEach(function (item, index) {
+                if (item != 'fc-day-grid-event'
+                    && item != 'fc-h-event'
+                    && item != 'fc-event'
+                    && item != 'fc-start'
+                    && item != 'fc-end'
+                    && item != 'show_tooltip'
+                    && item != 'payment_days'
+                    && item != 'cal_tooltip') {
+                    title = item.split('|').join(' ');
+                }
+            });
+
+            $('.show_tooltip').tooltip({
+                title: title,
+                placement: 'top',
+                container: 'body',
+            }).tooltip('show');
+        },
+        mouseleave: function () {
+            $('.show_tooltip').tooltip('hide');
+            $(this).removeClass('show_tooltip');
+        }
+    }, '.cal_tooltip');
 }

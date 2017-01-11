@@ -269,6 +269,7 @@
                     backgroundColor: '{{ $date->group->backcolor }}',
                     borderColor: '{{ $date->group->bordcolor }}',
                     textColor: '{{ $date->group->textcolor }}',
+                    className: 'cal_tooltip {{ str_replace(' ', '|', $date->title) }}',
                 },
             @endforeach
             @foreach ($events as $event)
@@ -276,13 +277,14 @@
                     title: '{!! $event->title !!}',
                     start: '{{ $event->start_event->format('Y-m-d\TH:i:s') }}',
                     url: '{{ route('home.event', ['id' => $event->id]) }}',
+                    className: 'cal_tooltip {{ str_replace(' ', '|', $event->title) }}',
                 },
             @endforeach
             @foreach ($payments_days as $payments_day)
                     {
                         title: '',
                         start: '{{ $payments_day }}',
-                        className: 'payment_days',
+                        className: 'payment_days cal_tooltip Día|de|Pago',
                     },
             @endforeach
             @foreach ($birthdates->unique('month_day') as $birthdate)
