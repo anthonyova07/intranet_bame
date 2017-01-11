@@ -15,47 +15,56 @@
 @if (!$can_not_do)
     <div class="row">
         <div class="col-xs-8 col-xs-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Carga de Archivos / Carpetas</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="col-xs-8">
-                        <form method="post" action="{{ route('administration.gestidoc.store', ['type' => 'files']) }}" id="form" enctype="multipart/form-data">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="form-group{{ $errors->first('term') ? ' has-error':'' }}">
-                                        <label class="control-label">Archivos <div class="label label-warning"> MAX: 10MB</div></label>
-                                        <input type="file" name="files[]" class="form-control input-sm" multiple>
-                                        <span class="help-block">{{ $errors->first('term') }}</span>
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Carga de Archivos</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form method="post" action="{{ route('administration.gestidoc.store', ['type' => 'files']) }}" id="form" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-group{{ $errors->first('term') ? ' has-error':'' }}">
+                                            {{-- <label class="control-label">Archivos <div class="label label-warning"> MAX: 10MB</div></label> --}}
+                                            <input type="file" name="files[]" class="form-control input-sm" multiple>
+                                            <span class="help-block">{{ $errors->first('term') }}</span>
+                                        </div>
+                                        <input type="hidden" name="folder" value="{{ $folder }}">
                                     </div>
-                                    <input type="hidden" name="folder" value="{{ $folder }}">
+                                    <div class="col-xs-2">
+                                        {{ csrf_field() }}
+                                        <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Subiendo archivos...">Subir</button>
+                                    </div>
                                 </div>
-                                <div class="col-xs-2">
-                                    {{ csrf_field() }}
-                                    <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Subiendo archivos...">Subir</button>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
+                </div>
 
-                    <div class="col-xs-4">
-                        <form method="post" action="{{ route('administration.gestidoc.store', ['type' => 'folder']) }}" id="form">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="form-group{{ $errors->first('folder_name') ? ' has-error':'' }}">
-                                        <label class="control-label">Nueva Carpeta</label>
-                                        <input type="text" name="folder_name" value="{{ old('folder_name') }}" placeholder="..." class="form-control input-sm">
-                                        <span class="help-block">{{ $errors->first('folder_name') }}</span>
+                <div class="col-xs-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Nueva Carpeta</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form method="post" action="{{ route('administration.gestidoc.store', ['type' => 'folder']) }}" id="form">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-group{{ $errors->first('folder_name') ? ' has-error':'' }}">
+                                            {{-- <label class="control-label">Nueva Carpeta</label> --}}
+                                            <input type="text" name="folder_name" value="{{ old('folder_name') }}" placeholder="..." class="form-control input-sm">
+                                            <span class="help-block">{{ $errors->first('folder_name') }}</span>
+                                        </div>
+                                        <input type="hidden" name="folder" value="{{ $folder }}">
                                     </div>
-                                    <input type="hidden" name="folder" value="{{ $folder }}">
+                                    <div class="col-xs-2">
+                                        {{ csrf_field() }}
+                                        <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Creando carpeta...">Crear</button>
+                                    </div>
                                 </div>
-                                <div class="col-xs-2">
-                                    {{ csrf_field() }}
-                                    <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Creando carpeta...">Crear</button>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -83,11 +92,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($gestidocs as $gestidoc)
+                        @foreach ($gestidocs as $gesti)
                             <tr>
                                 <td style="text-align: center;"><img src="{{ get_file_icon('directory') }}" style="width: 50px;"></td>
                                 <td style="vertical-align: middle;">
-                                    <a href="{{ route('administration.gestidoc.index', ['folder' => $gestidoc->id]) }}">{{ $gestidoc->name }}</a>
+                                    <a href="{{ route('administration.gestidoc.index', ['folder' => $gesti->id]) }}">{{ $gesti->name }}</a>
                                 </td>
                                 @if ($can_not_do)
                                     <td></td>
@@ -98,12 +107,12 @@
                                             data-toggle="popover"
                                             data-placement="right"
                                             data-content="
-                                            <form action='{{ route("administration.gestidoc.update", ["gestidoc" => $gestidoc->id, "type" => "rename"]) }}' method='post'>
+                                            <form action='{{ route("administration.gestidoc.update", ["gestidoc" => $gesti->id, "type" => "rename"]) }}' method='post'>
                                                 <div class='row'>
                                                     <div class='col-xs-12'>
                                                         <div class='form-group'>
                                                             <label class='control-label'>Nuevo Nombre</label>
-                                                            <input type='text' class='form-control input-sm' value='{{ $gestidoc->name }}' name='folder_name'>
+                                                            <input type='text' class='form-control input-sm' value='{{ $gesti->name }}' name='folder_name'>
                                                         </div>
                                                         {{ str_replace('"', '\'', csrf_field()) }}
                                                         {{ str_replace('"', '\'', method_field("PUT")) }}
@@ -119,12 +128,12 @@
                                             data-toggle="popover"
                                             data-placement="right"
                                             data-content="
-                                            <form action='{{ route("administration.gestidoc.update", ["gestidoc" => $gestidoc->id, "type" => "access"]) }}' method='post'>
+                                            <form action='{{ route("administration.gestidoc.update", ["gestidoc" => $gesti->id, "type" => "access"]) }}' method='post'>
                                                 <div class='row'>
                                                     <div class='col-xs-12'>
                                                         <div class='form-group'>
-                                                            <label class='control-label'>Usuarios (separados por coma)</label>
-                                                            <textarea rows='15' cols='24' class='form-control input-sm' name='usrsaccess'>{{ $gestidoc->usrsaccess }}</textarea>
+                                                            <label class='control-label'>Usuarios con Acceso a Esta Carpeta</label>
+                                                            <textarea rows='15' cols='24' class='form-control input-sm' name='usrsaccess'>{{ $gesti->usrsaccess }}</textarea>
                                                         </div>
                                                         {{ str_replace('"', '\'', csrf_field()) }}
                                                         {{ str_replace('"', '\'', method_field("PUT")) }}

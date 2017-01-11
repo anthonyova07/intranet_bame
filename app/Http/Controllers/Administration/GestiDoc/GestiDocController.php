@@ -91,7 +91,7 @@ class GestiDocController extends Controller
                 $gestidoc = GestiDoc::find($request->folder);
 
                 if (!$gestidoc) {
-                    return back()->with('warning', 'La carpeta indicada no existe.');
+                    return back()->with('warning', 'Favor seleccionar una carpeta destino.');
                 }
 
                 if ($request->hasFile('files')) {
