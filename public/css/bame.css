@@ -303,33 +303,35 @@ form {
     color: #444 !important;
 }
 
-.birthdate {
-    background-image: url(http://192.168.0.100/intranet/public/images/birthdate.png);
+.cal_icon {
     background-repeat: no-repeat;
-    background-size: 25px 25px;
+    background-size: 20px 20px;
     display: inline-block;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     content: "";
     background-color: transparent !important;
     border-color: transparent !important;
-    margin-top: -25px !important;
-    position: absolute;
+}
+
+.birthdate {
+    background-image: url(http://192.168.0.100/intranet/public/images/birthdate.png);
 }
 
 .payment_days {
     background-image: url(http://192.168.0.100/intranet/public/images/money.png);
-    background-repeat: no-repeat;
-    background-size: 25px 25px;
-    display: inline-block;
-    width: 25px;
-    height: 25px;
-    content: "";
-    background-color: transparent !important;
-    border-color: transparent !important;
-    margin-top: -25px !important;
-    margin-left: 45px !important;
-    position: absolute;
+}
+
+.event {
+    background-image: url(http://192.168.0.100/intranet/public/images/event.png);
+}
+
+.goesgreen {
+    background-image: url(http://192.168.0.100/intranet/public/images/goesgreen.png);
+}
+
+.holiday {
+    background-image: url(http://192.168.0.100/intranet/public/images/holiday.png);
 }
 
 .popover-title {

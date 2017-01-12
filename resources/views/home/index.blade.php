@@ -108,24 +108,13 @@
     </div>
 
     <div class="row" style="border-top: 1px solid #777;margin-top: 8px;border-width: 5px;">
-        <div class="col-xs-12">
-            <div class="panel panel-default panel-wiget" style="display: block;margin-top: 8px;">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Calendario Virtual</h3>
-                </div>
-                <div class="panel-body" style="background-color: #cccccc;">
-                    <div class="col-xs-12">
-                        <div id="calendar" style="width: 100%;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 
-    <div class="row" style="border-top: 1px solid #777;margin-top: -10px;border-width: 5px;">
+    <div class="row">
 
         <div class="col-xs-4">
-            <div class="panel panel-default" style="margin-top: 5px;">
+            <div class="panel panel-default" style="margin-top: 8px;">
 
                 <div class="panel-body text-center">
                     <img src="{{ route('home') . '/marketing/coco/rompete_el_coco.png' }}" style="width: 220px;">
@@ -186,6 +175,19 @@
 
                 @endif
 
+            </div>
+        </div>
+
+        <div class="col-xs-8">
+            <div class="panel panel-default panel-wiget" style="display: block;margin-top: 8px;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Calendario Virtual</h3>
+                </div>
+                <div class="panel-body" style="background-color: #cccccc;">
+                    <div class="col-xs-12">
+                        <div id="calendar" style="width: 100%;"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -262,36 +264,44 @@
         calendar('{{ $datetime->format('Y-m') }}', [
             @foreach ($dates as $date)
                 {
-                    title: '{!! $date->title !!}',
                     start: '{{ $date->startdate->format('Y-m-d') }}',
                     end: '{{ $date->enddate->format('Y-m-d') }}',
                     // color: '{{ $date->group->color }}',
                     backgroundColor: '{{ $date->group->backcolor }}',
                     borderColor: '{{ $date->group->bordcolor }}',
                     textColor: '{{ $date->group->textcolor }}',
-                    className: 'cal_tooltip {{ str_replace(' ', '|', $date->title) }}',
+                    @if ($date->group->name == 'Goes Green')
+                        title: '',
+                        className: 'cal_tooltip cal_icon goesgreen {{ str_replace(' ', '|', 'Goes Green: ' . $date->title) }}',
+                    @elseif($date->group->name == 'Feriados')
+                        title: '',
+                        className: 'cal_tooltip cal_icon holiday {{ str_replace(' ', '|', 'Día Feriado: ' . $date->title) }}',
+                    @else
+                        title: '{!! $date->title !!}',
+                        className: 'cal_tooltip {{ str_replace(' ', '|', $date->title) }}',
+                    @endif
                 },
             @endforeach
             @foreach ($events as $event)
                 {
-                    title: '{!! $event->title !!}',
+                    title: '',
                     start: '{{ $event->start_event->format('Y-m-d\TH:i:s') }}',
                     url: '{{ route('home.event', ['id' => $event->id]) }}',
-                    className: 'cal_tooltip {{ str_replace(' ', '|', $event->title) }}',
+                    className: 'cal_tooltip event cal_icon {{ str_replace(' ', '|', 'Evento: ' . $event->title) }}',
                 },
             @endforeach
-            @foreach ($payments_days as $payments_day)
+            @foreach ($payments_days as $index => $payments_day)
                     {
                         title: '',
                         start: '{{ $payments_day }}',
-                        className: 'payment_days cal_tooltip Día|de|Pago',
+                        className: 'payment_days cal_icon cal_tooltip Día|de|Pago|{{ ($index % 2 == 0) ? '1ra|Quincena' : '2da|Quincena' }}',
                     },
             @endforeach
             @foreach ($birthdates->unique('month_day') as $birthdate)
                 {
                     title: '',
                     start: '{{ $datetime->format('Y') .'-'. $birthdate->month_day }}',
-                    className: 'birthdate ' + '{!! str_replace(' ', '|', $birthdates->where('month_day', $birthdate->month_day)->implode('full_name', ',')) !!}',
+                    className: 'birthdate cal_icon ' + '{!! str_replace(' ', '|', $birthdates->where('month_day', $birthdate->month_day)->implode('full_name', ',')) !!}',
                 },
             @endforeach
         ]);
