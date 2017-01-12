@@ -49,6 +49,7 @@ function get_file_icon($ext)
             break;
         case 'ppt':
         case 'pptx':
+        case 'ppsx':
             $name = 'powerpoint';
             break;
         case 'pst':
