@@ -80,9 +80,17 @@
                 </div>
 
                 <div class="col-xs-8">
-                    <img src="{{ route('home') . $event->image }}" style="max-height: 280px;margin: 0px 30px 15px 0px;" class="img-thumbnail pull-left">
-                    <div style="color: #616365;">
-                        {!! html_entity_decode($event->detail) !!}
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <img src="{{ route('home') . $event->image }}" class="img-thumbnail pull-left">
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 15px;">
+                        <div class="col-xs-12">
+                            <div style="color: #616365;">
+                                {!! html_entity_decode($event->detail) !!}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

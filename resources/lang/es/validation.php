@@ -172,5 +172,7 @@ return [
       'rate_day' => 'Tasa del Día',
       'claim_status' => 'Estatus de Reclamación',
       'product_service' => 'Producto y Servicio',
+      'link' => 'Hipervínculo',
+      'link_video' => 'Hipervínculo del Video',
     ],
 ];
