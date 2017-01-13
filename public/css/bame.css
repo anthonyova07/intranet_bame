@@ -305,3 +305,7 @@ form {
     line-height: 1.5;
     border-radius: 3px;
 }
+
+.video-thumbnail {
+    background-color: #d82f27;
+}
