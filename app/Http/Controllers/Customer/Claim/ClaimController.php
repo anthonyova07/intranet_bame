@@ -415,11 +415,13 @@ class ClaimController extends Controller
         $claim->status_code = $claim_status->code;
         $claim->status_description = $claim_status->description;
 
-        $claim->is_closed = true;
-        $claim->closed_by = session()->get('user');
-        $claim->closed_by_name = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
-        $claim->closed_comments = $request->comment;
-        $claim->closed_date = new DateTime;
+        if ($request->claim_result != 'P') {
+            $claim->is_closed = true;
+            $claim->closed_by = session()->get('user');
+            $claim->closed_by_name = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+            $claim->closed_comments = $request->comment;
+            $claim->closed_date = new DateTime;
+        }
 
         $claim->claim_result = $request->claim_result;
 
@@ -428,10 +430,10 @@ class ClaimController extends Controller
         $claim->createStatus($claim_status, $request->comment);
 
         $noti = new Notification($claim->created_by);
-        $noti->create('Reclamaciones', 'La reclamación ' . $claim->claim_number . ' ha sido cerrada', route('customer.claim.show', ['id' => $claim->id]));
+        $noti->create('Reclamaciones', 'La reclamación ' . $claim->claim_number . ' ha ' . ($request->claim_result == 'P' ? 'cambiado de estado' : 'sido cerrada.'), route('customer.claim.show', ['id' => $claim->id]));
         $noti->save();
 
-        return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación ha sido cerrada correctamente.');
+        return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación ha ' . ($request->claim_result == 'P' ? 'cambiado de estado' : 'sido cerrada.') . ' correctamente.');
     }
 
     public function statuses($id)
