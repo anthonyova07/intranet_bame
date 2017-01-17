@@ -23,7 +23,7 @@
                             </div>
                         </div> --}}
 
-                        <form method="post" action="{{ route('auth.login') }}" id="form">
+                        <form method="post" action="{{ route('auth.login') }}" id="form" style="margin-top: 7px;">
                             <div class="form-group{{ $errors->first('user') ? ' has-error':'' }}">
                                 {{-- <label class="control-label" style="font-size: 16px;">Usuario</label> --}}
                                 <div class="input-group" data-toggle="tooltip" title="Usuario del Equipo">
