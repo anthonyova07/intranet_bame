@@ -23,32 +23,26 @@
                 </div>
             </div>
 
-            @foreach ($claim_statuses as $claim_status)
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="col-xs-4">
-                            <div class="form-group">
-                                <label class="control-label">Descripción</label>
-                                <p class="form-control-static">{{ $claim_status->description }}</p>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-4">
-                            <div class="form-group">
-                                <label class="control-label">Comentario</label>
-                                <p class="form-control-static">{{ $claim_status->comment }}</p>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-4">
-                            <div class="form-group">
-                                <label class="control-label">Creado por</label>
-                                <p class="form-control-static">{{ $claim_status->created_by_name }} a las {{ $claim_status->created_at->format('d/m/Y H:i:s') }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
+            <div class="panel panel-default">
+                <table class="table table-bordered table-condensed table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Descripción</th>
+                            <th>Comentario</th>
+                            <th>Editado por</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($claim_statuses as $claim_status)
+                            <tr>
+                                <td>{{ $claim_status->description }}</td>
+                                <td>{{ $claim_status->comment }}</td>
+                                <td>{{ $claim_status->created_by_name }} a las {{ $claim_status->created_at->format('d/m/Y H:i:s') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
 
         </div>
     </div>

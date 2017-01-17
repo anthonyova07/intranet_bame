@@ -49,7 +49,7 @@
                         @else
                             @if ($claim->is_approved != null)
                                 @if (!can_not_do('customer_claim_close'))
-                                    <a class="btn btn-danger btn-xs" href="{{ route('customer.claim.close', ['claim_id' => $claim->id]) }}"><i class="fa fa-mail-reply-all"></i> Cerrar</a>
+                                    <a data-toggle="tooltip" title="Cerrar o Cambiar de Estado" class="btn btn-danger btn-xs" href="{{ route('customer.claim.close', ['claim_id' => $claim->id]) }}"><i class="fa fa-mail-reply-all"></i> Cerrar / Cambiar</a>
                                 @endif
                             @endif
                         @endif
@@ -278,7 +278,7 @@
                                 <p class="form-control-static">{{ $claim->response_place_description }}</p>
                             </div>
                         </div>
-                        <div class="col-xs-2">
+                        <div class="col-xs-3">
                             <div class="form-group">
                                 <label class="control-label">Creado el</label>
                                 <p class="form-control-static">{{ $claim->created_at->format('d/m/Y H:i:s') }}</p>

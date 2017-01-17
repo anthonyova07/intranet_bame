@@ -2,7 +2,7 @@
 
 @section('title', 'Clientes - Reclamaciones')
 
-@section('page_title', 'Comentario para Cerrar la Reclamación')
+@section('page_title', 'Comentario para Cerrar/Cambiar Estado de la Reclamación')
 
 @if (can_not_do('customer_claim_close'))
     @section('contents')
@@ -44,7 +44,7 @@
                             <div class="col-xs-4">
                                 <div class="form-group{{ $errors->first('claim_result') ? ' has-error':'' }}">
                                     <label class="control-label">Resultado</label>
-                                    <select class="form-control input-sm" name="claim_result">
+                                    <select class="form-control input-sm" name="claim_result" data-toggle="tooltip" title="Colocar (Pendiente) para cambiar de estado">
                                         @foreach (get_claim_results() as $key => $claim_result)
                                             <option value="{{ $key }}" {{ old('claim_result') == $key ? 'selected':'' }}>{{ $claim_result }}</option>
                                         @endforeach
@@ -55,7 +55,7 @@
                         </div>
                         {{ csrf_field() }}
                         <a class="btn btn-info btn-xs" href="{{ route('customer.claim.show', array_merge(['id' => $claim->id], Request::all())) }}"><i class="fa fa-arrow-left"></i> Atrás</a>
-                        <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Cerrar...">Cerrar</button>
+                        <button data-toggle="tooltip" title="Cerrar o Cambiar de Estado" type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Cerrar...">Cerrar / Cambiar</button>
                     </form>
                 </div>
             </div>
