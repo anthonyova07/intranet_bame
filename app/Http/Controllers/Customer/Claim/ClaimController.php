@@ -436,6 +436,60 @@ class ClaimController extends Controller
         return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación ha ' . ($request->claim_result == 'P' ? 'cambiado de estado' : 'sido cerrada.') . ' correctamente.');
     }
 
+    public function getAttach(Request $request, $claim_id)
+    {
+        $claim = Claim::find($claim_id);
+
+        if (!$claim) {
+            return redirect(route('customer.claim.index'));
+        }
+
+        return view('customer.claim.attach')
+            ->with('claim', $claim);
+    }
+
+    public function postAttach(Request $request, $claim_id)
+    {
+        $claim = Claim::find($claim_id);
+
+        if (!$claim) {
+            return redirect(route('customer.claim.index'));
+        }
+
+        if ($claim->is_closed) {
+            return back()->with('warning', 'La reclamación se encuentra cerrada.');
+        }
+
+        if ($request->hasFile('files')) {
+            $files = collect($request->file('files'));
+
+            $path = storage_path('app\\claims\\attaches\\' . $claim->id . '\\');
+
+            $files->each(function ($file, $index) use ($path) {
+                $file_name_destination = str_replace(' ', '_', $file->getClientOriginalName());
+
+                $file->move($path, remove_accents($file_name_destination));
+            });
+
+            Notification::notify('Reclamaciones', 'Nuevo/s documento/s adjunto a la reclamación ' . $claim->claim_number, route('customer.claim.show', ['id' => $claim->id]), $claim->created_by);
+        }
+
+        return back()->with('success', 'Los archivos han sido cargados correctamente.');
+    }
+
+    public function downloadAttach(Request $request, $claim_id, $file)
+    {
+        $claim = Claim::find($claim_id);
+
+        if (!$claim) {
+            return redirect(route('customer.claim.index'));
+        }
+
+        $path = storage_path('app\\claims\\attaches\\' . $claim->id . '\\' . $file);
+
+        return response()->download($path);
+    }
+
     public function statuses($id)
     {
         $claim = Claim::find($id);

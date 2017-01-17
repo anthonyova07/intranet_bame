@@ -99,4 +99,15 @@ class Claim extends Model
 
         $status->save();
     }
+
+    public function getAttaches()
+    {
+        $url_files = storage_path('app\\claims\\attaches\\' . $this->id . '\\');
+
+        if (file_exists($url_files)) {
+            return collect(scandir($url_files));
+        } else {
+            return collect();
+        }
+    }
 }
