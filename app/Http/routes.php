@@ -163,7 +163,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('attach/{claim_id}', 'Customer\Claim\ClaimController@postAttach');
 
             Route::group(['prefix' => 'attach'], function () {
-                Route::get('download/{claim_id}/{file}', 'Customer\Claim\ClaimController@downloadAttach')->name('customer.claim.attach.download');
+                Route::get('download/{claim_id}/{attach}', 'Customer\Claim\ClaimController@downloadAttach')->name('customer.claim.attach.download');
+                Route::delete('delete/{claim_id}/{attach}', 'Customer\Claim\ClaimController@deleteAttach')->name('customer.claim.attach.delete');
             });
 
             Route::group(['prefix' => 'print'], function () {

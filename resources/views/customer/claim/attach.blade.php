@@ -42,7 +42,7 @@
     @endif
 
     <div class="row">
-        <div class="col-xs-6 col-xs-offset-3">
+        <div class="col-xs-8 col-xs-offset-2">
             <div class="panel panel-default">
 
                 <div class="panel-body">
@@ -53,17 +53,43 @@
                         <thead>
                             <tr>
                                 <th>Documento</th>
+                                <th style="width: 90px;">Subido por</th>
+                                <th style="width: 10px;"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($claim->getAttaches() as $file)
-                                @if ($file != '.' && $file != '..')
-                                    <tr>
-                                        <td>
-                                            <a href="{{ route('customer.claim.attach.download', ['claim_id' => $claim->id, 'file' => $file]) }}" download style="font-size: 16px;">{{ $file }}</a>
-                                        </td>
-                                    </tr>
-                                @endif
+                            @foreach ($claim->attaches as $attach)
+                                <tr>
+                                    <td style="vertical-align: middle;">
+                                        <a href="{{ route('customer.claim.attach.download', ['claim_id' => $claim->id, 'attach' => $attach->id]) }}" download style="font-size: 16px;">{{ $attach->file }}</a>
+                                    </td>
+                                    <td style="font-size: 14px;vertical-align: middle;">
+                                        {{ $attach->created_by_name }}
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        @if (!$claim->is_closed)
+                                            @if ($attach->created_by == session()->get('user'))
+                                                <a
+                                                    onclick="cancel('{{ $attach->id }}', this)"
+                                                    href="javascript:void(0)"
+                                                    style="font-size: 20px;"
+                                                    data-toggle="tooltip"
+                                                    data-placement="top"
+                                                    title="Eliminar Adjunto {{ $attach->file }}"
+                                                    class="rojo link_anular">
+                                                    <i class="fa fa-trash fa-fw"></i>
+                                                </a>
+                                                <form
+                                                    style="display: none;"
+                                                    action="{{ route('customer.claim.attach.delete', ['claim_id' => $attach->claim_id,'attach' => $attach->id]) }}"
+                                                    method="post" id="form_eliminar_{{ $attach->id }}">
+                                                    {{ csrf_field() }}
+                                                    {{ method_field('DELETE') }}
+                                                </form>
+                                            @endif
+                                        @endif
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -77,6 +103,20 @@
         $('#form').submit(function (event) {
             $('#btn_submit').button('loading');
         });
+
+        function cancel(id, el)
+        {
+            res = confirm('Realmente desea eliminar este adjunto?');
+
+            if (!res) {
+                event.preventDefault();
+                return;
+            }
+
+            $(el).remove();
+
+            $('#form_eliminar_' + id).submit();
+        }
     </script>
 
 @endsection
