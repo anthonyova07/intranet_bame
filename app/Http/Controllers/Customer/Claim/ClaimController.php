@@ -11,6 +11,7 @@ use Bame\Http\Controllers\Controller;
 use Bame\Models\Customer\Claim\Param;
 use Bame\Models\Customer\Claim\Claim;
 use Bame\Models\Customer\Claim\Status;
+use Bame\Models\Customer\Claim\Attach;
 use Bame\Models\Notification\Notification;
 use Bame\Http\Requests\Customer\Claim\ClaimRequest;
 
@@ -434,6 +435,103 @@ class ClaimController extends Controller
         $noti->save();
 
         return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación ha ' . ($request->claim_result == 'P' ? 'cambiado de estado' : 'sido cerrada.') . ' correctamente.');
+    }
+
+    public function getAttach(Request $request, $claim_id)
+    {
+        $claim = Claim::find($claim_id);
+
+        if (!$claim) {
+            return redirect(route('customer.claim.index'));
+        }
+
+        return view('customer.claim.attach')
+            ->with('claim', $claim);
+    }
+
+    public function postAttach(Request $request, $claim_id)
+    {
+        $claim = Claim::find($claim_id);
+
+        if (!$claim) {
+            return redirect(route('customer.claim.index'));
+        }
+
+        if ($claim->is_closed) {
+            return back()->with('warning', 'La reclamación se encuentra cerrada.');
+        }
+
+        if ($request->hasFile('files')) {
+            $files = collect($request->file('files'));
+
+            $path = storage_path('app\\claims\\attaches\\' . $claim->id . '\\');
+
+            $files->each(function ($file, $index) use ($path, $claim) {
+                $file_name_destination = str_replace(' ', '_', $file->getClientOriginalName());
+
+                $file_name_destination = remove_accents($file_name_destination);
+
+                $file->move($path, $file_name_destination);
+
+                $attach = new Attach;
+
+                $attach->id = uniqid(true);
+                $attach->claim_id = $claim->id;
+                $attach->file = $file_name_destination;
+
+                $attach->created_by = session()->get('user');
+                $attach->created_by_name = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+
+                $attach->save();
+            });
+
+            Notification::notify('Reclamaciones', 'Nuevo/s documento/s adjunto a la reclamación ' . $claim->claim_number, route('customer.claim.show', ['id' => $claim->id]), $claim->created_by);
+        }
+
+        return back()->with('success', 'Los archivos han sido cargados correctamente.');
+    }
+
+    public function downloadAttach(Request $request, $claim_id, $attach)
+    {
+        $claim = Claim::find($claim_id);
+
+        if (!$claim) {
+            return redirect(route('customer.claim.index'));
+        }
+
+        $attach = $claim->attaches()->where('id', $attach)->first();
+
+        if (!$attach) {
+            return back()->with('warning', 'Este adjunto no existe!');
+        }
+
+        $path = storage_path('app\\claims\\attaches\\' . $claim->id . '\\' . $attach->file);
+
+        return response()->download($path);
+    }
+
+    public function deleteAttach(Request $request, $claim_id, $attach)
+    {
+        $claim = Claim::find($claim_id);
+
+        if (!$claim) {
+            return redirect(route('customer.claim.index'));
+        }
+
+        if ($claim->is_closed) {
+            return back()->with('warning', 'La reclamación se encuentra cerrada.');
+        }
+
+        $attach = $claim->attaches()->where('id', $attach)->where('created_by', session()->get('user'))->first();
+
+        if (!$attach) {
+            return back()->with('warning', 'Este adjunto no existe o no fue cargado por usted!');
+        }
+
+        $attach->delete_attach();
+        $attach->delete();
+
+        return back()->with('success', 'El adjunto ha sido eliminado correctamente!');
     }
 
     public function statuses($id)

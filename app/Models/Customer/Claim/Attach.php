@@ -4,11 +4,11 @@ namespace Bame\Models\Customer\Claim;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Status extends Model
+class Attach extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intranet_claim_statuses';
+    protected $table = 'intranet_claim_attaches';
 
     protected $primaryKey = 'id';
 
@@ -24,5 +24,14 @@ class Status extends Model
     public function scopeLastestFirst($query)
     {
         return $query->orderBy('created_at', 'desc');
+    }
+
+    public function delete_attach()
+    {
+        $path = storage_path('app\\claims\\attaches\\' . $this->claim_id . '\\' . $this->file);
+
+        if (file_exists($path)) {
+            unlink($path);
+        }
     }
 }

@@ -47,6 +47,22 @@
     </style>
 </head>
     <body style="font-size: 80%">
+        <table style="width: 100%" border="0">
+            <tbody>
+                <tr>
+                    <td style="text-align: right;font-weight: bold;font-size: 20px;padding-right: 20px;">
+                    Formulario de
+                    @if ($form->form_type == 'FRA')
+                        Fraude
+                    @elseif ($form->form_type == 'CON')
+                        Consumo
+                    @elseif ($form->form_type == 'CAI')
+                        Cargos Internos
+                    @endif
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <table width="100%" border="0">
             <tbody>
                 <tr valign="top">
@@ -110,9 +126,9 @@
 
         @if (in_array($form->form_type, ['CAI']))
 
-            <h3 style="margin-bottom: 0px;">Información General</h3>
+            <h3 style="margin-bottom: 0px;font-size: 80%;">Información General</h3>
             <br>
-            <table style="width: 100%;margin-left: 10px;">
+            <table style="width: 100%;font-size: 80%;margin-left: 10px;">
                 <tbody>
                     <tr>
                         <td colspan="2"><b>Nombre del Cliente: </b> {{ $form->claim->getFullName() }}</td>
@@ -125,7 +141,7 @@
 
             <br>
 
-            <table style="width: 80%;margin-left: 10px;border-bottom: 1px solid #ccc;margin: auto;">
+            <table style="width: 80%;margin-left: 10px;font-size: 80%;border-bottom: 1px solid #ccc;margin: auto;">
                 <tbody>
                     <tr>
                         <td style="border-bottom: 1px solid #ccc;" colspan="2"><b>Capital: </b> {{ number_format($form->capital, 2) }}</td>
@@ -291,7 +307,7 @@
             </div>
 
             <h3 style="margin-bottom: 0px;">Datos de Oficial del Banco</h3>
-            <table style="width: 100%;margin-left: 10px;">
+            <table style="font-size: 80%;width: 100%;margin-left: 10px;">
                 <tbody>
                     <tr>
                         <td colspan="2"><b>Nombre y Apellido: </b> {{ $form->created_by_name }}</td>
@@ -300,6 +316,38 @@
                     </tr>
                 </tbody>
             </table>
+        @endif
+
+        <br>
+        <br>
+        <br>
+
+        <table style="font-size: 80%;width: 100%;">
+            <tbody>
+                <tr style="text-align: center;">
+                    <td class="sign_field">
+                        <b>_______________________________________</b>
+                        <br>
+                        <span style="font-size: 15px;">Firma Gerente</span>
+                    </td>
+
+                    <td class="sign_field">
+                        <b>_______________________________________</b>
+                        <br>
+                        <span style="font-size: 15px;">Firma Oficial</span>
+                    </td>
+
+                    <td class="sign_field">
+                        <b>_______________________________________</b>
+                        <br>
+                        <span style="font-size: 15px;">Firma Cliente (Cardholder Signature)</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        @if (in_array($form->form_type, ['FRA', 'CON']))
+            <br>
 
             <table style="font-size: 80%;margin-top: 5px;">
                 <tbody>
@@ -325,38 +373,7 @@
                     </tr>
                 </tbody>
             </table>
-
         @endif
-
-        <br>
-
-        <table style="font-size: 80%;width: 100%;">
-            <tbody>
-                <tr style="text-align: center;">
-                    <td class="sign_field" colspan="2" style="width: 50%;">
-                        <b>__________________________________________________</b>
-                        <br>
-                        <span style="font-size: 15px;">Firma por el Banco</span>
-                    </td>
-
-                    @if (in_array($form->form_type, ['CAI']))
-
-                        <td class="sign_field" colspan="2" style="width: 50%;">
-                            <b>__________________________________________________</b>
-                            <br>
-                            <span style="font-size: 15px;">Firma del Gerente</span>
-                        </td>
-
-                    @endif
-
-                    <td class="sign_field" colspan="2" style="width: 50%;">
-                        <b>__________________________________________________</b>
-                        <br>
-                        <span style="font-size: 15px;">Firma de Cliente (Cardholder Signature)</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
 
         @include('layouts.partials.print_and_exit')
     </body>
