@@ -61,7 +61,7 @@
                             @foreach ($claim->attaches as $attach)
                                 <tr>
                                     <td style="vertical-align: middle;">
-                                        <a href="{{ route('customer.claim.attach.download', ['claim_id' => $claim->id, 'attach' => $attach->id]) }}" download style="font-size: 16px;">{{ $attach->file }}</a>
+                                        <a href="{{ route('customer.claim.attach.download', ['claim_id' => $claim->id, 'attach' => $attach->id]) }}" target="__blank" style="font-size: 16px;">{{ $attach->file }}</a>
                                     </td>
                                     <td style="font-size: 14px;vertical-align: middle;">
                                         {{ $attach->created_by_name }}
