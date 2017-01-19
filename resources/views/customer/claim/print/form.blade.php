@@ -301,6 +301,36 @@
                 </tbody>
             </table>
 
+            <br>
+            <br>
+            <br>
+
+            <table style="font-size: 80%;width: 100%;">
+                <tbody>
+                    <tr style="text-align: center;">
+                        <td class="sign_field">
+                            <b>_______________________________________</b>
+                            <br>
+                            <span style="font-size: 15px;">Firma Gerente</span>
+                        </td>
+
+                        <td class="sign_field">
+                            <b>_______________________________________</b>
+                            <br>
+                            <span style="font-size: 15px;">Firma Oficial</span>
+                        </td>
+
+                        <td class="sign_field">
+                            <b>_______________________________________</b>
+                            <br>
+                            <span style="font-size: 15px;">Firma Cliente (Cardholder Signature)</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br>
+
             <table style="font-size: 80%;margin-top: 5px;">
                 <tbody>
                     <tr>
@@ -327,36 +357,6 @@
             </table>
 
         @endif
-
-        <br>
-
-        <table style="font-size: 80%;width: 100%;">
-            <tbody>
-                <tr style="text-align: center;">
-                    <td class="sign_field" colspan="2" style="width: 50%;">
-                        <b>__________________________________________________</b>
-                        <br>
-                        <span style="font-size: 15px;">Firma por el Banco</span>
-                    </td>
-
-                    @if (in_array($form->form_type, ['CAI']))
-
-                        <td class="sign_field" colspan="2" style="width: 50%;">
-                            <b>__________________________________________________</b>
-                            <br>
-                            <span style="font-size: 15px;">Firma del Gerente</span>
-                        </td>
-
-                    @endif
-
-                    <td class="sign_field" colspan="2" style="width: 50%;">
-                        <b>__________________________________________________</b>
-                        <br>
-                        <span style="font-size: 15px;">Firma de Cliente (Cardholder Signature)</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
 
         @include('layouts.partials.print_and_exit')
     </body>

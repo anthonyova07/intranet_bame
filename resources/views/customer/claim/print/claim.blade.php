@@ -206,18 +206,25 @@
         <br>
         <br>
 
-        <table style="font-size: 100%;">
+        <table style="font-size: 80%;width: 100%;">
             <tbody>
                 <tr style="text-align: center;">
-                    <td class="sign_field" colspan="2" style="width: 50%;">
-                        <b>____________________________________________</b>
+                    <td class="sign_field">
+                        <b>_______________________________________</b>
                         <br>
-                        <span style="font-size: 15px;">Firma del Oficial</span>
+                        <span style="font-size: 15px;">Firma Gerente</span>
                     </td>
-                    <td class="sign_field" colspan="2" style="width: 50%;">
-                        <b>____________________________________________</b>
+
+                    <td class="sign_field">
+                        <b>_______________________________________</b>
                         <br>
-                        <span style="font-size: 15px;">Firma del Cliente</span>
+                        <span style="font-size: 15px;">Firma Oficial</span>
+                    </td>
+
+                    <td class="sign_field">
+                        <b>_______________________________________</b>
+                        <br>
+                        <span style="font-size: 15px;">Firma Cliente</span>
                     </td>
                 </tr>
             </tbody>
@@ -276,6 +283,6 @@
             </tbody>
         </table>
 
-        @include('layouts.partials.print_and_exit')
+        {{-- @include('layouts.partials.print_and_exit') --}}
     </body>
 </html>
