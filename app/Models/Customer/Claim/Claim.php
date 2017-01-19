@@ -76,6 +76,11 @@ class Claim extends Model
         return $this->hasMany(Status::class, 'claim_id');
     }
 
+    public function attaches()
+    {
+        return $this->hasMany(Attach::class, 'claim_id');
+    }
+
     public function createStatus($claim_status, $comment)
     {
         if (is_string($claim_status)) {
@@ -99,4 +104,5 @@ class Claim extends Model
 
         $status->save();
     }
+
 }

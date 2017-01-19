@@ -21,6 +21,8 @@
                     </div>
 
                     <div class="col-xs-10 text-right" style="padding: 0 2px;">
+                        <a class="btn btn-default btn-xs" href="{{ route('customer.claim.attach', ['claim_id' => $claim->id]) }}"><i class="fa fa-file"></i> Adjuntos</a>
+
                         @foreach ($claim->forms as $form)
                             <a class="btn btn-primary btn-xs" href="{{ route('customer.claim.{claim_id}.{form_type}.form.show', ['form' => $form->id, 'claim_id' => $claim->id, 'form_type' => $form->form_type]) }}"><i class="fa fa-wpforms"></i> Formulario de {{ get_form_types($form->form_type) }}</a>
                         @endforeach
