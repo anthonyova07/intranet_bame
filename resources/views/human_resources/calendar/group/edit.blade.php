@@ -18,11 +18,18 @@
                 <div class="panel-body">
                     <form method="post" action="{{ route('human_resources.calendar.group.update', ['id' => $group->id]) }}" id="form" novalidate>
                         <div class="row">
-                            <div class="col-xs-10">
+                            <div class="col-xs-6">
                                 <div class="form-group{{ $errors->first('name') ? ' has-error':'' }}">
                                     <label class="control-label">Nombre</label>
                                     <input type="text" class="form-control input-sm" name="name" value="{{ $group->name }}">
                                     <span class="help-block">{{ $errors->first('name') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="checkbox">
+                                    <label style="margin-top: 18px;">
+                                        <input type="checkbox" name="showinday" {{ $group->showinday ? 'checked' : '' }}> Mostrar en Inicio
+                                    </label>
                                 </div>
                             </div>
                             <div class="col-xs-2">

@@ -134,4 +134,6 @@ $(document).ready(function() {
             $(this).remove();
         });
     });
+
+    $('.modal_start').modal('show');
 });
