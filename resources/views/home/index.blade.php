@@ -379,7 +379,7 @@
             @foreach ($events as $event)
                 {
                     title: '',
-                    start: '{{ $event->start_event->format('Y-m-d\TH:i:s') }}',
+                    start: '{{ $event->start_event->format('Y-m-d') }}',
                     url: '{{ route('home.event', ['id' => $event->id]) }}',
                     className: 'cal_tooltip event cal_icon {{ str_replace(' ', '|', 'Evento: ' . $event->title) }}',
                 },
