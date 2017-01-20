@@ -260,7 +260,7 @@
         </div>
     </div>
 
-    @if ($day_events->count())
+    @if ($day_events->count() || $day_birthdays->count() || $day_dates->count())
         <div class="modal fade modal_start" tabindex="-1">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
