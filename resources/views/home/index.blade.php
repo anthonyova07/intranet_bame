@@ -283,7 +283,7 @@
                                     @foreach($day_events as $event)
                                         <tr>
                                             <td>
-                                                <a href="{{ route('home.event', ['id' => $event->id]) }}" target="__blank">{{ $event->title }}</a>
+                                                <a style="color: #FF8849;" href="{{ route('home.event', ['id' => $event->id]) }}" target="__blank">{{ $event->title }}</a>
                                             </td>
                                             <td style="text-align: right;width: 120px;">
                                                 {{ $event->start_event->format('h:i:s a') }}
@@ -308,7 +308,7 @@
                                     @foreach($day_birthdays as $birthday)
                                         <tr>
                                             <td>
-                                                <a href="javascript:void(0)">{!! $birthday->full_name !!}</a>
+                                                <a style="color: #FF8849;" href="javascript:void(0)">{!! $birthday->full_name !!}</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -340,7 +340,7 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <a href="javascript:void(0)">{!! $date->title !!}</a>
+                                                    <a style="color: #FF8849;" href="javascript:void(0)">{!! $date->title !!}</a>
                                                 </td>
                                             </tr>
                                         @endif
