@@ -108,24 +108,13 @@
     </div>
 
     <div class="row" style="border-top: 1px solid #777;margin-top: 8px;border-width: 5px;">
-        <div class="col-xs-12">
-            <div class="panel panel-default panel-wiget" style="display: block;margin-top: 8px;">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Calendario Virtual</h3>
-                </div>
-                <div class="panel-body" style="background-color: #cccccc;">
-                    <div class="col-xs-12">
-                        <div id="calendar" style="width: 100%;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 
-    <div class="row" style="border-top: 1px solid #777;margin-top: -10px;border-width: 5px;">
+    <div class="row">
 
         <div class="col-xs-4">
-            <div class="panel panel-default" style="margin-top: 5px;">
+            <div class="panel panel-default" style="margin-top: 8px;">
 
                 <div class="panel-body text-center">
                     <img src="{{ route('home') . '/marketing/coco/rompete_el_coco.png' }}" style="width: 220px;">
@@ -186,6 +175,19 @@
 
                 @endif
 
+            </div>
+        </div>
+
+        <div class="col-xs-8">
+            <div class="panel panel-default panel-wiget" style="display: block;margin-top: 8px;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Calendario Virtual</h3>
+                </div>
+                <div class="panel-body" style="background-color: #cccccc;">
+                    <div class="col-xs-12">
+                        <div id="calendar" style="width: 100%;"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -258,40 +260,142 @@
         </div>
     </div>
 
+    @if ($day_events->count() || $day_birthdays->count() || $day_dates->count())
+        <div class="modal fade modal_start" tabindex="-1">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" style="padding: 6px 6px 6px 15px;color: #ffffff;background-color: #d82f27;">
+                        <button style="margin: -5px 8px 0 0; font-size: 40px;" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" style="font-size: 25px;">Actividades del Día</h4>
+                    </div>
+                    <div class="modal-body">
+                        @if ($day_events->count())
+                            <table class="table table-bordered table-hover table-striped" style="margin-bottom: 15px;">
+                                <thead>
+                                    <tr>
+                                        <th style="font-size: 18px;" colspan="2">
+                                            <img style="width: 25px;" src="{{ route('home') . '/images/event.png' }}">
+                                            Eventos
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size: 18px;">
+                                    @foreach($day_events as $event)
+                                        <tr>
+                                            <td>
+                                                <a style="color: #FF8849;" href="{{ route('home.event', ['id' => $event->id]) }}" target="__blank">{{ $event->title }}</a>
+                                            </td>
+                                            <td style="text-align: right;width: 120px;">
+                                                {{ $event->start_event->format('h:i:s a') }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+
+                        @if ($day_birthdays->count())
+                            <table class="table table-bordered table-hover table-striped" style="margin-bottom: 15px;">
+                                <thead>
+                                    <tr>
+                                        <th style="font-size: 18px;">
+                                            <img style="width: 25px;" src="{{ route('home') . '/images/birthdate.png' }}">
+                                            Cumpleaños
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size: 18px;">
+                                    @foreach($day_birthdays as $birthday)
+                                        <tr>
+                                            <td>
+                                                <a style="color: #FF8849;" href="javascript:void(0)">{!! $birthday->full_name !!}</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+
+                        @if ($day_dates->count())
+                            <table class="table table-bordered table-hover table-striped" style="margin-bottom: 15px;">
+                                <thead>
+                                    <tr>
+                                        <th style="font-size: 18px;" colspan="2">
+                                            <img style="width: 25px;" src="{{ route('home') . '/images/calendar.png' }}">
+                                            Fechas
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size: 18px;">
+                                    @foreach($day_dates as $date)
+                                        @if ($date->group->showinday)
+                                            <tr>
+                                                <td style="width: 42px;">
+                                                    @if ($date->group->name == 'Goes Green')
+                                                        <img data-toggle="tooltip" title="Goes Green" style="width: 25px;" src="{{ route('home') . '/images/goesgreen.png' }}">
+                                                    @elseif($date->group->name == 'Feriados')
+                                                        <img data-toggle="tooltip" title="Feriado" style="width: 25px;" src="{{ route('home') . '/images/holiday.png' }}">
+                                                    @else
+                                                        <img data-toggle="tooltip" title="Feriado" style="width: 25px;" src="{{ route('home') . '/images/calendar.png' }}">
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <a style="color: #FF8849;" href="javascript:void(0)">{!! $date->title !!}</a>
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <script>
         calendar('{{ $datetime->format('Y-m') }}', [
             @foreach ($dates as $date)
                 {
-                    title: '{!! $date->title !!}',
                     start: '{{ $date->startdate->format('Y-m-d') }}',
                     end: '{{ $date->enddate->format('Y-m-d') }}',
                     // color: '{{ $date->group->color }}',
                     backgroundColor: '{{ $date->group->backcolor }}',
                     borderColor: '{{ $date->group->bordcolor }}',
                     textColor: '{{ $date->group->textcolor }}',
-                    className: 'cal_tooltip {{ str_replace(' ', '|', $date->title) }}',
+                    @if ($date->group->name == 'Goes Green')
+                        title: '',
+                        className: 'cal_tooltip cal_icon goesgreen {{ str_replace(' ', '|', 'Goes Green: ' . $date->title) }}',
+                    @elseif($date->group->name == 'Feriados')
+                        title: '',
+                        className: 'cal_tooltip cal_icon holiday {{ str_replace(' ', '|', 'Día Feriado: ' . $date->title) }}',
+                    @else
+                        title: '{!! $date->title !!}',
+                        className: 'cal_tooltip {{ str_replace(' ', '|', $date->title) }}',
+                    @endif
                 },
             @endforeach
             @foreach ($events as $event)
                 {
-                    title: '{!! $event->title !!}',
-                    start: '{{ $event->start_event->format('Y-m-d\TH:i:s') }}',
+                    title: '',
+                    start: '{{ $event->start_event->format('Y-m-d') }}',
                     url: '{{ route('home.event', ['id' => $event->id]) }}',
-                    className: 'cal_tooltip {{ str_replace(' ', '|', $event->title) }}',
+                    className: 'cal_tooltip event cal_icon {{ str_replace(' ', '|', 'Evento: ' . $event->title) }}',
                 },
             @endforeach
-            @foreach ($payments_days as $payments_day)
+            @foreach ($payments_days as $index => $payments_day)
                     {
                         title: '',
                         start: '{{ $payments_day }}',
-                        className: 'payment_days cal_tooltip Día|de|Pago',
+                        className: 'payment_days cal_icon cal_tooltip Día|de|Pago|{{ ($index % 2 == 0) ? '1ra|Quincena' : '2da|Quincena' }}',
                     },
             @endforeach
             @foreach ($birthdates->unique('month_day') as $birthdate)
                 {
                     title: '',
                     start: '{{ $datetime->format('Y') .'-'. $birthdate->month_day }}',
-                    className: 'birthdate ' + '{!! str_replace(' ', '|', $birthdates->where('month_day', $birthdate->month_day)->implode('full_name', ',')) !!}',
+                    className: 'birthdate cal_icon ' + '{!! str_replace(' ', '|', $birthdates->where('month_day', $birthdate->month_day)->implode('full_name', ',')) !!}',
                 },
             @endforeach
         ]);

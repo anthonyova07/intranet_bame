@@ -109,6 +109,7 @@ function calendar(defaultDate, events) {
                     && item != 'fc-start'
                     && item != 'fc-end'
                     && item != 'show_popover'
+                    && item != 'cal_icon'
                     && item != 'birthdate') {
                     var names = item.split(',');
                     names.forEach(function (item, index) {
@@ -144,6 +145,7 @@ function calendar(defaultDate, events) {
                     && item != 'fc-end'
                     && item != 'show_tooltip'
                     && item != 'payment_days'
+                    && item != 'cal_icon'
                     && item != 'cal_tooltip') {
                     title = item.split('|').join(' ');
                 }

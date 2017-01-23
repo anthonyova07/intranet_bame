@@ -48,6 +48,18 @@ class HomeController extends Controller {
 
         $dates = Date::get();
 
+        $birthdates = Birthdate::getFile();
+
+        $day_events = $events->filter(function ($event, $key) use ($datetime) {
+            return !(stripos($event->start_event, $datetime->format('Y-m-d')) === FALSE);
+        });
+
+        $day_birthdays = $birthdates->where('month_day', $datetime->format('m-d'));
+
+        $day_dates = $dates->filter(function ($date, $key) use ($datetime) {
+            return !(stripos($date->startdate, $datetime->format('Y-m-d')) === FALSE || !$date->group->showinday);
+        });
+
         return view('home.index', [
             'column_new' => $column_new,
             'banners_news' => $banners_news,
@@ -57,8 +69,11 @@ class HomeController extends Controller {
             'vacancies' => $vacancies,
             'datetime' => $datetime,
             'payments_days' => Calendar::getPaymentsDays(),
-            'birthdates' => Birthdate::getFile(),
+            'birthdates' => $birthdates,
             'dates' => $dates,
+            'day_events' => $day_events,
+            'day_birthdays' => $day_birthdays,
+            'day_dates' => $day_dates,
         ]);
     }
 

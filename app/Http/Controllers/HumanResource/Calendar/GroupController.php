@@ -30,6 +30,7 @@ class GroupController extends Controller
         $group->bordcolor = $request->bordcolor;
         $group->textcolor = $request->textcolor;
         $group->is_active = $request->is_active ? true : false;
+        $group->showinday = $request->showinday ? true : false;
         $group->created_by = session()->get('user');
 
         $group->save();
@@ -65,6 +66,7 @@ class GroupController extends Controller
         $group->bordcolor = $request->bordcolor;
         $group->textcolor = $request->textcolor;
         $group->is_active = $request->is_active ? true : false;
+        $group->showinday = $request->showinday ? true : false;
         $group->updated_by = session()->get('user');
 
         $group->save();
