@@ -26,7 +26,8 @@
                                     <label class="control-label">Tipo de Transacción</label>
                                     <select class="form-control input-sm" name="transaction_type">
                                         @foreach ($transaction_types as $transaction_type)
-                                            <option value="{{ $transaction_type->transactionTypeID }}"{{ Request::get('transaction_type') == $transaction_type->transactionTypeID ? ' selected':'' }}>{{ $transaction_type->longName }}</option>
+                                            {{-- <option value="{{ $transaction_type->transactionTypeID }}"{{ Request::get('transaction_type') == $transaction_type->transactionTypeID ? ' selected':'' }}>{{ $transaction_type->longName }}</option> --}}
+                                            <option value="{{ $transaction_type->transactionTypeID }}"{{ 11 == $transaction_type->transactionTypeID ? ' selected':'' }}>{{ $transaction_type->longName }}</option>
                                         @endforeach
                                     </select>
                                 </div>
