@@ -42,18 +42,21 @@ class TransactionController extends Controller
             $transactions = $transactions->whereIn('trnTypeCurrencyID', $transactions_types_currency_destiny->toArray());
         // }
 
-        $transactions = $transactions->paginate();
+        // $transactions = $transactions->paginate();
 
         if ($request->has('print')) {
             $datetime = new DateTime;
             // $transaction_type = TransactionType::find($request->transaction_type);
+            $transactions = $transactions->get();
             $transaction_type = TransactionType::find(11);
             $view = view('pdfs.ib.transactions')
                 ->with('transaction_type', $transaction_type)
                 ->with('datetime', $datetime);
         } else {
-            $transaction_types = TransactionType::orderBy('longName')->get();
-            $view = view('ib.transaction.index')->with('transaction_types', $transaction_types);
+            $transactions = $transactions->paginate();
+            // $transaction_types = TransactionType::orderBy('longName')->get();
+            $view = view('ib.transaction.index');
+                // ->with('transaction_types', $transaction_types);
         }
 
         return $view->with('transactions', $transactions);
