@@ -18,7 +18,7 @@ class TransactionController extends Controller
     {
         $transactions = Transaction::orderBy('transactionDate', 'desc')->where('transactionStatusID', 9001);
 
-        if ($request->has('transaction_type')) {
+        // if ($request->has('transaction_type')) {
 
             if ($request->has('date_from')) {
                 $date_parts = explode('T', $request->date_from);
@@ -35,17 +35,19 @@ class TransactionController extends Controller
             $transactions_types_currency_origin = $transactions->pluck('trnTypeCurrencyID')->unique();
 
             $transactions_types_currency_destiny = TransactionTypeCurrency::whereIn('trnTypeCurrencyID', $transactions_types_currency_origin->toArray())
-                                    ->where('transactionTypeID', $request->transaction_type)
+                                    // ->where('transactionTypeID', $request->transaction_type)
+                                    ->where('transactionTypeID', 11)
                                     ->pluck('trnTypeCurrencyID');
 
             $transactions = $transactions->whereIn('trnTypeCurrencyID', $transactions_types_currency_destiny->toArray());
-        }
+        // }
 
         $transactions = $transactions->paginate();
 
         if ($request->has('print')) {
             $datetime = new DateTime;
-            $transaction_type = TransactionType::find($request->transaction_type);
+            // $transaction_type = TransactionType::find($request->transaction_type);
+            $transaction_type = TransactionType::find(11);
             $view = view('pdfs.ib.transactions')
                 ->with('transaction_type', $transaction_type)
                 ->with('datetime', $datetime);
