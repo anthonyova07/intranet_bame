@@ -188,6 +188,8 @@ class ClaimFormController extends Controller
 
         $form->save();
 
+        do_log('Creó el Formulario Adicional a la Reclamación ( número:' . strip_tags($claim->claim_number) . ' )');
+
         if (in_array($form_type, ['CON', 'FRA'])) {
 
             if ($request->transactions){
@@ -222,6 +224,8 @@ class ClaimFormController extends Controller
     public function show($claim_id, $form_type, $id)
     {
         $form = Form::find($id);
+
+        do_log('Consultó el Formulario Adicional de la Reclamación ( número:' . strip_tags($form->claim->claim_number) . ' )');
 
         return view('customer.claim.form.show')
                 ->with('form', $form);

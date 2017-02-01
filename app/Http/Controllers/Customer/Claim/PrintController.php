@@ -22,6 +22,8 @@ class PrintController extends Controller
             $claim->save();
         }
 
+        do_log('Imprimió la Reclamación ( número:' . strip_tags($claim->claim_number) . ' )');
+
         return view('customer.claim.print.claim')
             ->with('datetime', new DateTime)
             ->with('claim', $claim);
@@ -30,6 +32,8 @@ class PrintController extends Controller
     public function form(Request $request, $claim_id, $form_type, $form_id)
     {
         $form = Form::where('claim_id', $claim_id)->where('form_type', $form_type)->find($form_id);
+
+        do_log('Imprimió el Formulario Adicional de la Reclamación ( número:' . strip_tags($form->claim->claim_number) . ' )');
 
         return view('customer.claim.print.form')
                 ->with('datetime', new DateTime)
