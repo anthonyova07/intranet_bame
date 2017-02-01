@@ -33,9 +33,13 @@ class ParamController extends Controller
             $param->en_name = ucfirst(str_replace('campo', 'field', $request->en_name));
             $param->en_detail = ucfirst(str_replace('campo', 'field', $request->en_detail));
             $param->en_detail_2 = ucfirst(str_replace('campo', 'field', $request->en_detail_2));
+
+            do_log('Creó el parametro de TDC en Reclamaciones ( es_nombre:' . strip_tags($param->es_name) . ' )');
         } else {
             $param->code = strtoupper($request->code);
             $param->description = cap_str($request->description);
+
+            do_log('Creó el parametro ' . get_param($type, false) . ' en Reclamaciones ( código:' . strip_tags($param->code) . ' )');
         }
 
         $param->is_active = $request->is_active ? true : false;
@@ -75,9 +79,13 @@ class ParamController extends Controller
             $param->en_name = ucfirst(str_replace('campo', 'field', $request->en_name));
             $param->en_detail = ucfirst(str_replace('campo', 'field', $request->en_detail));
             $param->en_detail_2 = ucfirst(str_replace('campo', 'field', $request->en_detail_2));
+
+            do_log('Modificó el parametro de TDC en Reclamaciones ( es_nombre:' . strip_tags($param->es_name) . ' )');
         } else {
             $param->code = strtoupper($request->code);
             $param->description = cap_str($request->description);
+
+            do_log('Modificó el parametro ' . get_param($type, false) . ' en Reclamaciones ( código:' . strip_tags($param->code) . ' )');
         }
 
         $param->is_active = $request->is_active ? true : false;

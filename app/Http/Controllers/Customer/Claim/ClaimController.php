@@ -275,6 +275,8 @@ class ClaimController extends Controller
             return redirect(route('customer.claim.index'));
         }
 
+        do_log('Consultó la Reclamación ( número:' . strip_tags($claim->claim_number) . ' )');
+
         return view('customer.claim.show')
             ->with('claim', $claim);
     }
@@ -303,6 +305,8 @@ class ClaimController extends Controller
             $noti->save();
 
             $claim->createStatus('Reabierta', 'Reclamación Reabierta.');
+
+            do_log('Reabrió la Reclamación ( número:' . strip_tags($claim->claim_number) . ' )');
 
             return back()->with('info', 'La reclamación ha sido abierta nuevamente');
         }
@@ -376,6 +380,8 @@ class ClaimController extends Controller
             Notification::notifyUsersByPermission('customer_claim_close', 'Reclamaciones', 'Nueva reclamación creada y aprobada (' . $claim->claim_number . ') pendiente de trabajar.', route('customer.claim.show', ['id' => $claim->id]));
         }
 
+        do_log(($to_approve ? 'Aprobó' : 'Rechazó') . ' la Reclamación ( número:' . strip_tags($claim->claim_number) . ' )');
+
         return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación ha sido ' . ($to_approve ? 'Aprobada' : 'Rechazada') . ' correctamente.');
     }
 
@@ -434,6 +440,8 @@ class ClaimController extends Controller
         $noti->create('Reclamaciones', 'La reclamación ' . $claim->claim_number . ' ha ' . ($request->claim_result == 'P' ? 'cambiado de estado' : 'sido cerrada.'), route('customer.claim.show', ['id' => $claim->id]));
         $noti->save();
 
+        do_log(($request->claim_result == 'P' ? 'Cambió de Estado' : 'Cerró') . ' la Reclamación ( número:' . strip_tags($claim->claim_number) . ' )');
+
         return redirect(route('customer.claim.show', ['id' => $claim->id]))->with('success', 'La reclamación ha ' . ($request->claim_result == 'P' ? 'cambiado de estado' : 'sido cerrada.') . ' correctamente.');
     }
 
@@ -485,6 +493,8 @@ class ClaimController extends Controller
                 $attach->save();
             });
 
+            do_log('Adjuntó archivos a la Reclamación ( número:' . strip_tags($claim->claim_number) . ' )');
+
             Notification::notify('Reclamaciones', 'Nuevo/s documento/s adjunto a la reclamación ' . $claim->claim_number, route('customer.claim.show', ['id' => $claim->id]), $claim->created_by);
         }
 
@@ -507,6 +517,8 @@ class ClaimController extends Controller
 
         $path = storage_path('app\\claims\\attaches\\' . $claim->id . '\\' . $attach->file);
 
+        do_log('Descargó archivo de la Reclamación ( número:' . strip_tags($claim->claim_number) . ' archivo:' . $attach->file . ' )');
+
         return response()->download($path);
     }
 
@@ -528,6 +540,8 @@ class ClaimController extends Controller
             return back()->with('warning', 'Este adjunto no existe o no fue cargado por usted!');
         }
 
+        do_log('Eliminó archivo de la Reclamación ( número:' . strip_tags($claim->claim_number) . ' archivo:' . $attach->file . ' )');
+
         $attach->delete_attach();
         $attach->delete();
 
@@ -543,6 +557,8 @@ class ClaimController extends Controller
         }
 
         $claim_statuses = Status::where('claim_id', $id)->lastestFirst()->get();
+
+        do_log('Consultó los estatus de la Reclamación ( número:' . strip_tags($claim->claim_number) . ' )');
 
         return view('customer.claim.statuses')
                 ->with('claim', $claim)

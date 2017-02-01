@@ -283,6 +283,6 @@
             </tbody>
         </table>
 
-        {{-- @include('layouts.partials.print_and_exit') --}}
+        @include('layouts.partials.print_and_exit')
     </body>
 </html>

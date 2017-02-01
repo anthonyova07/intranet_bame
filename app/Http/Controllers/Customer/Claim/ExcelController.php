@@ -25,6 +25,8 @@ class ExcelController extends Controller
             $claims->where('created_at', '<=', $request->date_to . ' 23:59:59');
         }
 
+        do_log('Exportó a Excel las Reclamaciones ( desde:' . strip_tags($request->date_from) . ' hasta:' . strip_tags($request->date_to) . ' )');
+
         if ($request->claim_result) {
             $claims = $claims->where('claim_result', $request->claim_result)->get();
 
