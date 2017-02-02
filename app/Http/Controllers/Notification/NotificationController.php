@@ -39,6 +39,11 @@ class NotificationController extends Controller
 
             $ids_cookies = cookie('ids_notifications', $ids, env('NOTIFICATION_EXPIRATIONS_MINUTES'));
 
+            $notifications = $notifications->each(function ($notificacion, $index) {
+                $notificacion->titulo = html_entity_decode($notificacion->titulo);
+                $notificacion->texto = html_entity_decode($notificacion->texto);
+            });
+
             return response()->json($notifications)->cookie($ids_cookies);
         }
     }
