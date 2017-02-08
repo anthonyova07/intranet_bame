@@ -45,7 +45,7 @@
                             </tr>
                             <tr>
                                 <td>Fecha Limite Suscripciones</td>
-                                <td>{{ $event->end_subscriptions->format('d/m/Y') }}</td>
+                                <td>{{ $event->end_subscriptions->format('d/m/Y h:i:s A') }}</td>
                             </tr>
                             <tr>
                                 <td>Limite de Personas</td>
