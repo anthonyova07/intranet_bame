@@ -76,7 +76,7 @@ class EventController extends Controller
             $event->image = '/event/images/' . $file_name_destination;
         }
 
-        $event->end_subscriptions = new DateTime($request->end_subscriptions . ' 23:59:59');
+        $event->end_subscriptions = new DateTime($request->end_subscriptions);
         $event->start_event = new DateTime($request->start_event);
         $event->limit_persons = $request->limit_persons ? true : false;
         $event->limit_accompanists = $request->limit_accompanists ? true : false;
@@ -170,7 +170,7 @@ class EventController extends Controller
             $event->image = '/event/images/' . $file_name_destination;
         }
 
-        $event->end_subscriptions = new DateTime($request->end_subscriptions . ' 23:59:59');
+        $event->end_subscriptions = new DateTime($request->end_subscriptions);
         $event->start_event = new DateTime($request->start_event);
         $event->limit_persons = $request->limit_persons ? true : false;
         $event->limit_accompanists = $request->limit_accompanists ? true : false;

@@ -41,7 +41,7 @@
                         <div class="col-xs-4">
                             <div class="form-group{{ $errors->first('end_subscriptions') ? ' has-error':'' }}">
                                 <label class="control-label">Fecha Limite Suscripciones</label>
-                                <input type="date" class="form-control input-sm" name="end_subscriptions" value="{{ $event->end_subscriptions->format('Y-m-d') }}">
+                                <input type="datetime-local" class="form-control input-sm" name="end_subscriptions" value="{{ $event->end_subscriptions->format('Y-m-d\TH:i') }}">
                                 <span class="help-block">{{ $errors->first('end_subscriptions') }}</span>
                             </div>
                         </div>
