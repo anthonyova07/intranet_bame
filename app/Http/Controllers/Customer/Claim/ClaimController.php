@@ -19,7 +19,11 @@ class ClaimController extends Controller
 {
     public function index(Request $request)
     {
-        $claims = Claim::orderBy('created_at', 'desc');
+        if (can_not_do('customer_claim_close')) {
+            $claims = Claim::orderBy('created_at', 'desc');
+        } else {
+            $claims = Claim::orderBy('approved_date', 'desc');
+        }
 
         if ($request->term) {
             $term = cap_str($request->term);
@@ -337,7 +341,7 @@ class ClaimController extends Controller
             $rules['claim_status'] = 'required';
         }
 
-        $rules['rate_day'] = 'numeric' . ($claim->currency == 'US$' ? '|required' : '');
+        $rules['rate_day'] = 'min:1|numeric' . ($claim->currency == 'US$' ? '|required' : '');
 
         $this->validate($request, $rules);
 
