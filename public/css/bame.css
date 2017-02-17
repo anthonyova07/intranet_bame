@@ -343,3 +343,8 @@ form {
 .fc-event-container {
     padding-top: 1px !important;
 }
+
+.fc-toolbar.fc-header-toolbar {
+    margin-bottom: -6px;
+    margin-top: -5px;
+}

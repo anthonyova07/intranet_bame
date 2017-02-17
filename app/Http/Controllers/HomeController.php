@@ -38,7 +38,7 @@ class HomeController extends Controller {
         $coco = new Coco();
 
         $events = Event::where('is_active', true)
-            ->where('start_event', '>=', new DateTime)
+            ->where('end_subscriptions', '>=', new DateTime)
             ->orderBy('created_at', 'desc')
             ->get();
 

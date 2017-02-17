@@ -184,13 +184,38 @@
                     <h3 class="panel-title">Calendario Virtual</h3>
                 </div>
                 <div class="panel-body" style="background-color: #cccccc;">
-                    <div class="col-xs-12">
-                        <div id="calendar" style="width: 100%;"></div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div id="calendar" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 0px;">
+                        <div class="col-xs-12">
+                            <div class="panel panel-default" style="margin-bottom: 0px;border-radius: 0;border: 0 solid transparent;">
+                                <div class="panel-body">
+                                    <div class="col-xs-3 text-center">
+                                        <img style="width: 24px;" src="{{ route('home') }}/images/event.png"> Eventos
+                                    </div>
+                                    <div class="col-xs-3 text-center">
+                                        <img style="width: 24px;" src="{{ route('home') }}/images/goesgreen.png"> Goes Green
+                                    </div>
+                                    <div class="col-xs-3 text-center">
+                                        <img style="width: 24px;" src="{{ route('home') }}/images/birthdate.png"> Cumpleaños
+                                    </div>
+                                    <div class="col-xs-3 text-center">
+                                        <img style="width: 24px;" src="{{ route('home') }}/images/money.png"> Días de Pago
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+    </div>
+
+    <div class="row">
         <div class="col-xs-4">
 
             <div class="panel panel-default panel-wiget" style="margin-top: 5px;">
@@ -272,21 +297,30 @@
                         @if ($day_events->count())
                             <table class="table table-bordered table-hover table-striped" style="margin-bottom: 15px;">
                                 <thead>
-                                    <tr>
-                                        <th style="font-size: 18px;" colspan="2">
+                                    <tr style="font-size: 18px;">
+                                        <th style="width: 68%;">
                                             <img style="width: 25px;" src="{{ route('home') . '/images/event.png' }}">
                                             Eventos
                                         </th>
+                                        <th class="text-center" style="width: 16%;"><i style="color: #FF8849;" class="fa fa-hourglass-start"></i> Inicio</th>
+                                        <th class="text-center" style="width: 16%;"><i style="color: #FF8849;" class="fa fa-hourglass-end"></i> Fin</th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 18px;">
                                     @foreach($day_events as $event)
                                         <tr>
-                                            <td>
+                                            <td style="vertical-align: middle;">
                                                 <a style="color: #FF8849;" href="{{ route('home.event', ['id' => $event->id]) }}" target="__blank">{{ $event->title }}</a>
                                             </td>
-                                            <td style="text-align: right;width: 120px;">
-                                                {{ $event->start_event->format('h:i:s a') }}
+                                            <td style="text-align: right;width: 120px;font-size: 15px;letter-spacing: 1px;">
+                                                {{ $event->start_event->format('d/m/y') }}
+                                                <br>
+                                                {{ $event->start_event->format('h:i a') }}
+                                            </td>
+                                            <td style="text-align: right;width: 120px;font-size: 15px;letter-spacing: 1px;">
+                                                {{ $event->end_subscriptions->format('d/m/y') }}
+                                                <br>
+                                                {{ $event->end_subscriptions->format('h:i a') }}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -368,8 +402,9 @@
                         title: '',
                         className: 'cal_tooltip cal_icon goesgreen {{ str_replace(' ', '|', 'Goes Green: ' . $date->title) }}',
                     @elseif($date->group->name == 'Feriados')
-                        title: '',
-                        className: 'cal_tooltip cal_icon holiday {{ str_replace(' ', '|', 'Día Feriado: ' . $date->title) }}',
+                        title: '{{ $date->title }}',
+                        //cal_icon holiday
+                        className: 'cal_tooltip {{ str_replace(' ', '|', 'Día Feriado: ' . $date->title) }}',
                     @else
                         title: '{!! $date->title !!}',
                         className: 'cal_tooltip {{ str_replace(' ', '|', $date->title) }}',
