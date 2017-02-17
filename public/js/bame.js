@@ -167,4 +167,13 @@ $(document).ready(function() {
             $(this).remove();
         });
     });
+
+    $('.modal_start').modal('show');
+
+    setTimeout(function () {
+        var date = new Date;
+        if (date.getHours() == 2) {
+            window.location = '/';
+        }
+    }, 3000000);
 });

@@ -174,5 +174,11 @@ return [
       'product_service' => 'Producto y Servicio',
       'link' => 'Hipervínculo',
       'link_video' => 'Hipervínculo del Video',
+      'color' => 'Color',
+      'backcolor' => 'Fondo',
+      'bordcolor' => 'Borde',
+      'textcolor' => 'Texto',
+      'startdate' => 'Fecha de Inicio',
+      'enddate' => 'Fecha Final',
     ],
 ];

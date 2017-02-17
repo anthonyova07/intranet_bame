@@ -309,3 +309,67 @@ form {
 .video-thumbnail {
     background-color: #d82f27;
 }
+
+.ui-widget, .ui-widget button {
+    font-family: 'Juhl', 'Museo', sans-serif !important;
+}
+
+.ui-state-highlight.fc-today {
+    background-color: #acc0c6 !important;
+}
+
+.fc-row:hover {
+    cursor: pointer;
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    border: 1px solid #acc0c6 !important;
+    background: #acc0c6 !important;
+    color: #444 !important;
+}
+
+.cal_icon {
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    content: "";
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
+.birthdate {
+    background-image: url(http://192.168.0.100/intranet/public/images/birthdate.png);
+}
+
+.payment_days {
+    background-image: url(http://192.168.0.100/intranet/public/images/money.png);
+}
+
+.event {
+    background-image: url(http://192.168.0.100/intranet/public/images/event.png);
+}
+
+.goesgreen {
+    background-image: url(http://192.168.0.100/intranet/public/images/goesgreen.png);
+}
+
+.holiday {
+    background-image: url(http://192.168.0.100/intranet/public/images/holiday.png);
+}
+
+.popover-title {
+    padding: 6px 15px;
+    color: #ffffff;
+    background-color: #d82f27;
+}
+
+.fc-event-container {
+    padding-top: 1px !important;
+}
+
+.fc-toolbar.fc-header-toolbar {
+    margin-bottom: -6px;
+    margin-top: -5px;
+}

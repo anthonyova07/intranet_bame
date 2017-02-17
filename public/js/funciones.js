@@ -74,3 +74,92 @@ function delete_notification(id) {
         url: ruta_base + '/notification/delete/' + id
     });
 }
+
+function calendar(defaultDate, events) {
+    $('#calendar').fullCalendar({
+        theme: true,
+        defaultDate: defaultDate,
+        defaultView: 'month',
+        fixedWeekCount: true,
+        nowIndicator: true,
+        firstDay: 1,
+        weekNumbers: false,
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month'
+        },
+        navLinks: true, // can click day/week names to navigate views
+        editable: false,
+        // eventLimit: true, // allow "more" link when too many events
+        events: events,
+        dayClick: function (date, jsEvent, view) {
+            var day = date.toDate().getDate() + 1;
+            var month = date.toDate().getMonth() + 1;
+        }
+    });
+
+    $('#calendar').on({
+        mouseenter: function () {
+            var content = '<ul class="list-group">';
+            $(this).addClass('show_popover').attr('class').split(' ').forEach(function (item, index) {
+                if (item != 'fc-day-grid-event'
+                    && item != 'fc-h-event'
+                    && item != 'fc-event'
+                    && item != 'fc-start'
+                    && item != 'fc-end'
+                    && item != 'show_popover'
+                    && item != 'cal_icon'
+                    && item != 'birthdate') {
+                    var names = item.split(',');
+                    names.forEach(function (item, index) {
+                        var name = item.split('|').join(' ');
+                        content += '<li class="list-group-item">' + name + '</li>';
+                    });
+                }
+            });
+            content += '</ul>';
+
+            $('.show_popover').popover({
+                title: 'Cumpleaños del Día',
+                content: content,
+                html: true,
+                placement: 'top',
+                container: 'body',
+            }).popover('show');
+        },
+        mouseleave: function () {
+            $('.show_popover').popover('hide');
+            $(this).removeClass('show_popover');
+        }
+    }, '.birthdate');
+
+    $('#calendar').on({
+        mouseenter: function () {
+            var title = '';
+            $(this).addClass('show_tooltip').attr('class').split(' ').forEach(function (item, index) {
+                if (item != 'fc-day-grid-event'
+                    && item != 'fc-h-event'
+                    && item != 'fc-event'
+                    && item != 'fc-start'
+                    && item != 'fc-end'
+                    && item != 'show_tooltip'
+                    && item != 'payment_days'
+                    && item != 'cal_icon'
+                    && item != 'cal_tooltip') {
+                    title = item.split('|').join(' ');
+                }
+            });
+
+            $('.show_tooltip').tooltip({
+                title: title,
+                placement: 'top',
+                container: 'body',
+            }).tooltip('show');
+        },
+        mouseleave: function () {
+            $('.show_tooltip').tooltip('hide');
+            $(this).removeClass('show_tooltip');
+        }
+    }, '.cal_tooltip');
+}
