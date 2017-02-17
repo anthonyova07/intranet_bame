@@ -252,7 +252,7 @@
 
         <div class="col-xs-4">
 
-            <div class="panel panel-default panel-wiget" style="margin-top: 5px;">
+            <div class="panel panel-default panel-wiget">
                 <div class="panel-heading">
                     <h3 class="panel-title">Vacantes</h3>
                 </div>
