@@ -103,6 +103,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('gestidoc', 'GestiDoc\GestiDocController', ['only' => [
             'index', 'store', 'destroy'
         ]]);
+
+        Route::group(['prefix' => 'request'], function () {
+            Route::resource('{type}/param', 'Request\ParamController', ['only' => [
+                'create', 'store', 'edit', 'update'
+            ]]);
+        });
+
+        Route::resource('request', 'Request\Process\ProcessController', ['only' => [
+            'index', 'create', 'store', 'show'
+        ]]);
     });
 
     Route::resource('customer', 'Customer\CustomerController', ['only' => [
