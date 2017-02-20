@@ -505,6 +505,21 @@ function get_param($type, $plural = true)
     }
 }
 
+function get_proreq_param($type, $plural = true)
+{
+    switch ($type) {
+        case 'TIPSOL': //TIPO DE SOLICITUD
+            return ($plural ? 'Tipos ' : 'Tipo ') . 'de Solicitud';
+            break;
+        case 'EST': //TIPO DE SOLICITUD
+            return ($plural ? 'Estatus' : 'Estatus');
+            break;
+        case 'PRO': //TIPO DE SOLICITUD
+            return ($plural ? 'Procesos' : 'Proceso');
+            break;
+    }
+}
+
 function get_next_claim_number($last_claim_number)
 {
     $date = null;

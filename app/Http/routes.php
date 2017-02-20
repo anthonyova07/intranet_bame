@@ -105,12 +105,12 @@ Route::group(['middleware' => 'auth'], function () {
         ]]);
 
         Route::group(['prefix' => 'request'], function () {
-            Route::resource('{type}/param', 'Request\ParamController', ['only' => [
+            Route::resource('{type}/param', 'Process\Request\ParamController', ['only' => [
                 'create', 'store', 'edit', 'update'
             ]]);
         });
 
-        Route::resource('request', 'Request\Process\ProcessController', ['only' => [
+        Route::resource('request', 'Process\Request\RequestController', ['only' => [
             'index', 'create', 'store', 'show'
         ]]);
     });

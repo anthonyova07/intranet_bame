@@ -1,6 +1,6 @@
 <?php
 
-namespace Bame\Models\Request;
+namespace Bame\Models\Process\Request;
 
 use Illuminate\Database\Eloquent\Model;
 

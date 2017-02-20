@@ -4,11 +4,11 @@
 
 @section('page_title', 'Solicitudes de Procesos')
 
-{{-- @if (can_not_do('customer_claim'))
+@if (can_not_do('process_request'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 
@@ -107,9 +107,9 @@
     </div>
 
 
-    {{-- @if (!can_not_do('process_request_adm')) --}}
+    @if (!can_not_do('process_request_param'))
         <div class="row" style="border-bottom: 1px solid #777;border-top: 1px solid #777;margin: 8px 0 25px 0;border-width: 5px;">
-            <h1 style="margin: 0;text-align: center;">Mantenimientos</h1>
+            <h1 style="margin: 0;text-align: center;">Mantenimientos de Parametros</h1>
         </div>
 
         <div class="row">
@@ -132,13 +132,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($claim_types as $claim_type)
+                                @foreach ($request_types as $request_type)
                                     <tr>
-                                        <td>{{ $claim_type->code }}</td>
-                                        <td>{{ $claim_type->description }}</td>
+                                        <td>{{ $request_type->code }}</td>
+                                        <td>{{ $request_type->note }}</td>
                                         <td align="center">
                                             <a
-                                                href="{{ route('customer.claim.{type}.param.edit', ['type' => 'CT', 'param' => $claim_type->id]) }}"
+                                                href="{{ route('process.request.{type}.param.edit', ['type' => 'TIPSOL', 'param' => $request_type->id]) }}"
                                                 data-toggle="tooltip"
                                                 data-placement="top"
                                                 title="Editar"
@@ -147,7 +147,7 @@
                                             </a>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -172,13 +172,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($distribution_channels as $channel)
+                                @foreach ($request_statuses as $request_status)
                                     <tr>
-                                        <td>{{ $channel->code }}</td>
-                                        <td>{{ $channel->description }}</td>
+                                        <td>{{ $request_status->code }}</td>
+                                        <td>{{ $request_status->note }}</td>
                                         <td align="center">
                                             <a
-                                                href="{{ route('customer.claim.{type}.param.edit', ['type' => 'DC', 'param' => $channel->id]) }}"
+                                                href="{{ route('process.request.{type}.param.edit', ['type' => 'EST', 'param' => $request_status->id]) }}"
                                                 data-toggle="tooltip"
                                                 data-placement="top"
                                                 title="Editar"
@@ -187,7 +187,7 @@
                                             </a>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -211,18 +211,20 @@
                             <thead>
                                 <tr>
                                     <th style="width: 36px;">Código</th>
-                                    <th>Descripción</th>
+                                    <th style="width: 36px;">Versión</th>
+                                    <th>Nombre</th>
                                     <th style="width: 2px"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($claim_statuses as $claim_status)
+                                @foreach ($request_processes as $request_process)
                                     <tr>
-                                        <td>{{ $claim_status->code }}</td>
-                                        <td>{{ $claim_status->description }}</td>
+                                        <td>{{ $request_process->code }}</td>
+                                        <td>{{ $request_process->version }}</td>
+                                        <td>{{ $request_process->name }}</td>
                                         <td align="center">
                                             <a
-                                                href="{{ route('customer.claim.{type}.param.edit', ['type' => 'CS', 'param' => $claim_status->id]) }}"
+                                                href="{{ route('process.request.{type}.param.edit', ['type' => 'PRO', 'param' => $request_process->id]) }}"
                                                 data-toggle="tooltip"
                                                 data-placement="top"
                                                 title="Editar"
@@ -231,7 +233,7 @@
                                             </a>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -240,7 +242,7 @@
 
         </div>
 
-    {{-- @endif --}}
+    @endif
 
     <script type="text/javascript">
         $('#form').submit(function (vacant) {
