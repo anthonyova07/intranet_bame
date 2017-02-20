@@ -32,6 +32,28 @@
 
     <link href="{{ route('home') }}/css/bame.css?last_update={{ env('JS_NOT_CACHE') }}" rel="stylesheet" type="text/css">
 
+    <style>
+        .birthdate {
+            background-image: url({{ route('home') }}/images/birthdate.png);
+        }
+
+        .payment_days {
+            background-image: url({{ route('home') }}/images/money.png);
+        }
+
+        .event {
+            background-image: url({{ route('home') }}/images/event.png);
+        }
+
+        .goesgreen {
+            background-image: url({{ route('home') }}/images/goesgreen.png);
+        }
+
+        .holiday {
+            background-image: url({{ route('home') }}/images/holiday.png);
+        }
+    </style>
+
     {{-- <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> --}}
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

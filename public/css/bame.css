@@ -339,26 +339,6 @@ form {
     border-color: transparent !important;
 }
 
-.birthdate {
-    background-image: url(http://intranet_bame:8077/images/birthdate.png);
-}
-
-.payment_days {
-    background-image: url(http://intranet_bame:8077/images/money.png);
-}
-
-.event {
-    background-image: url(http://intranet_bame:8077/images/event.png);
-}
-
-.goesgreen {
-    background-image: url(http://intranet_bame:8077/images/goesgreen.png);
-}
-
-.holiday {
-    background-image: url(http://intranet_bame:8077/images/holiday.png);
-}
-
 .popover-title {
     padding: 6px 15px;
     color: #ffffff;
