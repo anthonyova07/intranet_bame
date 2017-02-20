@@ -340,23 +340,23 @@ form {
 }
 
 .birthdate {
-    background-image: url(http://192.168.0.100/intranet/public/images/birthdate.png);
+    background-image: url(http://intranet_bame:8077/images/birthdate.png);
 }
 
 .payment_days {
-    background-image: url(http://192.168.0.100/intranet/public/images/money.png);
+    background-image: url(http://intranet_bame:8077/images/money.png);
 }
 
 .event {
-    background-image: url(http://192.168.0.100/intranet/public/images/event.png);
+    background-image: url(http://intranet_bame:8077/images/event.png);
 }
 
 .goesgreen {
-    background-image: url(http://192.168.0.100/intranet/public/images/goesgreen.png);
+    background-image: url(http://intranet_bame:8077/images/goesgreen.png);
 }
 
 .holiday {
-    background-image: url(http://192.168.0.100/intranet/public/images/holiday.png);
+    background-image: url(http://intranet_bame:8077/images/holiday.png);
 }
 
 .popover-title {
