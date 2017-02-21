@@ -402,7 +402,7 @@
                         title: '',
                         className: 'cal_tooltip cal_icon goesgreen {{ str_replace(' ', '|', 'Goes Green: ' . $date->title) }}',
                     @elseif($date->group->name == 'Feriados')
-                        title: '{{ $date->title }}',
+                        title: '{!! $date->title !!}',
                         //cal_icon holiday
                         className: 'cal_tooltip {{ str_replace(' ', '|', 'Día Feriado: ' . $date->title) }}',
                     @else
