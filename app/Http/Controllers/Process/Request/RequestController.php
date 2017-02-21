@@ -55,7 +55,7 @@ class RequestController extends Controller
         }
 
         $process_request->id = uniqid(true);
-        $process_request->request_type = $request_type->note;
+        $process_request->reqtype = $request_type->note;
         $process_request->process = "{$process->name} v( {$process->version} )";
         $process_request->subprocess = "{$subprocess->name} v( {$subprocess->version} )";
         $process_request->note = $request->description;
@@ -67,7 +67,7 @@ class RequestController extends Controller
         $process_request->created_by = session()->get('user');
         $process_request->created_by_name = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
 
-        $process_request->request_number = get_next_request_number();
+        $process_request->reqnumber = get_next_request_number();
         $process_request->save();
 
         return redirect(route('process.request.show', ['request' => $process_request->id]))->with('success', 'La solicitud ha sido creada correctamente.');
@@ -76,6 +76,14 @@ class RequestController extends Controller
 
     public function show($request)
     {
-        dd($request);
+        $process_request = ProcessRequest::find($request);
+
+        if (!$process_request) {
+            return redirect(route('process.request.index'));
+        }
+
+        return view('process.request.show', [
+            'process_request' => $process_request,
+        ]);
     }
 }
