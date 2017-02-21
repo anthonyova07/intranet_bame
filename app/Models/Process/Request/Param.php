@@ -20,9 +20,4 @@ class Param extends Model
     {
         return $query->where('is_active', true);
     }
-
-    public function scopeOrderByDescription($query)
-    {
-        return $query->orderBy('description', 'asc');
-    }
 }

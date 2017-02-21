@@ -1,14 +1,14 @@
 <?php
 
-namespace Bame\Models\Request;
+namespace Bame\Models\Process\Request;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Param extends Model
+class ProcessRequest extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intreqprpa';
+    protected $table = 'intreqpr';
 
     protected $primaryKey = 'id';
 
@@ -19,10 +19,5 @@ class Param extends Model
     public function scopeActiveOnly($query)
     {
         return $query->where('is_active', true);
-    }
-
-    public function scopeOrderByDescription($query)
-    {
-        return $query->orderBy('description', 'asc');
     }
 }

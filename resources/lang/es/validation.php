@@ -174,5 +174,11 @@ return [
       'product_service' => 'Producto y Servicio',
       'link' => 'Hipervínculo',
       'link_video' => 'Hipervínculo del Video',
+      'request_type' => 'Tipo de Solicitud',
+      'process' => 'Proceso',
+      'subprocess' => 'Subproceso',
+      'cause_analysis' => 'Análisis de Causa',
+      'people_involved' => 'Personas Involucradas',
+      'deliverable' => 'Entregables',
     ],
 ];
