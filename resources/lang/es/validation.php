@@ -180,5 +180,6 @@ return [
       'cause_analysis' => 'Análisis de Causa',
       'people_involved' => 'Personas Involucradas',
       'deliverable' => 'Entregables',
+      'users' => 'Usuarios',
     ],
 ];

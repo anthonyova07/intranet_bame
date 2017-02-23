@@ -108,6 +108,11 @@ Route::group(['middleware' => 'auth'], function () {
             Route::resource('{type}/param', 'Process\Request\ParamController', ['only' => [
                 'create', 'store', 'edit', 'update'
             ]]);
+
+            Route::post('{process_request}/addusers', 'Process\Request\RequestController@addusers')->name('process.request.addusers');
+            Route::get('{process_request}/deleteuser', 'Process\Request\RequestController@deleteuser')->name('process.request.deleteuser');
+            Route::get('{process_request}/approval', 'Process\Request\RequestController@approval')->name('process.request.approval');
+            Route::get('{process_request}/approval', 'Process\Request\RequestController@approval')->name('process.request.approval');
         });
 
         Route::resource('request', 'Process\Request\RequestController', ['only' => [

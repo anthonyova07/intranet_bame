@@ -4,7 +4,7 @@
 
 @section('page_title', 'Solicitud #' . $process_request->reqnumber)
 
-@if (can_not_do('customer_claim'))
+@if (can_not_do('process_request'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
@@ -12,91 +12,200 @@
 
 @section('contents')
 
-    <form method="post" action="{{ route('process.request.store') }}" id="form">
-
-        <div class="row">
-            <div class="col-xs-8 col-xs-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Datos de la Solicitud</h3>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-xs-2" style="padding: 0 2px;">
+                        <a class="btn btn-info btn-xs" href="{{ route('process.request.index', Request::all()) }}"><i class="fa fa-arrow-left"></i> Atrás</a>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-xs-4">
-                                <div class="form-group">
-                                    <label class="control-label">Tipo de Solicitud</label>
-                                    <br>
-                                    <span class="form-control-static">{{ $process_request->reqtype }}</span>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Datos de la Solicitud (
+                        @if ($process_request->getStatus() === '0')
+                            Rechazada
+                        @elseif ($process_request->getStatus() === '1')
+                            Aprobada
+                        @else
+                            Pendiente
+                        @endif
+                    )</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#datos_solicitud" data-toggle="tab"><b>Detalle</b></a></li>
+                        <li><a href="#datos_aprobacion" data-toggle="tab"><b>Aprobaciones</b></a></li>
+                    </ul>
+
+                    <div class="tab-content" style="margin-top: 10px;">
+                        <div class="tab-pane active" id="datos_solicitud">
+
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Tipo de Solicitud</label>
+                                        <br>
+                                        <span class="form-control-static">{{ $process_request->reqtype }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Proceso Impactado</label>
+                                        <br>
+                                        <span class="form-control-static">{{ $process_request->process }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Subproceso Impactado</label>
+                                        <br>
+                                        <span class="form-control-static">{{ $process_request->subprocess }}</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-xs-4">
-                                <div class="form-group">
-                                    <label class="control-label">Proceso Impactado</label>
-                                    <br>
-                                    <span class="form-control-static">{{ $process_request->process }}</span>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Descripción</label>
+                                        <textarea class="form-control input-sm" readonly="readonly" rows="5" name="description">{{ $process_request->note }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Análisis de Causa</label>
+                                        <textarea class="form-control input-sm" readonly="readonly" rows="5" name="cause_analysis">{{ $process_request->causeanaly }}</textarea>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-xs-4">
-                                <div class="form-group">
-                                    <label class="control-label">Subproceso Impactado</label>
-                                    <br>
-                                    <span class="form-control-static">{{ $process_request->subprocess }}</span>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Personas que Intervinieron en el Análisis</label>
+                                        <textarea class="form-control input-sm" readonly="readonly" rows="5" name="people_involved">{{ $process_request->peoinvolve }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Entregables</label>
+                                        <textarea class="form-control input-sm" readonly="readonly" rows="5" name="deliverable">{{ $process_request->deliverabl }}</textarea>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Observaciones</label>
+                                        <textarea class="form-control input-sm" readonly="readonly" rows="5" name="observations">{{ $process_request->observatio }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <div class="form-group">
-                                    <label class="control-label">Descripción</label>
-                                    <textarea class="form-control input-sm" name="description">{{ old('description') }}</textarea>
+                        <div class="tab-pane" id="datos_aprobacion">
+
+                            @if (!can_not_do('process_request_admin') && !$is_approved)
+                                <div class="row">
+                                    <div class="col-xs-8 col-xs-offset-2">
+                                        <form action="{{ route('process.request.addusers', ['process_request' => $process_request->id]) }}" method="post">
+                                            <div class="col-xs-10">
+                                                <div class="text-center form-group{{ $errors->first('users') ? ' has-error':'' }}">
+                                                    <label class="control-label" style="font-size: 16px;">Agregar Usuarios</label>
+                                                    <input type="text" name="users" class="form-control input-sm">
+                                                    <span class="help-block">{{ $errors->first('users') }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                {{ csrf_field() }}
+                                                <button style="margin-top: 26px;" type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Agregar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <div class="row">
+                                <div class="col-xs-8 col-xs-offset-2">
+                                    <table class="table table-bordered table-condensed table-striped table-hover">
+                                        <thead>
+                                            <th>Usuario</th>
+                                            <th>Nombre</th>
+                                            {{-- <th>Comentario</th> --}}
+                                            <th style="width: 116px;">Fecha</th>
+                                            <th style="width: 170px;"></th>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($process_request->approvals as $approval)
+                                                <tr>
+                                                    <td>{{ $approval->userapprov }}</td>
+                                                    <td>{{ $approval->username }}</td>
+                                                    {{-- <td>{{ $approval->comment }}</td> --}}
+                                                    <td>{{ $approval->approvdate ? $approval->approvdate->format('d/m/Y H:i:s'):'' }}</td>
+                                                    <td class="text-center">
+                                                        @if ($approval->approved === '0')
+                                                            <span style="font-size: 14px;letter-spacing: 1px;" class="label label-danger">Rechazada</span>
+                                                        @elseif ($approval->approved === '1')
+                                                            <span style="font-size: 14px;letter-spacing: 1px;" class="label label-success">Aprobada</span>
+                                                        @else
+                                                            <span style="font-size: 14px;letter-spacing: 1px;" class="label label-warning">Pendiente</span>
+                                                        @endif
+
+                                                        @if (!$is_approved)
+                                                            @if (!can_not_do('process_request_approval'))
+                                                                @if ($approval->userapprov === session()->get('user'))
+                                                                    <a
+                                                                        href="{{ route('process.request.approval', ['process_request' => $process_request->id, 'a' => '1']) }}"
+                                                                        class="link_activar verde"
+                                                                        data-toggle="tooltip"
+                                                                        data-placement="top"
+                                                                        style="font-size: 20px;"
+                                                                        title="Aprobar">
+                                                                        <i class="fa fa-check fa-fw"></i>
+                                                                    </a>
+                                                                    <a
+                                                                        href="{{ route('process.request.approval', ['process_request' => $process_request->id, 'a' => '0']) }}"
+                                                                        class="link_anular rojo"
+                                                                        data-toggle="tooltip"
+                                                                        data-placement="top"
+                                                                        style="font-size: 20px;"
+                                                                        title="Rechazar">
+                                                                        <i class="fa fa-times fa-fw"></i>
+                                                                    </a>
+                                                                @endif
+                                                            @endif
+
+                                                            @if (!can_not_do('process_request_admin'))
+                                                                <a
+                                                                    href="{{ route('process.request.deleteuser', ['process_request' => $process_request->id, 'u' => $approval->userapprov]) }}"
+                                                                    class="link_anular rojo"
+                                                                    data-toggle="tooltip"
+                                                                    data-placement="top"
+                                                                    style="font-size: 20px;"
+                                                                    title="Rechazar">
+                                                                    <i class="fa fa-trash fa-fw"></i>
+                                                                </a>
+                                                            @endif
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            <div class="col-xs-6">
-                                <div class="form-group{{ $errors->first('cause_analysis') ? ' has-error':'' }}">
-                                    <label class="control-label">Análisis de Causa</label>
-                                    <textarea class="form-control input-sm" name="cause_analysis">{{ old('cause_analysis') }}</textarea>
-                                    <span class="help-block">{{ $errors->first('cause_analysis') }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <div class="form-group{{ $errors->first('people_involved') ? ' has-error':'' }}">
-                                    <label class="control-label">Personas que Intervinieron en el Análisis</label>
-                                    <textarea class="form-control input-sm" name="people_involved">{{ old('people_involved') }}</textarea>
-                                    <span class="help-block">{{ $errors->first('people_involved') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-xs-6">
-                                <div class="form-group{{ $errors->first('deliverable') ? ' has-error':'' }}">
-                                    <label class="control-label">Entregables</label>
-                                    <textarea class="form-control input-sm" name="deliverable">{{ old('deliverable') }}</textarea>
-                                    <span class="help-block">{{ $errors->first('deliverable') }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <label class="control-label">Observaciones</label>
-                                    <textarea class="form-control input-sm" name="observations">{{ old('observations') }}</textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-4">
-                                {{ csrf_field() }}
-                                <a class="btn btn-info btn-xs" href="{{ route('process.request.index') }}"><i class="fa fa-arrow-left"></i> Atrás</a>
-                                <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Guardar</button>
-                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-    </form>
+    </div>
 
     <script type="text/javascript">
         $('#form').submit(function (event) {

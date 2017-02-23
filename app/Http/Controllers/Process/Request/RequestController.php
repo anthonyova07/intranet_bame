@@ -8,6 +8,7 @@ use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 use Bame\Models\Process\Request\Param;
 use Bame\Models\Process\Request\ProcessRequest;
+use Bame\Models\Process\Request\ProcessRequestApproval;
 use Bame\Http\Requests\Process\Request\RequestProcessRequest;
 
 class RequestController extends Controller
@@ -20,10 +21,13 @@ class RequestController extends Controller
         $request_statuses = $param->where('type', 'EST');
         $request_processes = $param->where('type', 'PRO');
 
+        $process_requests = ProcessRequest::lastestFirst()->paginate();
+
         return view('process.request.index', [
             'request_types' => $request_types,
             'request_statuses' => $request_statuses,
             'request_processes' => $request_processes,
+            'process_requests' => $process_requests,
         ]);
     }
 
@@ -65,7 +69,7 @@ class RequestController extends Controller
         $process_request->observatio = $request->observations;
 
         $process_request->created_by = session()->get('user');
-        $process_request->created_by_name = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+        $process_request->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
 
         $process_request->reqnumber = get_next_request_number();
         $process_request->save();
@@ -84,6 +88,87 @@ class RequestController extends Controller
 
         return view('process.request.show', [
             'process_request' => $process_request,
+            'is_approved' => $process_request->isApproved(),
         ]);
+    }
+
+    public function addusers(Request $request, $process_request)
+    {
+        $process_request = ProcessRequest::find($process_request);
+
+        if (!$process_request) {
+            return redirect(route('process.request.index'));
+        }
+
+        $approvals = $process_request->approvals;
+
+        $this->validate($request, [
+            'users' => 'required'
+        ]);
+
+        $arr_users = collect(explode(' ', trim($request->users)));
+
+        $users = collect();
+
+        foreach ($arr_users->unique() as $index => $user) {
+            if ($approvals->contains('userapprov', $user)) {
+                continue;
+            }
+
+            $approval = new ProcessRequestApproval;
+
+            $approval->id = uniqid(true) . $index;
+            $approval->userapprov = $user;
+            $approval->approved = '';
+            $approval->approvdate = null;
+
+            $approval->created_by = session()->get('user');
+            $approval->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+
+            $users->push($approval);
+        }
+
+        $process_request->approvals()->saveMany($users);
+
+        return redirect(route('process.request.show', ['request' => $process_request->id]))->with('success', 'Los usuarios han sido agregados correctamente.');
+
+    }
+
+    public function approval(Request $request, $process_request)
+    {
+        if (can_not_do('process_request_approval')) {
+            return redirect(route('process.request.show', ['request' => $process_request]))->with('error', 'Usted no tiene permiso para ejecutar esta acción.');
+        }
+
+        $process_request = ProcessRequest::find($process_request);
+
+        if (!$process_request) {
+            return redirect(route('process.request.index'));
+        }
+
+        $approval = $process_request->approvals()->where('userapprov', session()->get('user'))->update([
+            'approved' => $request->a == '1',
+            'approvdate' => new \DateTime,
+            'username' => session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName(),
+        ]);
+
+        return redirect(route('process.request.show', ['request' => $process_request->id]))->with('success', 'Su aprobación ha sido procesada correctamente.');
+    }
+
+    public function deleteuser(Request $request, $process_request)
+    {
+        if (can_not_do('process_request_admin')) {
+            return redirect(route('process.request.show', ['request' => $process_request]))->with('error', 'Usted no tiene permiso para ejecutar esta acción.');
+        }
+
+        $process_request = ProcessRequest::find($process_request);
+
+        if (!$process_request) {
+            return redirect(route('process.request.index'));
+        }
+
+        $approval = $process_request->approvals()->where('userapprov', $request->u)->delete();
+
+        return redirect(route('process.request.show', ['request' => $process_request->id]))->with('success', 'El usuario ha sido eliminado correctamente.');
     }
 }

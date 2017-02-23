@@ -4,7 +4,7 @@
 
 @section('page_title', 'Edición ' . get_proreq_param($param->type, false))
 
-@if (can_not_do('process_request_param'))
+@if (can_not_do('process_request_admin'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection

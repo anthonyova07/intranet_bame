@@ -82,24 +82,47 @@
                     <table class="table table-striped table-bordered table-hover table-condensed" order-by='2|desc'>
                         <thead>
                             <tr>
-                                <th># Reclamación</th>
-                                <th># Cliente</th>
-                                <th>Identificación</th>
-                                <th>Monto</th>
-                                <th>Fec. Respuesta</th>
-                                <th>Estatus</th>
-                                <th>Resultado</th>
+                                <th># Solicitud</th>
+                                <th>Tipo Solicitud</th>
+                                <th>Proceso</th>
+                                <th>Subproceso</th>
+                                <th>Estado</th>
                                 <th style="width: 112px;">Fecha Creación</th>
                                 <th style="width: 112px;">Creado por</th>
                                 <th style="width: 52px"></th>
                             </tr>
                         </thead>
                         <tbody>
-
+                            @foreach ($process_requests as $process_request)
+                                <td>{{ $process_request->reqnumber }}</td>
+                                <td>{{ $process_request->reqtype }}</td>
+                                <td>{{ $process_request->process }}</td>
+                                <td>{{ $process_request->subprocess }}</td>
+                                <td>
+                                    @if ($process_request->getStatus() === '0')
+                                        <span style="font-size: 14px;letter-spacing: 1px;" class="label label-danger">Rechazada</span>
+                                    @elseif ($process_request->getStatus() === '1')
+                                        <span style="font-size: 14px;letter-spacing: 1px;" class="label label-success">Aprobada</span>
+                                    @else
+                                        <span style="font-size: 14px;letter-spacing: 1px;" class="label label-warning">Pendiente</span>
+                                    @endif
+                                </td>
+                                <td>{{ $process_request->created_at->format('d/m/Y H:i:s') }}</td>
+                                <td>{{ $process_request->createname }}</td>
+                                <td align="center">
+                                    <a
+                                        href="{{ route('process.request.show', array_merge(['request' => $process_request->id], Request::all())) }}"
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Ver Solicitud">
+                                        <i class="fa fa-share fa-fw"></i>
+                                    </a>
+                                </td>
+                            @endforeach
                         </tbody>
                     </table>
 
-                    {{-- {{ $claims->links() }} --}}
+                    {{ $process_requests->links() }}
                 </div>
             </div>
         </div>
@@ -107,7 +130,7 @@
     </div>
 
 
-    @if (!can_not_do('process_request_param'))
+    @if (!can_not_do('process_request_admin'))
         <div class="row" style="border-bottom: 1px solid #777;border-top: 1px solid #777;margin: 8px 0 25px 0;border-width: 5px;">
             <h1 style="margin: 0;text-align: center;">Mantenimientos de Parametros</h1>
         </div>

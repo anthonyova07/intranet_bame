@@ -4,7 +4,7 @@
 
 @section('page_title', 'Nueva Solicitud de Proceso')
 
-@if (can_not_do('customer_claim'))
+@if (can_not_do('process_request'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
