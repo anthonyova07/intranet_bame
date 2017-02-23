@@ -285,7 +285,7 @@
         </div>
     </div>
 
-    @if ($day_events->count() || $day_birthdays->count() || $day_dates->count())
+    @if ($day_events->count() || $day_birthdays->count() || $day_services->count() || $day_dates->count())
         <div class="modal fade modal_start" tabindex="-1">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -343,6 +343,32 @@
                                         <tr>
                                             <td>
                                                 <a style="color: #FF8849;" href="javascript:void(0)">{!! $birthday->full_name !!}</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+
+                        @if ($day_services->count())
+                            <table class="table table-bordered table-hover table-striped" style="margin-bottom: 15px;">
+                                <thead>
+                                    <tr style="font-size: 18px;">
+                                        <th style="width: 68%;">
+                                            <img style="width: 25px;" src="{{ route('home') . '/images/video.png' }}">
+                                            Cumpleaños de Servicios
+                                        </th>
+                                        <th class="text-center" style="width: 6%;">Años</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-size: 18px;">
+                                    @foreach($day_services as $day_service)
+                                        <tr>
+                                            <td>
+                                                <a style="color: #FF8849;" href="javascript:void(0)">{!! $day_service->full_name !!}</a>
+                                            </td>
+                                            <td class="text-center" style="width: 120px;font-size: 15px;letter-spacing: 1px;">
+                                                {{ calculate_year_of_service($day_service->services_date) }}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -431,6 +457,13 @@
                     title: '',
                     start: '{{ $datetime->format('Y') .'-'. $birthdate->month_day }}',
                     className: 'birthdate cal_icon ' + '{!! str_replace(' ', '|', $birthdates->where('month_day', $birthdate->month_day)->implode('full_name', ',')) !!}',
+                },
+            @endforeach
+            @foreach ($birthdates->unique('services_month_day') as $birthdate)
+                {
+                    title: '',
+                    start: '{{ $datetime->format('Y') .'-'. $birthdate->services_month_day }}',
+                    className: 'service_year cal_icon ' + '{!! str_replace(' ', '|', $birthdates->where('services_month_day', $birthdate->services_month_day)->implode('full_name', ',')) !!}',
                 },
             @endforeach
         ]);
