@@ -9,6 +9,7 @@ use Bame\Http\Controllers\Controller;
 use Bame\Models\Process\Request\Param;
 use Bame\Models\Process\Request\ProcessRequest;
 use Bame\Models\Process\Request\ProcessRequestApproval;
+use Bame\Models\Process\Request\ProcessRequestStatus;
 use Bame\Http\Requests\Process\Request\RequestProcessRequest;
 
 class RequestController extends Controller
@@ -82,6 +83,8 @@ class RequestController extends Controller
     {
         $process_request = ProcessRequest::find($request);
 
+        $status = Param::where('type', 'EST')->get();
+
         if (!$process_request) {
             return redirect(route('process.request.index'));
         }
@@ -89,11 +92,16 @@ class RequestController extends Controller
         return view('process.request.show', [
             'process_request' => $process_request,
             'is_approved' => $process_request->isApproved(),
+            'status' => $status,
         ]);
     }
 
     public function addusers(Request $request, $process_request)
     {
+        $this->validate($request, [
+            'users' => 'required'
+        ]);
+
         $process_request = ProcessRequest::find($process_request);
 
         if (!$process_request) {
@@ -101,10 +109,6 @@ class RequestController extends Controller
         }
 
         $approvals = $process_request->approvals;
-
-        $this->validate($request, [
-            'users' => 'required'
-        ]);
 
         $arr_users = collect(explode(' ', trim($request->users)));
 
@@ -170,5 +174,34 @@ class RequestController extends Controller
         $approval = $process_request->approvals()->where('userapprov', $request->u)->delete();
 
         return redirect(route('process.request.show', ['request' => $process_request->id]))->with('success', 'El usuario ha sido eliminado correctamente.');
+    }
+
+    public function addstatus(Request $request, $process_request)
+    {
+        $this->validate($request, [
+            'status' => 'required',
+            'comment' => 'required|max:1000',
+        ]);
+
+        $process_request = ProcessRequest::find($process_request);
+        $status = Param::where('type', 'EST')->find($request->status);
+
+        if (!$process_request || !$status) {
+            return redirect(route('process.request.index'));
+        }
+
+        $process_request_status = new ProcessRequestStatus;
+
+        $process_request_status->id = uniqid(true);
+        $process_request_status->status = $status->note;
+        $process_request_status->comment = $request->comment;
+
+        $process_request_status->created_by = session()->get('user');
+        $process_request_status->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+
+        $process_request->status()->save($process_request_status);
+
+        return redirect(route('process.request.show', ['request' => $process_request->id]))->with('success', 'El estatus sido agregado correctamente.');
+
     }
 }

@@ -31,6 +31,11 @@ class ProcessRequest extends Model
         return $this->hasMany(ProcessRequestApproval::class, 'req_id');
     }
 
+    public function status()
+    {
+        return $this->hasMany(ProcessRequestStatus::class, 'req_id');
+    }
+
     public function isApproved()
     {
         $approvals = $this->approvals;
@@ -52,9 +57,12 @@ class ProcessRequest extends Model
     {
         $approvals = $this->approvals;
 
-        if ($approvals->where('approved', '1')->count() == $approvals->count()) {
+        $count_1 = $approvals->where('approved', '1')->count();
+        $count_0 = $approvals->where('approved', '0')->count();
+
+        if ($count_1 > 0 && $count_1 == $approvals->count()) {
             return '1';
-        } else if ($approvals->where('approved', '0')->count() == $approvals->count()) {
+        } else if ($count_0 > 0 && $count_0 == $approvals->count()) {
             return '0';
         } else {
             return '';

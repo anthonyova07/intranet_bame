@@ -181,5 +181,6 @@ return [
       'people_involved' => 'Personas Involucradas',
       'deliverable' => 'Entregables',
       'users' => 'Usuarios',
+      'status' => 'Estatus',
     ],
 ];

@@ -2,7 +2,7 @@
 
 @section('title', 'Clientes - Reclamaciones')
 
-@section('page_title', 'Solicitud #' . $process_request->reqnumber)
+@section('page_title', 'Solicitud de Proceso #' . $process_request->reqnumber)
 
 @if (can_not_do('process_request'))
     @section('contents')
@@ -42,6 +42,7 @@
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#datos_solicitud" data-toggle="tab"><b>Detalle</b></a></li>
                         <li><a href="#datos_aprobacion" data-toggle="tab"><b>Aprobaciones</b></a></li>
+                        <li><a href="#datos_estatus" data-toggle="tab"><b>Estatus</b></a></li>
                     </ul>
 
                     <div class="tab-content" style="margin-top: 10px;">
@@ -108,6 +109,7 @@
                             </div>
 
                         </div>
+
                         <div class="tab-pane" id="datos_aprobacion">
 
                             @if (!can_not_do('process_request_admin') && !$is_approved)
@@ -193,6 +195,65 @@
                                                             @endif
                                                         @endif
                                                     </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane" id="datos_estatus">
+
+                            @if (!can_not_do('process_request_admin') && !$is_approved)
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <form action="{{ route('process.request.addstatus', ['process_request' => $process_request->id]) }}" method="post">
+                                            <div class="col-xs-3">
+                                                <div class="form-group{{ $errors->first('status') ? ' has-error':'' }}">
+                                                    <label class="control-label" style="font-size: 16px;">Estatus</label>
+                                                    <select class="form-control input-sm" name="status">
+                                                        <option value="">Seleccione un Estatus</option>
+                                                        @foreach ($status as $s)
+                                                            <option value="{{ $s->id }}"{{ old('status') == $s->id ? ' selected':'' }}>{{ $s->note }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span class="help-block">{{ $errors->first('status') }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <div class="form-group{{ $errors->first('comment') ? ' has-error':'' }}">
+                                                    <label class="control-label" style="font-size: 16px;">Comentario</label>
+                                                    <input type="text" name="comment" class="form-control input-sm">
+                                                    <span class="help-block">{{ $errors->first('comment') }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-1">
+                                                {{ csrf_field() }}
+                                                <button style="margin-top: 26px;" type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Agregar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <table class="table table-bordered table-condensed table-striped table-hover">
+                                        <thead>
+                                            <th>Estatus</th>
+                                            <th>Comentario</th>
+                                            <th style="width: 116px;">Creado por</th>
+                                            <th style="width: 116px;">Fecha</th>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($process_request->status->sortByDesc('created_at') as $status)
+                                                <tr>
+                                                    <td>{{ $status->status }}</td>
+                                                    <td>{{ $status->comment }}</td>
+                                                    <td>{{ $status->createname }}</td>
+                                                    <td>{{ $status->created_at->format('d/m/Y H:i:s') }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
