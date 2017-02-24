@@ -469,11 +469,13 @@
                 },
             @endforeach
             @foreach ($birthdates->unique('services_month_day') as $birthdate)
-                {
-                    title: '',
-                    start: '{{ $datetime->format('Y') .'-'. $birthdate->services_month_day }}',
-                    className: 'service_year cal_icon ' + '{!! str_replace(' ', '|', $birthdates->where('services_month_day', $birthdate->services_month_day)->implode('full_name', ',')) !!}',
-                },
+                @if (isset($birthdate->services_month_day))
+                    {
+                        title: '',
+                        start: '{{ $datetime->format('Y') .'-'. $birthdate->services_month_day }}',
+                        className: 'service_year cal_icon ' + '{!! str_replace(' ', '|', $birthdates->where('services_month_day', $birthdate->services_month_day)->implode('full_name', ',')) !!}',
+                    },
+                @endif
             @endforeach
         ]);
     </script>
