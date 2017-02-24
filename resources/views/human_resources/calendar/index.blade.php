@@ -134,8 +134,8 @@
                                     <td>{{ $birthdate->code }}</td>
                                     <td>{{ $birthdate->full_name }}</td>
                                     <td>{{ $birthdate->month_day }}</td>
-                                    <td>{{ $birthdate->services_date }}</td>
-                                    <td>{{ calculate_year_of_service($birthdate->services_date) }}</td>
+                                    <td>{{ isset($birthdate->services_date) ? $birthdate->services_date : '' }}</td>
+                                    <td>{{ calculate_year_of_service(isset($birthdate->services_date) ? $birthdate->services_date : null) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
