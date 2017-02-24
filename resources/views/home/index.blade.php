@@ -192,18 +192,27 @@
                     <div class="row" style="margin-top: 0px;">
                         <div class="col-xs-12">
                             <div class="panel panel-default" style="margin-bottom: 0px;border-radius: 0;border: 0 solid transparent;">
-                                <div class="panel-body">
-                                    <div class="col-xs-3 text-center">
-                                        <img style="width: 24px;" src="{{ route('home') }}/images/event.png"> Eventos
+                                <div class="panel-body" style="letter-spacing: -1px;">
+                                    <div class="col-xs-1">
+
                                     </div>
-                                    <div class="col-xs-3 text-center">
-                                        <img style="width: 24px;" src="{{ route('home') }}/images/goesgreen.png"> Goes Green
+                                    <div class="col-xs-2 text-center">
+                                        <img style="width: 24px;" src="{{ route('home') }}/images/event.png"> <br>Eventos
                                     </div>
-                                    <div class="col-xs-3 text-center">
-                                        <img style="width: 24px;" src="{{ route('home') }}/images/birthdate.png"> Cumpleaños
+                                    <div class="col-xs-2 text-center">
+                                        <img style="width: 24px;" src="{{ route('home') }}/images/goesgreen.png"> <br>Goes Green
                                     </div>
-                                    <div class="col-xs-3 text-center">
-                                        <img style="width: 24px;" src="{{ route('home') }}/images/money.png"> Días de Pago
+                                    <div class="col-xs-2 text-center">
+                                        <img style="width: 24px;" src="{{ route('home') }}/images/birthdate.png"> <br>Cumpleaños
+                                    </div>
+                                    <div class="col-xs-2 text-center">
+                                        <img style="width: 24px;" src="{{ route('home') }}/images/money.png"> <br>Días de Pago
+                                    </div>
+                                    <div class="col-xs-2 text-center">
+                                        <img style="width: 24px;" src="{{ route('home') }}/images/service_year.png"> <br>Aniversarios
+                                    </div>
+                                    <div class="col-xs-1">
+
                                     </div>
                                 </div>
                             </div>
@@ -355,8 +364,8 @@
                                 <thead>
                                     <tr style="font-size: 18px;">
                                         <th style="width: 68%;">
-                                            <img style="width: 25px;" src="{{ route('home') . '/images/video.png' }}">
-                                            Cumpleaños de Servicios
+                                            <img style="width: 25px;" src="{{ route('home') . '/images/service_year.png' }}">
+                                            Aniversarios de Trabajo
                                         </th>
                                         <th class="text-center" style="width: 6%;">Años</th>
                                     </tr>

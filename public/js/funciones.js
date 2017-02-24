@@ -156,7 +156,7 @@ function calendar(defaultDate, events) {
             content += '</ul>';
 
             $('.show_popover').popover({
-                title: 'Cumpleaños de Servicios',
+                title: 'Aniversarios de Trabajo',
                 content: content,
                 html: true,
                 placement: 'top',

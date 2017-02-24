@@ -38,7 +38,7 @@
         }
 
         .service_year {
-            background-image: url({{ route('home') }}/images/video.png);
+            background-image: url({{ route('home') }}/images/service_year.png);
         }
 
         .payment_days {
