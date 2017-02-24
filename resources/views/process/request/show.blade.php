@@ -43,6 +43,7 @@
                         <li class="active"><a href="#datos_solicitud" data-toggle="tab"><b>Detalle</b></a></li>
                         <li><a href="#datos_aprobacion" data-toggle="tab"><b>Aprobaciones</b></a></li>
                         <li><a href="#datos_estatus" data-toggle="tab"><b>Estatus</b></a></li>
+                        <li><a href="#datos_adjuntos" data-toggle="tab"><b>Adjuntos</b></a></li>
                     </ul>
 
                     <div class="tab-content" style="margin-top: 10px;">
@@ -215,7 +216,7 @@
                                                     <label class="control-label" style="font-size: 16px;">Estatus</label>
                                                     <select class="form-control input-sm" name="status">
                                                         <option value="">Seleccione un Estatus</option>
-                                                        @foreach ($status as $s)
+                                                        @foreach ($status->sortBy('note') as $s)
                                                             <option value="{{ $s->id }}"{{ old('status') == $s->id ? ' selected':'' }}>{{ $s->note }}</option>
                                                         @endforeach
                                                     </select>
@@ -262,6 +263,79 @@
                             </div>
 
                         </div>
+
+                        <div class="tab-pane" id="datos_adjuntos">
+
+                            @if (!can_not_do('process_request_admin') && !$is_approved)
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <form method="post" action="{{ route('process.request.addattach', ['process_request' => $process_request->id]) }}" id="form" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <div class="form-group{{ $errors->first('files') ? ' has-error':'' }}">
+                                                        <label class="control-label">Archivos <div class="label label-warning"> MAX: 10MB</div></label>
+                                                        <input type="file" name="files[]" multiple>
+                                                        <span class="help-block">{{ $errors->first('files') }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-2">
+                                                    {{ csrf_field() }}
+                                                    <button style="margin-top: 16px;" type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Subiendo archivos...">Subir</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|asc'>
+                                        <thead>
+                                            <tr>
+                                                <th>Documento</th>
+                                                <th style="width: 90px;">Subido por</th>
+                                                <th style="width: 10px;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($process_request->attaches as $attach)
+                                                <tr>
+                                                    <td style="vertical-align: middle;">
+                                                        <a href="{{ route('process.request.downloadattach', ['process_request' => $process_request->id, 'attach' => $attach->id]) }}" target="__blank" style="font-size: 16px;">{{ $attach->file }}</a>
+                                                    </td>
+                                                    <td style="font-size: 14px;vertical-align: middle;">
+                                                        {{ $attach->createname }}
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        @if (!$is_approved)
+                                                            <a
+                                                                onclick="cancel('{{ $attach->id }}', this)"
+                                                                href="javascript:void(0)"
+                                                                style="font-size: 20px;"
+                                                                data-toggle="tooltip"
+                                                                data-placement="top"
+                                                                title="Eliminar Adjunto {{ $attach->file }}"
+                                                                class="rojo link_anular">
+                                                                <i class="fa fa-trash fa-fw"></i>
+                                                            </a>
+                                                            <form
+                                                                style="display: none;"
+                                                                action="{{ route('process.request.deleteattach', ['process_request' => $process_request->id,'attach' => $attach->id]) }}"
+                                                                method="post" id="form_eliminar_{{ $attach->id }}">
+                                                                {{ csrf_field() }}
+                                                                {{ method_field('DELETE') }}
+                                                            </form>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -290,6 +364,20 @@
                 subprocess.val(-1);
             });
         });
+
+        function cancel(id, el)
+        {
+            res = confirm('Realmente desea eliminar este adjunto?');
+
+            if (!res) {
+                event.preventDefault();
+                return;
+            }
+
+            $(el).remove();
+
+            $('#form_eliminar_' + id).submit();
+        }
     </script>
 
 @endsection

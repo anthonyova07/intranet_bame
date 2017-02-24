@@ -28,12 +28,17 @@ class ProcessRequest extends Model
 
     public function approvals()
     {
-        return $this->hasMany(ProcessRequestApproval::class, 'req_id');
+        return $this->hasMany(Approval::class, 'req_id');
     }
 
     public function status()
     {
-        return $this->hasMany(ProcessRequestStatus::class, 'req_id');
+        return $this->hasMany(Status::class, 'req_id');
+    }
+
+    public function attaches()
+    {
+        return $this->hasMany(Attach::class, 'req_id');
     }
 
     public function isApproved()

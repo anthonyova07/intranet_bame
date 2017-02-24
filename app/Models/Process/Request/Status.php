@@ -4,7 +4,7 @@ namespace Bame\Models\Process\Request;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProcessRequestStatus extends Model
+class Status extends Model
 {
     protected $connection = 'ibs';
 

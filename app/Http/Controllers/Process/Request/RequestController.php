@@ -8,8 +8,9 @@ use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 use Bame\Models\Process\Request\Param;
 use Bame\Models\Process\Request\ProcessRequest;
-use Bame\Models\Process\Request\ProcessRequestApproval;
-use Bame\Models\Process\Request\ProcessRequestStatus;
+use Bame\Models\Process\Request\Approval;
+use Bame\Models\Process\Request\Status;
+use Bame\Models\Process\Request\Attach;
 use Bame\Http\Requests\Process\Request\RequestProcessRequest;
 
 class RequestController extends Controller
@@ -75,6 +76,8 @@ class RequestController extends Controller
         $process_request->reqnumber = get_next_request_number();
         $process_request->save();
 
+        do_log('Creó la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' )');
+
         return redirect(route('process.request.show', ['request' => $process_request->id]))->with('success', 'La solicitud ha sido creada correctamente.');
 
     }
@@ -83,11 +86,13 @@ class RequestController extends Controller
     {
         $process_request = ProcessRequest::find($request);
 
-        $status = Param::where('type', 'EST')->get();
+        $status = Param::where('type', 'EST')->activeOnly()->get();
 
         if (!$process_request) {
             return redirect(route('process.request.index'));
         }
+
+        do_log('Consultó la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' )');
 
         return view('process.request.show', [
             'process_request' => $process_request,
@@ -119,7 +124,7 @@ class RequestController extends Controller
                 continue;
             }
 
-            $approval = new ProcessRequestApproval;
+            $approval = new Approval;
 
             $approval->id = uniqid(true) . $index;
             $approval->userapprov = $user;
@@ -133,6 +138,8 @@ class RequestController extends Controller
         }
 
         $process_request->approvals()->saveMany($users);
+
+        do_log('Agregó Usuarios de Aprobación a la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' usuarios:' . str_replace(' ', ',',  trim($request->users)).' )');
 
         return redirect(route('process.request.show', ['request' => $process_request->id]))->with('success', 'Los usuarios han sido agregados correctamente.');
 
@@ -156,6 +163,8 @@ class RequestController extends Controller
             'username' => session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName(),
         ]);
 
+        do_log($request->a == '1' ? 'Aprobó':'Rechazó' . ' la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' )');
+
         return redirect(route('process.request.show', ['request' => $process_request->id]))->with('success', 'Su aprobación ha sido procesada correctamente.');
     }
 
@@ -172,6 +181,8 @@ class RequestController extends Controller
         }
 
         $approval = $process_request->approvals()->where('userapprov', $request->u)->delete();
+
+        do_log('Elimino el usuario de Aprobación a la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' usuario:' . $request->u . ' )');
 
         return redirect(route('process.request.show', ['request' => $process_request->id]))->with('success', 'El usuario ha sido eliminado correctamente.');
     }
@@ -190,7 +201,7 @@ class RequestController extends Controller
             return redirect(route('process.request.index'));
         }
 
-        $process_request_status = new ProcessRequestStatus;
+        $process_request_status = new Status;
 
         $process_request_status->id = uniqid(true);
         $process_request_status->status = $status->note;
@@ -201,7 +212,91 @@ class RequestController extends Controller
 
         $process_request->status()->save($process_request_status);
 
+        do_log('Agregó un Estatus a la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' estatus:' . $status->note . ' )');
+
         return redirect(route('process.request.show', ['request' => $process_request->id]))->with('success', 'El estatus sido agregado correctamente.');
 
+    }
+
+    public function addattach(Request $request, $process_request)
+    {
+        {
+            $process_request = ProcessRequest::find($process_request);
+
+            if (!$process_request) {
+                return redirect(route('process.request.index'));
+            }
+
+            if ($request->hasFile('files')) {
+                $files = collect($request->file('files'));
+
+                $path = storage_path('app\\process_request\\attaches\\' . $process_request->id . '\\');
+
+                $files->each(function ($file, $index) use ($path, $process_request) {
+                    $file_name_destination = str_replace(' ', '_', $file->getClientOriginalName());
+
+                    $file_name_destination = remove_accents($file_name_destination);
+
+                    $file->move($path, $file_name_destination);
+
+                    $attach = new Attach;
+
+                    $attach->id = uniqid(true);
+                    $attach->file = $file_name_destination;
+
+                    $attach->created_by = session()->get('user');
+                    $attach->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+
+                    $process_request->attaches()->save($attach);
+                });
+
+                do_log('Adjuntó archivos a la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' )');
+            }
+
+            return back()->with('success', 'Los archivos han sido cargados correctamente.');
+        }
+    }
+
+    public function downloadattach(Request $request, $process_request)
+    {
+        $process_request = ProcessRequest::find($process_request);
+
+        if (!$process_request) {
+            return redirect(route('process.request.index'));
+        }
+
+        $attach = $process_request->attaches()->where('id', $request->attach)->first();
+
+        if (!$attach) {
+            return back()->with('warning', 'Este adjunto no existe!');
+        }
+
+        $path = storage_path('app\\process_request\\attaches\\' . $process_request->id . '\\' . $attach->file);
+
+        do_log('Descargó archivo de la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' archivo:' . $attach->file . ' )');
+
+        return response()->download($path);
+    }
+
+    public function deleteattach(Request $request, $process_request)
+    {
+        $process_request = ProcessRequest::find($process_request);
+
+        if (!$process_request) {
+            return redirect(route('process.request.index'));
+        }
+
+        $attach = $process_request->attaches()->where('id', $request->attach)->first();
+
+        if (!$attach) {
+            return back()->with('warning', 'Este adjunto no existe!');
+        }
+
+        do_log('Eliminó archivo de la Reclamación ( número:' . strip_tags($process_request->reqnumber) . ' archivo:' . $attach->file . ' )');
+
+        $attach->delete_attach();
+        $attach->delete();
+
+        return back()->with('success', 'El adjunto ha sido eliminado correctamente!');
     }
 }
