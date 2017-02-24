@@ -41,6 +41,10 @@ class Birthdate extends Model
             $birthdate->gender = $parts[4];
             $birthdate->month_day = str_pad($parts['6'], 2, '0', STR_PAD_LEFT) .'-'. str_pad($parts['5'], 2, '0', STR_PAD_LEFT);
 
+            $service_parts = explode('/', $parts['14']);
+            $birthdate->services_date = trim($parts['14']);
+            $birthdate->services_month_day = str_pad($service_parts[1], 2, '0', STR_PAD_LEFT) .'-'. str_pad($service_parts[0], 2, '0', STR_PAD_LEFT);
+
             $birthdates->push($birthdate);
         }
 

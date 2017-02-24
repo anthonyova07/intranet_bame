@@ -564,3 +564,12 @@ function str_to_field($str, $id)
 {
     return str_field($str, [], false, $id);
 }
+
+function calculate_year_of_service($date)
+{
+    if (!is_null($date)) {
+        $parts = explode('/', $date);
+
+        return (new \Datetime(trim($parts[2]) . "-{$parts[1]}-{$parts[0]}"))->diff((new \DateTime))->y;
+    }
+}

@@ -104,25 +104,28 @@
                 <div class="panel-body">
                     <form method="post" action="{{ route('human_resources.calendar.birthdate.store') }}" id="form" enctype="multipart/form-data" novalidate>
                         <div class="row">
-                            <div class="col-xs-12">
+                            <div class="col-xs-9">
                                 <div class="form-group{{ $errors->first('birthdate_file') ? ' has-error':'' }}">
                                     <label class="control-label">Cargar Archivo de Empleados<small style="font-size: 11px;" class="label label-warning">MAX 10MB</small></label>
                                     <input type="file" name="birthdate_file">
                                     <span class="help-block">{{ $errors->first('birthdate_file') }}</span>
                                 </div>
                             </div>
+                            <div class="col-xs-3">
+                                {{ csrf_field() }}
+                                <button style="margin-top: 16px;" type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Cargando...">Cargar</button>
+                            </div>
                         </div>
-                        {{ csrf_field() }}
-                        <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Cargando...">Cargar</button>
                     </form>
-                    <br>
                     <br>
                     <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
                         <thead>
                             <tr>
                                 <th>Código</th>
                                 <th>Nombre y Apellido</th>
-                                <th>Fecha M-D</th>
+                                <th>Cumple. M-D</th>
+                                <th>Ingreso</th>
+                                <th>Años Servi.</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -131,6 +134,8 @@
                                     <td>{{ $birthdate->code }}</td>
                                     <td>{{ $birthdate->full_name }}</td>
                                     <td>{{ $birthdate->month_day }}</td>
+                                    <td>{{ isset($birthdate->services_date) ? $birthdate->services_date : '' }}</td>
+                                    <td>{{ calculate_year_of_service(isset($birthdate->services_date) ? $birthdate->services_date : null) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

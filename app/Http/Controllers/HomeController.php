@@ -56,6 +56,8 @@ class HomeController extends Controller {
 
         $day_birthdays = $birthdates->where('month_day', $datetime->format('m-d'));
 
+        $day_services = $birthdates->where('services_month_day', $datetime->format('m-d'));
+
         $day_dates = $dates->filter(function ($date, $key) use ($datetime) {
             return !(stripos($date->startdate, $datetime->format('Y-m-d')) === FALSE || !$date->group->showinday);
         });
@@ -73,6 +75,7 @@ class HomeController extends Controller {
             'dates' => $dates,
             'day_events' => $day_events,
             'day_birthdays' => $day_birthdays,
+            'day_services' => $day_services,
             'day_dates' => $day_dates,
         ]);
     }
