@@ -12,6 +12,7 @@ use Bame\Models\Process\Request\Approval;
 use Bame\Models\Process\Request\Status;
 use Bame\Models\Process\Request\Attach;
 use Bame\Http\Requests\Process\Request\RequestProcessRequest;
+use Bame\Models\Notification\Notification;
 
 class RequestController extends Controller
 {
@@ -23,7 +24,12 @@ class RequestController extends Controller
         $request_statuses = $param->where('type', 'EST');
         $request_processes = $param->where('type', 'PRO');
 
-        $process_requests = ProcessRequest::lastestFirst()->paginate();
+        if (!can_not_do('process_request_approval')) {
+            $ids_req = Approval::where('userapprov', session()->get('user'))->pluck('req_id');
+            $process_requests = ProcessRequest::lastestFirst()->whereIn('id', $ids_req)->paginate();
+        } else {
+            $process_requests = ProcessRequest::lastestFirst()->paginate();
+        }
 
         return view('process.request.index', [
             'request_types' => $request_types,
@@ -136,6 +142,8 @@ class RequestController extends Controller
             $approval->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
 
             $users->push($approval);
+
+            Notification::notify('Solicitud de Procesos', "Usted ha sido colocado como usuario para aprobar la solicitud {$process_request->reqnumber}.", route('process.request.show', ['request' => $process_request->id]), $user);
         }
 
         $process_request->approvals()->saveMany($users);
@@ -183,6 +191,8 @@ class RequestController extends Controller
 
         $approval = $process_request->approvals()->where('userapprov', $request->u)->delete();
 
+        Notification::notify('Solicitud de Procesos', "Usted ha sido removido de los usuarios que pueden aprobar la solicitud {$process_request->reqnumber}.", route('process.request.show', ['request' => $process_request->id]), $request->u);
+
         do_log('Elimino el usuario de Aprobación a la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' usuario:' . $request->u . ' )');
 
         return redirect(route('process.request.show', ['request' => $process_request->id]))->with('success', 'El usuario ha sido eliminado correctamente.');
@@ -217,6 +227,8 @@ class RequestController extends Controller
             $process_request->requested = false;
             $process_request->save();
         }
+
+        Notification::notify('Solicitud de Procesos', "La solicitud {$process_request->reqnumber} ha cambiado al estatus {$process_request_status->status}", route('process.request.show', ['request' => $process_request->id]), $process_request->created_by);
 
         do_log('Agregó un Estatus a la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' estatus:' . $status->note . ' )');
 

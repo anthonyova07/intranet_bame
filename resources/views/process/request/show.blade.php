@@ -197,7 +197,7 @@
                                                                     data-toggle="tooltip"
                                                                     data-placement="top"
                                                                     style="font-size: 20px;"
-                                                                    title="Rechazar">
+                                                                    title="Eliminar Aprobación">
                                                                     <i class="fa fa-trash fa-fw"></i>
                                                                 </a>
                                                             @endif
