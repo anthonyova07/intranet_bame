@@ -69,6 +69,7 @@ class RequestController extends Controller
         $process_request->peoinvolve = $request->people_involved;
         $process_request->deliverabl = $request->deliverable;
         $process_request->observatio = $request->observations;
+        $process_request->requested = true;
 
         $process_request->created_by = session()->get('user');
         $process_request->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
@@ -211,6 +212,11 @@ class RequestController extends Controller
         $process_request_status->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
 
         $process_request->status()->save($process_request_status);
+
+        if ($process_request->requested) {
+            $process_request->requested = false;
+            $process_request->save();
+        }
 
         do_log('Agregó un Estatus a la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' estatus:' . $status->note . ' )');
 

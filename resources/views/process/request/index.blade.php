@@ -94,30 +94,36 @@
                         </thead>
                         <tbody>
                             @foreach ($process_requests as $process_request)
-                                <td>{{ $process_request->reqnumber }}</td>
-                                <td>{{ $process_request->reqtype }}</td>
-                                <td>{{ $process_request->process }}</td>
-                                <td>{{ $process_request->subprocess }}</td>
-                                <td>
-                                    @if ($process_request->getStatus() === '0')
-                                        <span style="font-size: 14px;letter-spacing: 1px;" class="label label-danger">Rechazada</span>
-                                    @elseif ($process_request->getStatus() === '1')
-                                        <span style="font-size: 14px;letter-spacing: 1px;" class="label label-success">Aprobada</span>
-                                    @else
-                                        <span style="font-size: 14px;letter-spacing: 1px;" class="label label-warning">Pendiente</span>
-                                    @endif
-                                </td>
-                                <td>{{ $process_request->created_at->format('d/m/Y H:i:s') }}</td>
-                                <td>{{ $process_request->createname }}</td>
-                                <td align="center">
-                                    <a
-                                        href="{{ route('process.request.show', array_merge(['request' => $process_request->id], Request::all())) }}"
-                                        data-toggle="tooltip"
-                                        data-placement="top"
-                                        title="Ver Solicitud">
-                                        <i class="fa fa-share fa-fw"></i>
-                                    </a>
-                                </td>
+                                <tr>
+                                    <td>{{ $process_request->reqnumber }}</td>
+                                    <td>{{ $process_request->reqtype }}</td>
+                                    <td>{{ $process_request->process }}</td>
+                                    <td>{{ $process_request->subprocess }}</td>
+                                    <td>
+                                        @if (!$process_request->requested)
+                                            @if ($process_request->getStatus() === '0')
+                                                <span style="font-size: 14px;letter-spacing: 1px;" class="label label-danger">Rechazada</span>
+                                            @elseif ($process_request->getStatus() === '1')
+                                                <span style="font-size: 14px;letter-spacing: 1px;" class="label label-success">Aprobada</span>
+                                            @else
+                                                <span style="font-size: 14px;letter-spacing: 1px;" class="label label-warning">Pendiente</span>
+                                            @endif
+                                        @else
+                                            <span style="font-size: 14px;letter-spacing: 1px;" class="label label-default">Solicitada</span>
+                                        @endif
+                                    </td>
+                                    <td>{{ $process_request->created_at->format('d/m/Y H:i:s') }}</td>
+                                    <td>{{ $process_request->createname }}</td>
+                                    <td align="center">
+                                        <a
+                                            href="{{ route('process.request.show', array_merge(['request' => $process_request->id], Request::all())) }}"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="Ver Solicitud">
+                                            <i class="fa fa-share fa-fw"></i>
+                                        </a>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>

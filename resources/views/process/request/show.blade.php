@@ -29,14 +29,21 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Datos de la Solicitud (
-                        @if ($process_request->getStatus() === '0')
-                            Rechazada
-                        @elseif ($process_request->getStatus() === '1')
-                            Aprobada
+                        @if (!$process_request->requested)
+                            @if ($process_request->getStatus() === '0')
+                                Rechazada
+                            @elseif ($process_request->getStatus() === '1')
+                                Aprobada
+                            @else
+                                Pendiente
+                            @endif
                         @else
-                            Pendiente
+                            Solicitada
                         @endif
                     )</h3>
+                    <span>
+                        Creada por: {{ $process_request->createname }} el {{ $process_request->created_at->format('d/m/Y H:i:s') }}
+                    </span>
                 </div>
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
