@@ -15,4 +15,9 @@ class Status extends Model
     public $incrementing = false;
 
     public $timestamps = true;
+
+    public function scopegetLastStatus($query)
+    {
+        return $this->orderBy('created_at', 'desc')->take(1);
+    }
 }

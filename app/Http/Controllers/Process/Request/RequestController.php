@@ -44,6 +44,10 @@ class RequestController extends Controller
             $process_requests->where('reqtype', $request->request_type);
         }
 
+        if ($request->process) {
+            $process_requests->where('process', $request->process);
+        }
+
         if ($request->date_from) {
             $process_requests->where('created_at', '>=', $request->date_from . ' 00:00:00');
         }
@@ -251,10 +255,10 @@ class RequestController extends Controller
 
         $process_request->status()->save($process_request_status);
 
-        if ($process_request->requested) {
-            $process_request->requested = false;
-            $process_request->save();
-        }
+        $process_request->reqstatus = $status->note;
+        $process_request->requested = false;
+        
+        $process_request->save();
 
         Notification::notify('Solicitud de Procesos', "La solicitud {$process_request->reqnumber} ha cambiado al estatus {$process_request_status->status}", route('process.request.show', ['request' => $process_request->id]), $process_request->created_by);
 

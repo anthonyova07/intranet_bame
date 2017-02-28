@@ -42,8 +42,13 @@
                         @endif
                     )</h3>
                     <span>
-                        Creada por: {{ $process_request->createname }} el {{ $process_request->created_at->format('d/m/Y H:i:s') }}
+                        Solicitada por: {{ $process_request->createname }} el {{ $process_request->created_at->format('d/m/Y H:i:s') }}
                     </span>
+                    @if ($process_request->reqstatus)
+                        <span class="pull-right">
+                            Estatus: {{ $process_request->reqstatus }}
+                        </span>
+                    @endif
                 </div>
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
@@ -256,14 +261,16 @@
                                             <th style="width: 116px;">Fecha</th>
                                         </thead>
                                         <tbody>
-                                            @foreach ($process_request->status->sortByDesc('created_at') as $status)
-                                                <tr>
-                                                    <td>{{ $status->status }}</td>
-                                                    <td>{{ $status->comment }}</td>
-                                                    <td>{{ $status->createname }}</td>
-                                                    <td>{{ $status->created_at->format('d/m/Y H:i:s') }}</td>
-                                                </tr>
-                                            @endforeach
+                                            @if ($process_request->status)
+                                                @foreach ($process_request->status->sortByDesc('created_at') as $status)
+                                                    <tr>
+                                                        <td>{{ $status->status }}</td>
+                                                        <td>{{ $status->comment }}</td>
+                                                        <td>{{ $status->createname }}</td>
+                                                        <td>{{ $status->created_at->format('d/m/Y H:i:s') }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>

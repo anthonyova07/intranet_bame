@@ -40,7 +40,7 @@
                                     <label class="control-label">Proceso Impactado</label>
                                     <select class="form-control input-sm" name="process">
                                         <option value="">Selecciona un proceso</option>
-                                        @foreach ($processes as $process)
+                                        @foreach ($processes->where('id_parent', '') as $process)
                                             <option value="{{ $process->id }}" {{ old('process') == $process->id ? 'selected':'' }}>{{ $process->name . ' (' . $process->version . ')' }}</option>
                                         @endforeach
                                     </select>

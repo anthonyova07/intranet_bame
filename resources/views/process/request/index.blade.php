@@ -46,11 +46,23 @@
                                     <label class="control-label">Proceso Impactado</label>
                                     <select class="form-control input-sm" name="process">
                                         <option value="">Todos</option>
-                                        @foreach ($request_processes as $request_process)
+                                        @foreach ($request_processes->where('id_parent', '') as $request_process)
                                             <option value="{{ $request_process->name . ' v( ' . $request_process->version . ' )' }}" {{ old('process') == $request_process->name ? 'selected':'' }}>{{ $request_process->name . ' v( ' . $request_process->version . ' )' }}</option>
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('process') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div class="form-group{{ $errors->first('status') ? ' has-error':'' }}">
+                                    <label class="control-label">Estatus</label>
+                                    <select class="form-control input-sm" name="status">
+                                        <option value="todos">Todos</option>
+                                        @foreach ($request_statuses as $status)
+                                            <option value="{{ $status->note }}" {{ old('status') == $status->note ? 'selected':'' }}>{{ $status->note }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="help-block">{{ $errors->first('status') }}</span>
                                 </div>
                             </div>
                             <div class="col-xs-2">
@@ -69,7 +81,7 @@
                             </div>
                             <div class="col-xs-2">
                                 {{ csrf_field() }}
-                                <button style="margin-top: 22px;" type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Buscando vacantos...">Buscar</button>
+                                <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Buscando vacantos...">Buscar</button>
                             </div>
                         </div>
                     </form>
@@ -86,8 +98,8 @@
                 <div class="panel-body">
                     <a class="btn btn-danger btn-xs" href="{{ route('process.request.create') }}">Nueva Solicitud</a>
 
-                    @if (!can_not_do('customer_claim_param'))
-                        <a style="font-size: 13px;" download class="label btn-success pull-right" target="__blank" href="{{ route('customer.claim.excel.claim', Request::except(['term', 'page'])) }}">Exportar Excel</a>
+                    @if (!can_not_do('process_request_admin'))
+                        <a style="font-size: 13px;" download class="label btn-success pull-right" target="__blank" href="{{ route('process.request.excel.status_count', Request::except(['term', 'page'])) }}">Exportar Excel</a>
                     @endif
                     <br>
                     <br>
@@ -98,6 +110,7 @@
                                 <th>Tipo Solicitud</th>
                                 <th>Proceso</th>
                                 <th>Subproceso</th>
+                                <th>Estatus</th>
                                 <th>Estado</th>
                                 <th style="width: 112px;">Fecha Creación</th>
                                 <th style="width: 112px;">Creado por</th>
@@ -111,6 +124,7 @@
                                     <td>{{ $process_request->reqtype }}</td>
                                     <td>{{ $process_request->process }}</td>
                                     <td>{{ $process_request->subprocess }}</td>
+                                    <td>{{ $process_request->reqstatus }}</td>
                                     <td>
                                         @if (!$process_request->requested)
                                             @if ($process_request->getStatus() === '0')
