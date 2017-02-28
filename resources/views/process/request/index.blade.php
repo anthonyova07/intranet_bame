@@ -14,7 +14,7 @@
 
     <div class="row">
 
-        <div class="col-xs-10 col-xs-offset-1">
+        <div class="col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Búscar Solicitud</h3>
@@ -22,21 +22,45 @@
                 <div class="panel-body">
                     <form method="get" action="{{ route('process.request.index') }}" id="form">
                         <div class="row">
-                            <div class="col-xs-4">
+                            <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('term') ? ' has-error':'' }}">
                                     <label class="control-label">Término</label>
                                     <input type="text" class="form-control input-sm" name="term" placeholder="término de busqueda..." value="{{ old('term') }}">
                                     <span class="help-block">{{ $errors->first('term') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-3">
+                            <div class="col-xs-2">
+                                <div class="form-group{{ $errors->first('request_type') ? ' has-error':'' }}">
+                                    <label class="control-label">Tipo de Solicitud</label>
+                                    <select class="form-control input-sm" name="request_type">
+                                        <option value="">Todos</option>
+                                        @foreach ($request_types as $request_type)
+                                            <option value="{{ $request_type->note }}" {{ old('request_type') == $request_type->note ? 'selected':'' }}>{{ $request_type->note }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="help-block">{{ $errors->first('request_type') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div class="form-group{{ $errors->first('process') ? ' has-error':'' }}">
+                                    <label class="control-label">Proceso Impactado</label>
+                                    <select class="form-control input-sm" name="process">
+                                        <option value="">Todos</option>
+                                        @foreach ($request_processes as $request_process)
+                                            <option value="{{ $request_process->name . ' v( ' . $request_process->version . ' )' }}" {{ old('process') == $request_process->name ? 'selected':'' }}>{{ $request_process->name . ' v( ' . $request_process->version . ' )' }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="help-block">{{ $errors->first('process') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('date_from') ? ' has-error':'' }}">
                                     <label class="control-label">Desde</label>
                                     <input type="date" class="form-control input-sm" name="date_from" value="{{ old('date_from') }}">
                                     <span class="help-block">{{ $errors->first('date_from') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-3">
+                            <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('date_to') ? ' has-error':'' }}">
                                     <label class="control-label">Hasta</label>
                                     <input type="date" class="form-control input-sm" name="date_to" value="{{ old('date_to') }}">
@@ -44,20 +68,8 @@
                                 </div>
                             </div>
                             <div class="col-xs-2">
-                                <div class="form-group{{ $errors->first('claim_result') ? ' has-error':'' }}">
-                                    <label class="control-label">Resultado</label>
-                                    <select class="form-control input-sm" name="claim_result">
-                                        <option value="">Todos</option>
-                                        @foreach (get_claim_results() as $key => $claim_result)
-                                            <option value="{{ $key }}" {{ old('claim_result') == $key ? 'selected':'' }}>{{ $claim_result }}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="help-block">{{ $errors->first('claim_result') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-xs-2">
                                 {{ csrf_field() }}
-                                <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Buscando vacantos...">Buscar</button>
+                                <button style="margin-top: 22px;" type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Buscando vacantos...">Buscar</button>
                             </div>
                         </div>
                     </form>

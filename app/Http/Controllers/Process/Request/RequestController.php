@@ -16,7 +16,7 @@ use Bame\Models\Notification\Notification;
 
 class RequestController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $param = Param::all();
 
@@ -24,11 +24,39 @@ class RequestController extends Controller
         $request_statuses = $param->where('type', 'EST');
         $request_processes = $param->where('type', 'PRO');
 
+        $process_requests = ProcessRequest::lastestFirst();
+
+        if ($request->term) {
+            $term = cap_str($request->term);
+
+            $process_requests = $process_requests->orWhere('reqnumber', 'like', '%' . $term . '%')
+                        ->orWhere('reqtype', 'like', '%' . $term . '%')
+                        ->orWhere('process', 'like', '%' . $term . '%')
+                        ->orWhere('subprocess', 'like', '%' . $term . '%')
+                        ->orWhere('note', 'like', '%' . $term . '%')
+                        ->orWhere('causeanaly', 'like', '%' . $term . '%')
+                        ->orWhere('peoinvolve', 'like', '%' . $term . '%')
+                        ->orWhere('deliverabl', 'like', '%' . $term . '%')
+                        ->orWhere('observatio', 'like', '%' . $term . '%');
+        }
+
+        if ($request->request_type) {
+            $process_requests->where('reqtype', $request->request_type);
+        }
+
+        if ($request->date_from) {
+            $process_requests->where('created_at', '>=', $request->date_from . ' 00:00:00');
+        }
+
+        if ($request->date_to) {
+            $process_requests->where('created_at', '<=', $request->date_to . ' 23:59:59');
+        }
+
         if (!can_not_do('process_request_approval')) {
             $ids_req = Approval::where('userapprov', session()->get('user'))->pluck('req_id');
-            $process_requests = ProcessRequest::lastestFirst()->whereIn('id', $ids_req)->paginate();
+            $process_requests = $process_requests->whereIn('id', $ids_req)->paginate();
         } else {
-            $process_requests = ProcessRequest::lastestFirst()->paginate();
+            $process_requests = $process_requests->paginate();
         }
 
         return view('process.request.index', [
