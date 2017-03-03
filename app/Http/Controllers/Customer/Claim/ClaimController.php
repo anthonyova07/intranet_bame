@@ -580,16 +580,20 @@ class ClaimController extends Controller
                 $messages->push('La razón social de la empresa es requerido.');
             }
 
-            if (empty($customer->agent->getLegalName())) {
-                $messages->push('El nombre legal del representante es requerido.');
-            }
+            if ($customer->agent) {
+                if (empty($customer->agent->getLegalName())) {
+                    $messages->push('El nombre legal del representante es requerido.');
+                }
 
-            if (empty($customer->agent->getIdentification())) {
-                $messages->push('La identificación del representante es requerido.');
-            }
+                if (empty($customer->agent->getIdentification())) {
+                    $messages->push('La identificación del representante es requerido.');
+                }
 
-            if (empty(clear_str($request->residential_phone)) && empty(clear_str($request->office_phone)) && empty(clear_str($customer->agent->getPhoneNumber()))) {
-                $messages->push('El representante debe tener un teléfono residencial, oficina o celular.');
+                if (empty(clear_str($request->residential_phone)) && empty(clear_str($request->office_phone)) && empty(clear_str($customer->agent->getPhoneNumber()))) {
+                    $messages->push('El representante debe tener un teléfono residencial, oficina o celular.');
+                }
+            } else {
+                $messages->push('El cliente debe tener un representante.');
             }
 
             if (empty(clear_str($request->mail))) {
