@@ -30,6 +30,9 @@ Route::group(['prefix' => 'notification'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
 
+    //Consulta del Historico
+    Route::resource('consultas/historicoproducto','Consultas\HistoricoProducto\ProductoController');
+
     Route::group(['prefix' => 'security'], function () {
 
         Route::resource('menu', 'Security\MenuController');
