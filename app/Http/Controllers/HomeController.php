@@ -62,6 +62,10 @@ class HomeController extends Controller {
             return !(stripos($date->startdate, $datetime->format('Y-m-d')) === FALSE || !$date->group->showinday);
         });
 
+        $services_dates = Birthdate::getFile()->each(function ($item, $index) {
+            return $item->full_name = $item->full_name . ' (' . calculate_year_of_service($item->services_date) . ' año/s)';
+        });
+
         return view('home.index', [
             'column_new' => $column_new,
             'banners_news' => $banners_news,
@@ -72,6 +76,7 @@ class HomeController extends Controller {
             'datetime' => $datetime,
             'payments_days' => Calendar::getPaymentsDays(),
             'birthdates' => $birthdates,
+            'services_dates' => $services_dates,
             'dates' => $dates,
             'day_events' => $day_events,
             'day_birthdays' => $day_birthdays,

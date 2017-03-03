@@ -468,12 +468,12 @@
                     className: 'birthdate cal_icon ' + '{!! str_replace(' ', '|', $birthdates->where('month_day', $birthdate->month_day)->implode('full_name', ',')) !!}',
                 },
             @endforeach
-            @foreach ($birthdates->unique('services_month_day') as $birthdate)
-                @if (isset($birthdate->services_month_day))
+            @foreach ($services_dates->unique('services_month_day') as $service_date)
+                @if (isset($service_date->services_month_day))
                     {
                         title: '',
-                        start: '{{ $datetime->format('Y') .'-'. $birthdate->services_month_day }}',
-                        className: 'service_year cal_icon ' + '{!! str_replace(' ', '|', $birthdates->where('services_month_day', $birthdate->services_month_day)->implode('full_name', ',')) !!}',
+                        start: '{{ $datetime->format('Y') .'-'. $service_date->services_month_day }}',
+                        className: 'service_year cal_icon ' + '{!! str_replace(' ', '|', $services_dates->where('services_month_day', $service_date->services_month_day)->implode('full_name', ',')) !!}',
                     },
                 @endif
             @endforeach
