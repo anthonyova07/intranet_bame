@@ -115,6 +115,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('vacant', 'HumanResource\Vacant\VacantController');
 
         Route::resource('event', 'Event\EventController');
+
+        Route::group(['prefix' => 'queries'], function () {
+            Route::get('reporte_cuentas', 'HumanResource\Queries\QueryController@reporte_cuentas');
+            Route::get('reporte_vinculados_gestion', 'HumanResource\Queries\QueryController@reporte_vinculados_gestion');            
+        });
     });
 
     Route::group(['prefix' => 'process'], function () {
