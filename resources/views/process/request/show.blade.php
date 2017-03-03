@@ -28,7 +28,7 @@
         <div class="col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Datos de la Solicitud (
+                    <h3 class="panel-title">Datos de la Solicitud Estatus:
                         @if (!$process_request->requested)
                             @if ($process_request->getStatus() === '0')
                                 Rechazada
@@ -40,7 +40,7 @@
                         @else
                             Solicitada
                         @endif
-                    )</h3>
+                    </h3>
                     <span>
                         Solicitada por: {{ $process_request->createname }} el {{ $process_request->created_at->format('d/m/Y H:i:s') }}
                     </span>

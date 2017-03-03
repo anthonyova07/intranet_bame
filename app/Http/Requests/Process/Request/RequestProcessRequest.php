@@ -31,7 +31,7 @@ class RequestProcessRequest extends Request
             'cause_analysis' => 'required|max:1000',
             'people_involved' => 'required|max:1000',
             'deliverable' => 'required|max:1000',
-            'observations' => 'required|max:1000',
+            // 'observations' => 'required|max:1000',
         ];
     }
 }

@@ -31,7 +31,7 @@
 
                                 <div class="col-xs-2">
                                     <div class="form-group{{ $errors->first('process_parent') ? ' has-error':'' }}">
-                                        <label class="control-label">Proceso Padre</label>
+                                        <label class="control-label">Proceso General</label>
                                         <select class="form-control input-sm" name="process_parent">
                                             <option value="">Ninguno</option>
                                             @foreach ($process as $pro)
