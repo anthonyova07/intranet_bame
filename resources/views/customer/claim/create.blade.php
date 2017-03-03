@@ -121,14 +121,14 @@
                                 <table class="table table-bordered table-condensed table-striped">
                                     <tbody>
                                         <tr>
-                                            <td colspan="2" style="width: 50%"><b>Nombre Legal:</b> {{ session()->get('customer_claim')->agent->getLegalName() }}</td>
-                                            <td colspan="2" style="width: 50%"><b>Cédula/Pasaporte:</b> {{ session()->get('customer_claim')->agent->getIdentification() }}</td>
+                                            <td colspan="2" style="width: 50%"><b>Nombre Legal:</b> {{ session()->get('customer_claim')->agent ? session()->get('customer_claim')->agent->getLegalName() : '' }}</td>
+                                            <td colspan="2" style="width: 50%"><b>Cédula/Pasaporte:</b> {{ session()->get('customer_claim')->agent ? session()->get('customer_claim')->agent->getIdentification() : '' }}</td>
                                         </tr>
                                         <tr>
                                             <td><b>Teléfonos:</b></td>
                                             <td><b>Residencia: </b> <input type="text" name="residential_phone" class="form-control input-sm" placeholder="000-000-0000" value="{{ old('residential_phone') }}"></td>
                                             <td><b>Oficina: </b> <input type="text" name="office_phone" class="form-control input-sm" placeholder="000-000-0000" value="{{ old('office_phone') }}"></td>
-                                            <td><b>Celular: </b> <p class="form-control-static">{{ session()->get('customer_claim')->agent->getPhoneNumber() }}</p></td>
+                                            <td><b>Celular: </b> <p class="form-control-static">{{ session()->get('customer_claim')->agent ? session()->get('customer_claim')->agent->getPhoneNumber() : '' }}</p></td>   
                                         </tr>
                                         <tr>
                                             <td colspan="2">
