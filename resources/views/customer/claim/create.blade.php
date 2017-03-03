@@ -150,39 +150,6 @@
 
             <div class="row">
                 <div class="col-xs-1"></div>
-                <div class="col-xs-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Canal de Distribución / Tipo de Persona</h3>
-                        </div>
-
-                        <div class="panel-body">
-
-                            <div class="{{ $errors->first('channel') ? 'has-error':'' }}">
-                                <label class="control-label">Canal de Distribución</label>
-                                <select class="form-control input-sm" name="channel">
-                                    <option value="">Seleccione un Canal de Distribución</option>
-                                    @foreach ($distribution_channels as $channel)
-                                        <option value="{{ $channel->id }}" {{ old('channel') == $channel->id ? 'selected':'' }}>{{ $channel->description }}</option>
-                                    @endforeach
-                                </select>
-                                <span class="help-block">{{ $errors->first('channel') }}</span>
-                            </div>
-
-                            <div class="form-group {{ $errors->first('kind_person') ? 'has-error':'' }}">
-                                <label class="control-label">Tipo de Persona</label>
-                                <select class="form-control input-sm" name="kind_person">
-                                    <option value="">Seleccione un Tipo de Persona</option>
-                                    @foreach ($kind_persons as $kind_person)
-                                        <option value="{{ $kind_person->id }}" {{ old('kind_person') == $kind_person->id ? 'selected':'' }}>{{ $kind_person->description }}</option>
-                                    @endforeach
-                                </select>
-                                <span class="help-block">{{ $errors->first('kind_person') }}</span>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
                 <div class="col-xs-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -258,6 +225,47 @@
                                 </div>
 
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Canal de Distribución / Tipo de Persona</h3>
+                        </div>
+
+                        <div class="panel-body">
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="{{ $errors->first('channel') ? 'has-error':'' }}">
+                                        <label class="control-label">Canal de Distribución</label>
+                                        <select class="form-control input-sm" name="channel">
+                                            <option value="">Seleccione un Canal de Distribución</option>
+                                            @foreach ($distribution_channels as $channel)
+                                                <option code="{{ $channel->code }}" value="{{ $channel->id }}" {{ old('channel') == $channel->id ? 'selected':'' }}>{{ $channel->description }}</option>
+                                            @endforeach
+                                        </select>
+                                        <span class="help-block">{{ $errors->first('channel') }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="form-group {{ $errors->first('kind_person') ? 'has-error':'' }}">
+                                        <label class="control-label">Tipo de Persona</label>
+                                        <select class="form-control input-sm" name="kind_person">
+                                            <option value="">Seleccione un Tipo de Persona</option>
+                                            @foreach ($kind_persons as $kind_person)
+                                                <option value="{{ $kind_person->id }}" {{ old('kind_person') == $kind_person->id ? 'selected':'' }}>{{ $kind_person->description }}</option>
+                                            @endforeach
+                                        </select>
+                                        <span class="help-block">{{ $errors->first('kind_person') }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -397,6 +405,27 @@
     <script type="text/javascript">
         $('#form').submit(function (event) {
             $('#btn_submit').button('loading');
+        });
+
+        $('select[name=form_type]').change(function (e) {
+            var form_type = $(this).val();
+
+            if (form_type == 'FRA') {
+                $('select[name=channel]').val(-1);
+
+                $('select[name=channel] option').each(function (index, value) {
+                    var channel = $(value);
+                    if (channel.attr('code') == 'PO' || channel.attr('code') == 'EB') {
+                        channel.show();
+                    } else {
+                        channel.hide();
+                    }
+                });
+            } else {
+                $('select[name=channel] option').each(function (index, value) {
+                    $(value).show();
+                });
+            }
         });
 
         $('select[name=product_type]').change(function (e) {
