@@ -565,11 +565,34 @@ function str_to_field($str, $id)
     return str_field($str, [], false, $id);
 }
 
-function calculate_year_of_service($date)
+function calculate_year_of_service($date, $with_diff = false)
 {
     if (!is_null($date)) {
         $parts = explode('/', $date);
+        $current_date = new \DateTime;
 
-        return (new \Datetime(trim($parts[2]) . "-{$parts[1]}-{$parts[0]}"))->diff((new \DateTime))->y;
+        $service_compare_date = new \Datetime($current_date->format('Y') . "-{$parts[1]}-{$parts[0]} 23:59:59");
+
+        $service_date = new \Datetime(trim($parts[2]) . "-{$parts[1]}-{$parts[0]} 23:59:59");
+
+        $diff = ($service_date)->diff($current_date);
+
+        if ($with_diff) {
+            if ($diff->y > 0) {
+                return $diff->y == 1 ? ($diff->y . ' año'):($diff->y . ' años');
+            } else if ($diff->m > 0) {
+                return $diff->m == 1 ? ($diff->m . ' mes'):($diff->m .' meses');
+            } else {
+                return $diff->d == 1 ? ($diff->d . ' día'):($diff->d . ' días');
+            }
+        }
+
+        // dd($service_compare_date > $current_date, $service_compare_date, $current_date);
+
+        if ($service_compare_date > $current_date) {
+            return ($diff->y + 1) == 1 ? (($diff->y + 1) . ' año'):(($diff->y + 1) . ' años');
+        } else {
+            return $diff->y == 1 ? ($diff->y . ' año'):($diff->y . ' años');
+        }
     }
 }

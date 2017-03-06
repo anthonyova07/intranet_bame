@@ -63,7 +63,7 @@ class HomeController extends Controller {
         });
 
         $services_dates = Birthdate::getFile()->each(function ($item, $index) {
-            return $item->full_name = $item->full_name . ' (tiene ' . calculate_year_of_service($item->services_date) . ' año/s)';
+            return $item->full_name = $item->full_name . ' cumple ' . calculate_year_of_service($item->services_date);
         });
 
         return view('home.index', [
