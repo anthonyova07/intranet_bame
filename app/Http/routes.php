@@ -120,8 +120,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('{process_request}/downloadattach', 'Process\Request\RequestController@downloadattach')->name('process.request.downloadattach');
             Route::delete('{process_request}/deleteattach', 'Process\Request\RequestController@deleteattach')->name('process.request.deleteattach');
 
-            Route::group(['prefix' => 'excel'], function () {
-                Route::get('status_count', 'Process\Request\ExcelController@status_count')->name('process.request.excel.status_count');
+            Route::group(['prefix' => 'export'], function () {
+                Route::get('status_count_pdf', 'Process\Request\ExportController@status_count_pdf')->name('process.request.export.status_count_pdf');
             });
         });
 

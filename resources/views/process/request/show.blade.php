@@ -28,27 +28,13 @@
         <div class="col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Datos de la Solicitud Estatus:
-                        @if (!$process_request->requested)
-                            @if ($process_request->getStatus() === '0')
-                                Rechazada
-                            @elseif ($process_request->getStatus() === '1')
-                                Aprobada
-                            @else
-                                Pendiente
-                            @endif
-                        @else
-                            Solicitada
-                        @endif
-                    </h3>
-                    <span>
+                    <h3 class="panel-title">Datos de la Solicitud </h3>
+                    <span class="pull-right">
                         Solicitada por: {{ $process_request->createname }} el {{ $process_request->created_at->format('d/m/Y H:i:s') }}
                     </span>
-                    @if ($process_request->reqstatus)
-                        <span class="pull-right">
-                            Estatus: {{ $process_request->reqstatus }}
-                        </span>
-                    @endif
+                    <span>
+                        Estatus: {{ $process_request->reqstatus }}
+                    </span>
                 </div>
                 <div class="panel-body">
                     <ul class="nav nav-tabs">
@@ -62,36 +48,31 @@
                         <div class="tab-pane active" id="datos_solicitud">
 
                             <div class="row">
-                                <div class="col-xs-4">
+                                <div class="col-xs-6">
                                     <div class="form-group">
                                         <label class="control-label">Tipo de Solicitud</label>
                                         <br>
                                         <span class="form-control-static">{{ $process_request->reqtype }}</span>
                                     </div>
                                 </div>
-                                <div class="col-xs-4">
+                                <div class="col-xs-6">
                                     <div class="form-group">
                                         <label class="control-label">Proceso Impactado</label>
                                         <br>
                                         <span class="form-control-static">{{ $process_request->process }}</span>
                                     </div>
                                 </div>
-                                <div class="col-xs-4">
-                                    <div class="form-group">
-                                        <label class="control-label">Subproceso Impactado</label>
-                                        <br>
-                                        <span class="form-control-static">{{ $process_request->subprocess }}</span>
-                                    </div>
-                                </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-xs-12">
                                     <div class="form-group">
                                         <label class="control-label">Descripción</label>
                                         <textarea class="form-control input-sm" readonly="readonly" rows="5" name="description">{{ $process_request->note }}</textarea>
                                     </div>
                                 </div>
-                                <div class="col-xs-6">
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
                                     <div class="form-group">
                                         <label class="control-label">Análisis de Causa</label>
                                         <textarea class="form-control input-sm" readonly="readonly" rows="5" name="cause_analysis">{{ $process_request->causeanaly }}</textarea>
@@ -99,24 +80,10 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-xs-12">
                                     <div class="form-group">
                                         <label class="control-label">Personas que Intervinieron en el Análisis</label>
                                         <textarea class="form-control input-sm" readonly="readonly" rows="5" name="people_involved">{{ $process_request->peoinvolve }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-xs-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Entregables</label>
-                                        <textarea class="form-control input-sm" readonly="readonly" rows="5" name="deliverable">{{ $process_request->deliverabl }}</textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="form-group">
-                                        <label class="control-label">Observaciones</label>
-                                        <textarea class="form-control input-sm" readonly="readonly" rows="5" name="observations">{{ $process_request->observatio }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -219,7 +186,7 @@
 
                         <div class="tab-pane" id="datos_estatus">
 
-                            @if (!can_not_do('process_request_admin') && !$is_approved)
+                            @if (!can_not_do('process_request_admin'))
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <form action="{{ route('process.request.addstatus', ['process_request' => $process_request->id]) }}" method="post">
@@ -359,24 +326,6 @@
     <script type="text/javascript">
         $('#form').submit(function (event) {
             $('#btn_submit').button('loading');
-        });
-
-        $('select[name=process]').change(function (e) {
-            var process = $(this).val();
-            var subprocess = $('select[name=subprocess]');
-            subprocess.show();
-
-            $('select[name=subprocess] option').each(function (index, value) {
-                var parent = $(this).attr('parent');
-
-                if (process == parent) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-
-                subprocess.val(-1);
-            });
         });
 
         function cancel(id, el)

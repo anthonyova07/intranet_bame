@@ -14,7 +14,7 @@
 
     <div class="row">
 
-        <div class="col-xs-10 col-xs-offset-1">
+        <div class="col-xs-8 col-xs-offset-2">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form method="post" action="{{ route('process.request.{type}.param.store', ['type' => $type]) }}" id="form" novalidate>
@@ -30,19 +30,6 @@
                             @if ($type == 'PRO')
 
                                 <div class="col-xs-2">
-                                    <div class="form-group{{ $errors->first('process_parent') ? ' has-error':'' }}">
-                                        <label class="control-label">Proceso General</label>
-                                        <select class="form-control input-sm" name="process_parent">
-                                            <option value="">Ninguno</option>
-                                            @foreach ($process as $pro)
-                                                <option value="{{ $pro->id }}"{{ old('process_parent') == $pro->id ? ' selected':'' }}>{{ $pro->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        <span class="help-block">{{ $errors->first('process_parent') }}</span>
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-2">
                                     <div class="form-group{{ $errors->first('version') ? ' has-error':'' }}">
                                         <label class="control-label">Versión</label>
                                         <input type="text" class="form-control input-sm" name="version" value="{{ old('version') }}">
@@ -50,7 +37,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-xs-4">
+                                <div class="col-xs-6">
                                     <div class="form-group{{ $errors->first('name') ? ' has-error':'' }}">
                                         <label class="control-label">Nombre</label>
                                         <input type="text" class="form-control input-sm" name="name" value="{{ old('name') }}">

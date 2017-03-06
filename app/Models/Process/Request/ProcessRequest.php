@@ -73,4 +73,18 @@ class ProcessRequest extends Model
             return '';
         }
     }
+
+    public function createStatus($status, $comment = '')
+    {
+        $process_request_status = new Status;
+
+        $process_request_status->id = uniqid(true);
+        $process_request_status->status = $status;
+        $process_request_status->comment = $comment;
+
+        $process_request_status->created_by = session()->get('user');
+        $process_request_status->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+
+        $this->status()->save($process_request_status);
+    }
 }

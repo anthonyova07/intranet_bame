@@ -14,14 +14,7 @@ class ParamController extends Controller
 {
     public function create($type)
     {
-        $process = collect();
-
-        if ($type == 'PRO') {
-            $process = Param::where('type', 'PRO')->where('id_parent', '')->get();
-        }
-
         return view('process.request.param.create')
-            ->with('process', $process)
             ->with('type', $type);
     }
 
@@ -34,7 +27,6 @@ class ParamController extends Controller
         $param->code = strtoupper($request->code);
 
         if ($type == 'PRO') {
-            $param->id_parent = $request->process_parent;
             $param->version = $request->version;
             $param->name = cap_str($request->name);
         } else {
@@ -62,12 +54,7 @@ class ParamController extends Controller
 
         $process = collect();
 
-        if ($type == 'PRO') {
-            $process = Param::where('type', 'PRO')->where('id_parent', '')->where('id', '<>', $param->id)->get();
-        }
-
         return view('process.request.param.edit')
-            ->with('process', $process)
             ->with('param', $param);
     }
 
@@ -82,7 +69,6 @@ class ParamController extends Controller
         $param->code = strtoupper($request->code);
 
         if ($type == 'PRO') {
-            $parem->id_parent = $request->process_parent;
             $param->version = $request->version;
             $param->name = cap_str($request->name);
         } else {

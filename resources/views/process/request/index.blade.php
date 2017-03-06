@@ -99,7 +99,7 @@
                     <a class="btn btn-danger btn-xs" href="{{ route('process.request.create') }}">Nueva Solicitud</a>
 
                     @if (!can_not_do('process_request_admin'))
-                        <a style="font-size: 13px;" download class="label btn-success pull-right" target="__blank" href="{{ route('process.request.excel.status_count', Request::except(['term', 'page'])) }}">Exportar Excel</a>
+                        <a style="font-size: 13px;" class="label btn-danger pull-right" target="__blank" href="{{ route('process.request.export.status_count_pdf', Request::except(['term', 'page'])) }}">Exportar PDF</a>
                     @endif
                     <br>
                     <br>
@@ -109,9 +109,7 @@
                                 <th># Solicitud</th>
                                 <th>Tipo Solicitud</th>
                                 <th>Proceso</th>
-                                <th>Subproceso</th>
                                 <th>Estatus</th>
-                                <th>Estado</th>
                                 <th style="width: 112px;">Fecha Creación</th>
                                 <th style="width: 112px;">Creado por</th>
                                 <th style="width: 52px"></th>
@@ -123,21 +121,7 @@
                                     <td>{{ $process_request->reqnumber }}</td>
                                     <td>{{ $process_request->reqtype }}</td>
                                     <td>{{ $process_request->process }}</td>
-                                    <td>{{ $process_request->subprocess }}</td>
                                     <td>{{ $process_request->reqstatus }}</td>
-                                    <td>
-                                        @if (!$process_request->requested)
-                                            @if ($process_request->getStatus() === '0')
-                                                <span style="font-size: 14px;letter-spacing: 1px;" class="label label-danger">Rechazada</span>
-                                            @elseif ($process_request->getStatus() === '1')
-                                                <span style="font-size: 14px;letter-spacing: 1px;" class="label label-success">Aprobada</span>
-                                            @else
-                                                <span style="font-size: 14px;letter-spacing: 1px;" class="label label-warning">Pendiente</span>
-                                            @endif
-                                        @else
-                                            <span style="font-size: 14px;letter-spacing: 1px;" class="label label-default">Solicitada</span>
-                                        @endif
-                                    </td>
                                     <td>{{ $process_request->created_at->format('d/m/Y H:i:s') }}</td>
                                     <td>{{ $process_request->createname }}</td>
                                     <td align="center">

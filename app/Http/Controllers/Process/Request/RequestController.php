@@ -32,12 +32,9 @@ class RequestController extends Controller
             $process_requests = $process_requests->orWhere('reqnumber', 'like', '%' . $term . '%')
                         ->orWhere('reqtype', 'like', '%' . $term . '%')
                         ->orWhere('process', 'like', '%' . $term . '%')
-                        ->orWhere('subprocess', 'like', '%' . $term . '%')
                         ->orWhere('note', 'like', '%' . $term . '%')
                         ->orWhere('causeanaly', 'like', '%' . $term . '%')
-                        ->orWhere('peoinvolve', 'like', '%' . $term . '%')
-                        ->orWhere('deliverabl', 'like', '%' . $term . '%')
-                        ->orWhere('observatio', 'like', '%' . $term . '%');
+                        ->orWhere('peoinvolve', 'like', '%' . $term . '%');
         }
 
         if ($request->request_type) {
@@ -92,28 +89,26 @@ class RequestController extends Controller
 
         $request_type = $params->where('id', $request->request_type)->where('type', 'TIPSOL')->first();
         $process = $params->where('id', $request->process)->where('type', 'PRO')->first();
-        $subprocess = $params->where('id', $request->subprocess)->where('type', 'PRO')->where('id_parent', $process->id)->first();
 
-        if (is_null($request_type) || is_null($process) || is_null($subprocess)) {
+        if (is_null($request_type) || is_null($process)) {
             return back()->withInput()->withError('Los parámetros seleccionados no son correctos.');
         }
 
         $process_request->id = uniqid(true);
         $process_request->reqtype = $request_type->note;
+        $process_request->reqstatus = 'Pendiente';
         $process_request->process = "{$process->name} v( {$process->version} )";
-        $process_request->subprocess = "{$subprocess->name} v( {$subprocess->version} )";
         $process_request->note = $request->description;
         $process_request->causeanaly = $request->cause_analysis;
         $process_request->peoinvolve = $request->people_involved;
-        $process_request->deliverabl = $request->deliverable;
-        $process_request->observatio = $request->observations;
-        $process_request->requested = true;
 
         $process_request->created_by = session()->get('user');
         $process_request->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
 
         $process_request->reqnumber = get_next_request_number();
         $process_request->save();
+
+        $process_request->createStatus('Creada', 'Solicitud creada');
 
         do_log('Creó la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' )');
 
@@ -204,6 +199,21 @@ class RequestController extends Controller
             'username' => session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName(),
         ]);
 
+        $status = $process_request->getStatus();
+
+        if ($status == '1') {
+            $process_request->reqstatus = 'Aprobada';
+        }
+
+        if ($status == '0') {
+            $process_request->reqstatus = 'Rechazada';
+        }
+
+        if ($status == '1' || $status == '0') {
+            $process_request->save();
+            $process_request->createStatus($process_request->reqstatus, 'Solicitud ' . $process_request->reqstatus);
+        }
+
         do_log($request->a == '1' ? 'Aprobó':'Rechazó' . ' la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' )');
 
         return redirect(route('process.request.show', ['request' => $process_request->id]))->with('success', 'Su aprobación ha sido procesada correctamente.');
@@ -244,20 +254,10 @@ class RequestController extends Controller
             return redirect(route('process.request.index'));
         }
 
-        $process_request_status = new Status;
-
-        $process_request_status->id = uniqid(true);
-        $process_request_status->status = $status->note;
-        $process_request_status->comment = $request->comment;
-
-        $process_request_status->created_by = session()->get('user');
-        $process_request_status->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
-
-        $process_request->status()->save($process_request_status);
+        $process_request->createStatus($status->note, $request->comment);
 
         $process_request->reqstatus = $status->note;
-        $process_request->requested = false;
-        
+
         $process_request->save();
 
         Notification::notify('Solicitud de Procesos', "La solicitud {$process_request->reqnumber} ha cambiado al estatus {$process_request_status->status}", route('process.request.show', ['request' => $process_request->id]), $process_request->created_by);
