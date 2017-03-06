@@ -592,7 +592,22 @@ function calculate_year_of_service($date, $with_diff = false)
         if ($service_compare_date > $current_date) {
             return ($diff->y + 1) == 1 ? (($diff->y + 1) . ' año'):(($diff->y + 1) . ' años');
         } else {
-            return $diff->y == 1 ? ($diff->y . ' año'):($diff->y . ' años');
+            // return $diff->y == 1 ? ($diff->y . ' año'):($diff->y . ' años');
+            $str = '';
+
+            if ($diff->y > 0) {
+                $str .= $diff->y == 1 ? ($diff->y . ' año '):($diff->y . ' años ');
+            }
+
+            if ($diff->m > 0) {
+                $str .= $diff->m == 1 ? ($diff->m . ' mes '):($diff->m .' meses ');
+            }
+
+            if ($diff->d > 0) {
+                $str .= $diff->d == 1 ? ($diff->d . ' día '):($diff->d . ' días ');
+            }
+
+            return $str;
         }
     }
 }
