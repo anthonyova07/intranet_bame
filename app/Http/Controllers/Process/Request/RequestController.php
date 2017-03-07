@@ -197,6 +197,7 @@ class RequestController extends Controller
             'approved' => $request->a == '1',
             'approvdate' => new \DateTime,
             'username' => session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName(),
+            'title' => session()->get('user_info')->getTitle(),
         ]);
 
         $status = $process_request->getStatus();

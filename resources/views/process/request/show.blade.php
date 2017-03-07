@@ -118,6 +118,7 @@
                                         <thead>
                                             <th>Usuario</th>
                                             <th>Nombre</th>
+                                            <th>Posición</th>
                                             {{-- <th>Comentario</th> --}}
                                             <th style="width: 116px;">Fecha</th>
                                             <th style="width: 170px;"></th>
@@ -127,6 +128,7 @@
                                                 <tr>
                                                     <td>{{ $approval->userapprov }}</td>
                                                     <td>{{ $approval->username }}</td>
+                                                    <td>{{ $approval->title }}</td>
                                                     {{-- <td>{{ $approval->comment }}</td> --}}
                                                     <td>{{ $approval->approvdate ? $approval->approvdate->format('d/m/Y H:i:s'):'' }}</td>
                                                     <td class="text-center">
@@ -247,7 +249,7 @@
 
                         <div class="tab-pane" id="datos_adjuntos">
 
-                            @if (!can_not_do('process_request_admin') && !$is_approved)
+                            @if (!can_not_do('process_request_admin'))
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <form method="post" action="{{ route('process.request.addattach', ['process_request' => $process_request->id]) }}" id="form" enctype="multipart/form-data">
