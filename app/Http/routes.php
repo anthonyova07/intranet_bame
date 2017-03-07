@@ -99,6 +99,7 @@ Route::group(['middleware' => 'auth'], function () {
 
             Route::group(['prefix' => 'date'], function () {
                 Route::post('loadfile', 'HumanResource\Calendar\DateController@loadfile')->name('human_resources.calendar.date.loadfile');
+                Route::get('delete/{id}', 'HumanResource\Calendar\DateController@delete')->name('human_resources.calendar.date.delete');
             });
 
             Route::resource('date', 'HumanResource\Calendar\DateController', ['only' => [

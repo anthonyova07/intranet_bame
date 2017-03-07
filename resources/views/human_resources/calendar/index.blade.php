@@ -48,6 +48,14 @@
                                             class="naranja">
                                             <i class="fa fa-edit fa-fw"></i>
                                         </a>
+                                        <a
+                                            href="{{ route('human_resources.calendar.date.delete', ['id' => $date->id]) }}"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="Eliminar"
+                                            class="rojo">
+                                            <i class="fa fa-trash fa-fw"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -70,7 +78,9 @@
                                     <label class="control-label">Cargar al Grupo</label>
                                     <select class="form-control input-sm" name="group_id">
                                         @foreach ($groups as $group)
-                                            <option value="{{ $group->id }}" {{ old('group_id') == $group->id ? 'selected':'' }}>{{ $group->name }}</option>
+                                            @if ($group->name != 'Cumpleaños' && $group->name != 'Días de Pago')
+                                                <option value="{{ $group->id }}" {{ old('group_id') == $group->id ? 'selected':'' }}>{{ $group->name }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('group_id') }}</span>

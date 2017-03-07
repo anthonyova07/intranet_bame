@@ -94,6 +94,7 @@ class DateController extends Controller
                 if (isset($parts[1]) && !empty($parts[1])) {
                     $date = [];
 
+                    $date['id'] = uniqid(true) . $index;
                     $date['group_id'] = $request->group_id;
                     $date['title'] = utf8_encode($parts[0]);
 
@@ -108,6 +109,23 @@ class DateController extends Controller
             }
 
             Date::insert($dates->toArray());
+
+            do_log('Realizó una carga masiva de fechas');
+
+            return back()->with('success', 'Los fechas fueron cargadas correctamente.');
         }
+    }
+
+    public function delete(Request $request, $id)
+    {
+        $date = Date::find($id);
+
+        if (!$date) {
+            return back()->with('warning', 'Esta fecha no existe!');
+        }
+
+        $date->delete();
+
+        return back()->with('success', 'La fecha ha sido eliminada correctamente.');
     }
 }
