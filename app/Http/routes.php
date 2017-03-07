@@ -97,6 +97,10 @@ Route::group(['middleware' => 'auth'], function () {
                 'create', 'store', 'edit', 'update'
             ]]);
 
+            Route::group(['prefix' => 'date'], function () {
+                Route::post('loadfile', 'HumanResource\Calendar\DateController@loadfile')->name('human_resources.calendar.date.loadfile');
+            });
+
             Route::resource('date', 'HumanResource\Calendar\DateController', ['only' => [
                 'create', 'store', 'edit', 'update'
             ]]);

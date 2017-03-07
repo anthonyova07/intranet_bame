@@ -13,7 +13,7 @@
 @section('contents')
 
     <div class="row">
-        <div class="col-xs-10 col-xs-offset-1">
+        <div class="col-xs-7">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Fechas</h3>
@@ -53,6 +53,42 @@
                             @endforeach
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-5">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Carga Masiva de Fechas desde CSV</h3>
+                </div>
+                <div class="panel-body">
+                    <form method="post" action="{{ route('human_resources.calendar.date.loadfile') }}" id="form" enctype="multipart/form-data" novalidate>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group{{ $errors->first('group_id') ? ' has-error':'' }}">
+                                    <label class="control-label">Cargar al Grupo</label>
+                                    <select class="form-control input-sm" name="group_id">
+                                        @foreach ($groups as $group)
+                                            <option value="{{ $group->id }}" {{ old('group_id') == $group->id ? 'selected':'' }}>{{ $group->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="help-block">{{ $errors->first('group_id') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="form-group{{ $errors->first('date_file') ? ' has-error':'' }}">
+                                    <label class="control-label">Cargar Archivo de Fechas<small style="font-size: 11px;" class="label label-warning">MAX 10MB</small></label>
+                                    <input type="file" name="date_file">
+                                    <span class="help-block">{{ $errors->first('date_file') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                {{ csrf_field() }}
+                                <button style="margin-top: 16px;" type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Cargando...">Cargar</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

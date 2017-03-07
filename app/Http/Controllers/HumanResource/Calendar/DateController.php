@@ -76,4 +76,38 @@ class DateController extends Controller
 
         return redirect(route('human_resources.calendar.index'))->with('success', 'La fecha de calendario fue editado correctamente.');
     }
+
+    public function loadfile(Request $request)
+    {
+        if ($request->hasFile('date_file')) {
+            $content = file($request->file('date_file')->path());
+
+            $dates = collect();
+
+            foreach ($content as $index => $line) {
+                if ($index == 0) {
+                    continue;
+                }
+
+                $parts = explode(',', $line);
+
+                if (isset($parts[1]) && !empty($parts[1])) {
+                    $date = [];
+
+                    $date['group_id'] = $request->group_id;
+                    $date['title'] = utf8_encode($parts[0]);
+
+                    $parts_date = explode('.', $parts[1]);
+                    $date['startdate'] = str_pad('20' . $parts_date['2'], 2, '0', STR_PAD_LEFT) .'-'. str_pad($parts_date['1'], 2, '0', STR_PAD_LEFT) .'-'. str_pad($parts_date['0'], 2, '0', STR_PAD_LEFT);
+
+                    $date['enddate'] = $date['startdate'];
+                    $date['created_by'] = session()->get('user');
+
+                    $dates->push($date);
+                }
+            }
+
+            Date::insert($dates->toArray());
+        }
+    }
 }
