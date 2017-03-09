@@ -124,10 +124,10 @@ class QueryController extends Controller {
                     ON TCACT_MSAL = TCACT_MTAR
                 INNER JOIN SATDESC00
                     ON PREFI_DESC = 'SAT_STSTC' AND CODIG_DESC = STSRD_MTAR
-                WHERE CODPR_MTAR = '08'
+                WHERE (CODPR_MTAR = '08'
                 OR CODPR_MTAR = '28'
                 OR CODPR_MTAR = '11'
-                OR CODPR_MTAR = '25'
+                OR CODPR_MTAR = '25')
                 AND STSRD_MTAR NOT IN('09','07','05')");
 
         return view('layouts.queries.excel', compact('results'));
