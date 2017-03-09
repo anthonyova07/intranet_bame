@@ -4,11 +4,11 @@
 
 @section('page_title', 'Reportes de Recuersos Humanos')
 
-{{-- @if (can_not_do('human_resources_vacant'))
+@if (can_not_do('human_resources_queries'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="{{ route('human_resources.queries.reporte_cuentas') }}" download>
+                <a href="{{ route('human_resources.queries.reporte_cuentas') }}">
                     <div class="panel-footer" style="padding: 2px 70px;">
                         <span class="pull-left">Descargar</span>
                         <span class="pull-right"><i class="fa fa-arrow-down"></i></span>
@@ -56,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="{{ route('human_resources.queries.reporte_vinculados_gestion') }}" download>
+                <a href="{{ route('human_resources.queries.reporte_vinculados_gestion') }}">
                     <div class="panel-footer" style="padding: 2px 70px;">
                         <span class="pull-left">Descargar</span>
                         <span class="pull-right"><i class="fa fa-arrow-down"></i></span>
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="{{ route('human_resources.queries.reporte_oficial_asignado') }}" download>
+                <a href="{{ route('human_resources.queries.reporte_oficial_asignado') }}">
                     <div class="panel-footer" style="padding: 2px 70px;">
                         <span class="pull-left">Descargar</span>
                         <span class="pull-right"><i class="fa fa-arrow-down"></i></span>
@@ -98,7 +98,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="{{ route('human_resources.queries.reporte_cliente_empleado') }}" download>
+                <a href="{{ route('human_resources.queries.reporte_cliente_empleado') }}">
                     <div class="panel-footer" style="padding: 2px 70px;">
                         <span class="pull-left">Descargar</span>
                         <span class="pull-right"><i class="fa fa-arrow-down"></i></span>
@@ -119,7 +119,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="{{ route('human_resources.queries.reporte_tdc_empleado') }}" download>
+                <a href="{{ route('human_resources.queries.reporte_tdc_empleado') }}">
                     <div class="panel-footer" style="padding: 2px 70px;">
                         <span class="pull-left">Descargar</span>
                         <span class="pull-right"><i class="fa fa-arrow-down"></i></span>
