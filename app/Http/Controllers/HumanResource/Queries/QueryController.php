@@ -108,6 +108,9 @@ class QueryController extends Controller {
                     WHEN CODPR_MTAR = '11' THEN 'EMPLEADO BANDA'
                     WHEN CODPR_MTAR = '25' THEN 'EMPLEADO CHIP'
                 END PRODUCTO,
+                CASE
+                    WHEN SUBSTR(TCACT_MTAR,0,7) = '485912' THEN 'SI' ELSE 'NO'
+                END ES_COMBUSTIBLE,
                 NOMPL_MTAR NOMBRE_CLIENTE,
                 NOMBR_DESC ESTATUS,
                 CASE
