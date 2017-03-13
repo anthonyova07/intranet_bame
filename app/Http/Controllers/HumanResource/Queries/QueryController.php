@@ -16,29 +16,36 @@ class QueryController extends Controller {
         return view('human_resources.queries.index');
     }
 
-    //Reporte Cuentas tipo H201/H202
+    //Reporte Cuentas tipo H201/H202/H251
     public function reporte_cuentas()
     {
         $results = DB::connection('ibs')
             ->select("SELECT
-                TRIM(ACMOPD) DIA_APERTURA,
-                TRIM(ACMOPM) MES_APERTURA,
-                TRIM(ACMOPY) ANIO_APERTURA,
-                TRIM(ACMBRN) SUCURSAL,
+                CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(TRIM(ACMOPD), '/'), TRIM(ACMOPM)), '/'),
+                    CASE WHEN ACMOPY > 9 THEN '20' ELSE '200' END
+                ), TRIM(ACMOPY)) FECHA_APERTURA,
+                TRIM(BRNNME) SUCURSAL,
                 TRIM(ACMACC) NUMERO_CUENTA,
                 TRIM(ACMCUN) CODIGO_CLIENTE,
                 TRIM(CUSNA1) NOMBRE_CLIENTE,
                 TRIM(ACMATY) PRODUCTO,
-                TRIM(ACMPRO) TIPO,
+                TRIM(ACMPRO) CODIGO_PRODUCTO,
+                CASE WHEN TRIM(ACMACD) = '04' THEN 'AHORRO' ELSE 'CORRIENTE' END AS TIPO_CUENTA,
+                TRIM(APCDSC) PRODUCTO_DESCRIPCION,
                 TRIM(ACMAST) ESTADO,
                 TRIM(ACMCCY) MONEDA,
                 TRIM(ACMGBL) *-1 SALDO_LIBRO,
                 TRIM(ACMIAC) INTERES_POR_PAGAR,
-                TRIM(ACMIPL) INTERES_COBRADO_ANIO,
-                CASE WHEN ACMACD = '04' THEN 'AHORRO' ELSE  'CORRIENTE' END AS TIPO
-                FROM ACMST, CUMST
-                WHERE CUSCUN = ACMCUN AND
-                ACMPRO IN('H201','H202')");
+                TRIM(ACMIPL) INTERES_COBRADO_ANIO
+                FROM ACMST
+                INNER JOIN APCLS
+                    ON APCCDE = ACMPRO
+                    AND APCTYP = ACMATY
+                INNER JOIN CNTRLBRN
+                    ON ACMBRN = BRNNUM
+                INNER JOIN CUMST
+                    ON CUSCUN = ACMCUN
+                WHERE ACMPRO IN('H201','H202', 'H251')");
 
         return view('layouts.queries.excel', compact('results'));
     }

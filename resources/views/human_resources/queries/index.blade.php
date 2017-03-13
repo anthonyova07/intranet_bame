@@ -31,7 +31,7 @@
                             <i class="fa fa-file-excel-o fa-4x"></i>
                         </div>
                         <div class="col-xs-10 text-right">
-                            Reporte Cuentas tipo H201/H202
+                            Reporte Cuentas tipo H201/H202/H251
                         </div>
                     </div>
                 </div>
