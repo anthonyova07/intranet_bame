@@ -115,11 +115,32 @@
                             <i class="fa fa-file-excel-o fa-4x"></i>
                         </div>
                         <div class="col-xs-10 text-right">
-                            Reporte Tarjetas Empleado
+                            Reporte Tarjetas Empleados
                         </div>
                     </div>
                 </div>
                 <a href="{{ route('human_resources.queries.reporte_tdc_empleado') }}">
+                    <div class="panel-footer" style="padding: 2px 70px;">
+                        <span class="pull-left">Descargar</span>
+                        <span class="pull-right"><i class="fa fa-arrow-down"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <i class="fa fa-file-excel-o fa-4x"></i>
+                        </div>
+                        <div class="col-xs-10 text-right">
+                            Reporte Prestamos Empleados
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ route('human_resources.queries.reporte_loan_empleado') }}">
                     <div class="panel-footer" style="padding: 2px 70px;">
                         <span class="pull-left">Descargar</span>
                         <span class="pull-right"><i class="fa fa-arrow-down"></i></span>

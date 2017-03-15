@@ -21,9 +21,7 @@ class QueryController extends Controller {
     {
         $results = DB::connection('ibs')
             ->select("SELECT
-                CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(TRIM(ACMOPD), '/'), TRIM(ACMOPM)), '/'),
-                    CASE WHEN ACMOPY > 9 THEN '20' ELSE '200' END
-                ), TRIM(ACMOPY)) FECHA_APERTURA,
+                ACMOPD||'/'||ACMOPM||'/'||CASE WHEN ACMOPY > 9 THEN '20' ELSE '200' END||ACMOPY FECHA_APERTURA,
                 TRIM(BRNNME) SUCURSAL,
                 TRIM(ACMACC) NUMERO_CUENTA,
                 TRIM(ACMCUN) CODIGO_CLIENTE,
@@ -54,7 +52,8 @@ class QueryController extends Controller {
     public function reporte_vinculados_gestion()
     {
         $results = DB::connection('ibs')
-            ->select("SELECT CUSCUN CODIGOCLIENTE,
+            ->select("SELECT
+                CUSCUN CODIGO_CLIENTE,
                 TRIM(CUSNA1) NOMBRE,
                 TRIM(CUSUC1) VINCULACION
                 FROM CUMST
@@ -69,21 +68,19 @@ class QueryController extends Controller {
         $results = DB::connection('ibs')
             ->select("SELECT
                 TRIM(CUSCUN) CODIGO_CLIENTE,
-                TRIM(C.CUSNA1) NOMBRE,
-                TRIM(C.CUSOFC) CODIGO_OFICIAL_PRINCIPAL,
-                TRIM((SELECT
-                    CNODSC
-                    FROM CNOFC
-                    WHERE CNOCFL = '15'
-                    AND CNORCD = C.CUSOFC)) AS NOMBRE_OFICIAL_PRINCIPAL,
-                TRIM(C.CUSOF2) CODIGO_OFICIAL_SEGUNDO,
-                TRIM((SELECT
-                    CNODSC
-                    FROM CNOFC
-                    WHERE CNOCFL = '15'
-                    AND CNORCD = C.CUSOF2)) AS NOMBRE_OFICIAL_SEGUNDO
-                FROM CUMST C
-                WHERE C.CUSOFC IN('244','187')");
+                TRIM(CUSNA1) NOMBRE,
+                TRIM(CUSOFC) CODIGO_OFICIAL_PRINCIPAL,
+                TRIM(PRINCIPAL.CNODSC) NOMBRE_OFICIAL_PRINCIPAL,
+                TRIM(CUSOF2) CODIGO_OFICIAL_SEGUNDO,
+                TRIM(SEGUNDO.CNODSC) NOMBRE_OFICIAL_SEGUNDO
+                FROM CUMST
+                INNER JOIN CNOFC PRINCIPAL
+                    ON PRINCIPAL.CNOCFL = '15'
+                    AND PRINCIPAL.CNORCD = CUSOFC
+                INNER JOIN CNOFC SEGUNDO
+                    ON SEGUNDO.CNOCFL = '15'
+                    AND SEGUNDO.CNORCD = CUSOF2
+                WHERE CUSOFC IN('244','187')");
 
         return view('layouts.queries.excel', compact('results'));
     }
@@ -95,8 +92,8 @@ class QueryController extends Controller {
             ->select("SELECT
                 TRIM(CUSCUN) CODIGO_CLIENTE,
                 TRIM(CUSNA1) NOMBRE
-                FROM CUMST C
-                WHERE C.CUSOFC IN('244','187')
+                FROM CUMST
+                WHERE CUSOFC IN('244','187')
                 AND CUSSTF = '3'");
 
         return view('layouts.queries.excel', compact('results'));
@@ -107,8 +104,8 @@ class QueryController extends Controller {
     {
         $results = DB::connection('itc')
             ->select("SELECT
-                CONCAT(TCACT_MTAR, '*') NUMERO_TARJETA,
-                CONCAT(INDCL_MTAR, '*') IDENTIFICACION,
+                TCACT_MTAR||'*' NUMERO_TARJETA,
+                INDCL_MTAR||'*' IDENTIFICACION,
                 CASE
                     WHEN CODPR_MTAR = '08' THEN 'DIFERIDO BANDA'
                     WHEN CODPR_MTAR = '28' THEN 'DIFERIDO CHIP'
@@ -139,6 +136,54 @@ class QueryController extends Controller {
                 OR CODPR_MTAR = '11'
                 OR CODPR_MTAR = '25')
                 AND STSRD_MTAR NOT IN('09','07','05')");
+
+        return view('layouts.queries.excel', compact('results'));
+    }
+
+    //Reporte de prestamos empleados
+    public function reporte_loan_empleado()
+    {
+        $results = DB::connection('ibs')
+            ->select("SELECT
+                TRIM(DEACUN) CODIGO_CLIENTE,
+                TRIM(CUSNA1) NOMBRE,
+                TRIM(DEAACC)||'*' NUMERO_PRODUCTO,
+                TRIM(DEAPRO) CODIGO_PRODUCTO,
+                TRIM(DEATYP) CODIGO_SUBPRODUCTO,
+                TRIM(APCDSC) DESCRIPCION_PRODUCTO,
+                TRIM(DEACCY) MONEDA,
+                TRIM(DEAOAM) CREDITO,
+                (SELECT
+                    CASE
+                        WHEN (DAYS(CURRENT DATE) - DAYS(DATE(CASE WHEN DLPPDY > 9 THEN '20' ELSE '200' END||DLPPDY||'-'||DLPPDM||'-'||DLPPDD))) > 0
+                            THEN DAYS(CURRENT DATE) - DAYS(DATE(CASE WHEN DLPPDY > 9 THEN '20' ELSE '200' END||DLPPDY||'-'||DLPPDM||'-'||DLPPDD))
+                            ELSE ''
+                    END
+                FROM DLPMT
+                WHERE DLPACC = DEAACC
+                    AND DLPPFL <> 'P'
+                    ORDER BY DLPPNU DESC
+                    FETCH FIRST 1 ROWS ONLY) DIAS_ATRASO,
+                TRIM(DEARTE) TASA,
+                TRIM(CNODSC) OFICIAL,
+                TRIM(DEATRM) PLAZO_MESES,
+                CASE
+                    WHEN TRIM(DEATRC) = 'D' THEN 'dia/s'
+                    WHEN TRIM(DEATRC) = 'M' THEN 'mes/es'
+                    WHEN TRIM(DEATRC) = 'Y' THEN 'año/s'
+                END PLAZO_TERMINO,
+                DEAOMD||'/'||DEAOMM||'/'||CASE WHEN DEAOMY > 9 THEN '20' ELSE '200' END||DEAOMY FECHA_APERTURA
+            FROM DEALS
+            INNER JOIN CUMST
+                ON CUSCUN = DEACUN
+                AND CUSOFC IN('244','187')
+            INNER JOIN APCLS
+                ON APCCDE = DEAPRO
+                AND APCTYP = DEATYP
+            INNER JOIN CNOFC
+                ON CNOCFL = '15'
+                AND CNORCD = CUSOFC
+            WHERE DEAACD = '10'");
 
         return view('layouts.queries.excel', compact('results'));
     }
