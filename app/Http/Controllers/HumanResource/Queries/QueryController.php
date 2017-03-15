@@ -171,7 +171,7 @@ class QueryController extends Controller {
             ->select("SELECT
                 TRIM(DEACUN) CODIGO_CLIENTE,
                 TRIM(CUSNA1) NOMBRE,
-                TRIM(DEAACC)||'*' NUMERO_PRODUCTO,
+                TRIM(DEAACC) NUMERO_PRODUCTO,
                 TRIM(DEAPRO) CODIGO_PRODUCTO,
                 TRIM(DEATYP) CODIGO_SUBPRODUCTO,
                 TRIM(APCDSC) DESCRIPCION_PRODUCTO,
@@ -186,7 +186,7 @@ class QueryController extends Controller {
                 FROM DLPMT
                 WHERE DLPACC = DEAACC
                     AND DLPPFL <> 'P'
-                    ORDER BY DLPPNU DESC
+                    ORDER BY DLPPNU ASC
                     FETCH FIRST 1 ROWS ONLY) DIAS_ATRASO,
                 TRIM(DEARTE) TASA,
                 TRIM(CNODSC) OFICIAL,
