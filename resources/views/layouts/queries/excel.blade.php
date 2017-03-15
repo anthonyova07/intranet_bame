@@ -7,6 +7,15 @@
     <body>
         <table border="1" style="font-size: 80%;">
             <thead>
+                <tr>
+                    <td colspan="2">Bancamérica</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Generado en {{ datetime()->format('d/m/Y h:i:s a') }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Generado por {{ session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName() }}</td>
+                </tr>
                 @if (count($results))
                     <tr>
                         @foreach ($results[0] as $key => $value)
