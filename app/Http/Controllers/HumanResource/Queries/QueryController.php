@@ -19,6 +19,10 @@ class QueryController extends Controller {
     //Reporte Cuentas tipo H201/H202/H251
     public function reporte_cuentas()
     {
+        if (can_not_do('human_resources_queries')) {
+            return 'Usted no tiene permisos para acceder a esta opción';
+        }
+
         $results = DB::connection('ibs')
             ->select("SELECT
                 ACMOPD||'/'||ACMOPM||'/'||CASE WHEN ACMOPY > 9 THEN '20' ELSE '200' END||ACMOPY FECHA_APERTURA,
@@ -51,6 +55,10 @@ class QueryController extends Controller {
     //Reporte Vinculados por gestión
     public function reporte_vinculados_gestion()
     {
+        if (can_not_do('human_resources_queries')) {
+            return 'Usted no tiene permisos para acceder a esta opción';
+        }
+
         $results = DB::connection('ibs')
             ->select("SELECT
                 CUSCUN CODIGO_CLIENTE,
@@ -65,6 +73,10 @@ class QueryController extends Controller {
     //Reporte Oficial asignado (244: Bianca / 187: Victoria)
     public function reporte_oficial_asignado()
     {
+        if (can_not_do('human_resources_queries')) {
+            return 'Usted no tiene permisos para acceder a esta opción';
+        }
+
         $results = DB::connection('ibs')
             ->select("SELECT
                 TRIM(CUSCUN) CODIGO_CLIENTE,
@@ -88,6 +100,10 @@ class QueryController extends Controller {
     //Reporte Relación del Cliente como Empleado (Rel. 3)
     public function reporte_cliente_empleado()
     {
+        if (can_not_do('human_resources_queries')) {
+            return 'Usted no tiene permisos para acceder a esta opción';
+        }
+
         $results = DB::connection('ibs')
             ->select("SELECT
                 TRIM(CUSCUN) CODIGO_CLIENTE,
@@ -102,6 +118,10 @@ class QueryController extends Controller {
     //Reporte de tarjeta empleado
     public function reporte_tdc_empleado()
     {
+        if (can_not_do('human_resources_queries')) {
+            return 'Usted no tiene permisos para acceder a esta opción';
+        }
+
         $results = DB::connection('itc')
             ->select("SELECT
                 TCACT_MTAR||'*' NUMERO_TARJETA,
@@ -143,6 +163,10 @@ class QueryController extends Controller {
     //Reporte de prestamos empleados
     public function reporte_loan_empleado()
     {
+        if (can_not_do('human_resources_queries')) {
+            return 'Usted no tiene permisos para acceder a esta opción';
+        }
+
         $results = DB::connection('ibs')
             ->select("SELECT
                 TRIM(DEACUN) CODIGO_CLIENTE,
@@ -172,7 +196,7 @@ class QueryController extends Controller {
                     WHEN TRIM(DEATRC) = 'M' THEN 'mes/es'
                     WHEN TRIM(DEATRC) = 'Y' THEN 'año/s'
                 END PLAZO_TERMINO,
-                DEAOMD||'/'||DEAOMM||'/'||CASE WHEN DEAOMY > 9 THEN '20' ELSE '200' END||DEAOMY FECHA_APERTURA
+                DEASDD||'/'||DEASDM||'/'||CASE WHEN DEASDY > 9 THEN '20' ELSE '200' END||DEASDY FECHA_APERTURA
             FROM DEALS
             INNER JOIN CUMST
                 ON CUSCUN = DEACUN
