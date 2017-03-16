@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Mercadeo -> Vacantes')
+@section('title', 'Recuersos Humanos -> Vacantes')
 
 @section('page_title', 'Mantenimiento de Vacantes')
 

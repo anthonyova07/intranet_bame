@@ -611,3 +611,8 @@ function calculate_year_of_service($date, $with_diff = false)
         }
     }
 }
+
+function datetime()
+{
+    return new \DateTime;
+}
