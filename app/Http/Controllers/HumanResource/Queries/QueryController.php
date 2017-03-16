@@ -36,9 +36,9 @@ class QueryController extends Controller {
                 TRIM(APCDSC) PRODUCTO_DESCRIPCION,
                 TRIM(ACMAST) ESTADO,
                 TRIM(ACMCCY) MONEDA,
-                TRIM(ACMGBL) *-1 SALDO_LIBRO,
-                TRIM(ACMIAC) INTERES_POR_PAGAR,
-                TRIM(ACMIPL) INTERES_COBRADO_ANIO
+                ACMGBL *-1 SALDO_LIBRO,
+                ACMIAC INTERES_POR_PAGAR,
+                ACMIPL INTERES_COBRADO_ANIO
                 FROM ACMST
                 INNER JOIN APCLS
                     ON APCCDE = ACMPRO
@@ -135,8 +135,8 @@ class QueryController extends Controller {
                 CASE
                     WHEN SUBSTR(TCACT_MTAR,0,7) = '485912' THEN 'SI' ELSE 'NO'
                 END ES_COMBUSTIBLE,
-                NOMPL_MTAR NOMBRE_CLIENTE,
-                NOMBR_DESC ESTATUS,
+                TRIM(NOMPL_MTAR) NOMBRE_CLIENTE,
+                TRIM(NOMBR_DESC) ESTATUS,
                 CASE
                     WHEN MONED_MSAL = '214' THEN 'DOP'
                     WHEN MONED_MSAL = '840' THEN 'USD'
@@ -176,7 +176,7 @@ class QueryController extends Controller {
                 TRIM(DEATYP) CODIGO_SUBPRODUCTO,
                 TRIM(APCDSC) DESCRIPCION_PRODUCTO,
                 TRIM(DEACCY) MONEDA,
-                TRIM(DEAOAM) CREDITO,
+                DEAOAM CREDITO,
                 (SELECT
                     CASE
                         WHEN (DAYS(CURRENT DATE) - DAYS(DATE(CASE WHEN DLPPDY > 9 THEN '20' ELSE '200' END||DLPPDY||'-'||DLPPDM||'-'||DLPPDD))) > 0
@@ -188,9 +188,9 @@ class QueryController extends Controller {
                     AND DLPPFL <> 'P'
                     ORDER BY DLPPNU ASC
                     FETCH FIRST 1 ROWS ONLY) DIAS_ATRASO,
-                TRIM(DEARTE) TASA,
+                DEARTE TASA,
                 TRIM(CNODSC) OFICIAL,
-                TRIM(DEATRM) PLAZO_MESES,
+                DEATRM PLAZO,
                 CASE
                     WHEN TRIM(DEATRC) = 'D' THEN 'dia/s'
                     WHEN TRIM(DEATRC) = 'M' THEN 'mes/es'
