@@ -75,6 +75,8 @@ class Birthdate extends Model
 
     public static function addModifyDeleteOne($data)
     {
+        $message = 'El empleado ha sido eliminado correctamente.';
+
         $birthdates = self::getFile();
 
         if ($birthdates->contains('code', $data->code)) {
@@ -90,7 +92,7 @@ class Birthdate extends Model
             $birthdate = new \stdClass;
 
             $birthdate->code = $data->code;
-            $birthdate->full_name = utf8_encode($data->full_name);
+            $birthdate->full_name = $data->full_name;
             $birthdate->gender = $data->gender;
             $birthdate->month_day = $birthdate_parts[1] .'-'. $birthdate_parts[2];
 
@@ -98,8 +100,12 @@ class Birthdate extends Model
             $birthdate->services_month_day = $service_parts[1] .'-'. $service_parts[2];
 
             $birthdates->push($birthdate);
+
+            $message = 'El empleado ha sido agregado/modificado correctamente.';
         }
 
         self::saveFile($birthdates);
+
+        return $message;
     }
 }

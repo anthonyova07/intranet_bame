@@ -32,8 +32,8 @@ class BirthdateController extends Controller
 
         $this->validate($request, $rules);
 
-        Birthdate::addModifyDeleteOne($request);
+        $message = Birthdate::addModifyDeleteOne($request);
 
-        return back()->with('success', 'El proceso fue ejecutado correctamente.');
+        return back()->with('success', $message);
     }
 }

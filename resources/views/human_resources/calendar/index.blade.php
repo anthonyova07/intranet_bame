@@ -216,7 +216,7 @@
                                     <div class="col-xs-12">
                                         {{ csrf_field() }}
                                         <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Guardar</button>
-                                        {{-- <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Eliminando...">Eliminar</button> --}}
+                                        <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Eliminando...">Eliminar</button>
                                     </div>
                                 </div>
                             </div>
