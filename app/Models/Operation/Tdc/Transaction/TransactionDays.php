@@ -51,7 +51,7 @@ class TransactionDays extends Model
     public function getTransactionDate($formatted = true)
     {
         if ($formatted) {
-            return $this->format_date($this->fectr_atrn);
+            return $this->format_date($this->fectr_atrn, 'dmy');
         } else {
             return $this->fectr_atrn;
         }
@@ -73,20 +73,26 @@ class TransactionDays extends Model
         return $this->hasOne(Description::class, 'codig_desc', 'codco_atrn')->where('prefi_desc', 'SAT_CONCEP');
     }
 
-    public function format_date($date)
+    public function format_date($date, $from = 'ymd')
     {
-        if (strlen($date) == 8) {
+        if ($from == 'ymd') {
             $y = substr($date, 0, 4);
             $m = substr($date, 4, 2);
             $d = substr($date, 6, 2);
-        } else if (strlen($date) == 7) {
-            $d = '0' . substr($date, 0, 1);
-            $m = substr($date, 1, 2);
-            $y = substr($date, 3, 4);
-        } else {
-            $d = '';
-            $m = '';
-            $y = '';
+        } else if ($from == 'dmy') {
+            if (strlen($date) == 8) {
+                $d = substr($date, 0, 2);
+                $m = substr($date, 2, 2);
+                $y = substr($date, 4, 4);
+            } else if (strlen($date) == 7) {
+                $d = '0' . substr($date, 0, 1);
+                $m = substr($date, 1, 2);
+                $y = substr($date, 3, 4);
+            } else {
+                $d = '';
+                $m = '';
+                $y = '';
+            }
         }
 
         return $d . '/' . $m . '/' . $y;

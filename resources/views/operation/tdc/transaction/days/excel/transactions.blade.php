@@ -24,9 +24,9 @@
             <tbody>
                 @foreach ($transactions as $transaction)
                     <tr>
-                        <td>{{ '*' . $transaction->getCreditCard() }}</td>
+                        <td>{{ $transaction->getCreditCard() . '*' }}</td>
                         @if ($transaction->creditcard)
-                            <td>{{ $transaction->creditcard->getIdentification() }}</td>
+                            <td>{{ $transaction->creditcard->getIdentification() . '*' }}</td>
                             <td>{{ $transaction->creditcard->getPlasticName() }}</td>
                         @else
                             <td></td>
