@@ -49,6 +49,8 @@ class QueryController extends Controller {
                     ON CUSCUN = ACMCUN
                 WHERE ACMPRO IN('H201','H202', 'H251')");
 
+        do_log('Generó el Reporte de RRHH  ( reporte:Reporte Cuentas tipo H201/H202/H251 )');
+
         return view('layouts.queries.excel', compact('results'));
     }
 
@@ -66,6 +68,8 @@ class QueryController extends Controller {
                 TRIM(CUSUC1) VINCULACION
                 FROM CUMST
                 WHERE CUSUC1 IN('G1','G2')");
+
+        do_log('Generó el Reporte de RRHH  ( reporte:Reporte Vinculados por gestión )');
 
         return view('layouts.queries.excel', compact('results'));
     }
@@ -94,6 +98,8 @@ class QueryController extends Controller {
                     AND SEGUNDO.CNORCD = CUSOF2
                 WHERE CUSOFC IN('244','187')");
 
+        do_log('Generó el Reporte de RRHH  ( reporte:Reporte Oficial asignado (244: Bianca / 187: Victoria) )');
+
         return view('layouts.queries.excel', compact('results'));
     }
 
@@ -111,6 +117,8 @@ class QueryController extends Controller {
                 FROM CUMST
                 WHERE CUSOFC IN('244','187')
                 AND CUSSTF = '3'");
+
+        do_log('Generó el Reporte de RRHH  ( reporte:Reporte Relación del Cliente como Empleado (Rel. 3) )');
 
         return view('layouts.queries.excel', compact('results'));
     }
@@ -156,6 +164,8 @@ class QueryController extends Controller {
                 OR CODPR_MTAR = '11'
                 OR CODPR_MTAR = '25')
                 AND STSRD_MTAR NOT IN('09','07','05')");
+
+        do_log('Generó el Reporte de RRHH  ( reporte:Reporte de tarjeta empleado )');
 
         return view('layouts.queries.excel', compact('results'));
     }
@@ -208,6 +218,8 @@ class QueryController extends Controller {
                 ON CNOCFL = '15'
                 AND CNORCD = CUSOFC
             WHERE DEAACD = '10'");
+
+        do_log('Generó el Reporte de RRHH  ( reporte:Reporte de prestamos empleados )');
 
         return view('layouts.queries.excel', compact('results'));
     }
