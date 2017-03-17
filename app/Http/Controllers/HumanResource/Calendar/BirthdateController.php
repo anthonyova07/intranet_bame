@@ -17,8 +17,23 @@ class BirthdateController extends Controller
     {
         if ($request->hasFile('birthdate_file')) {
             Birthdate::storeFile($request->file('birthdate_file'));
+
+            return back()->with('success', 'Los cumpleaños fueron cargados correctamente.');
         }
 
-        return back()->with('success', 'Los cumpleaños fueron cargados correctamente.');
+        $rules = ['code' => 'required|integer'];
+
+        if (trim($request->full_name) != '') {
+            $rules = array_merge($rules, [
+                'birthdate' => 'required',
+                'initial_date' => 'required',
+            ]);
+        }
+
+        $this->validate($request, $rules);
+
+        Birthdate::addModifyDeleteOne($request);
+
+        return back()->with('success', 'El proceso fue ejecutado correctamente.');
     }
 }

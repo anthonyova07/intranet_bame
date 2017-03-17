@@ -180,5 +180,8 @@ return [
       'textcolor' => 'Texto',
       'startdate' => 'Fecha de Inicio',
       'enddate' => 'Fecha Final',
+      'full_name' => 'Nombre Completo',
+      'birthdate' => 'Cumpleño',
+      'initial_date' => 'Ingreso',
     ],
 ];
