@@ -198,6 +198,7 @@ class RequestController extends Controller
             'approvdate' => new \DateTime,
             'username' => session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName(),
             'title' => session()->get('user_info')->getTitle(),
+            'comment' => $request->comment,
         ]);
 
         $status = $process_request->getStatus();

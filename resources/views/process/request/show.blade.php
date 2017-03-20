@@ -113,40 +113,79 @@
                             @endif
 
                             <div class="row">
-                                <div class="col-xs-8 col-xs-offset-2">
+                                <div class="col-xs-12">
                                     <table class="table table-bordered table-condensed table-striped table-hover">
                                         <thead>
                                             <th>Usuario</th>
                                             <th>Nombre</th>
                                             <th>Posición</th>
-                                            {{-- <th>Comentario</th> --}}
                                             <th style="width: 116px;">Fecha</th>
+                                            <th>Comentario</th>
                                             <th style="width: 170px;"></th>
                                         </thead>
                                         <tbody>
                                             @foreach ($process_request->approvals as $index => $approval)
-                                                <tr>
-                                                    <td>{{ $approval->userapprov }}</td>
-                                                    <td>{{ $approval->username }}</td>
-                                                    <td>{{ $approval->title }}</td>
-                                                    {{-- <td>{{ $approval->comment }}</td> --}}
-                                                    <td>{{ $approval->approvdate ? $approval->approvdate->format('d/m/Y H:i:s'):'' }}</td>
-                                                    <td class="text-center">
-                                                        @if ($approval->approved === '0')
-                                                            <span style="font-size: 14px;letter-spacing: 1px;" class="label label-danger">Rechazada</span>
-                                                        @elseif ($approval->approved === '1')
-                                                            <span style="font-size: 14px;letter-spacing: 1px;" class="label label-success">Aprobada</span>
+                                                <form id="form_{{ $approval->id }}" action="{{ route('process.request.approval', ['process_request' => $process_request->id]) }}" method="get">
+                                                    <input type="hidden" id="a_{{ $approval->id }}" name="a">
+                                                    <tr>
+                                                        <td>{{ $approval->userapprov }}</td>
+                                                        <td>{{ $approval->username }}</td>
+                                                        <td>{{ $approval->title }}</td>
+                                                        <td>{{ $approval->approvdate ? $approval->approvdate->format('d/m/Y H:i:s'):'' }}</td>
+                                                        @if ($index > 0)
+                                                            @if ($process_request->approvals->get($index - 1)->approved == '1' && $approval->userapprov === session()->get('user') && !$is_approved)
+                                                                <td><input type="text" class="form-control asd" name="comment" value="{{ $approval->comment }}" placeholder="Comentario..."></td>
+                                                            @else
+                                                                <td>{{ $approval->comment }}</td>
+                                                            @endif
                                                         @else
-                                                            <span style="font-size: 14px;letter-spacing: 1px;" class="label label-warning">Pendiente</span>
+                                                            @if ($approval->userapprov === session()->get('user'))
+                                                                <td><input type="text" class="form-control" name="comment" value="{{ $approval->comment }}" placeholder="Comentario..."></td>
+                                                            @else
+                                                                <td>{{ $approval->comment }}</td>
+                                                            @endif
                                                         @endif
+                                                        <td class="text-center">
+                                                            @if ($approval->approved === '0')
+                                                                <span style="font-size: 14px;letter-spacing: 1px;" class="label label-danger">Rechazada</span>
+                                                            @elseif ($approval->approved === '1')
+                                                                <span style="font-size: 14px;letter-spacing: 1px;" class="label label-success">Aprobada</span>
+                                                            @else
+                                                                <span style="font-size: 14px;letter-spacing: 1px;" class="label label-warning">Pendiente</span>
+                                                            @endif
 
-                                                        @if (!$is_approved)
-                                                            @if (!can_not_do('process_request_approval'))
-                                                                @if ($index > 0)
-                                                                    @if ($process_request->approvals->get($index - 1)->approved == '1')
+                                                            @if (!$is_approved)
+                                                                @if (!can_not_do('process_request_approval'))
+                                                                    @if ($index > 0)
+                                                                        @if ($process_request->approvals->get($index - 1)->approved == '1')
+                                                                            @if ($approval->userapprov === session()->get('user'))
+                                                                                <a
+                                                                                    href="javascript:void(0)"
+                                                                                    onclick="send_form('{{ $approval->id }}', '1')"
+                                                                                    class="link_activar verde"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="top"
+                                                                                    style="font-size: 20px;"
+                                                                                    title="Aprobar">
+                                                                                    <i class="fa fa-check fa-fw"></i>
+                                                                                </a>
+                                                                                <a
+                                                                                    href="javascript:void(0)"
+                                                                                    onclick="send_form('{{ $approval->id }}', '0')"
+                                                                                    class="link_anular rojo"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="top"
+                                                                                    style="font-size: 20px;"
+                                                                                    title="Rechazar">
+                                                                                    <i class="fa fa-times fa-fw"></i>
+                                                                                </a>
+                                                                            @endif
+                                                                        @endif
+                                                                    @else
                                                                         @if ($approval->userapprov === session()->get('user'))
                                                                             <a
-                                                                                href="{{ route('process.request.approval', ['process_request' => $process_request->id, 'a' => '1']) }}"
+                                                                                href="javascript:void(0)"
+                                                                                onclick="send_form('{{ $approval->id }}', '1')"
                                                                                 class="link_activar verde"
                                                                                 data-toggle="tooltip"
                                                                                 data-placement="top"
@@ -155,7 +194,8 @@
                                                                                 <i class="fa fa-check fa-fw"></i>
                                                                             </a>
                                                                             <a
-                                                                                href="{{ route('process.request.approval', ['process_request' => $process_request->id, 'a' => '0']) }}"
+                                                                                href="javascript:void(0)"
+                                                                                onclick="send_form('{{ $approval->id }}', '0')"
                                                                                 class="link_anular rojo"
                                                                                 data-toggle="tooltip"
                                                                                 data-placement="top"
@@ -165,44 +205,23 @@
                                                                             </a>
                                                                         @endif
                                                                     @endif
-                                                                @else
-                                                                    @if ($approval->userapprov === session()->get('user'))
-                                                                        <a
-                                                                            href="{{ route('process.request.approval', ['process_request' => $process_request->id, 'a' => '1']) }}"
-                                                                            class="link_activar verde"
-                                                                            data-toggle="tooltip"
-                                                                            data-placement="top"
-                                                                            style="font-size: 20px;"
-                                                                            title="Aprobar">
-                                                                            <i class="fa fa-check fa-fw"></i>
-                                                                        </a>
-                                                                        <a
-                                                                            href="{{ route('process.request.approval', ['process_request' => $process_request->id, 'a' => '0']) }}"
-                                                                            class="link_anular rojo"
-                                                                            data-toggle="tooltip"
-                                                                            data-placement="top"
-                                                                            style="font-size: 20px;"
-                                                                            title="Rechazar">
-                                                                            <i class="fa fa-times fa-fw"></i>
-                                                                        </a>
-                                                                    @endif
+                                                                @endif
+
+                                                                @if (!can_not_do('process_request_admin'))
+                                                                    <a
+                                                                        href="{{ route('process.request.deleteuser', ['process_request' => $process_request->id, 'u' => $approval->userapprov]) }}"
+                                                                        class="link_anular rojo"
+                                                                        data-toggle="tooltip"
+                                                                        data-placement="top"
+                                                                        style="font-size: 20px;"
+                                                                        title="Eliminar Aprobación">
+                                                                        <i class="fa fa-trash fa-fw"></i>
+                                                                    </a>
                                                                 @endif
                                                             @endif
-
-                                                            @if (!can_not_do('process_request_admin'))
-                                                                <a
-                                                                    href="{{ route('process.request.deleteuser', ['process_request' => $process_request->id, 'u' => $approval->userapprov]) }}"
-                                                                    class="link_anular rojo"
-                                                                    data-toggle="tooltip"
-                                                                    data-placement="top"
-                                                                    style="font-size: 20px;"
-                                                                    title="Eliminar Aprobación">
-                                                                    <i class="fa fa-trash fa-fw"></i>
-                                                                </a>
-                                                            @endif
-                                                        @endif
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                    </tr>
+                                                </form>
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -274,7 +293,7 @@
 
                         <div class="tab-pane" id="datos_adjuntos">
 
-                            @if (!can_not_do('process_request_admin'))
+                            @if (!can_not_do('process_request_admin') || $process_request->approvals->contains('userapprov', session()->get('user')))
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <form method="post" action="{{ route('process.request.addattach', ['process_request' => $process_request->id]) }}" id="form" enctype="multipart/form-data">
@@ -354,6 +373,11 @@
         $('#form').submit(function (event) {
             $('#btn_submit').button('loading');
         });
+
+        function send_form(form, a) {
+            $('#a_' + form).val(a);
+            $('#form_' + form).submit();
+        }
 
         function cancel(id, el)
         {
