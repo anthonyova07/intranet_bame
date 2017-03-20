@@ -124,7 +124,7 @@
                                             <th style="width: 170px;"></th>
                                         </thead>
                                         <tbody>
-                                            @foreach ($process_request->approvals as $approval)
+                                            @foreach ($process_request->approvals as $index => $approval)
                                                 <tr>
                                                     <td>{{ $approval->userapprov }}</td>
                                                     <td>{{ $approval->username }}</td>
@@ -142,25 +142,50 @@
 
                                                         @if (!$is_approved)
                                                             @if (!can_not_do('process_request_approval'))
-                                                                @if ($approval->userapprov === session()->get('user'))
-                                                                    <a
-                                                                        href="{{ route('process.request.approval', ['process_request' => $process_request->id, 'a' => '1']) }}"
-                                                                        class="link_activar verde"
-                                                                        data-toggle="tooltip"
-                                                                        data-placement="top"
-                                                                        style="font-size: 20px;"
-                                                                        title="Aprobar">
-                                                                        <i class="fa fa-check fa-fw"></i>
-                                                                    </a>
-                                                                    <a
-                                                                        href="{{ route('process.request.approval', ['process_request' => $process_request->id, 'a' => '0']) }}"
-                                                                        class="link_anular rojo"
-                                                                        data-toggle="tooltip"
-                                                                        data-placement="top"
-                                                                        style="font-size: 20px;"
-                                                                        title="Rechazar">
-                                                                        <i class="fa fa-times fa-fw"></i>
-                                                                    </a>
+                                                                @if ($index > 0)
+                                                                    @if ($process_request->approvals->get($index - 1)->approved == '1')
+                                                                        @if ($approval->userapprov === session()->get('user'))
+                                                                            <a
+                                                                                href="{{ route('process.request.approval', ['process_request' => $process_request->id, 'a' => '1']) }}"
+                                                                                class="link_activar verde"
+                                                                                data-toggle="tooltip"
+                                                                                data-placement="top"
+                                                                                style="font-size: 20px;"
+                                                                                title="Aprobar">
+                                                                                <i class="fa fa-check fa-fw"></i>
+                                                                            </a>
+                                                                            <a
+                                                                                href="{{ route('process.request.approval', ['process_request' => $process_request->id, 'a' => '0']) }}"
+                                                                                class="link_anular rojo"
+                                                                                data-toggle="tooltip"
+                                                                                data-placement="top"
+                                                                                style="font-size: 20px;"
+                                                                                title="Rechazar">
+                                                                                <i class="fa fa-times fa-fw"></i>
+                                                                            </a>
+                                                                        @endif
+                                                                    @endif
+                                                                @else
+                                                                    @if ($approval->userapprov === session()->get('user'))
+                                                                        <a
+                                                                            href="{{ route('process.request.approval', ['process_request' => $process_request->id, 'a' => '1']) }}"
+                                                                            class="link_activar verde"
+                                                                            data-toggle="tooltip"
+                                                                            data-placement="top"
+                                                                            style="font-size: 20px;"
+                                                                            title="Aprobar">
+                                                                            <i class="fa fa-check fa-fw"></i>
+                                                                        </a>
+                                                                        <a
+                                                                            href="{{ route('process.request.approval', ['process_request' => $process_request->id, 'a' => '0']) }}"
+                                                                            class="link_anular rojo"
+                                                                            data-toggle="tooltip"
+                                                                            data-placement="top"
+                                                                            style="font-size: 20px;"
+                                                                            title="Rechazar">
+                                                                            <i class="fa fa-times fa-fw"></i>
+                                                                        </a>
+                                                                    @endif
                                                                 @endif
                                                             @endif
 

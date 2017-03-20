@@ -160,7 +160,7 @@ class RequestController extends Controller
 
             $approval = new Approval;
 
-            $approval->id = uniqid(true) . $index;
+            $approval->id = uniqid(true);
             $approval->userapprov = $user;
             $approval->approved = '';
             $approval->approvdate = null;
