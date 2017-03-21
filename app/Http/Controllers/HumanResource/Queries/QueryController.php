@@ -113,7 +113,8 @@ class QueryController extends Controller {
         $results = DB::connection('ibs')
             ->select("SELECT
                 TRIM(CUSCUN) CODIGO_CLIENTE,
-                TRIM(CUSNA1) NOMBRE
+                TRIM(CUSNA1) NOMBRE,
+                TRIM(CUSSTF) TIPO_RELACION
                 FROM CUMST
                 WHERE CUSOFC IN('244','187')
                 AND CUSSTF = '3'");
@@ -132,8 +133,8 @@ class QueryController extends Controller {
 
         $results = DB::connection('itc')
             ->select("SELECT
-                TCACT_MTAR||'*' NUMERO_TARJETA,
-                INDCL_MTAR||'*' IDENTIFICACION,
+                TCACT_MTAR NUMERO_TARJETA,
+                INDCL_MTAR IDENTIFICACION,
                 CASE
                     WHEN CODPR_MTAR = '08' THEN 'DIFERIDO BANDA'
                     WHEN CODPR_MTAR = '28' THEN 'DIFERIDO CHIP'
