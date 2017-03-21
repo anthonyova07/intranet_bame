@@ -14,7 +14,7 @@
 
     <div class="row">
 
-        <div class="col-xs-10 col-xs-offset-1">
+        <div class="col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Búscar Reclamación</h3>
@@ -29,14 +29,14 @@
                                     <span class="help-block">{{ $errors->first('term') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-3">
+                            <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('date_from') ? ' has-error':'' }}">
                                     <label class="control-label">Desde</label>
                                     <input type="date" class="form-control input-sm" name="date_from" value="{{ old('date_from') }}">
                                     <span class="help-block">{{ $errors->first('date_from') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-3">
+                            <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('date_to') ? ' has-error':'' }}">
                                     <label class="control-label">Hasta</label>
                                     <input type="date" class="form-control input-sm" name="date_to" value="{{ old('date_to') }}">
@@ -53,6 +53,13 @@
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('claim_result') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div class="checkbox">
+                                    <label style="margin-top: 18px;">
+                                        <input type="checkbox" name="pending_approval"> Pendiente de Aprobación
+                                    </label>
                                 </div>
                             </div>
                             <div class="col-xs-2">
@@ -140,7 +147,7 @@
                         </tbody>
                     </table>
 
-                    {{ $claims->links() }}
+                    {{ $claims->appends(Request::all())->links() }}
                 </div>
             </div>
         </div>
