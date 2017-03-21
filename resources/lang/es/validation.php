@@ -180,5 +180,6 @@ return [
       'textcolor' => 'Texto',
       'startdate' => 'Fecha de Inicio',
       'enddate' => 'Fecha Final',
+      'folder_name' => 'Nombre de Carpeta',
     ],
 ];

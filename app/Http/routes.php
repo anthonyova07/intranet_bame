@@ -87,6 +87,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('gallery/delete_image/{gallery}/{image}', 'Marketing\Gallery\GalleryController@delete_image')->name('marketing.gallery.delete_image');
     });
 
+    Route::group(['prefix' => 'administration'], function () {
+        Route::resource('gestidoc', 'Administration\GestiDoc\GestiDocController', ['only' => [
+            'index', 'store', 'update', 'destroy'
+        ]]);
+        Route::group(['prefix' => 'gestidoc'], function () {
+            Route::get('download/{folder}/{file}', 'Administration\GestiDoc\GestiDocController@download')->name('administration.gestidoc.download');
+        });
+    });
+
     Route::group(['prefix' => 'human_resources'], function () {
         Route::resource('gestidoc', 'GestiDoc\GestiDocController', ['only' => [
             'index', 'store', 'destroy'
