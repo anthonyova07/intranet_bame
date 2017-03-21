@@ -62,7 +62,15 @@ class ClaimController extends Controller
         }
 
         if (!can_not_do('customer_claim_close')) {
-            $claims->where('is_approved', true);
+            if ($request->pending_approval) {
+                $claims->where('is_approved', null)->orWhere('is_approved', '');
+            } else {
+                $claims->where('is_approved', true);
+            }
+        } else {
+            if ($request->pending_approval) {
+                $claims->where('is_approved', null)->orWhere('is_approved', '');
+            }
         }
 
         $claims = $claims->paginate();
