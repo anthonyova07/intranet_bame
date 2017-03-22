@@ -262,7 +262,7 @@ class RequestController extends Controller
 
         $process_request->save();
 
-        Notification::notify('Solicitud de Procesos', "La solicitud {$process_request->reqnumber} ha cambiado al estatus {$process_request_status->status}", route('process.request.show', ['request' => $process_request->id]), $process_request->created_by);
+        Notification::notify('Solicitud de Procesos', "La solicitud {$process_request->reqnumber} ha cambiado al estatus {$status->note}", route('process.request.show', ['request' => $process_request->id]), $process_request->created_by);
 
         do_log('Agregó un Estatus a la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' estatus:' . $status->note . ' )');
 
