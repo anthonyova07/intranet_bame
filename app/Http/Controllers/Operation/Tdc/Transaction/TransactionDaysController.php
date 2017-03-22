@@ -16,6 +16,14 @@ class TransactionDaysController extends Controller
     {
         set_time_limit(600);
 
+        if (!count($request->all())) {
+            $descriptions = Description::where('prefi_desc', 'SAT_CODTR')->orWhere('prefi_desc', 'SAT_CONCEP')->get();
+
+            return view('operation.tdc.transaction.days.index')
+                ->with('descriptions', $descriptions)
+                ->with('transactions', collect());
+        }
+
         $transactions = TransactionDays::orderBy('fecpr_atrn')->where('ststr_atrn', 'A');
 
         if ($request->transaction_type) {

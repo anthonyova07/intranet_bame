@@ -135,7 +135,9 @@
                         </tbody>
                     </table>
 
-                    {{ $transactions->appends(Request::all())->links() }}
+                    @if ($transactions->count())
+                        {{ $transactions->appends(Request::all())->links() }}
+                    @endif
                 </div>
             </div>
         </div>
