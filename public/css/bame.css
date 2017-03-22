@@ -51,7 +51,7 @@ ul.nav.nav-second-level>li>a {
 
 ul.nav.nav-second-level>li>a:focus, .nav>li>a:hover {
     text-decoration: none;
-    background-color: #aa272f;
+    background-color: #d82f27;
     color: #ffffff;
 }
 

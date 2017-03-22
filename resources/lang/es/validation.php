@@ -181,5 +181,13 @@ return [
       'startdate' => 'Fecha de Inicio',
       'enddate' => 'Fecha Final',
       'folder_name' => 'Nombre de Carpeta',
+      'request_type' => 'Tipo de Solicitud',
+      'process' => 'Proceso',
+      'subprocess' => 'Subproceso',
+      'cause_analysis' => 'Análisis de Causa',
+      'people_involved' => 'Personas Involucradas',
+      'deliverable' => 'Entregables',
+      'users' => 'Usuarios',
+      'status' => 'Estatus',
     ],
 ];
