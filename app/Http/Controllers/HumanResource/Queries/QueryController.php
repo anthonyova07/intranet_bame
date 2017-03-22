@@ -133,8 +133,8 @@ class QueryController extends Controller {
 
         $results = DB::connection('itc')
             ->select("SELECT
-                TCACT_MTAR NUMERO_TARJETA,
-                INDCL_MTAR IDENTIFICACION,
+                TRIM(TCACT_MTAR)||'_' NUMERO_TARJETA,
+                TRIM(INDCL_MTAR)||'_' IDENTIFICACION,
                 CASE
                     WHEN CODPR_MTAR = '08' THEN 'DIFERIDO BANDA'
                     WHEN CODPR_MTAR = '28' THEN 'DIFERIDO CHIP'
@@ -182,7 +182,7 @@ class QueryController extends Controller {
             ->select("SELECT
                 TRIM(DEACUN) CODIGO_CLIENTE,
                 TRIM(CUSNA1) NOMBRE,
-                TRIM(DEAACC) NUMERO_PRODUCTO,
+                TRIM(DEAACC)||'_' NUMERO_PRODUCTO,
                 TRIM(DEAPRO) CODIGO_PRODUCTO,
                 TRIM(DEATYP) CODIGO_SUBPRODUCTO,
                 TRIM(APCDSC) DESCRIPCION_PRODUCTO,
