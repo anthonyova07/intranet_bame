@@ -113,6 +113,76 @@
 
     <div class="row">
 
+        <div class="col-xs-12">
+            <div class="panel panel-default panel-wiget">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Sobre Nosotros</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="col-xs-8" style="padding-left: 0px;">
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <div class="well well-sm" style="margin-bottom: 10px;">
+                                    <h4 class="list-group-item-heading" style="color: #d82f27;">Visión</h4>
+                                    <p class="list-group-item-text">
+                                        Ser reconocidos como el mejor banco de la República Dominicana en términos de eficiencia, rentabilidad, confianza, respuesta al cliente y responsabilidad social.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="well well-sm" style="margin-bottom: 10px;">
+                                    <h4 class="list-group-item-heading" style="color: #d82f27;">Misión</h4>
+                                    <p class="list-group-item-text">
+                                        Proveer soluciones financieras a las necesidades de nuestros clientes con un servicio de excelencia contribuyendo al crecimiento económico y desarrollo de la República Dominicana.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <div class="well well-sm" style="margin-bottom: 0px;">
+                                    <h3 class="list-group-item-heading" style="color: #d82f27;">Valores</h3>
+                                    <table class="table table-condensed">
+                                        <tbody>
+                                            <tr>
+                                                <td><b data-toggle="tooltip" title="Honestos, confiables y sinceros">INTEGRIDAD</b></td>
+                                                <td><b data-toggle="tooltip" title="Sencillos y comedidos">PRUDENCIA</b></td>
+                                                <td><b data-toggle="tooltip" title="Superamos las expectativas de nuestros clientes">EXCELENCIA</b></td>
+                                                <td><b data-toggle="tooltip" title="Mejora constante de calidad y eficiencia">COMPROMISO</b></td>
+                                                <td><b data-toggle="tooltip" title="Apego, fidelidad y respeto">LEALTAD</b></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="row">
+                            <div class="well well-sm" style="margin-bottom: 0px;">
+                                <h3 class="list-group-item-heading text-center" style="color: #d82f27;font-size: 24px;">Código de Ética</h3>
+                                <table class="table table-condensed">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">
+                                                <a target="_blank" data-toggle="tooltip" title="Click para ver" href="http://intranet_bame:8077/files/gesti_doc/human_resources/Codigo_de_Etica_y_Conducta/Manual_de_Normas_Codigo_de_Etica_y_Conducta.pdf">
+                                                    <i style="font-size: 183px;color: #d82f27;" class="fa fa-book"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
         <div class="col-xs-4">
             <div class="panel panel-default" style="margin-top: 8px;">
 
@@ -225,6 +295,7 @@
     </div>
 
     <div class="row">
+
         <div class="col-xs-4">
 
             <div class="panel panel-default panel-wiget">
