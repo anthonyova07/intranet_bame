@@ -575,7 +575,7 @@ function calculate_year_of_service($date, $with_diff = false)
 
         $service_date = new \Datetime(trim($parts[2]) . "-{$parts[1]}-{$parts[0]} 23:59:59");
 
-        $diff = ($service_date)->diff($current_date);
+        $diff = ($service_date)-diff($current_date);
 
         if ($with_diff) {
             if ($diff->y > 0) {

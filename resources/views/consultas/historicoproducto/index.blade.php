@@ -2,7 +2,7 @@
 
 @section('title', 'Historico Cliente')
 
-@section('page_title', 'Consulta Historico de Cliente')
+@section('page_title', 'Consulta Historico de Cliente ')
 
 @if (can_not_do('historico_producto'))
     @section('contents')
@@ -10,7 +10,7 @@
     @endsection
 @endif
 
-@section('contents')
+@section('contents') 
 
     <div class="row">
         <div class="col-xs-12">
@@ -30,11 +30,15 @@
                             </div>
                             <div class="col-xs-2">
                                 {{ csrf_field() }}
-                                <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Consultando Historico..." style="margin-top: 22px;">Consultar Historico</button>
-                            </div>
-                        </div>
+                                <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Consultando Historico..." style="margin-top: 22px;">Consultar Historico</button>                             
+                            </div>                             
+                        </div>                        
                     </form>
-                </div>
+                </div>                
+
+                <a href="{{URL::action('Consultas\HistoricoProducto\ProductoController@reportepdf',$cliente)}}" target="_blank"><button class="btn btn-info">Genera PDF</button></a>    
+
+
             </div>
         </div>
     </div>
@@ -60,6 +64,7 @@
                                 <th>DiaC</th>
                                 <th>MesC</th>
                                 <th>AñoC</th>
+                                <th>Movtos</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -78,12 +83,18 @@
                                     <td>{{ $prod->hislpd }}</td>
                                     <td>{{ $prod->hislpm }}</td>
                                     <td>{{ $prod->hislpy }}</td>
+
+                                    <td>
+                                        <a href="{{URL::action('Consultas\HistoricoProducto\TransaccionController@reportetrans',$prod->hisacc)}}" title="Genera Movimientos"> <i class="fa fa-share fa-fw"></i></a>
+                                    </td>
+
                                 </tr>
                             @endforeach
                         </tbody>
-                    </table>
-                  
-                      
+                    </table>   
+                     {{ $productos->appends(Request::all())->links() }}                                    
+                    
+
                 </div>
             </div>
         </div>
