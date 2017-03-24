@@ -28,6 +28,9 @@ function get_department_name($department)
         case 'process':
             return 'Procesos';
             break;
+        case 'compliance':
+            return 'Cumplimiento';
+            break;
     }
 }
 
@@ -549,7 +552,7 @@ function get_next_claim_number($last_claim_number)
 function get_next_request_number()
 {
     $date = null;
-    
+
     $last_process_request = \Bame\Models\Process\Request\ProcessRequest::orderBy('created_at', 'desc')->first();
     $last_request_number = $last_process_request ? $last_process_request->request_number : null;
 

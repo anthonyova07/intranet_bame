@@ -6,6 +6,7 @@ Route::group(['prefix' => 'gestidoc'], function () {
     Route::get('marketing', 'GestiDoc\GestiDocController@gestidoc')->name('gestidoc.marketing');
     Route::get('human_resources', 'GestiDoc\GestiDocController@gestidoc')->name('gestidoc.human_resources');
     Route::get('process', 'GestiDoc\GestiDocController@gestidoc')->name('gestidoc.process');
+    Route::get('compliance', 'GestiDoc\GestiDocController@gestidoc')->name('gestidoc.compliance');
 });
 
 Route::get('break_coco', 'Marketing\MarketingController@coco')->name('coco');
@@ -144,6 +145,12 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('queries', 'HumanResource\Queries\QueryController', ['only' => [
             'index'
+        ]]);
+    });
+
+    Route::group(['prefix' => 'compliance'], function () {
+        Route::resource('gestidoc', 'GestiDoc\GestiDocController', ['only' => [
+            'index', 'store', 'destroy'
         ]]);
     });
 

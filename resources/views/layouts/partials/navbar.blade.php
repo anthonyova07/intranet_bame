@@ -123,6 +123,12 @@
                                 Procesos
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('gestidoc.compliance') }}">
+                                <i class="fa fa-files-o fa-fw"></i>
+                                Cumplimiento
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 @if (session()->has('menus'))
