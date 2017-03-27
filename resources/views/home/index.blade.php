@@ -14,10 +14,9 @@
                         La Columna del Presidente
                     </div>
                     <div class="row text-center" style="margin-bottom: 10px;">
-                        <img class="img-thumbnail" style="max-width: 280px" src="{{ route('home') . $column_new->image }}">
+                        <img style="max-width: 402px;" src="{{ route('home') . $column_new->image }}">
                     </div>
                     <div class="row parrafo-columna text-justify">
-                        <p style="height: 220px;max-height: 220px;"><b>{{ substr(strip_tags($column_new->title), 0, 80) . '...' }}</b> {!! substr(strip_tags(html_entity_decode($column_new->detail)), 0, 600)  . '...' !!}</p>
                     </div>
                     <div class="row text-center">
                         <a href="{{ route('home.news', ['id' => $column_new->id]) }}" class="link_noticias">Ver Más</a>
