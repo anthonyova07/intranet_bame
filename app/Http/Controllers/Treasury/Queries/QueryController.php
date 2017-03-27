@@ -19,30 +19,33 @@ class QueryController extends Controller {
     //Reporte Encaje Legal
     public function reporte_encaje_legal(Request $request)
     {
-        // if (can_not_do('human_resources_queries')) {
-        //     return 'Usted no tiene permisos para acceder a esta opción';
-        // }
+        if (can_not_do('treasury_queries')) {
+            return 'Usted no tiene permisos para acceder a esta opción';
+        }
+
+        set_time_limit(600);
 
         $columns = DB::connection('ibs')
-            ->select("SELECT *
+            ->select("SELECT
+                REG_COLUMNA COLUMNA,
+                REG_MONEDA MONEDA,
+                DESCRIPCION
                 FROM TEL_RENGLONES
-                    WHERE REG_MONEDA = '{$request->currency_encaje_legal}'");
+                WHERE REG_MONEDA = '{$request->currency_encaje_legal}'");
 
-        $accounts_chunks = collect();
+        $results = [];
 
         foreach ($columns as $column) {
             $accounts_by_column = DB::connection('ibs')
                 ->select("SELECT CTA_COLUMNA COLUMNA,CUENTAS CUENTA
                     FROM TEL_CUENTAS
-                        WHERE CTA_MONEDA = '{$request->currency_encaje_legal}'
-                        AND CTA_COLUMNA = {$column->reg_columna}");
+                    WHERE CTA_MONEDA = '{$request->currency_encaje_legal}'
+                    AND CTA_COLUMNA = {$column->columna}");
 
-            $accounts_chunks->push($accounts_by_column);
-        }
+            $accounts_balance = [];
 
-        foreach ($accounts_chunks as $accounts) {
-            foreach ($accounts as $account) {
-                DB::connection('ibs')
+            foreach ($accounts_by_column as $account) {
+                $account_balance = DB::connection('ibs')
                     ->select("SELECT
                         GLBCCY,
                         GLBGLN,
@@ -59,13 +62,31 @@ class QueryController extends Controller {
                         SUM(GLBOCB) GLBOCB,
                         SUM(GLBNOB) GLBNOB,
                         SUM(GLBDEB) GLBDEB
-                        FROM BADCYFILES.GLBLN
-                            WHERE GLBGLN LIKE '{$account->cuenta}%'
-                            GROUP BY GLBCCY,GLBGLN");
+                        FROM GLBLN
+                        WHERE GLBGLN LIKE '{$account->cuenta}%'
+                        GROUP BY GLBCCY,GLBGLN");
+
+                array_push($accounts_balance, $account_balance);
             }
+
+            $total = 0;
+
+            foreach ($accounts_balance as $balances) {
+                foreach ($balances as $balance) {
+                    $balance = array_values(get_object_vars($balance));
+                    $total += floatval($balance[2]);
+                    for ($i=0; $i < $request->month_encaje_legal; $i++) {
+                        $total += $balance[3 + $i];
+                    }
+                }
+            }
+
+            $results[str_replace(' ', '_', cap_str($column->columna . ' ' . $column->descripcion))] = abs($total);
         }
 
-        do_log('Generó el Reporte de Tesorería  ( reporte:Reporte Encaje Legal )');
+        $results = [(object) $results];
+
+        do_log('Generó el Reporte de Tesorería ( reporte:Reporte Encaje Legal )');
 
         return view('layouts.queries.excel', compact('results'));
     }

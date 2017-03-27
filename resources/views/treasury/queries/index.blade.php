@@ -4,7 +4,7 @@
 
 @section('page_title', 'Reportes de Tesorería')
 
-@if (can_not_do('human_resources_queries'))
+@if (can_not_do('treasury_queries'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
