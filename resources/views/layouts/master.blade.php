@@ -44,11 +44,11 @@
         </div>
         <!-- /#wrapper -->
         <script>
-            setTimeout(check_global_notifications, 1000);
+            setTimeout(check_global_notifications, 1500);
         </script>
         @if (session()->has('user'))
             <script>
-                setTimeout(check_notifications, 1000);
+                setTimeout(check_notifications, 3000);
                 setInterval(check_notifications, {{ env('NOTIFICACIONES_INTERVALO') }});
             </script>
         @endif

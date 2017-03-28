@@ -88,6 +88,6 @@ class Notification
 
     public function save()
     {
-        save_notifications($this->user, $this->notifications->take(-10)->values());
+        save_notifications($this->user, $this->notifications->take(-50)->values());
     }
 }
