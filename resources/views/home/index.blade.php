@@ -345,13 +345,17 @@
                                             <img style="width: 25px;" src="{{ route('home') . '/images/birthdate.png' }}">
                                             Cumpleaños
                                         </th>
+                                        <th style="width: 85px;"></th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 18px;">
                                     @foreach($day_birthdays as $birthday)
                                         <tr>
-                                            <td>
+                                            <td style="vertical-align: middle;">
                                                 <a style="color: #FF8849;" href="javascript:void(0)">{!! $birthday->full_name !!}</a>
+                                            </td>
+                                            <td class="text-center">
+                                                <img alt="Imagen no disponible" style="max-width: 100px;" src="{{ route('home') . '\files\employee_images\\' . $birthday->code . '.jpg' }}">
                                             </td>
                                         </tr>
                                     @endforeach
