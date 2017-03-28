@@ -48,6 +48,11 @@ class Birthdate extends Model
             $birthdates->push($birthdate);
         }
 
+        self::saveFile($birthdates);
+    }
+
+    public static function saveFile($birthdates)
+    {
         $path = storage_path('app\\calendar\\birthdates.json');
 
         if (!file_exists(storage_path('app\\calendar'))) {
@@ -66,5 +71,41 @@ class Birthdate extends Model
         }
 
         return $birthdates;
+    }
+
+    public static function addModifyDeleteOne($data)
+    {
+        $message = 'El empleado ha sido eliminado correctamente.';
+
+        $birthdates = self::getFile();
+
+        if ($birthdates->contains('code', $data->code)) {
+            $birthdates = $birthdates->filter(function ($birthdate, $index) use ($data) {
+                return $data->code != $birthdate->code;
+            });
+        }
+
+        if (trim($data->full_name) != '') {
+            $birthdate_parts = explode('-', $data->birthdate);
+            $service_parts = explode('-', $data->initial_date);
+
+            $birthdate = new \stdClass;
+
+            $birthdate->code = $data->code;
+            $birthdate->full_name = $data->full_name;
+            $birthdate->gender = $data->gender;
+            $birthdate->month_day = $birthdate_parts[1] .'-'. $birthdate_parts[2];
+
+            $birthdate->services_date = $service_parts[2] . '/' . $service_parts[1] . '/' . $service_parts[0];
+            $birthdate->services_month_day = $service_parts[1] .'-'. $service_parts[2];
+
+            $birthdates->push($birthdate);
+
+            $message = 'El empleado ha sido agregado/modificado correctamente.';
+        }
+
+        self::saveFile($birthdates);
+
+        return $message;
     }
 }

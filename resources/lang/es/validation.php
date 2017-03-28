@@ -189,5 +189,8 @@ return [
       'deliverable' => 'Entregables',
       'users' => 'Usuarios',
       'status' => 'Estatus',
+      'full_name' => 'Nombre Completo',
+      'birthdate' => 'Cumpleño',
+      'initial_date' => 'Ingreso',
     ],
 ];
