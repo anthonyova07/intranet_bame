@@ -385,7 +385,7 @@
                                                 {{ calculate_year_of_service($day_service->services_date) }}
                                             </td>
                                             <td class="text-center">
-                                                <img alt="Imagen no disponible" style="max-width: 100px;" src="{{ route('home') . '\files\employee_images\\' . $birthday->code . '.jpg' }}">
+                                                <img alt="Imagen no disponible" style="max-width: 100px;" src="{{ route('home') . '\files\employee_images\\' . $day_service->code . '.jpg' }}">
                                             </td>
                                         </tr>
                                     @endforeach
