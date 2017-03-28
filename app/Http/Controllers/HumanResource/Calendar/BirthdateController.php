@@ -15,6 +15,12 @@ class BirthdateController extends Controller
 {
     public function store(Request $request)
     {
+        if ($request->hasFile('employee_images_file')) {
+            Birthdate::storeImages($request->file('employee_images_file'));
+
+            return back()->with('success', 'Las imagenes de los empleados fueron cargadas correctamente.');
+        }
+
         if ($request->hasFile('birthdate_file')) {
             Birthdate::storeFile($request->file('birthdate_file'));
 

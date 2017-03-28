@@ -51,6 +51,19 @@ class Birthdate extends Model
         self::saveFile($birthdates);
     }
 
+    public static function storeImages($files)
+    {
+        $employees = self::getFile();
+        $files = collect($files);
+
+        $files->each(function ($file, $index) use ($employees) {
+            $name = explode('.', $file->getClientOriginalName())[0];
+            if ($employees->contains('code', trim($name))) {
+                $file->move(public_path() . '\\files\\employee_images\\', $file->getClientOriginalName());
+            }
+        });
+    }
+
     public static function saveFile($birthdates)
     {
         $path = storage_path('app\\calendar\\birthdates.json');
