@@ -355,7 +355,11 @@
                                                 <a style="color: #FF8849;" href="javascript:void(0)">{!! $birthday->full_name !!}</a>
                                             </td>
                                             <td class="text-center">
-                                                <img alt="Imagen no disponible" style="max-width: 100px;" src="{{ route('home') . '\files\employee_images\\' . $birthday->code . '.jpg' }}">
+                                                @if (file_exists(public_path() . '\files\employee_images\\' . $birthday->code . '.jpg'))
+                                                    <img style="max-width: 100px;" src="{{ route('home') . '\files\employee_images\\' . $birthday->code . '.jpg' }}">
+                                                @else
+                                                    <img style="max-width: 100px;" src="{{ route('home') . '\files\employee_images\\' . $birthday->gender . '.jpg' }}">
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
