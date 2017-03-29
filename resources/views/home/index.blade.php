@@ -44,7 +44,7 @@
                                     <div class="item {{ $index == 0 ? 'active':'' }}">
                                         <img src="{{ route('home') . $banner->image }}" style="height: 232px;margin: auto;">
                                         <div class="carousel-caption" style="right: 0;left: 0;margin-bottom: -44px;">
-                                            <a href="http://bancamerica.com.do/" target="__blank" class="link_noticias_no_effect">Ver Detalle</a>
+                                            {{-- <a href="http://bancamerica.com.do/" target="__blank" class="link_noticias_no_effect">Ver Detalle</a> --}}
                                         </div>
                                     </div>
                                 @endforeach
