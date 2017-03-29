@@ -13,12 +13,15 @@
 @section('contents')  
 
     <div class="row">
-        <div class="col-xs-12">
-
-               <a href="{{URL::action('Consultas\HistoricoProducto\TransaccionController@reportetranspdf',$cuenta)}}" target="_blank"><button class="btn btn-info">Genera PDF</button></a>    
+        <div class="col-xs-12">               
 
             <div class="panel panel-default">
                 <div class="panel-body">                                                           
+
+                    <a class="btn btn-info btn-xs" href="{{ URL::previous() }}"><i class="fa fa-arrow-left"></i> Atras</a> 
+
+                    <a style="font-size: 13px;" class="label btn-warning pull-right" target="__blank" href="{{URL::action('Consultas\HistoricoProducto\TransaccionController@reportetranspdf',$cuenta)}}">PDF</a>
+
                     <br>
                     <table class="table table-striped table-bordered table-hover table-condensed" order-by='0|desc'>
                         <thead>

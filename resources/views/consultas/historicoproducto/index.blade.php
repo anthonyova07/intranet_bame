@@ -34,9 +34,7 @@
                             </div>                             
                         </div>                        
                     </form>
-                </div>                
-
-                <a href="{{URL::action('Consultas\HistoricoProducto\ProductoController@reportepdf',$cliente)}}" target="_blank"><button class="btn btn-info">Genera PDF</button></a>    
+                </div>                     
 
 
             </div>
@@ -46,7 +44,10 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="panel panel-default">
-                <div class="panel-body">                                                           
+                <div class="panel-body">                       
+
+                      <a style="font-size: 13px;" class="label btn-warning pull-right" target="__blank" href="{{URL::action('Consultas\HistoricoProducto\ProductoController@reportepdf',$cliente)}}">PDF</a>   
+
                     <br>
                     <table class="table table-striped table-bordered table-hover table-condensed" order-by='0|desc'>
                         <thead>
@@ -85,7 +86,7 @@
                                     <td>{{ $prod->hislpy }}</td>
 
                                     <td>
-                                        <a href="{{URL::action('Consultas\HistoricoProducto\TransaccionController@reportetrans',$prod->hisacc)}}" title="Genera Movimientos"> <i class="fa fa-share fa-fw"></i></a>
+                                        <a href="{{URL::action('Consultas\HistoricoProducto\TransaccionController@reportetrans', $prod->hisacc)}}" title="Genera Movimientos"> <i class="fa fa-share fa-fw"></i></a>
                                     </td>
 
                                 </tr>
