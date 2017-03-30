@@ -416,13 +416,21 @@
                                             <img style="width: 25px;" src="{{ route('home') . '/images/birthdate.png' }}">
                                             Cumpleaños
                                         </th>
+                                        <th style="width: 85px;"></th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 18px;">
                                     @foreach($day_birthdays as $birthday)
                                         <tr>
-                                            <td>
+                                            <td style="vertical-align: middle;">
                                                 <a style="color: #FF8849;" href="javascript:void(0)">{!! $birthday->full_name !!}</a>
+                                            </td>
+                                            <td class="text-center">
+                                                @if (file_exists(public_path() . '\files\employee_images\\' . $birthday->code . '.jpg'))
+                                                    <img style="max-width: 100px;" src="{{ route('home') . '\files\employee_images\\' . $birthday->code . '.jpg' }}">
+                                                @else
+                                                    <img style="max-width: 100px;" src="{{ route('home') . '\files\employee_images\\' . $birthday->gender . '.jpg' }}">
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -438,17 +446,21 @@
                                             <img style="width: 25px;" src="{{ route('home') . '/images/service_year.png' }}">
                                             Aniversarios de Trabajo
                                         </th>
-                                        <th class="text-center" style="width: 6%;">Años</th>
+                                        <th class="text-center" style="width: 14%;">Años</th>
+                                        <th style="width: 85px;"></th>
                                     </tr>
                                 </thead>
                                 <tbody style="font-size: 18px;">
                                     @foreach($day_services as $day_service)
                                         <tr>
-                                            <td>
+                                            <td style="vertical-align: middle;">
                                                 <a style="color: #FF8849;" href="javascript:void(0)">{!! $day_service->full_name !!}</a>
                                             </td>
-                                            <td class="text-center" style="width: 120px;font-size: 15px;letter-spacing: 1px;">
+                                            <td class="text-center" style="width: 120px;font-size: 15px;letter-spacing: 1px;vertical-align: middle;">
                                                 {{ calculate_year_of_service($day_service->services_date) }}
+                                            </td>
+                                            <td class="text-center">
+                                                <img alt="Imagen no disponible" style="max-width: 100px;" src="{{ route('home') . '\files\employee_images\\' . $day_service->code . '.jpg' }}">
                                             </td>
                                         </tr>
                                     @endforeach

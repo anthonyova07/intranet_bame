@@ -51,6 +51,19 @@ class Birthdate extends Model
         self::saveFile($birthdates);
     }
 
+    public static function storeImages($files)
+    {
+        $employees = self::getFile();
+        $files = collect($files);
+        
+        $files->each(function ($file, $index) use ($employees) {
+            $name = explode('.', self::getName($file->getClientOriginalName()))[0];
+            if ($employees->contains('code', trim($name))) {
+                $file->move(public_path() . '\\files\\employee_images\\', $name . '.jpg');
+            }
+        });
+    }
+
     public static function saveFile($birthdates)
     {
         $path = storage_path('app\\calendar\\birthdates.json');
@@ -107,5 +120,11 @@ class Birthdate extends Model
         self::saveFile($birthdates);
 
         return $message;
+    }
+
+    //optener el numero de empleado del formato "Nombre Empleado (###).jpg"
+    public static function getName($str)
+    {
+        return str_ireplace(').jpg', '', explode('(', $str)[1]);
     }
 }
