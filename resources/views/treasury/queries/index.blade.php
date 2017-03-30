@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <a href="{{ route('treasury.queries.reporte_encaje_legal') }}" id="btn_encaje_legal">
-                    <div class="panel-footer" style="padding: 2px 70px;">
+                    <div class="panel-footer" style="padding: 2px 65px;">
                         <span class="pull-left">Descargar</span>
                         <span class="pull-right"><i class="fa fa-arrow-down"></i></span>
                         <div class="clearfix"></div>

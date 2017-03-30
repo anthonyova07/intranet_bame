@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <a href="{{ route('human_resources.queries.reporte_cuentas') }}">
-                    <div class="panel-footer" style="padding: 2px 70px;">
+                    <div class="panel-footer" style="padding: 2px 65px;">
                         <span class="pull-left">Descargar</span>
                         <span class="pull-right"><i class="fa fa-arrow-down"></i></span>
                         <div class="clearfix"></div>
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <a href="{{ route('human_resources.queries.reporte_vinculados_gestion') }}">
-                    <div class="panel-footer" style="padding: 2px 70px;">
+                    <div class="panel-footer" style="padding: 2px 65px;">
                         <span class="pull-left">Descargar</span>
                         <span class="pull-right"><i class="fa fa-arrow-down"></i></span>
                         <div class="clearfix"></div>
@@ -78,7 +78,7 @@
                     </div>
                 </div>
                 <a href="{{ route('human_resources.queries.reporte_oficial_asignado') }}">
-                    <div class="panel-footer" style="padding: 2px 70px;">
+                    <div class="panel-footer" style="padding: 2px 65px;">
                         <span class="pull-left">Descargar</span>
                         <span class="pull-right"><i class="fa fa-arrow-down"></i></span>
                         <div class="clearfix"></div>
@@ -99,7 +99,7 @@
                     </div>
                 </div>
                 <a href="{{ route('human_resources.queries.reporte_cliente_empleado') }}">
-                    <div class="panel-footer" style="padding: 2px 70px;">
+                    <div class="panel-footer" style="padding: 2px 65px;">
                         <span class="pull-left">Descargar</span>
                         <span class="pull-right"><i class="fa fa-arrow-down"></i></span>
                         <div class="clearfix"></div>
@@ -120,7 +120,7 @@
                     </div>
                 </div>
                 <a href="{{ route('human_resources.queries.reporte_tdc_empleado') }}">
-                    <div class="panel-footer" style="padding: 2px 70px;">
+                    <div class="panel-footer" style="padding: 2px 65px;">
                         <span class="pull-left">Descargar</span>
                         <span class="pull-right"><i class="fa fa-arrow-down"></i></span>
                         <div class="clearfix"></div>
@@ -141,7 +141,7 @@
                     </div>
                 </div>
                 <a href="{{ route('human_resources.queries.reporte_loan_empleado') }}">
-                    <div class="panel-footer" style="padding: 2px 70px;">
+                    <div class="panel-footer" style="padding: 2px 65px;">
                         <span class="pull-left">Descargar</span>
                         <span class="pull-right"><i class="fa fa-arrow-down"></i></span>
                         <div class="clearfix"></div>
