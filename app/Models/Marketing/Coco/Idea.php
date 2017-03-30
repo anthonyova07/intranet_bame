@@ -8,7 +8,7 @@ class Idea extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intranet_coco_ideas';
+    protected $table = 'intrcocoid';
 
     protected $primaryKey = 'id';
 

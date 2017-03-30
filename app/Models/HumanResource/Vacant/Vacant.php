@@ -10,7 +10,7 @@ class Vacant extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intranet_vacancies';
+    protected $table = 'intrvacan';
 
     protected $primaryKey = 'id';
 

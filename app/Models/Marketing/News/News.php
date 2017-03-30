@@ -8,7 +8,7 @@ class News extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intranet_news';
+    protected $table = 'intranews';
 
     protected $primaryKey = 'id';
 

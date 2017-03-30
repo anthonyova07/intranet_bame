@@ -8,7 +8,7 @@ class Attach extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intranet_claim_attaches';
+    protected $table = 'intrclaatt';
 
     protected $primaryKey = 'id';
 

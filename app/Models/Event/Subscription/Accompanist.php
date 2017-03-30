@@ -10,7 +10,7 @@ class Accompanist extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intranet_event_subscription_accompanists';
+    protected $table = 'intrevsuba';
 
     protected $primaryKey = 'id';
 
