@@ -164,8 +164,8 @@
                                 <table class="table table-condensed">
                                     <tbody>
                                         <tr>
-                                            <td class="text-center">
-                                                <a target="_blank" data-toggle="tooltip" title="Click para ver" href="http://intranet_bame:8077/files/gesti_doc/human_resources/Codigo_de_Etica_y_Conducta/Manual_de_Normas_Codigo_de_Etica_y_Conducta.pdf">
+                                            <td class="text-center" data-toggle="tooltip" title="Click para ver">
+                                                <a target="_blank" href="http://intranet_bame:8077/files/gesti_doc/human_resources/Codigo_de_Etica_y_Conducta/Manual_de_Normas_Codigo_de_Etica_y_Conducta.pdf">
                                                     <i style="font-size: 183px;color: #d82f27;" class="fa fa-book"></i>
                                                 </a>
                                             </td>
@@ -176,6 +176,110 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-xs-12">
+            <div class="panel panel-default panel-wiget">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Manuales Cumplimiento</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="col-xs-3">
+                        <div class="well well-sm" style="margin-bottom: 0px;">
+                            <h3 class="list-group-item-heading text-center" style="color: #d82f27;font-size: 14px;">Circular 004 16 Instructivo Debida Diligencia</h3>
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center" data-toggle="tooltip" title="Click para ver">
+                                            <a target="_blank" href="http://intranet_bame:8077/files/gesti_doc/compliance/Marco_Legal/Circular_004_16_Instructivo_Debida_Diligencia.pdf">
+                                                <i style="font-size: 70px;color: #d82f27;" class="fa fa-book"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="well well-sm" style="margin-bottom: 0px;">
+                            <h3 class="list-group-item-heading text-center" style="color: #d82f27;font-size: 14px;">Ley Monetaria y Financiera No.183-02</h3>
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center" data-toggle="tooltip" title="Click para ver">
+                                            <a target="_blank" href="http://intranet_bame:8077/files/gesti_doc/compliance/Marco_Legal/Ley_Monetaria-y-Financiera-No.183-02.pdf">
+                                                <i style="font-size: 70px;color: #d82f27;" class="fa fa-book"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="well well-sm" style="margin-bottom: 0px;">
+                            <h3 class="list-group-item-heading text-center" style="color: #d82f27;font-size: 14px;">Decreto-20-03</h3>
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center" data-toggle="tooltip" title="Click para ver">
+                                            <a target="_blank" href="http://intranet_bame:8077/files/gesti_doc/compliance/Marco_Legal/Decreto-20-03.pdf">
+                                                <i style="font-size: 70px;color: #d82f27;" class="fa fa-book"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="well well-sm" style="margin-bottom: 0px;">
+                            <h3 class="list-group-item-heading text-center" style="color: #d82f27;font-size: 14px;">Ley 72-02 Lavado Activo</h3>
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center" data-toggle="tooltip" title="Click para ver">
+                                            <a target="_blank" href="http://intranet_bame:8077/files/gesti_doc/compliance/Marco_Legal/Decreto-20-03.pdf">
+                                                <i style="font-size: 70px;color: #d82f27;" class="fa fa-book"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                {{-- <table class="table table-condensed">
+                    <tbody>
+                        <tr>
+                            <td class="text-center" data-toggle="tooltip" title="Circular 004 16 Instructivo Debida Diligencia">
+                                <a target="_blank" href="http://intranet_bame:8077/files/gesti_doc/compliance/Marco_Legal/Circular_004_16_Instructivo_Debida_Diligencia.pdf">
+                                    <i style="font-size: 70px;color: #d82f27;" class="fa fa-book"></i>
+                                </a>
+                            </td>
+                            <td class="text-center" data-toggle="tooltip" title="Ley Monetaria y Financiera No.183-02">
+                                <a target="_blank" href="http://intranet_bame:8077/files/gesti_doc/compliance/Marco_Legal/Ley_Monetaria-y-Financiera-No.183-02.pdf">
+                                    <i style="font-size: 70px;color: #d82f27;" class="fa fa-book"></i>
+                                </a>
+                            </td>
+                            <td class="text-center" data-toggle="tooltip" title="Ley 72-02 Lavado Activo">
+                                <a target="_blank" href="http://intranet_bame:8077/files/gesti_doc/compliance/Marco_Legal/Ley_72-02_Lavado_Activo.pdf">
+                                    <i style="font-size: 70px;color: #d82f27;" class="fa fa-book"></i>
+                                </a>
+                            </td>
+                            <td class="text-center" data-toggle="tooltip" title="Decreto-20-03">
+                                <a target="_blank" href="http://intranet_bame:8077/files/gesti_doc/compliance/Marco_Legal/Decreto-20-03.pdf">
+                                    <i style="font-size: 70px;color: #d82f27;" class="fa fa-book"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table> --}}
             </div>
         </div>
 
