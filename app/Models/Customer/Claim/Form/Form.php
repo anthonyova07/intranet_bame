@@ -10,7 +10,7 @@ class Form extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intranet_claim_forms';
+    protected $table = 'intrclafor';
 
     protected $primaryKey = 'id';
 

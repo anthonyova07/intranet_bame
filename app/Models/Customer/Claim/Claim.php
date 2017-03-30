@@ -10,7 +10,7 @@ class Claim extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intranet_claims';
+    protected $table = 'intrclaims';
 
     protected $primaryKey = 'id';
 

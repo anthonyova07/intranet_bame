@@ -8,7 +8,7 @@ class Applicant extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intranet_vacancies_applicants';
+    protected $table = 'intrvacapp';
 
     protected $primaryKey = 'id';
 

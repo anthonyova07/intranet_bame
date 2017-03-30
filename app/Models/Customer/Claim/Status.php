@@ -8,7 +8,7 @@ class Status extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intranet_claim_statuses';
+    protected $table = 'intrclasta';
 
     protected $primaryKey = 'id';
 

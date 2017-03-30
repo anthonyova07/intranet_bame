@@ -14,7 +14,7 @@ class Event extends Model
 
     protected $connection = 'ibs';
 
-    protected $table = 'intranet_events';
+    protected $table = 'intrevents';
 
     protected $primaryKey = 'id';
 

@@ -8,7 +8,7 @@ class Param extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intranet_claim_param';
+    protected $table = 'intrclapar';
 
     protected $primaryKey = 'id';
 

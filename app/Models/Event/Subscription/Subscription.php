@@ -8,7 +8,7 @@ class Subscription extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intranet_event_subscriptions';
+    protected $table = 'intrevesub';
 
     protected $primaryKey = 'id';
 

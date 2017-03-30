@@ -10,7 +10,7 @@ class Transaction extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intranet_claim_form_transactions';
+    protected $table = 'intrclaftr';
 
     protected $primaryKey = 'id';
 
