@@ -2,7 +2,7 @@
 
 @section('title', 'Recursos Humanos -> Vacantes')
 
-@section('page_title', 'Reportes de Recuersos Humanos')
+@section('page_title', 'Reportes de Recursos Humanos')
 
 @if (can_not_do('human_resources_queries'))
     @section('contents')
@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <a href="{{ route('human_resources.queries.reporte_cuentas') }}">
-                    <div class="panel-footer" style="padding: 2px 70px;">
+                    <div class="panel-footer" style="padding: 2px 65px;">
                         <span class="pull-left">Descargar</span>
                         <span class="pull-right"><i class="fa fa-arrow-down"></i></span>
                         <div class="clearfix"></div>
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <a href="{{ route('human_resources.queries.reporte_vinculados_gestion') }}">
-                    <div class="panel-footer" style="padding: 2px 70px;">
+                    <div class="panel-footer" style="padding: 2px 65px;">
                         <span class="pull-left">Descargar</span>
                         <span class="pull-right"><i class="fa fa-arrow-down"></i></span>
                         <div class="clearfix"></div>
@@ -78,7 +78,7 @@
                     </div>
                 </div>
                 <a href="{{ route('human_resources.queries.reporte_oficial_asignado') }}">
-                    <div class="panel-footer" style="padding: 2px 70px;">
+                    <div class="panel-footer" style="padding: 2px 65px;">
                         <span class="pull-left">Descargar</span>
                         <span class="pull-right"><i class="fa fa-arrow-down"></i></span>
                         <div class="clearfix"></div>
@@ -99,7 +99,7 @@
                     </div>
                 </div>
                 <a href="{{ route('human_resources.queries.reporte_cliente_empleado') }}">
-                    <div class="panel-footer" style="padding: 2px 70px;">
+                    <div class="panel-footer" style="padding: 2px 65px;">
                         <span class="pull-left">Descargar</span>
                         <span class="pull-right"><i class="fa fa-arrow-down"></i></span>
                         <div class="clearfix"></div>
@@ -120,7 +120,7 @@
                     </div>
                 </div>
                 <a href="{{ route('human_resources.queries.reporte_tdc_empleado') }}">
-                    <div class="panel-footer" style="padding: 2px 70px;">
+                    <div class="panel-footer" style="padding: 2px 65px;">
                         <span class="pull-left">Descargar</span>
                         <span class="pull-right"><i class="fa fa-arrow-down"></i></span>
                         <div class="clearfix"></div>
@@ -141,7 +141,7 @@
                     </div>
                 </div>
                 <a href="{{ route('human_resources.queries.reporte_loan_empleado') }}">
-                    <div class="panel-footer" style="padding: 2px 70px;">
+                    <div class="panel-footer" style="padding: 2px 65px;">
                         <span class="pull-left">Descargar</span>
                         <span class="pull-right"><i class="fa fa-arrow-down"></i></span>
                         <div class="clearfix"></div>
@@ -152,26 +152,7 @@
     </div>
 
     <script type="text/javascript">
-        $('#search_field').keyup(function (e) {
-            var str = $(this).val().trim().toLowerCase();
-
-            if (str != '') {
-                $('#reports .col-xs-3').each(function (index, value) {
-                    var tag = $(value);
-                    var text = $(tag.children('div').children('div').children('div').children('div')[1]).text().trim();
-
-                    if (text.toLowerCase().indexOf(str) >= 0) {
-                        tag.show('slow');
-                    } else {
-                        tag.hide('slow');
-                    }
-                });
-            } else {
-                $('#reports .col-xs-3').each(function (index, value) {
-                    $(value).show('slow');
-                });
-            }
-        });
+        @include('layouts.functions_js.busqueda_rapida');
     </script>
 
 @endsection
