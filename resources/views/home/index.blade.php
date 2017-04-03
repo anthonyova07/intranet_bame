@@ -182,16 +182,24 @@
         <div class="col-xs-3">
             <div class="panel panel-default panel-wiget">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Normativa Legal <u data-toggle="tooltip" title="Prevención del Lavado de Activos y el Financiamiento al Terrorismo">PLA/FT</u></h3>
+                    <h3 class="panel-title">Normativa Legal</h3>
                 </div>
                 <div class="panel-body text-center">
                     <div class="col-xs-12">
                         <div class="row">
                             <div class="well well-sm" style="margin-bottom: 0px;height: 281px;">
-                                {{-- <h3 class="list-group-item-heading text-center" style="color: #d82f27;font-size: 24px;">Normativa Legal PLA/FT</h3> --}}
-                                <a target="_blank" href="http://intranet_bame:8077/gestidoc/compliance?folder=Marco_Legal">
-                                    <i style="font-size: 183px;color: #d82f27;margin-top: 38px;" data-toggle="tooltip" title="Click para ver" class="fa fa-gavel"></i>
-                                </a>
+                                <h3 class="list-group-item-heading text-center" style="color: #d82f27;font-size: 24px;"><u data-toggle="tooltip" title="Prevención del Lavado de Activos y el Financiamiento al Terrorismo">PLA/FT</u></h3>
+                                <table class="table table-condensed">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">
+                                                <a target="_blank" href="http://intranet_bame:8077/gestidoc/compliance?folder=Marco_Legal">
+                                                    <i style="font-size: 183px;color: #d82f27;margin-top: 13px;" data-toggle="tooltip" title="Click para ver" class="fa fa-gavel"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
