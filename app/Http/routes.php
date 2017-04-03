@@ -16,6 +16,8 @@ Route::get('news/{id}', 'Marketing\MarketingController@news')->name('home.news')
 
 Route::get('gallery/{gallery?}', 'Marketing\MarketingController@gallery')->name('home.gallery');
 
+Route::get('faqs', 'Marketing\MarketingController@faqs')->name('home.faqs');
+
 Route::get('event/{id}', 'HomeController@event')->name('home.event');
 Route::get('event/{id}/subscribers', 'HomeController@subscribers')->name('home.event.subscribers');
 

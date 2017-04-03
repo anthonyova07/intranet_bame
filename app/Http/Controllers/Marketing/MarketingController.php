@@ -11,6 +11,7 @@ use Bame\Models\Marketing\News\News;
 use Bame\Models\Marketing\Coco\Coco;
 use Bame\Models\Marketing\Coco\Idea;
 use Bame\Models\Marketing\Gallery\Gallery;
+use Bame\Models\Marketing\FAQs\Theme;
 
 class MarketingController extends Controller
 {
@@ -99,6 +100,14 @@ class MarketingController extends Controller
             ->with('gallery', $gallery)
             ->with('images', $gallery ? Gallery::getFiles($gallery->id) : collect())
             ->with('galleries', $galleries);
+    }
+
+    public function faqs()
+    {
+        $themes = Theme::where('is_active', true)->get();
+
+        return view('home.marketing.faqs')
+            ->with('themes', $themes);
     }
 
 }

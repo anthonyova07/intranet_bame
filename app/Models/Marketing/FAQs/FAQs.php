@@ -15,4 +15,9 @@ class FAQs extends Model
     public $incrementing = false;
 
     public $timestamps = true;
+
+    public function theme()
+    {
+        return $this->belongsTo(Theme::class, 'theme_id', 'id');
+    }
 }

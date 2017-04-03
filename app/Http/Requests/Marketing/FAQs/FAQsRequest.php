@@ -24,12 +24,8 @@ class FAQsRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required|max:150',
-            'type' => 'required|in:C,N,B',
-            'detail' => 'required|max:20000',
-            'image' => 'image' . ($this->FAQs ? '':'|required'),
-            // 'link' => 'url',
-            // 'link_video' => 'url',
+            'question' => 'required|max:500',
+            'answer' => 'required|max:1000',
         ];
     }
 }

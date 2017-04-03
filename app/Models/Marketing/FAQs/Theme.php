@@ -15,4 +15,9 @@ class Theme extends Model
     public $incrementing = false;
 
     public $timestamps = true;
+
+    public function questions()
+    {
+        return $this->hasMany(FAQs::class, 'theme_id', 'id')->where('is_active', '1')->orderBy('question');
+    }
 }

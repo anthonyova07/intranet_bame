@@ -24,10 +24,7 @@ class ThemesRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required|max:150',
-            'type' => 'required|in:C,N,B',
-            'detail' => 'required|max:20000',
-            'image' => 'image' . ($this->FAQs ? '':'|required'),
+            'name' => 'required|max:100',
         ];
     }
 }
