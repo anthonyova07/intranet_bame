@@ -113,7 +113,7 @@
 
     <div class="row">
 
-        <div class="col-xs-12">
+        <div class="col-xs-9">
             <div class="panel panel-default panel-wiget">
                 <div class="panel-heading">
                     <h3 class="panel-title">Sobre Nosotros</h3>
@@ -159,14 +159,14 @@
                     </div>
                     <div class="col-xs-4">
                         <div class="row">
-                            <div class="well well-sm" style="margin-bottom: 0px;">
+                            <div class="well well-sm" style="margin-bottom: 0px;height: 281px;">
                                 <h3 class="list-group-item-heading text-center" style="color: #d82f27;font-size: 24px;">Código de Ética</h3>
                                 <table class="table table-condensed">
                                     <tbody>
                                         <tr>
                                             <td class="text-center">
-                                                <a target="_blank" data-toggle="tooltip" title="Click para ver" href="http://intranet_bame:8077/files/gesti_doc/human_resources/Codigo_de_Etica_y_Conducta/Manual_de_Normas_Codigo_de_Etica_y_Conducta.pdf">
-                                                    <i style="font-size: 183px;color: #d82f27;" class="fa fa-book"></i>
+                                                <a target="_blank" href="http://intranet_bame:8077/files/gesti_doc/human_resources/Codigo_de_Etica_y_Conducta/Manual_de_Normas_Codigo_de_Etica_y_Conducta.pdf">
+                                                    <i style="font-size: 183px;color: #d82f27;margin-top: 24px;" data-toggle="tooltip" title="Click para ver" class="fa fa-book"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -179,11 +179,31 @@
             </div>
         </div>
 
+        <div class="col-xs-3">
+            <div class="panel panel-default panel-wiget">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Normativa Legal <u data-toggle="tooltip" title="Prevención del Lavado de Activos y el Financiamiento al Terrorismo">PLA/FT</u></h3>
+                </div>
+                <div class="panel-body text-center">
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="well well-sm" style="margin-bottom: 0px;height: 281px;">
+                                {{-- <h3 class="list-group-item-heading text-center" style="color: #d82f27;font-size: 24px;">Normativa Legal PLA/FT</h3> --}}
+                                <a target="_blank" href="http://intranet_bame:8077/gestidoc/compliance?folder=Marco_Legal">
+                                    <i style="font-size: 183px;color: #d82f27;margin-top: 38px;" data-toggle="tooltip" title="Click para ver" class="fa fa-gavel"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="row">
 
-        <div class="col-xs-4">
+        <div class="col-xs-4" style="margin-top: -8px;">
             <div class="panel panel-default" style="margin-top: 8px;">
 
                 <div class="panel-body text-center">
@@ -248,7 +268,7 @@
             </div>
         </div>
 
-        <div class="col-xs-8">
+        <div class="col-xs-8" style="margin-top: -8px;">
             <div class="panel panel-default panel-wiget" style="display: block;margin-top: 8px;">
                 <div class="panel-heading">
                     <h3 class="panel-title">Calendario Virtual</h3>
@@ -296,7 +316,7 @@
 
     <div class="row">
 
-        <div class="col-xs-4">
+        <div class="col-xs-4" style="margin-top: -15px;">
 
             <div class="panel panel-default panel-wiget">
                 <div class="panel-heading">
@@ -330,7 +350,7 @@
 
         </div>
 
-        <div class="col-xs-4">
+        <div class="col-xs-4" style="margin-top: -15px;">
 
             <div class="panel panel-default panel-wiget">
                 <div class="panel-heading">
