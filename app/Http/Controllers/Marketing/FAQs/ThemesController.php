@@ -32,7 +32,7 @@ class ThemesController extends Controller
         do_log('Creó el Tema de Pregunta Frecuente ( nombre:' . strip_tags($request->name) . ' )');
 
         if ($theme->is_active) {
-            // Notification::notify('Nueva Tema de Pregunta Frecuente', $request->name, route('home.FAQs', ['id' => $faq->id]), 'global');
+            Notification::notify('Nuevo Tema de Pregunta Frecuente', $request->name, '', 'global');
         }
 
         return redirect(route('marketing.faqs.index'))->with('success', 'La Pregunta Frecuente fue creada correctamente.');

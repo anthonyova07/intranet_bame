@@ -50,7 +50,7 @@ class FAQsController extends Controller
         do_log('Creó la Pregunta Frecuente ( pregunta:' . strip_tags($request->question) . ' )');
 
         if ($faq->is_active) {
-            // Notification::notify('Nueva Pregunta Frecuente', $request->question, route('home.FAQs', ['id' => $faq->id]), 'global');
+            Notification::notify('Nueva Pregunta Frecuente', $request->question, '', 'global');
         }
 
         return redirect(route('marketing.faqs.index'))->with('success', 'La Pregunta Frecuente fue creada correctamente.');
