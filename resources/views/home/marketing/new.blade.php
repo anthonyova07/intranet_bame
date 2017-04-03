@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="col-xs-6">
-                        <div style="color: #616365;">
+                        <div style="color: #616365;text-align: justify;">
                             {!! html_entity_decode($new->detail) !!}
                         </div>
                     </div>
