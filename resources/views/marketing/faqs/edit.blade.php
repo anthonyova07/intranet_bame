@@ -4,7 +4,7 @@
 
 @section('page_title', 'Editar Noticia')
 
-@if (can_not_do('marketing_news'))
+@if (can_not_do('marketing_faqs'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection

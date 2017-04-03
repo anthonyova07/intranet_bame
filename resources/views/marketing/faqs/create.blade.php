@@ -4,11 +4,11 @@
 
 @section('page_title', 'Nueva Pregunta Frecuente')
 
-{{-- @if (can_not_do('marketing_news'))
+@if (can_not_do('marketing_faqs'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 
