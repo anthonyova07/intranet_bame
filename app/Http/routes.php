@@ -66,6 +66,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'marketing'], function () {
         Route::resource('news', 'Marketing\News\NewsController');
 
+        Route::group(['prefix' => 'faqs'], function () {
+            Route::resource('themes', 'Marketing\FAQs\ThemesController');
+        });
+
+        Route::resource('faqs', 'Marketing\FAQs\FAQsController');
+
         Route::resource('break_coco', 'Marketing\Coco\CocoController', ['only' => [
             'index', 'store'
         ]]);
