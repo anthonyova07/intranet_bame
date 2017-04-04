@@ -108,8 +108,8 @@
                             @endforeach
                         </tbody>
                     </table>
-
-                    {{ $accompanists->links() }}
+                    
+                    {{ $accompanists->appends(Request::all())->links() }}
                 </div>
             </div>
         </div>
