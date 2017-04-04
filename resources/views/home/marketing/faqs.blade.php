@@ -6,8 +6,18 @@
 
 @section('contents')
     <div class="row">
-
         <div class="col-xs-8 col-xs-offset-2">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                  <input type="text" id="search_field" placeholder="Búsqueda rápida" class="form-control input-lg" autofocus>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-xs-12">
 
             <div class="panel-group" id="faqs">
                 @foreach ($themes as $index => $theme)
@@ -47,4 +57,31 @@
         </div>
 
     </div>
+
+    <script>
+    $('#search_field').keyup(function (e) {
+        var str = $(this).val().trim().toLowerCase();
+
+        if (str != '') {
+            $('#faqs .panel').each(function (index, value) {
+                var tag = $(value);
+
+                var text = tag.children('div').children('h4').children('a').each(function (index, value) {
+                    var a = $(value);
+
+                    if (a.text().trim().toLowerCase().indexOf(str) >= 0) {
+                        tag.show('slow');
+                    } else {
+                        tag.hide('slow');
+                    }
+                });
+            });
+        } else {
+            $('#faqs .panel').each(function (index, value) {
+                $(value).show('slow');
+            });
+        }
+    });
+
+    </script>
 @endsection
