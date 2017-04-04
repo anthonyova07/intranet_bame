@@ -38,7 +38,7 @@
                                 <div class="col-xs-6" style="padding: 0 1px 0 0;">
                                     <select class="form-control input-sm" name="month_encaje_legal" style="margin-top: 6px;">
                                         @foreach (get_months() as $key => $value)
-                                            <option value="{{ $key }}">{{ $value }}</option>
+                                            <option{{ $datetime->format('m') == $key ? ' selected':'' }} value="{{ $key }}">{{ $value }}</option>
                                         @endforeach
                                     </select>
                                 </div>

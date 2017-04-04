@@ -16,6 +16,13 @@
                 <tr>
                     <td colspan="2">Generado por {{ session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName() }}</td>
                 </tr>
+                @if (isset($meta_data))
+                    @foreach ($meta_data as $key => $value)
+                        <tr>
+                            <td colspan="2">{{ $key }}: {{ $value }}</td>
+                        </tr>
+                    @endforeach
+                @endif
                 @if (count($results))
                     <tr>
                         @foreach ($results[0] as $key => $value)

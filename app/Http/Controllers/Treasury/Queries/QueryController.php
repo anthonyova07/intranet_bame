@@ -13,7 +13,9 @@ class QueryController extends Controller {
 
     public function index(Request $request)
     {
-        return view('treasury.queries.index');
+        $datetime = new \Datetime;
+
+        return view('treasury.queries.index', compact('datetime'));
     }
 
     //Reporte Encaje Legal
@@ -24,6 +26,11 @@ class QueryController extends Controller {
         }
 
         set_time_limit(600);
+
+        $meta_data = [
+            'Mes de Generación' => get_months($request->month_encaje_legal),
+            'Moneda' => $request->currency_encaje_legal,
+        ];
 
         $columns = DB::connection('ibs')
             ->select("SELECT
@@ -88,7 +95,7 @@ class QueryController extends Controller {
 
         do_log('Generó el Reporte de Tesorería ( reporte:Reporte Encaje Legal )');
 
-        return view('layouts.queries.excel', compact('results'));
+        return view('layouts.queries.excel', compact('results', 'meta_data'));
     }
 
 }
