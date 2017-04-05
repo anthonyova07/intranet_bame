@@ -28,7 +28,7 @@ class QueryController extends Controller {
         set_time_limit(600);
 
         $meta_data = [
-            'Mes de Generación' => get_months($request->month_encaje_legal),
+            'Fecha Encaje Legal' => get_months($request->month_encaje_legal) . ' ' . (new \Datetime)->format('Y'),
             'Moneda' => $request->currency_encaje_legal,
         ];
 
