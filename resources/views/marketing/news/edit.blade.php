@@ -25,7 +25,7 @@
                                     <span class="help-block">{{ $errors->first('title') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-4">
+                            <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('type') ? ' has-error':'' }}">
                                     <label class="control-label">Tipo</label>
                                     <select class="form-control input-sm" name="type">
@@ -34,6 +34,13 @@
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('type') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div class="checkbox">
+                                    <label style="margin-top: 18px;">
+                                        <input type="checkbox" name="is_active" {{ $new->is_active ? 'checked' : '' }}> Activo
+                                    </label>
                                 </div>
                             </div>
                         </div>

@@ -23,14 +23,17 @@ class HomeController extends Controller {
         $datetime = new DateTime;
 
         $column_new = News::where('type', 'C')
+            ->where('is_active', true)
             ->orderBy('created_at', 'desc')->first();
 
         $banners_news = News::where('type', 'B')
+            ->where('is_active', true)
             ->orderBy('created_at', 'desc')
             ->take(env('BANNERS_QUANTITY'))
             ->get();
 
         $news = News::where('type', 'N')
+            ->where('is_active', true)
             ->orderBy('created_at', 'desc')
             ->take(env('NEWS_QUANTITY'))
             ->get();

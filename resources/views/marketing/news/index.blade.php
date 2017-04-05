@@ -84,7 +84,7 @@
                                             class="naranja">
                                             <i class="fa fa-edit fa-fw"></i>
                                         </a>
-                                        <a
+                                        {{-- <a
                                             onclick="cancel('{{ $new->id }}', this)"
                                             href="javascript:void(0)"
                                             data-toggle="tooltip"
@@ -98,7 +98,7 @@
                                             method="post" id="form_eliminar_{{ $new->id }}">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
-                                        </form>
+                                        </form> --}}
                                     </td>
                                 </tr>
                             @endforeach
