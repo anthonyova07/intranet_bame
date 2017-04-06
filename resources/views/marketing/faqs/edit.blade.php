@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
-@section('title', 'Mercadeo - Noticias')
+@section('title', 'Mercadeo - Pregunta Frecuente')
 
-@section('page_title', 'Editar Noticia')
+@section('page_title', 'Editar Pregunta Frecuente')
 
 @if (can_not_do('marketing_faqs'))
     @section('contents')

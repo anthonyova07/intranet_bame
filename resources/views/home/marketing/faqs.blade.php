@@ -2,7 +2,7 @@
 
 @section('title', 'Intranet Bancamérica')
 
-@section('page_title', 'Detalle de la Noticia')
+@section('page_title', 'Preguntas Frecuentes')
 
 @section('contents')
     <div class="row">
