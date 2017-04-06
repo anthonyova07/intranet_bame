@@ -63,7 +63,7 @@
         var str = $(this).val().trim().toLowerCase();
 
         if (str != '') {
-            $('#faqs .panel').each(function (index, value) {
+            $('#faqs>.panel').each(function (index, value) {
                 var tag = $(value);
 
                 var text = tag.children('div').children('h4').children('a').each(function (index, value) {
@@ -77,7 +77,7 @@
                 });
             });
         } else {
-            $('#faqs .panel').each(function (index, value) {
+            $('#faqs>.panel').each(function (index, value) {
                 $(value).show('slow');
             });
         }
