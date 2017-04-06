@@ -454,11 +454,7 @@
                                                 <a style="color: #FF8849;" href="javascript:void(0)">{!! $birthday->full_name !!}</a>
                                             </td>
                                             <td class="text-center">
-                                                @if (file_exists(public_path() . '\files\employee_images\\' . $birthday->code . '.jpg'))
-                                                    <img style="max-width: 100px;" src="{{ route('home') . '\files\employee_images\\' . $birthday->code . '.jpg' }}">
-                                                @else
-                                                    <img style="max-width: 100px;" src="{{ route('home') . '\files\employee_images\\' . $birthday->gender . '.jpg' }}">
-                                                @endif
+                                                <img style="max-width: 100px;" src="{{ route('home') . '\files\employee_images\\' . get_employee_name_photo($birthday->code, $birthday->gender) }}">
                                             </td>
                                         </tr>
                                     @endforeach
@@ -488,12 +484,7 @@
                                                 {{ calculate_year_of_service($day_service->services_date) }}
                                             </td>
                                             <td class="text-center">
-                                                @if (file_exists(public_path() . '\files\employee_images\\' . $day_service->code . '.jpg'))
-                                                    <img alt="Imagen no disponible" style="max-width: 100px;" src="{{ route('home') . '\files\employee_images\\' . $day_service->code . '.jpg' }}">
-                                                @else
-                                                    <img style="max-width: 100px;" src="{{ route('home') . '\files\employee_images\\' . $day_service->gender . '.jpg' }}">
-                                                @endif
-
+                                                <img style="max-width: 100px;" src="{{ route('home') . '\files\employee_images\\' . get_employee_name_photo($day_service->code, $day_service->gender) }}">
                                             </td>
                                         </tr>
                                     @endforeach

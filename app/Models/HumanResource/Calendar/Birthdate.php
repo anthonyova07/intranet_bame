@@ -55,11 +55,24 @@ class Birthdate extends Model
     {
         $employees = self::getFile();
         $files = collect($files);
-        
+
         $files->each(function ($file, $index) use ($employees) {
-            $name = explode('.', self::getName($file->getClientOriginalName()))[0];
+            $file_name = explode('.', $file->getClientOriginalName());
+            $name = self::getName($file_name[0]);
+
             if ($employees->contains('code', trim($name))) {
-                $file->move(public_path() . '\\files\\employee_images\\', $name . '.jpg');
+                $path = public_path() . '\\files\\employee_images\\';
+                $file_path = $path . $name;
+
+                if (file_exists($file_path . '.jpg')) {
+                    unlink($file_path . '.jpg');
+                }
+
+                if (file_exists($file_path . '.png')) {
+                    unlink($file_path . '.png');
+                }
+
+                $file->move($path, $name . '.' . $file_name[1]);
             }
         });
     }
@@ -125,6 +138,6 @@ class Birthdate extends Model
     //optener el numero de empleado del formato "Nombre Empleado (###).jpg"
     public static function getName($str)
     {
-        return str_ireplace(').jpg', '', explode('(', $str)[1]);
+        return str_ireplace(')', '', explode('(', $str)[1]);
     }
 }

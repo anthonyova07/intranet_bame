@@ -663,3 +663,19 @@ function datetime()
 {
     return new \DateTime;
 }
+
+function get_employee_name_photo($code, $gender)
+{
+    $id = uniqid();
+    $file = public_path() . '\files\employee_images\\' . $code;
+
+    if (file_exists($file . '.jpg')) {
+        return $code . '.jpg?' . $id;
+    }
+
+    if (file_exists($file . '.png')) {
+        return $code . '.png?' . $id;
+    }
+
+    return $gender . '.jpg';
+}
