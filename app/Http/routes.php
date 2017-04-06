@@ -41,8 +41,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('reportetransaccionpdf/{producto}','Consultas\HistoricoProducto\TransaccionController@reportetranspdf');
 
-     Route::get('consultas/historicoproducto/reportetrans/{cuenta}', 'Consultas\HistoricoProducto\TransaccionController@reportetrans');
-    
+    Route::get('consultas/historicoproducto/reportetrans/{cuenta}', 'Consultas\HistoricoProducto\TransaccionController@reportetrans');
+
+    //Actualizcion de clientes 
+    Route::resource('cumplimiento/cliente','Cumplimiento\Cliente\CumstController');     
 
 
     Route::group(['prefix' => 'security'], function () {

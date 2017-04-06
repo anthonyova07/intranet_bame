@@ -24,7 +24,7 @@
                             <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('codigo') ? ' has-error':'' }}">
                                     <label class="control-label">Codigo Cliente</label>
-                                    <input type="number" class="form-control input-sm" name="codigo" placeholder="0" value="{{ old('codigo') }}>
+                                    <input type="number" class="form-control input-sm" name="codigo" placeholder="0" value="{{ old('codigo') }}">
                                     <span class="help-block">{{ $errors->first('codigo') }}</span>
                                 </div>
                             </div>
