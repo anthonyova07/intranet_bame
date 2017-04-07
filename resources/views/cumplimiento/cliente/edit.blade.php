@@ -37,7 +37,7 @@
                     
                     <div class="row">                        
                         <div class="col-xs-3">                            
-                            <label for="identificacion">Identificacion</label>
+                            <label for="identificacion">Identificación</label>
             				<input type="text" name="Identificacion" class="form-control" value="{{$cliente->cusln3}}">
 
                         </div>  
@@ -86,7 +86,7 @@
                     <div class="row">                        
                         
                         <div class="col-xs-3">                            
-                            <label for="pasaporte">PasaPorte</label>
+                            <label for="pasaporte">Pasaporte</label>
             				<input type="text" name="pasaporte" class="form-control" value="{{$cliente->cusidn}}">
                         </div>  
 
