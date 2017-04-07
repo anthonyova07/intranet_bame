@@ -664,10 +664,23 @@ function datetime()
     return new \DateTime;
 }
 
-function get_employee_name_photo($code, $gender)
+function get_employee_name_photo($code, $gender, $just_name = false)
 {
-    $id = uniqid();
     $file = public_path() . '\files\employee_images\\' . $code;
+
+    if ($just_name) {
+        if (file_exists($file . '.jpg')) {
+            return $code . '.jpg';
+        }
+
+        if (file_exists($file . '.png')) {
+            return $code . '.png';
+        }
+
+        return 'no_existe';
+    }
+
+    $id = uniqid();
 
     if (file_exists($file . '.jpg')) {
         return $code . '.jpg?' . $id;

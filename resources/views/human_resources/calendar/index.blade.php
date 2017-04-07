@@ -126,6 +126,7 @@
                             <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>Código</th>
                                         <th>Nombre y Apellido</th>
                                         <th>Cumple. M-D</th>
@@ -136,6 +137,11 @@
                                 <tbody>
                                     @foreach ($birthdates as $birthdate)
                                         <tr>
+                                            <td>
+                                                @if (file_exists(public_path('\files\employee_images\\') . get_employee_name_photo($birthdate->code, $birthdate->gender, true)))
+                                                    <i class="fa fa-image fa-fw"></i>
+                                                @endif
+                                            </td>
                                             <td>{{ $birthdate->code }}</td>
                                             <td>{{ $birthdate->full_name }}</td>
                                             <td>{{ $birthdate->month_day }}</td>
