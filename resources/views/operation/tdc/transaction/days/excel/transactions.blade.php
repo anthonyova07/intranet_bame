@@ -22,25 +22,27 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($transactions as $transaction)
-                    <tr>
-                        <td>{{ $transaction->getCreditCard() . '*' }}</td>
-                        @if ($transaction->creditcard)
-                            <td>{{ $transaction->creditcard->getIdentification() . '*' }}</td>
-                            <td>{{ $transaction->creditcard->getPlasticName() }}</td>
-                        @else
-                            <td></td>
-                            <td></td>
-                        @endif
-                        <td>{{ $transaction->getDescription() }}</td>
-                        <td>{{ $transaction->getCurrency() == '214' ? 'DOP' : 'USD' }}</td>
-                        <td>{{ number_format($transaction->getAmount(), 2) }}</td>
-                        <td>{{ $transaction->transaction_type->getDescription() }}</td>
-                        <td>{{ $transaction->transaction_concep->getDescription() }}</td>
-                        <td>{{ $transaction->getProcessDate() }}</td>
-                        <td>{{ $transaction->getTransactionDate() }}</td>
-                        <td>{{ substr($transaction->getCreditCard(), 0, 6) }}</td>
-                    </tr>
+                @foreach ($transactions as $transaction_collect)
+                    @foreach ($transaction_collect as $transaction)
+                        <tr>
+                            <td>{{ $transaction->getCreditCard() . '*' }}</td>
+                            @if ($transaction->creditcard)
+                                <td>{{ $transaction->creditcard->getIdentification() . '*' }}</td>
+                                <td>{{ $transaction->creditcard->getPlasticName() }}</td>
+                            @else
+                                <td></td>
+                                <td></td>
+                            @endif
+                            <td>{{ $transaction->getDescription() }}</td>
+                            <td>{{ $transaction->getCurrency() == '214' ? 'DOP' : 'USD' }}</td>
+                            <td>{{ number_format($transaction->getAmount(), 2) }}</td>
+                            <td>{{ $transaction->transaction_type->getDescription() }}</td>
+                            <td>{{ $transaction->transaction_concep->getDescription() }}</td>
+                            <td>{{ $transaction->getProcessDate() }}</td>
+                            <td>{{ $transaction->getTransactionDate() }}</td>
+                            <td>{{ substr($transaction->getCreditCard(), 0, 6) }}</td>
+                        </tr>
+                    @endforeach
                 @endforeach
             </tbody>
         </table>

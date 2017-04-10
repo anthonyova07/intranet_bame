@@ -48,7 +48,13 @@ class TransactionDaysController extends Controller
 
         if ($request->format == 'excel') {
             $view = view('operation.tdc.transaction.days.excel.transactions');
-            $transactions = $transactions->get();
+            $trxs = collect();
+
+            $transactions->chunk(100, function ($transactions) use ($trxs) {
+                $trxs->push($transactions);
+            });
+
+            $transactions = $trxs;
         } else {
             $descriptions = Description::where('prefi_desc', 'SAT_CODTR')->orWhere('prefi_desc', 'SAT_CONCEP')->get();
             $transactions = $transactions->paginate();
