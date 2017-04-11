@@ -11,6 +11,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form method="get" action="{{ $user ? route('event.unsubscribe', ['id' => $event_id, 'user' => $user]) : route('event.subscribe', ['id' => $event_id]) }}" id="form" novalidate>
+                        <input type="hidden" name="department" value="{{ Request::get('department') }}">
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group{{ $errors->first('unsubscription_reason') ? ' has-error':'' }}">

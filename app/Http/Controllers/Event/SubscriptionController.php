@@ -104,11 +104,12 @@ class SubscriptionController extends Controller
                 'is_subscribe' => false,
             ]);
 
-        return redirect(route('event.show', ['id' => $event]))->with('success', 'Al usuario e invitados se le han dado de baja correctamente!');
+        return redirect(route($request->department . '.event.show', ['id' => $event, 'department' => $request->department]))->with('success', 'Al usuario e invitados se le han dado de baja correctamente!');
     }
 
     public function unsubscribe_reason(Request $request, $id)
     {
+        $redirect =  redirect(route('home'));
         $datetime = new DateTime;
 
         $event = Event::find($id);

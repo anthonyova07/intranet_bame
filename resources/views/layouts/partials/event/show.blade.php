@@ -41,7 +41,7 @@
                                         <td>{{ $subscription->names }}</td>
                                         <td align="center">
                                             <a
-                                                href="{{ route('event.unsubscribe_reason', ['id' => $event->id, 'user' => $subscription->username]) }}"
+                                                href="{{ route('event.unsubscribe_reason', ['id' => $event->id, 'user' => $subscription->username, 'department' => Request::get('department')]) }}"
                                                 data-toggle="tooltip"
                                                 data-placement="top"
                                                 title="Dar de Baja"

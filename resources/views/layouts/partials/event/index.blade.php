@@ -77,7 +77,7 @@
                                         <i class="fa fa-edit fa-fw"></i>
                                     </a>
                                     <a
-                                        href="{{ route($department . '.event.show', ['id' => $event->id]) }}"
+                                        href="{{ route($department . '.event.show', ['id' => $event->id, 'department' => $department]) }}"
                                         data-toggle="tooltip"
                                         data-placement="top"
                                         title="Ver Suscriptores">
