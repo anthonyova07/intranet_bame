@@ -146,6 +146,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('queries', 'HumanResource\Queries\QueryController', ['only' => [
             'index'
         ]]);
+
+        Route::group(['prefix' => 'request'], function () {
+
+        });
+
+        Route::resource('request', 'HumanResource\Request\RequestController', ['only' => [
+            'index', 'create', 'store', 'show'
+        ]]);
     });
 
     Route::group(['prefix' => 'compliance'], function () {
