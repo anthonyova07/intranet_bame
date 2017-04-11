@@ -200,6 +200,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('payroll', 'HumanResource\Payroll\PayrollController', ['only' => [
             'create', 'store'
         ]]);
+        
+        Route::group(['prefix' => 'request'], function () {
+
+        });
+
+        Route::resource('request', 'HumanResource\Request\RequestController', ['only' => [
+            'index', 'create', 'store', 'show'
+        ]]);
     });
 
     Route::group(['prefix' => 'compliance'], function () {

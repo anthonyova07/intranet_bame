@@ -148,6 +148,26 @@
                     </a>
                 </li>
                 @if (session()->has('menus'))
+                    @if (!session()->get('menus')->contains('men_codigo', '22'))
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-lock fa-fw"></i>
+                                {{ session()->get('menus')->where('men_codigo', '22')->first()->men_descri }}
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-second-level animated zoomInLeft" style="animation-duration: 0.5s;">
+                                @if (Route::has('home'))
+                                    <li>
+                                        <a href="{{ route('human_resources.request.index') }}">
+                                            <i class="fa fa-unlock-alt fa-fw"></i>
+                                            Mis Solicitudes
+                                        </a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </li>
+                    @endif
+
                     @foreach (session()->get('menus') as $menu)
                         <li>
                             <a href="#">
@@ -167,6 +187,14 @@
                                             </li>
                                         @endif
                                     @endforeach
+                                    @if ($menu->men_codigo == '22')
+                                        <li>
+                                            <a href="{{ route('human_resources.request.index') }}">
+                                                <i class="fa fa-unlock-alt fa-fw"></i>
+                                                Mis Solicitudes
+                                            </a>
+                                        </li>
+                                    @endif
                                 </ul>
                             @endif
                         </li>
