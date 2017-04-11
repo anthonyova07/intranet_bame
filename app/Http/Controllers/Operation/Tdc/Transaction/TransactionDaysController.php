@@ -55,6 +55,15 @@ class TransactionDaysController extends Controller
             });
 
             $transactions = $trxs;
+        } else if ($request->format == 'csv') {
+            $view = view('operation.tdc.transaction.days.excel.transactions_csv');
+            $trxs = collect();
+
+            $transactions->chunk(100, function ($transactions) use ($trxs) {
+                $trxs->push($transactions);
+            });
+
+            $transactions = $trxs;
         } else {
             $descriptions = Description::where('prefi_desc', 'SAT_CODTR')->orWhere('prefi_desc', 'SAT_CONCEP')->get();
             $transactions = $transactions->paginate();
