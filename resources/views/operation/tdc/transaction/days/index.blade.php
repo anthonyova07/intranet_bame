@@ -95,6 +95,8 @@
 
                     <a style="font-size: 13px;" class="label btn-success pull-right" href="{{ route('operation.tdc.transactions.days.index', array_merge(Request::except(['page']), ['format' => 'excel']) ) }}">Exportar Excel</a>
 
+                    {{-- <a style="font-size: 13px;" class="label btn-success pull-right" href="{{ route('operation.tdc.transactions.days.index', array_merge(Request::except(['page']), ['format' => 'csv']) ) }}">Exportar CSV</a> --}}
+
                     <br>
                     <br>
                     <table class="table table-striped table-bordered table-hover table-condensed" order-by='2|desc'>
