@@ -180,26 +180,56 @@
         </div>
 
         <div class="col-xs-3">
-            <div class="panel panel-default panel-wiget">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Normativa Legal</h3>
+            <div class="row">
+                <div class="panel panel-default panel-wiget">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Normativa Legal</h3>
+                    </div>
+                    <div class="panel-body text-center">
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <div class="well well-sm" style="margin-bottom: 0px;height: 111px;">
+                                    <h3 class="list-group-item-heading text-center" style="color: #d82f27;font-size: 24px;"><u data-toggle="tooltip" title="Prevención del Lavado de Activos y el Financiamiento al Terrorismo">PLA/FT</u></h3>
+                                    <table class="table table-condensed">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center">
+                                                    <a target="_blank" href="http://intranet_bame:8077/gestidoc/compliance?folder=Marco_Legal">
+                                                        <i style="font-size: 58px;color: #d82f27;" data-toggle="tooltip" title="Click para ver" class="fa fa-gavel"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-body text-center">
-                    <div class="col-xs-12">
-                        <div class="row">
-                            <div class="well well-sm" style="margin-bottom: 0px;height: 281px;">
-                                <h3 class="list-group-item-heading text-center" style="color: #d82f27;font-size: 24px;"><u data-toggle="tooltip" title="Prevención del Lavado de Activos y el Financiamiento al Terrorismo">PLA/FT</u></h3>
-                                <table class="table table-condensed">
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-center">
-                                                <a target="_blank" href="http://intranet_bame:8077/gestidoc/compliance?folder=Marco_Legal">
-                                                    <i style="font-size: 183px;color: #d82f27;margin-top: 13px;" data-toggle="tooltip" title="Click para ver" class="fa fa-gavel"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+            </div>
+
+            <div class="row">
+                <div class="panel panel-default panel-wiget" style="margin-top: -10px;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Cápsulas informativas</h3>
+                    </div>
+                    <div class="panel-body text-center">
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <div class="well well-sm" style="margin-bottom: 0px;height: 111px;">
+                                    <h3 class="list-group-item-heading text-center" style="color: #d82f27;font-size: 24px;"><u data-toggle="tooltip" title="Prevención del Lavado de Activos y el Financiamiento al Terrorismo">PLA/FT</u></h3>
+                                    <table class="table table-condensed">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center">
+                                                    <a target="_blank" href="http://intranet_bame:8077/gestidoc/compliance?folder=Capsulas_Informativas_PLA-FT">
+                                                        <i style="font-size: 58px;color: #d82f27;" data-toggle="tooltip" title="Click para ver" class="fa fa-commenting"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
