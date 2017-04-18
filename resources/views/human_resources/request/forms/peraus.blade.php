@@ -1,0 +1,103 @@
+<form method="post" action="{{ route('human_resources.request.store') }}" id="form">
+
+    <div class="row">
+        @include('human_resources.request.forms.colaborator_panel')
+
+        @include('human_resources.request.forms.supervisor_panel')
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Datos de la Solicitud de {{ $type }}</h3>
+                </div>
+
+                <div class="panel-body">
+                    <div class="row text-center">
+                        <div class="col-xs-6">
+                            <div class="checkbox">
+                                <label style="font-size: 16px;font-weight: bold;">
+                                    <input type="radio" name="permission_type" {{ old('permission_type') == 'one_day' ? 'checked' : '' }} value="one_day"> Por menos de un día
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="checkbox">
+                                <label style="font-size: 16px;font-weight: bold;">
+                                    <input type="radio" name="permission_type" {{ old('permission_type') == 'multiple_days' ? 'checked' : '' }} value="multiple_days"> Por varios días
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="well well-sm">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div class="form-group{{ $errors->first('permission_date') ? ' has-error':'' }}">
+                                            <label class="control-label">Fecha</label>
+                                            <input type="date" class="form-control input-sm" name="permission_date">
+                                            <span class="help-block">{{ $errors->first('permission_date') }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div class="form-group{{ $errors->first('permission_time_from') ? ' has-error':'' }}">
+                                            <label class="control-label">Hora Desde</label>
+                                            <input type="time" class="form-control input-sm" name="permission_time_from">
+                                            <span class="help-block">{{ $errors->first('permission_time_from') }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div class="form-group{{ $errors->first('permission_time_to') ? ' has-error':'' }}">
+                                            <label class="control-label">Hora Hasta</label>
+                                            <input type="time" class="form-control input-sm" name="permission_time_to">
+                                            <span class="help-block">{{ $errors->first('permission_time_to') }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="well well-sm">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="form-group{{ $errors->first('permission_date_from') ? ' has-error':'' }}">
+                                            <label class="control-label">Fecha Desde</label>
+                                            <input type="date" class="form-control input-sm" name="permission_date_from">
+                                            <span class="help-block">{{ $errors->first('permission_date_from') }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="form-group{{ $errors->first('permission_date_to') ? ' has-error':'' }}">
+                                            <label class="control-label">Fecha Hasta</label>
+                                            <input type="date" class="form-control input-sm" name="permission_date_to">
+                                            <span class="help-block">{{ $errors->first('permission_date_to') }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group{{ $errors->first('cause_analysis') ? ' has-error':'' }}">
+                                <label class="control-label">Razón de la Ausencia</label>
+                                <textarea class="form-control input-sm" name="cause_analysis">{{ old('cause_analysis') }}</textarea>
+                                <span class="help-block">{{ $errors->first('cause_analysis') }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            {{ csrf_field() }}
+                            <a class="btn btn-info btn-xs" href="{{ route('human_resources.request.index') }}"><i class="fa fa-arrow-left"></i> Atrás</a>
+                            <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

@@ -17,12 +17,6 @@ class RequestController extends Controller
 {
     public function index(Request $request)
     {
-        $param = Param::all();
-
-        $request_types = $param->where('type', 'TIPSOL');
-        $request_statuses = $param->where('type', 'EST');
-        $request_human_resources = $param->where('type', 'PRO');
-
         $human_resource_requests = HumanResourceRequest::lastestFirst();
 
         if ($request->term) {
@@ -30,18 +24,11 @@ class RequestController extends Controller
 
             $human_resource_requests = $human_resource_requests->orWhere('reqnumber', 'like', '%' . $term . '%')
                         ->orWhere('reqtype', 'like', '%' . $term . '%')
-                        ->orWhere('human_resource', 'like', '%' . $term . '%')
-                        ->orWhere('note', 'like', '%' . $term . '%')
-                        ->orWhere('causeanaly', 'like', '%' . $term . '%')
-                        ->orWhere('peoinvolve', 'like', '%' . $term . '%');
+                        ->orWhere('note', 'like', '%' . $term . '%');
         }
 
         if ($request->request_type) {
             $human_resource_requests->where('reqtype', $request->request_type);
-        }
-
-        if ($request->human_resource) {
-            $human_resource_requests->where('human_resource', $request->human_resource);
         }
 
         if ($request->date_from) {
@@ -53,30 +40,25 @@ class RequestController extends Controller
         }
 
         if (!can_not_do('human_resource_request_approval')) {
-            $ids_req = Approval::where('userapprov', session()->get('user'))->pluck('req_id');
-            $human_resource_requests = $human_resource_requests->whereIn('id', $ids_req)->paginate();
-        } else {
-            $human_resource_requests = $human_resource_requests->paginate();
+            //
         }
 
         return view('human_resources.request.index', [
-            'request_types' => $request_types,
-            'request_statuses' => $request_statuses,
-            'request_human_resources' => $request_human_resources,
-            'human_resource_requests' => $human_resource_requests,
+            'human_resource_requests' => $human_resource_requests->paginate(),
         ]);
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        $params = Param::activeOnly()->get();
-
-        $request_types = $params->where('type', 'TIPSOL');
-        $human_resources = $params->where('type', 'PRO');
+        if ($request->type) {
+            if (!array_key_exists($request->type, rh_req_types()->toArray())) {
+                return redirect(route('human_resources.request.create'))->with('warning', 'El tipo de solicitud seleccionado no existe.');
+            }
+        }
 
         return view('human_resources.request.create', [
-            'request_types' => $request_types,
-            'human_resources' => $human_resources,
+            'type' => $request->type,
+            'request_type_exists' => array_key_exists($request->type, rh_req_types()->toArray()),
         ]);
     }
 

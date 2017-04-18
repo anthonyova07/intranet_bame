@@ -4,11 +4,11 @@ namespace Bame\Models\HumanResource\Request;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Status extends Model
+class Detail extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intreqpres';
+    protected $table = 'intreqrhde';
 
     protected $primaryKey = 'id';
 
@@ -16,8 +16,8 @@ class Status extends Model
 
     public $timestamps = true;
 
-    public function scopegetLastStatus($query)
+    public function scopeLastestFirst($query)
     {
-        return $this->orderBy('created_at', 'desc')->take(1);
+        return $this->orderBy('created_at', 'desc');
     }
 }
