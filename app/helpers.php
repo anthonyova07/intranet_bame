@@ -692,3 +692,17 @@ function get_employee_name_photo($code, $gender, $just_name = false)
 
     return $gender . '.jpg';
 }
+
+function rh_req_types($rh_req_type = null)
+{
+    $rh_req_types = collect([
+        'PERAUS' => 'Permisos y Ausencias',
+        'VAC' => 'Vacaciones',
+    ]);
+
+    if (!$rh_req_type) {
+        return $rh_req_types;
+    }
+
+    return $rh_req_types->get($rh_req_type);
+}

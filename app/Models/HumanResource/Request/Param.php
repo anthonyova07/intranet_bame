@@ -8,7 +8,7 @@ class Param extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intreqprpa';
+    protected $table = 'intreqrhpa';
 
     protected $primaryKey = 'id';
 

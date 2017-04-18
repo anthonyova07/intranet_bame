@@ -8,7 +8,7 @@ class HumanResourceRequest extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intreqpr';
+    protected $table = 'intreqrh';
 
     protected $primaryKey = 'id';
 
@@ -36,28 +36,6 @@ class HumanResourceRequest extends Model
         return $this->hasMany(Status::class, 'req_id');
     }
 
-    public function attaches()
-    {
-        return $this->hasMany(Attach::class, 'req_id');
-    }
-
-    public function isApproved()
-    {
-        $approvals = $this->approvals;
-
-        if ($approvals->count() > 0) {
-            foreach ($approvals as $approval) {
-                if ($approval->approved <> '1') {
-                    return false;
-                }
-            }
-            return true;
-        } else {
-            return false;
-        }
-        return !(bool) $this->approvals()->where('approved', '<>', '1')->get()->count();
-    }
-
     public function getStatus()
     {
         $approvals = $this->approvals;
@@ -72,19 +50,5 @@ class HumanResourceRequest extends Model
         } else {
             return '';
         }
-    }
-
-    public function createStatus($status, $comment = '')
-    {
-        $process_request_status = new Status;
-
-        $process_request_status->id = uniqid(true);
-        $process_request_status->status = $status;
-        $process_request_status->comment = $comment;
-
-        $process_request_status->created_by = session()->get('user');
-        $process_request_status->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
-
-        $this->status()->save($process_request_status);
     }
 }
