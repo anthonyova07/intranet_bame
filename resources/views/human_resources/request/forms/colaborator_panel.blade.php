@@ -1,4 +1,4 @@
-<div class="col-xs-6">
+<div class="col-xs-8">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Datos del Empleado</h3>

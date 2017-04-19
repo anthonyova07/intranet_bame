@@ -17,6 +17,8 @@ class RequestController extends Controller
 {
     public function index(Request $request)
     {
+        $params = Param::all();
+
         $human_resource_requests = HumanResourceRequest::lastestFirst();
 
         if ($request->term) {
@@ -25,10 +27,6 @@ class RequestController extends Controller
             $human_resource_requests = $human_resource_requests->orWhere('reqnumber', 'like', '%' . $term . '%')
                         ->orWhere('reqtype', 'like', '%' . $term . '%')
                         ->orWhere('note', 'like', '%' . $term . '%');
-        }
-
-        if ($request->request_type) {
-            $human_resource_requests->where('reqtype', $request->request_type);
         }
 
         if ($request->date_from) {
@@ -45,11 +43,14 @@ class RequestController extends Controller
 
         return view('human_resources.request.index', [
             'human_resource_requests' => $human_resource_requests->paginate(),
+            'params' => $params,
         ]);
     }
 
     public function create(Request $request)
     {
+        $params = Param::where('is_active', '1')->get();
+
         if ($request->type) {
             if (!array_key_exists($request->type, rh_req_types()->toArray())) {
                 return redirect(route('human_resources.request.create'))->with('warning', 'El tipo de solicitud seleccionado no existe.');
@@ -59,14 +60,16 @@ class RequestController extends Controller
         return view('human_resources.request.create', [
             'type' => $request->type,
             'request_type_exists' => array_key_exists($request->type, rh_req_types()->toArray()),
+            'params' => $params,
         ]);
     }
 
     public function store(RequestHumanResourceRequest $request)
     {
+        dd($request->all());
         $human_resource_request = new HumanResourceRequest;
 
-        $params = Param::whereIn('id', [$request->request_type, $request->human_resource, $request->subhuman_resource])->get();
+        $param = Param::find($request->request_type);
 
         $request_type = $params->where('id', $request->request_type)->where('type', 'TIPSOL')->first();
         $human_resource = $params->where('id', $request->human_resource)->where('type', 'PRO')->first();
