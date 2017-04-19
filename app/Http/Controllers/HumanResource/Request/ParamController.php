@@ -1,20 +1,24 @@
 <?php
 
-namespace Bame\Http\Controllers\Process\Request;
+namespace Bame\Http\Controllers\HumanResource\Request;
 
 use Illuminate\Http\Request;
 
 use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
-use Bame\Models\Process\Request\Param;
-use Bame\Http\Requests\Process\Request\ParamRequest;
+use Bame\Models\HumanResource\Request\Param;
+use Bame\Http\Requests\HumanResource\Request\ParamRequest;
 
 class ParamController extends Controller
 {
     public function create($type)
     {
-        return view('process.request.param.create')
+        if (!array_key_exists($type, rh_req_types()->toArray())) {
+            return redirect(route('human_resources.request.create'))->with('warning', 'El tipo de solicitud seleccionado no existe.');
+        }
+
+        return view('human_resources.request.param.create')
             ->with('type', $type);
     }
 
@@ -25,23 +29,17 @@ class ParamController extends Controller
         $param->id = uniqid(true);
         $param->type = $type;
         $param->code = strtoupper($request->code);
+        $param->name = cap_str($request->name);
 
-        if ($type == 'PRO') {
-            $param->version = $request->version;
-            $param->name = cap_str($request->name);
-        } else {
-            $param->note = cap_str($request->description);
-        }
-
-        do_log('Creó el parametro ' . get_proreq_param($type, false) . ' en Solicitudes de Procesos ( código:' . strip_tags($param->code) . ' )');
+        do_log('Creó el parametro ' . rh_req_types($type) . ' en Solicitudes de Recursos Humanos ( código:' . strip_tags($param->code) . ' )');
 
         $param->is_active = $request->is_active ? true : false;
         $param->created_by = session()->get('user');
 
         $param->save();
 
-        return redirect(route('process.request.{type}.param.create', ['type' => $type]))
-            ->with('success', 'El ' . get_proreq_param($type, false) . ' fue creado correctamente.');
+        return redirect(route('human_resources.request.{type}.param.create', ['type' => $type]))
+            ->with('success', 'El ' . rh_req_types($type) . ' fue creado correctamente.');
     }
 
     public function edit($type, $id)
@@ -49,12 +47,10 @@ class ParamController extends Controller
         $param = Param::find($id);
 
         if (!$param) {
-            return back()->with('warning', 'Este ' . get_proreq_param($type, false) . ' no existe!');
+            return back()->with('warning', 'Este ' . rh_req_types($type) . ' no existe!');
         }
 
-        $process = collect();
-
-        return view('process.request.param.edit')
+        return view('human_resources.request.param.edit')
             ->with('param', $param);
     }
 
@@ -63,26 +59,20 @@ class ParamController extends Controller
         $param = Param::find($id);
 
         if (!$param) {
-            return back()->with('warning', 'Este ' . get_proreq_param($type, false) . ' no existe!');
+            return back()->with('warning', 'Este ' . rh_req_types($type) . ' no existe!');
         }
 
         $param->code = strtoupper($request->code);
+        $param->name = cap_str($request->name);
 
-        if ($type == 'PRO') {
-            $param->version = $request->version;
-            $param->name = cap_str($request->name);
-        } else {
-            $param->note = cap_str($request->description);
-        }
-
-        do_log('Modificó el parametro ' . get_proreq_param($type, false) . ' en Solicitudes de Procesos ( código:' . strip_tags($param->code) . ' )');
+        do_log('Modificó el parametro ' . rh_req_types($type) . ' en Solicitudes de Recursos Humanos ( código:' . strip_tags($param->code) . ' )');
 
         $param->is_active = $request->is_active ? true : false;
         $param->updated_by = session()->get('user');
 
         $param->save();
 
-        return redirect(route('process.request.index'))
-            ->with('success', 'El ' . get_proreq_param($type, false) . ' fue modificado correctamente.');
+        return redirect(route('human_resources.request.index'))
+            ->with('success', 'El ' . rh_req_types($type) . ' fue modificado correctamente.');
     }
 }

@@ -202,7 +202,9 @@ Route::group(['middleware' => 'auth'], function () {
         ]]);
         
         Route::group(['prefix' => 'request'], function () {
-
+            Route::resource('{type}/param', 'HumanResource\Request\ParamController', ['only' => [
+                'create', 'store', 'edit', 'update'
+            ]]);
         });
 
         Route::resource('request', 'HumanResource\Request\RequestController', ['only' => [

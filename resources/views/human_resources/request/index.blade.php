@@ -14,7 +14,7 @@
 
     <div class="row">
 
-        <div class="col-xs-12">
+        <div class="col-xs-8 col-xs-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Búscar Solicitud</h3>
@@ -22,26 +22,14 @@
                 <div class="panel-body">
                     <form method="get" action="{{ route('human_resources.request.index') }}" id="form">
                         <div class="row">
-                            <div class="col-xs-2">
+                            <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('term') ? ' has-error':'' }}">
                                     <label class="control-label">Término</label>
                                     <input type="text" class="form-control input-sm" name="term" placeholder="término de busqueda..." value="{{ old('term') }}">
                                     <span class="help-block">{{ $errors->first('term') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-2">
-                                <div class="form-group{{ $errors->first('request_type') ? ' has-error':'' }}">
-                                    <label class="control-label">Tipo de Solicitud</label>
-                                    <select class="form-control input-sm" name="request_type">
-                                        <option value="">Todos</option>
-                                        {{-- @foreach ($request_types as $request_type)
-                                            <option value="{{ $request_type->note }}" {{ old('request_type') == $request_type->note ? 'selected':'' }}>{{ $request_type->note }}</option>
-                                        @endforeach --}}
-                                    </select>
-                                    <span class="help-block">{{ $errors->first('request_type') }}</span>
-                                </div>
-                            </div>
-                            <div class="col-xs-2">
+                            <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('status') ? ' has-error':'' }}">
                                     <label class="control-label">Estatus</label>
                                     <select class="form-control input-sm" name="status">
@@ -53,14 +41,14 @@
                                     <span class="help-block">{{ $errors->first('status') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-2">
+                            <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('date_from') ? ' has-error':'' }}">
                                     <label class="control-label">Desde</label>
                                     <input type="date" class="form-control input-sm" name="date_from" value="{{ old('date_from') }}">
                                     <span class="help-block">{{ $errors->first('date_from') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-2">
+                            <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('date_to') ? ' has-error':'' }}">
                                     <label class="control-label">Hasta</label>
                                     <input type="date" class="form-control input-sm" name="date_to" value="{{ old('date_to') }}">
@@ -144,28 +132,30 @@
             <div class="col-xs-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Tipos de Solicitudes</h3>
+                        <h3 class="panel-title">Permisos y Ausencias Predefinidos</h3>
                     </div>
                     <div class="panel-body">
-                        <a class="btn btn-danger btn-xs" href="">Nuevo</a>
+                        <a class="btn btn-danger btn-xs" href="{{ route('human_resources.request.{type}.param.create', ['type' => 'PERAUS']) }}">Nuevo</a>
                         <br>
                         <br>
                         <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
                             <thead>
                                 <tr>
                                     <th style="width: 36px;">Código</th>
-                                    <th>Descripción</th>
+                                    <th>Nombre</th>
+                                    <th style="width: 36px;">Activo</th>
                                     <th style="width: 2px"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($request_types as $request_type)
+                                @foreach ($params->where('type', 'PERAUS') as $param)
                                     <tr>
-                                        <td>{{ $request_type->code }}</td>
-                                        <td>{{ $request_type->note }}</td>
+                                        <td>{{ $param->code }}</td>
+                                        <td>{{ $param->name }}</td>
+                                        <td>{{ $param->is_active ? 'Si':'No' }}</td>
                                         <td align="center">
                                             <a
-                                                href=""
+                                                href="{{ route('human_resources.request.{type}.param.edit', ['type' => 'PERAUS', 'param' => $param->id]) }}"
                                                 data-toggle="tooltip"
                                                 data-placement="top"
                                                 title="Editar"
@@ -174,7 +164,7 @@
                                             </a>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

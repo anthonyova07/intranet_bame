@@ -200,5 +200,12 @@ return [
       'recordcard' => 'Código',
       'servicedat' => 'Fecha de Ingreso',
       'position ' => 'Posición',
+      'colsupuser' => 'Usuario de Supervisor',
+      'permission_type' => 'Tipo de Permiso',
+      'permission_date' => 'Fecha del Permiso',
+      'permission_time_from' => 'Hora Inicio',
+      'permission_time_to' => 'Hora Final',
+      'permission_date_from' => 'Fecha Inicio',
+      'permission_date_to' => 'Fecha Final',
     ],
 ];

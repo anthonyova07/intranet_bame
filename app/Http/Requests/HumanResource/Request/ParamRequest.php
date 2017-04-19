@@ -23,16 +23,9 @@ class ParamRequest extends Request
      */
     public function rules()
     {
-        if ($this->type == 'PRO') {
-            return [
-                'version' => 'required|max:45',
-                'name' => 'required|max:255',
-            ];
-        } else {
-            return [
-                'code' => 'required|max:45',
-                'description' => 'required|max:255',
-            ];
-        }
+        return [
+            'code' => 'required|max:45',
+            'name' => 'required|max:100',
+        ];
     }
 }
