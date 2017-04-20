@@ -66,14 +66,14 @@
                                     <div class="col-xs-6">
                                         <div class="form-group{{ $errors->first('permission_date_from') ? ' has-error':'' }}">
                                             <label class="control-label">Fecha Desde</label>
-                                            <input type="date" class="form-control input-sm" name="permission_date_from">
+                                            <input type="date" class="form-control input-sm" name="permission_date_from" value="{{ old('permission_date_from') }}">
                                             <span class="help-block">{{ $errors->first('permission_date_from') }}</span>
                                         </div>
                                     </div>
                                     <div class="col-xs-6">
                                         <div class="form-group{{ $errors->first('permission_date_to') ? ' has-error':'' }}">
                                             <label class="control-label">Fecha Hasta</label>
-                                            <input type="date" class="form-control input-sm" name="permission_date_to">
+                                            <input type="date" class="form-control input-sm" name="permission_date_to" value="{{ old('permission_date_to') }}">
                                             <span class="help-block">{{ $errors->first('permission_date_to') }}</span>
                                         </div>
                                     </div>

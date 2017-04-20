@@ -100,9 +100,16 @@ class RequestController extends Controller
             $detail->id = uniqid(true);
             $detail->req_id = $human_resource_request->id;
             $detail->pertype = $request->permission_type;
-            $detail->perdatfrom = $request->permission_date;
-            $detail->pertimfrom = $request->permission_time_from . ':00';
-            $detail->pertimto = $request->permission_time_to . ':00';
+            if ($request->permission_type == 'one_day') {
+                $detail->perdatfrom = $request->permission_date;
+                $detail->pertimfrom = $request->permission_time_from . ':00';
+                $detail->pertimto = $request->permission_time_to . ':00';
+            }
+
+            if ($request->permission_type == 'multiple_days') {
+                $detail->perdatfrom = $request->permission_date_from;
+                $detail->perdatto = $request->permission_date_to;
+            }
 
             if ($request->peraus == 'otro') {
                 $detail->reaforabse = $request->peraus_reason;
@@ -119,6 +126,8 @@ class RequestController extends Controller
 
         $human_resource_request->reqnumber = get_next_request_rh_number();
         $human_resource_request->save();
+
+        Notification::notify('Solicitud de RH', 'Tiene un solicitud RH pendiente de aprobación', route('human_resources.request.show', ['request' => $human_resource_request->id]), $request->colsupuser);
 
         do_log('Creó la Solicitud de Recursos Humanos ( número:' . strip_tags($human_resource_request->reqnumber) . ' )');
 

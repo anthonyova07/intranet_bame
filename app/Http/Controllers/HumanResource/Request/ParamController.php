@@ -14,8 +14,8 @@ class ParamController extends Controller
 {
     public function create($type)
     {
-        if (!array_key_exists($type, rh_req_types()->toArray())) {
-            return redirect(route('human_resources.request.create'))->with('warning', 'El tipo de solicitud seleccionado no existe.');
+        if (!array_key_exists($type, rh_req_params()->toArray())) {
+            return redirect(route('human_resources.request.index'))->with('warning', 'El tipo de solicitud seleccionado no existe.');
         }
 
         return view('human_resources.request.param.create')
@@ -31,7 +31,7 @@ class ParamController extends Controller
         $param->code = strtoupper($request->code);
         $param->name = cap_str($request->name);
 
-        do_log('Creó el parametro ' . rh_req_types($type) . ' en Solicitudes de Recursos Humanos ( código:' . strip_tags($param->code) . ' )');
+        do_log('Creó el parametro ' . rh_req_params($type) . ' en Solicitudes de Recursos Humanos ( código:' . strip_tags($param->code) . ' )');
 
         $param->is_active = $request->is_active ? true : false;
         $param->created_by = session()->get('user');
@@ -39,15 +39,19 @@ class ParamController extends Controller
         $param->save();
 
         return redirect(route('human_resources.request.{type}.param.create', ['type' => $type]))
-            ->with('success', 'El ' . rh_req_types($type) . ' fue creado correctamente.');
+            ->with('success', 'El ' . rh_req_params($type) . ' fue creado correctamente.');
     }
 
     public function edit($type, $id)
     {
+        if (!array_key_exists($type, rh_req_params()->toArray())) {
+            return redirect(route('human_resources.request.index'))->with('warning', 'El tipo de solicitud seleccionado no existe.');
+        }
+        
         $param = Param::find($id);
 
         if (!$param) {
-            return back()->with('warning', 'Este ' . rh_req_types($type) . ' no existe!');
+            return back()->with('warning', 'Este ' . rh_req_params($type) . ' no existe!');
         }
 
         return view('human_resources.request.param.edit')
@@ -59,13 +63,13 @@ class ParamController extends Controller
         $param = Param::find($id);
 
         if (!$param) {
-            return back()->with('warning', 'Este ' . rh_req_types($type) . ' no existe!');
+            return back()->with('warning', 'Este ' . rh_req_params($type) . ' no existe!');
         }
 
         $param->code = strtoupper($request->code);
         $param->name = cap_str($request->name);
 
-        do_log('Modificó el parametro ' . rh_req_types($type) . ' en Solicitudes de Recursos Humanos ( código:' . strip_tags($param->code) . ' )');
+        do_log('Modificó el parametro ' . rh_req_params($type) . ' en Solicitudes de Recursos Humanos ( código:' . strip_tags($param->code) . ' )');
 
         $param->is_active = $request->is_active ? true : false;
         $param->updated_by = session()->get('user');
@@ -73,6 +77,6 @@ class ParamController extends Controller
         $param->save();
 
         return redirect(route('human_resources.request.index'))
-            ->with('success', 'El ' . rh_req_types($type) . ' fue modificado correctamente.');
+            ->with('success', 'El ' . rh_req_params($type) . ' fue modificado correctamente.');
     }
 }
