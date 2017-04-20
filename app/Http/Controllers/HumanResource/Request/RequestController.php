@@ -9,7 +9,7 @@ use Bame\Http\Controllers\Controller;
 use Bame\Models\HumanResource\Request\Param;
 use Bame\Models\HumanResource\Request\HumanResourceRequest;
 use Bame\Models\HumanResource\Request\Approval;
-use Bame\Models\HumanResource\Request\Status;
+use Bame\Models\HumanResource\Request\Detail;
 use Bame\Http\Requests\HumanResource\Request\RequestHumanResourceRequest;
 use Bame\Models\Notification\Notification;
 
@@ -66,35 +66,61 @@ class RequestController extends Controller
 
     public function store(RequestHumanResourceRequest $request)
     {
-        dd($request->all());
-        $human_resource_request = new HumanResourceRequest;
-
-        $param = Param::find($request->request_type);
-
-        $request_type = $params->where('id', $request->request_type)->where('type', 'TIPSOL')->first();
-        $human_resource = $params->where('id', $request->human_resource)->where('type', 'PRO')->first();
-
-        if (is_null($request_type) || is_null($human_resource)) {
-            return back()->withInput()->withError('Los parámetros seleccionados no son correctos.');
+        if ($request->type) {
+            if (!array_key_exists($request->type, rh_req_types()->toArray())) {
+                return redirect(route('human_resources.request.create'))->with('warning', 'El tipo de solicitud seleccionado no existe.');
+            }
         }
 
+        $human_resource_request = new HumanResourceRequest;
+
         $human_resource_request->id = uniqid(true);
-        $human_resource_request->reqtype = $request_type->note;
+        $human_resource_request->reqtype = $request->type;
         $human_resource_request->reqstatus = 'Pendiente';
-        $human_resource_request->human_resource = "{$human_resource->name} v( {$human_resource->version} )";
-        $human_resource_request->note = $request->description;
-        $human_resource_request->causeanaly = $request->cause_analysis;
-        $human_resource_request->peoinvolve = $request->people_involved;
+
+        $user_info = session()->get('user_info');
+
+        $human_resource_request->coluser = session()->get('user');
+        $human_resource_request->colcode = $user_info->getPostalCode();
+        $human_resource_request->colname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
+        $human_resource_request->colposi = $user_info->getTitle();
+        $human_resource_request->coldepart = $user_info->getDepartment();
+
+        $human_resource_request->colsupuser = $request->colsupuser;
+        $human_resource_request->approvesup = false;
+
+        $human_resource_request->approverh = false;
 
         $human_resource_request->created_by = session()->get('user');
-        $human_resource_request->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+        $human_resource_request->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
 
-        $human_resource_request->reqnumber = get_next_request_number();
+        if ($request->type == 'PERAUS') {
+            $detail = new Detail;
+
+            $detail->id = uniqid(true);
+            $detail->req_id = $human_resource_request->id;
+            $detail->pertype = $request->permission_type;
+            $detail->perdatfrom = $request->permission_date;
+            $detail->pertimfrom = $request->permission_time_from . ':00';
+            $detail->pertimto = $request->permission_time_to . ':00';
+
+            if ($request->peraus == 'otro') {
+                $detail->reaforabse = $request->peraus_reason;
+            } else {
+                $param = Param::find($request->peraus);
+                $detail->reaforabse = $param->name;
+            }
+
+            $detail->created_by = session()->get('user');
+            $detail->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
+
+            $detail->save();
+        }
+
+        $human_resource_request->reqnumber = get_next_request_rh_number();
         $human_resource_request->save();
 
-        $human_resource_request->createStatus('Creada', 'Solicitud creada');
-
-        do_log('Creó la Solicitud de Procesos ( número:' . strip_tags($human_resource_request->reqnumber) . ' )');
+        do_log('Creó la Solicitud de Recursos Humanos ( número:' . strip_tags($human_resource_request->reqnumber) . ' )');
 
         return redirect(route('human_resources.request.show', ['request' => $human_resource_request->id]))->with('success', 'La solicitud ha sido creada correctamente.');
 
@@ -110,7 +136,7 @@ class RequestController extends Controller
             return redirect(route('human_resources.request.index'));
         }
 
-        do_log('Consultó la Solicitud de Procesos ( número:' . strip_tags($human_resource_request->reqnumber) . ' )');
+        do_log('Consultó la Solicitud de Recursos Humanos ( número:' . strip_tags($human_resource_request->reqnumber) . ' )');
 
         return view('human_resources.request.show', [
             'human_resource_request' => $human_resource_request,
@@ -154,12 +180,12 @@ class RequestController extends Controller
 
             $users->push($approval);
 
-            Notification::notify('Solicitud de Procesos', "Usted ha sido colocado como usuario para aprobar la solicitud {$human_resource_request->reqnumber}.", route('human_resources.request.show', ['request' => $human_resource_request->id]), $user);
+            Notification::notify('Solicitud de Recursos Humanos', "Usted ha sido colocado como usuario para aprobar la solicitud {$human_resource_request->reqnumber}.", route('human_resources.request.show', ['request' => $human_resource_request->id]), $user);
         }
 
         $human_resource_request->approvals()->saveMany($users);
 
-        do_log('Agregó Usuarios de Aprobación a la Solicitud de Procesos ( número:' . strip_tags($human_resource_request->reqnumber) . ' usuarios:' . str_replace(' ', ',',  trim($request->users)).' )');
+        do_log('Agregó Usuarios de Aprobación a la Solicitud de Recursos Humanos ( número:' . strip_tags($human_resource_request->reqnumber) . ' usuarios:' . str_replace(' ', ',',  trim($request->users)).' )');
 
         return redirect(route('human_resources.request.show', ['request' => $human_resource_request->id]))->with('success', 'Los usuarios han sido agregados correctamente.');
 
@@ -200,7 +226,7 @@ class RequestController extends Controller
             $human_resource_request->createStatus($human_resource_request->reqstatus, 'Solicitud ' . $human_resource_request->reqstatus);
         }
 
-        do_log($request->a == '1' ? 'Aprobó':'Rechazó' . ' la Solicitud de Procesos ( número:' . strip_tags($human_resource_request->reqnumber) . ' )');
+        do_log($request->a == '1' ? 'Aprobó':'Rechazó' . ' la Solicitud de Recursos Humanos ( número:' . strip_tags($human_resource_request->reqnumber) . ' )');
 
         return redirect(route('human_resources.request.show', ['request' => $human_resource_request->id]))->with('success', 'Su aprobación ha sido procesada correctamente.');
     }
@@ -219,9 +245,9 @@ class RequestController extends Controller
 
         $approval = $human_resource_request->approvals()->where('userapprov', $request->u)->delete();
 
-        Notification::notify('Solicitud de Procesos', "Usted ha sido removido de los usuarios que pueden aprobar la solicitud {$human_resource_request->reqnumber}.", route('human_resources.request.show', ['request' => $human_resource_request->id]), $request->u);
+        Notification::notify('Solicitud de Recursos Humanos', "Usted ha sido removido de los usuarios que pueden aprobar la solicitud {$human_resource_request->reqnumber}.", route('human_resources.request.show', ['request' => $human_resource_request->id]), $request->u);
 
-        do_log('Elimino el usuario de Aprobación a la Solicitud de Procesos ( número:' . strip_tags($human_resource_request->reqnumber) . ' usuario:' . $request->u . ' )');
+        do_log('Elimino el usuario de Aprobación a la Solicitud de Recursos Humanos ( número:' . strip_tags($human_resource_request->reqnumber) . ' usuario:' . $request->u . ' )');
 
         return redirect(route('human_resources.request.show', ['request' => $human_resource_request->id]))->with('success', 'El usuario ha sido eliminado correctamente.');
     }
@@ -246,9 +272,9 @@ class RequestController extends Controller
 
         $human_resource_request->save();
 
-        Notification::notify('Solicitud de Procesos', "La solicitud {$human_resource_request->reqnumber} ha cambiado al estatus {$status->note}", route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->created_by);
+        Notification::notify('Solicitud de Recursos Humanos', "La solicitud {$human_resource_request->reqnumber} ha cambiado al estatus {$status->note}", route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->created_by);
 
-        do_log('Agregó un Estatus a la Solicitud de Procesos ( número:' . strip_tags($human_resource_request->reqnumber) . ' estatus:' . $status->note . ' )');
+        do_log('Agregó un Estatus a la Solicitud de Recursos Humanos ( número:' . strip_tags($human_resource_request->reqnumber) . ' estatus:' . $status->note . ' )');
 
         return redirect(route('human_resources.request.show', ['request' => $human_resource_request->id]))->with('success', 'El estatus sido agregado correctamente.');
 
@@ -286,7 +312,7 @@ class RequestController extends Controller
                     $human_resource_request->attaches()->save($attach);
                 });
 
-                do_log('Adjuntó archivos a la Solicitud de Procesos ( número:' . strip_tags($human_resource_request->reqnumber) . ' )');
+                do_log('Adjuntó archivos a la Solicitud de Recursos Humanos ( número:' . strip_tags($human_resource_request->reqnumber) . ' )');
             }
 
             return back()->with('success', 'Los archivos han sido cargados correctamente.');
@@ -309,7 +335,7 @@ class RequestController extends Controller
 
         $path = storage_path('app\\human_resource_request\\attaches\\' . $human_resource_request->id . '\\' . $attach->file);
 
-        do_log('Descargó archivo de la Solicitud de Procesos ( número:' . strip_tags($human_resource_request->reqnumber) . ' archivo:' . $attach->file . ' )');
+        do_log('Descargó archivo de la Solicitud de Recursos Humanos ( número:' . strip_tags($human_resource_request->reqnumber) . ' archivo:' . $attach->file . ' )');
 
         return response()->download($path);
     }

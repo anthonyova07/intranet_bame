@@ -9,7 +9,7 @@
                 <div class="col-xs-4">
                     <div class="form-group{{ $errors->first('colsupuser') ? ' has-error':'' }}">
                         <label class="control-label">Usuario</label>
-                        <input type="text" class="form-control input-sm" name="colsupuser" value="">
+                        <input type="text" class="form-control input-sm" name="colsupuser" value="{{ old('colsupuser') }}">
                         <span class="help-block">{{ $errors->first('colsupuser') }}</span>
                     </div>
                 </div>

@@ -25,24 +25,29 @@ class RequestHumanResourceRequest extends Request
     {
         $v = [
             'colsupuser' => 'required',
-            'permission_type' => 'required',
-            'peraus' => 'required',
-            'peraus_reason' => 'required_if:peraus,otro',
         ];
 
-        if ($this->permission_type == 'one_day') {
+        if ($this->type == 'PERAUS') {
             $v = array_merge($v, [
-                'permission_date' => 'required|date_format:"Y-m-d',
-                'permission_time_from' => 'required|date_format:"H:i',
-                'permission_time_to' => 'required|date_format:"H:i',
+                'permission_type' => 'required',
+                'peraus' => 'required',
+                'peraus_reason' => 'required_if:peraus,otro|max:1000',
             ]);
-        }
 
-        if ($this->permission_type == 'multiple_days') {
-            $v = array_merge($v, [
-                'permission_date_from' => 'required|date_format:"Y-m-d',
-                'permission_date_to' => 'required|date_format:"Y-m-d',
-            ]);
+            if ($this->permission_type == 'one_day') {
+                $v = array_merge($v, [
+                    'permission_date' => 'required|date_format:"Y-m-d',
+                    'permission_time_from' => 'required|date_format:"H:i',
+                    'permission_time_to' => 'required|date_format:"H:i',
+                ]);
+            }
+
+            if ($this->permission_type == 'multiple_days') {
+                $v = array_merge($v, [
+                    'permission_date_from' => 'required|date_format:"Y-m-d',
+                    'permission_date_to' => 'required|date_format:"Y-m-d',
+                ]);
+            }
         }
 
         return $v;
