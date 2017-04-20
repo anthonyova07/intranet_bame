@@ -58,7 +58,8 @@
         </script>
     @else
         @include('human_resources.request.forms.' . strtolower($type), [
-            'type' => rh_req_types($type)
+            'type' => $type,
+            'type_desc' => rh_req_types($type)
         ])
 
         <script type="text/javascript">

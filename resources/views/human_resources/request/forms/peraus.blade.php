@@ -1,4 +1,4 @@
-<form method="post" action="{{ route('human_resources.request.store') }}" id="form">
+<form method="post" action="{{ route('human_resources.request.store', ['type' => $type]) }}" id="form">
 
     <div class="row">
         @include('human_resources.request.forms.colaborator_panel')
@@ -10,7 +10,7 @@
         <div class="col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Datos de la Solicitud de {{ $type }}</h3>
+                    <h3 class="panel-title">Datos de la Solicitud de {{ $type_desc }}</h3>
                 </div>
 
                 <div class="panel-body">
@@ -39,21 +39,21 @@
                                     <div class="col-xs-4">
                                         <div class="form-group{{ $errors->first('permission_date') ? ' has-error':'' }}">
                                             <label class="control-label">Fecha</label>
-                                            <input type="date" class="form-control input-sm" name="permission_date">
+                                            <input type="date" class="form-control input-sm" name="permission_date" value="{{ old('permission_date') }}">
                                             <span class="help-block">{{ $errors->first('permission_date') }}</span>
                                         </div>
                                     </div>
                                     <div class="col-xs-4">
                                         <div class="form-group{{ $errors->first('permission_time_from') ? ' has-error':'' }}">
                                             <label class="control-label">Hora Desde</label>
-                                            <input type="time" class="form-control input-sm" name="permission_time_from">
+                                            <input type="time" class="form-control input-sm" name="permission_time_from" value="{{ old('permission_time_from') }}">
                                             <span class="help-block">{{ $errors->first('permission_time_from') }}</span>
                                         </div>
                                     </div>
                                     <div class="col-xs-4">
                                         <div class="form-group{{ $errors->first('permission_time_to') ? ' has-error':'' }}">
                                             <label class="control-label">Hora Hasta</label>
-                                            <input type="time" class="form-control input-sm" name="permission_time_to">
+                                            <input type="time" class="form-control input-sm" name="permission_time_to" value="{{ old('permission_time_to') }}">
                                             <span class="help-block">{{ $errors->first('permission_time_to') }}</span>
                                         </div>
                                     </div>
@@ -106,7 +106,7 @@
                                 <label class="control-label">
                                     <input type="radio" name="peraus" {{ old('peraus') == 'otro' ? 'checked' : '' }} value="otro"> Otro
                                 </label>
-                                <textarea class="form-control input-sm" name="peraus_reason">{{ old('peraus_reason') }}</textarea>
+                                <textarea class="form-control input-sm" placeholder="Especifique la razón la ausencia..." name="peraus_reason">{{ old('peraus_reason') }}</textarea>
                                 <span class="help-block">{{ $errors->first('peraus_reason') }}</span>
                             </div>
                         </div>

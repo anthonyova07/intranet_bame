@@ -578,6 +578,35 @@ function get_next_request_number()
     return $number;
 }
 
+function get_next_request_rh_number()
+{
+    $date = null;
+
+    $last_request = \Bame\Models\HumanResource\Request\HumanResourceRequest::orderBy('created_at', 'desc')->first();
+    $last_request_number = $last_request ? $last_request->request_number : null;
+
+    if ($last_request_number) {
+        $parts = explode('-', $last_request_number);
+
+        $year = $parts[0];
+        $month = $parts[1];
+        $day = $parts[2];
+        $sequence = $parts[3];
+
+        $date = $year . '-' . $month . '-' . $day;
+    }
+
+    $date_current = (new \DateTime)->format('Y-m-d');
+
+    if ($date == $date_current) {
+        $number = $date_current . '-' . (str_pad((intval($sequence) + 1), 2, '0', STR_PAD_LEFT));
+    } else {
+        $number = $date_current . '-01';
+    }
+
+    return $number;
+}
+
 function get_response_term()
 {
     return [
