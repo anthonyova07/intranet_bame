@@ -583,7 +583,7 @@ function get_next_request_rh_number()
     $date = null;
 
     $last_request = \Bame\Models\HumanResource\Request\HumanResourceRequest::orderBy('created_at', 'desc')->first();
-    $last_request_number = $last_request ? $last_request->request_number : null;
+    $last_request_number = $last_request ? $last_request->reqnumber : null;
 
     if ($last_request_number) {
         $parts = explode('-', $last_request_number);
@@ -777,4 +777,18 @@ function rh_req_types($rh_req_type = null)
     }
 
     return $rh_req_types->get($rh_req_type);
+}
+
+function rh_req_params($rh_req_param = null)
+{
+    $rh_req_params = collect([
+        'PERAUS' => 'Permisos y Ausencias',
+        'EST' => 'Estatus',
+    ]);
+
+    if (!$rh_req_param) {
+        return $rh_req_params;
+    }
+
+    return $rh_req_params->get($rh_req_param);
 }

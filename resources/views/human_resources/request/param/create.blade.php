@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
-@section('title', 'Solicitudes - ' . rh_req_types($type))
+@section('title', 'Solicitudes - ' . rh_req_params($type))
 
-@section('page_title', 'Nuevo ' . rh_req_types($type) . ' Predefinidos')
+@section('page_title', 'Nuevo ' . rh_req_params($type))
 
 @if (can_not_do('human_resource_request_admin'))
     @section('contents')

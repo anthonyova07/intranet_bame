@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
-@section('title', 'Solicitudes - ' . rh_req_types($param->type))
+@section('title', 'Solicitudes - ' . rh_req_params($param->type))
 
-@section('page_title', 'Edición de ' . rh_req_types($param->type))
+@section('page_title', 'Edición de ' . rh_req_params($param->type))
 
 @if (can_not_do('process_request_admin'))
     @section('contents')
