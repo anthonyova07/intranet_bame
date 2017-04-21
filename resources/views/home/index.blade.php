@@ -398,7 +398,16 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">Generador de Firmas</h3>
                 </div>
-                <div class="panel-body text-center">
+                <div class="panel-body">
+                    <h4>Pasos a seguir:</h4>
+                    <ol>
+                        <li style="padding-bottom: 10px;">Completar los datos correctamente y presionar <b>Generar Firma</b>.</li>
+                        <li style="padding-bottom: 10px;">Copiar la imagen generada (que se encuentra en la parte superior del generador).</li>
+                        <li style="padding-bottom: 10px;">Abrir un nuevo correo electrónico y presionar en el menú superior la opción <b>Firma</b> y dentro de ésta presionar <b>Firmas…</b></li>
+                        <li>Dentro de esta, presionar la pestaña <b>Nueva</b>, nombrar la firma, pegar la imagen en el recuadro y luego seleccionarla como firma predeterminada para Mensajes Nuevos y Respuestas o Reenvíos.</li>
+                    </ol>
+                </div>
+                <div class="panel-body">
                     <button type="button" data-toggle="modal" data-target="#modal_firmas" style="margin-left: 42px;width: 210px;background-color:#d9534f;padding: 5px;" class="btn btn-danger btn-lg btn-block">Click para Generar Firma</button>
 
                     <div class="modal fade" id="modal_firmas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
