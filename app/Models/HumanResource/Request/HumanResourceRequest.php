@@ -36,6 +36,11 @@ class HumanResourceRequest extends Model
         return $this->hasMany(Status::class, 'req_id');
     }
 
+    public function detail()
+    {
+        return $this->hasOne(Detail::class, 'req_id');
+    }
+
     public function getStatus()
     {
         $approvals = $this->approvals;

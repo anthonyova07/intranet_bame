@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
-@section('title', 'Procesos -> Solicitudes')
+@section('title', 'Recursos Humanos -> Solicitudes')
 
-@section('page_title', 'Solicitudes de Procesos')
+@section('page_title', 'Solicitudes de Recursos Humanos')
 
 {{-- @if (can_not_do('human_resource_request'))
     @section('contents')
