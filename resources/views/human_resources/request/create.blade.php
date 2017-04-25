@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Clientes - Reclamaciones')
+@section('title', 'Recursos Humanos -> Solicitudes')
 
 @if (!$request_type_exists)
     @section('page_title', 'Nueva Solicitud de Recursos Humanos')
@@ -57,7 +57,7 @@
             @include('layouts.functions_js.busqueda_rapida');
         </script>
     @else
-        @include('human_resources.request.forms.' . strtolower($type), [
+        @include('human_resources.request.panels.' . strtolower($type), [
             'type' => $type,
             'type_desc' => rh_req_types($type)
         ])

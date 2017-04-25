@@ -1,9 +1,9 @@
 <form method="post" action="{{ route('human_resources.request.store', ['type' => $type]) }}" id="form">
 
     <div class="row">
-        @include('human_resources.request.forms.colaborator_panel')
+        @include('human_resources.request.panels.colaborator_panel')
 
-        @include('human_resources.request.forms.supervisor_panel')
+        @include('human_resources.request.panels.supervisor_panel')
     </div>
 
     <div class="row">

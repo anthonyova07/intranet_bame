@@ -139,7 +139,7 @@ class RequestController extends Controller
     {
         $human_resource_request = HumanResourceRequest::find($request);
 
-        $status = Param::where('type', 'EST')->activeOnly()->get();
+        $statuses = Param::where('type', 'EST')->activeOnly()->get();
 
         if (!$human_resource_request) {
             return redirect(route('human_resources.request.index'));
@@ -149,8 +149,7 @@ class RequestController extends Controller
 
         return view('human_resources.request.show', [
             'human_resource_request' => $human_resource_request,
-            'is_approved' => $human_resource_request->isApproved(),
-            'status' => $status,
+            'statuses' => $statuses,
         ]);
     }
 

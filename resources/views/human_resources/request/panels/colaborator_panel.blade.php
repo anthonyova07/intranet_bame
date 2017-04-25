@@ -9,21 +9,21 @@
                 <div class="col-xs-4">
                     <div class="form-group{{ $errors->first('coluser') ? ' has-error':'' }}">
                         <label class="control-label">Usuario</label>
-                        <input type="text" class="form-control input-sm" name="coluser" readonly value="{{ session()->get('user') }}">
+                        <p class="form-control-static">{{ session()->get('user') }}</p>
                         <span class="help-block">{{ $errors->first('coluser') }}</span>
                     </div>
                 </div>
                 <div class="col-xs-4">
                     <div class="form-group{{ $errors->first('colcode') ? ' has-error':'' }}">
                         <label class="control-label">Código</label>
-                        <input type="text" class="form-control input-sm" name="colcode" readonly value="{{ session()->get('user_info')->getPostalCode() }}">
+                        <p class="form-control-static">{{ session()->get('user_info')->getPostalCode() }}</p>
                         <span class="help-block">{{ $errors->first('colcode') }}</span>
                     </div>
                 </div>
                 <div class="col-xs-4">
                     <div class="form-group{{ $errors->first('colname') ? ' has-error':'' }}">
                         <label class="control-label">Nombre</label>
-                        <input type="text" class="form-control input-sm" name="colname" readonly value="{{ session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName() }}">
+                        <p class="form-control-static">{{ session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName() }}</p>
                         <span class="help-block">{{ $errors->first('colname') }}</span>
                     </div>
                 </div>
@@ -32,14 +32,14 @@
                 <div class="col-xs-6">
                     <div class="form-group{{ $errors->first('colposi') ? ' has-error':'' }}">
                         <label class="control-label">Posición</label>
-                        <input type="text" class="form-control input-sm" name="colposi" readonly value="{{ session()->get('user_info')->getTitle() }}">
+                        <p class="form-control-static">{{ session()->get('user_info')->getTitle() }}</p>
                         <span class="help-block">{{ $errors->first('colposi') }}</span>
                     </div>
                 </div>
                 <div class="col-xs-6">
                     <div class="form-group{{ $errors->first('coldepart') ? ' has-error':'' }}">
                         <label class="control-label">Departamento</label>
-                        <input type="text" class="form-control input-sm" name="coldepart" readonly value="{{ session()->get('user_info')->getDepartment() }}">
+                        <p class="form-control-static">{{ session()->get('user_info')->getDepartment() }}</p>
                         <span class="help-block">{{ $errors->first('coldepart') }}</span>
                     </div>
                 </div>
