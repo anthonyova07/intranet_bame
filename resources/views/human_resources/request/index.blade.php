@@ -25,7 +25,7 @@
                             <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('term') ? ' has-error':'' }}">
                                     <label class="control-label">Término</label>
-                                    <input type="text" class="form-control input-sm" name="term" placeholder="término de busqueda..." value="{{ old('term') }}">
+                                    <input type="text" class="form-control input-sm" name="term" placeholder="término de busqueda..." value="{{ request('term') }}">
                                     <span class="help-block">{{ $errors->first('term') }}</span>
                                 </div>
                             </div>
@@ -35,7 +35,7 @@
                                     <select class="form-control input-sm" name="reqtype">
                                         <option value="todos">Todos</option>
                                         @foreach (rh_req_types() as $key => $value)
-                                            <option value="{{ $key }}" {{ old('reqtype') == $key ? 'selected':'' }}>{{ $value }}</option>
+                                            <option value="{{ $key }}" {{ request('reqtype') == $key ? 'selected':'' }}>{{ $value }}</option>
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('reqtype') }}</span>
@@ -47,7 +47,7 @@
                                     <select class="form-control input-sm" name="status">
                                         <option value="todos">Todos</option>
                                         @foreach ($params->where('type', 'EST') as $est)
-                                            <option value="{{ $est->name }}" {{ old('status') == $est->name ? 'selected':'' }}>{{ $est->name }}</option>
+                                            <option value="{{ $est->name }}" {{ request('status') == $est->name ? 'selected':'' }}>{{ $est->name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('status') }}</span>
@@ -56,14 +56,14 @@
                             <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('date_from') ? ' has-error':'' }}">
                                     <label class="control-label">Desde</label>
-                                    <input type="date" class="form-control input-sm" name="date_from" value="{{ old('date_from') }}">
+                                    <input type="date" class="form-control input-sm" name="date_from" value="{{ request('date_from') }}">
                                     <span class="help-block">{{ $errors->first('date_from') }}</span>
                                 </div>
                             </div>
                             <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('date_to') ? ' has-error':'' }}">
                                     <label class="control-label">Hasta</label>
-                                    <input type="date" class="form-control input-sm" name="date_to" value="{{ old('date_to') }}">
+                                    <input type="date" class="form-control input-sm" name="date_to" value="{{ request('date_to') }}">
                                     <span class="help-block">{{ $errors->first('date_to') }}</span>
                                 </div>
                             </div>

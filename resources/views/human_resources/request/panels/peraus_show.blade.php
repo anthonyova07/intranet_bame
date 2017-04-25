@@ -30,7 +30,7 @@
                     <div class="col-xs-6">
                         <div class="radio">
                             <label style="font-size: 16px;font-weight: bold;">
-                                <input type="radio" disabled name="permission_type" {{ $human_resource_request->detail->pertype == 'one_day' ? 'checked' : '' }} value="one_day"> Por menos de un día
+                                <input type="radio" disabled name="permission_type" {{ $human_resource_request->detail->pertype == 'one_day' ? 'checked' : '' }} value="one_day"> Por un día o menos
                             </label>
                         </div>
                     </div>

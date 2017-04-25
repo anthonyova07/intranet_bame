@@ -24,9 +24,21 @@ class RequestController extends Controller
         if ($request->term) {
             $term = cap_str($request->term);
 
-            $human_resource_requests = $human_resource_requests->orWhere('reqnumber', 'like', '%' . $term . '%')
-                        ->orWhere('reqtype', 'like', '%' . $term . '%')
-                        ->orWhere('note', 'like', '%' . $term . '%');
+            $human_resource_requests = $human_resource_requests->where(function ($query) use ($term) {
+                $query->orWhere('reqnumber', 'like', '%' . $term . '%')
+                        ->orWhere('colcode', 'like', '%' . $term . '%')
+                        ->orWhere('colname', 'like', '%' . $term . '%')
+                        ->orWhere('colposi', 'like', '%' . $term . '%')
+                        ->orWhere('coldepart', 'like', '%' . $term . '%');
+            });
+        }
+
+        if ($request->reqtype != 'todos') {
+            $human_resource_requests->where('reqtype', $request->reqtype);
+        }
+
+        if ($request->status != 'todos') {
+            $human_resource_requests->where('reqstatus', $request->status);
         }
 
         if ($request->date_from) {
@@ -37,8 +49,12 @@ class RequestController extends Controller
             $human_resource_requests->where('created_at', '<=', $request->date_to . ' 23:59:59');
         }
 
-        if (!can_not_do('human_resource_request_approval')) {
-            //
+        $human_resource_requests->orWhere('colsupuser', session()->get('user'));
+
+        if (can_not_do('human_resource_request_approverh')) {
+            $human_resource_requests->orWhere('created_by', session()->get('user'));
+        } else {
+            // $human_resource_requests->where('approvesup', '1');
         }
 
         return view('human_resources.request.index', [
