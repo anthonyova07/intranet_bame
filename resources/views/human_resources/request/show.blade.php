@@ -13,7 +13,7 @@
 @section('contents')
 
     <div class="row">
-        <div class="col-xs-10 col-xs-offset-1">
+        <div class="col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="col-xs-2" style="padding: 0 2px;">

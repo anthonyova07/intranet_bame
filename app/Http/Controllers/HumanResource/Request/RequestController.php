@@ -33,11 +33,11 @@ class RequestController extends Controller
             });
         }
 
-        if ($request->reqtype != 'todos') {
+        if ($request->reqtype && $request->reqtype != 'todos') {
             $human_resource_requests->where('reqtype', $request->reqtype);
         }
 
-        if ($request->status != 'todos') {
+        if ($request->status && $request->status != 'todos') {
             $human_resource_requests->where('reqstatus', $request->status);
         }
 
@@ -49,16 +49,15 @@ class RequestController extends Controller
             $human_resource_requests->where('created_at', '<=', $request->date_to . ' 23:59:59');
         }
 
-        $human_resource_requests->orWhere('colsupuser', session()->get('user'));
-
         if (can_not_do('human_resource_request_approverh')) {
-            $human_resource_requests->orWhere('created_by', session()->get('user'));
-        } else {
-            // $human_resource_requests->where('approvesup', '1');
+            $human_resource_requests->where('created_by', session()->get('user'))
+                ->orWhere('colsupuser', session()->get('user'));
         }
 
+        $human_resource_requests =  $human_resource_requests->paginate();
+
         return view('human_resources.request.index', [
-            'human_resource_requests' => $human_resource_requests->paginate(),
+            'human_resource_requests' => $human_resource_requests,
             'params' => $params,
         ]);
     }

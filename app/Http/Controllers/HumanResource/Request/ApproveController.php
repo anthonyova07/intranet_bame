@@ -35,6 +35,8 @@ class ApproveController extends Controller
                 $human_resource_request->colsupname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
                 $human_resource_request->colsupposi = $user_info->getTitle();
                 $human_resource_request->save();
+
+                Notification::notify('Solicitud de RH', 'Tú solicitud #' . $human_resource_request->reqnumber . ' de RH ha sido ' . ((bool) $to_approve ? 'aprobada' : 'rechazada') . ' por tu supervisor.', route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->created_by);
             }
         } else if ($type == 'rh') {
             if (can_not_do('human_resource_request_approverh')) {
@@ -51,6 +53,10 @@ class ApproveController extends Controller
                     $human_resource_request->rhuser = session()->get('user');
                     $human_resource_request->rhname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
                     $human_resource_request->save();
+
+                    Notification::notify('Solicitud de RH', 'Tú solicitud #' . $human_resource_request->reqnumber . ' de RH ha sido ' . ((bool) $to_approve ? 'aprobada' : 'rechazada') . ' por RRHH.', route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->created_by);
+
+                    Notification::notify('Solicitud de RH', 'La solicitud #' . $human_resource_request->reqnumber . ' de ' . $human_resource_request->colname . ' ha sido ' . ((bool) $to_approve ? 'aprobada' : 'rechazada') . ' por RRHH.', route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->created_by);
                 }
             }
         }
