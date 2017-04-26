@@ -126,7 +126,7 @@
                         </tbody>
                     </table>
 
-                    {{ $human_resource_requests->links() }}
+                    {{ $human_resource_requests->appends(Request::all())->links() }}
                 </div>
             </div>
         </div>

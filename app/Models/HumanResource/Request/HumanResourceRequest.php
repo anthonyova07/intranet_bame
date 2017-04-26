@@ -26,16 +26,6 @@ class HumanResourceRequest extends Model
         return $query->orderBy('created_at', 'desc');
     }
 
-    public function approvals()
-    {
-        return $this->hasMany(Approval::class, 'req_id');
-    }
-
-    public function status()
-    {
-        return $this->hasMany(Status::class, 'req_id');
-    }
-
     public function detail()
     {
         return $this->hasOne(Detail::class, 'req_id');
