@@ -5,7 +5,7 @@
                 Datos del Supervisor
                 @if (isset($human_resource_request))
                     (
-                    @if ($human_resource_request->colsupuser)
+                    @if (!$human_resource_request->colsupname)
                         Pendiente
                     @else
                         @if ($human_resource_request->approvesup)

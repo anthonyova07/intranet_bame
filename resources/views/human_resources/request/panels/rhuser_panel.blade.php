@@ -24,7 +24,7 @@
                 <div class="col-xs-4">
                     <div class="form-group">
                         <label class="control-label">Usuario</label>
-                        <p class="form-control-static">{{ $human_resource_request->thuser }}</p>
+                        <p class="form-control-static">{{ $human_resource_request->rhuser }}</p>
                     </div>
                 </div>
                 <div class="col-xs-8">

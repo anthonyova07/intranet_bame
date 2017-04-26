@@ -151,6 +151,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::resource('{type}/param', 'HumanResource\Request\ParamController', ['only' => [
                 'create', 'store', 'edit', 'update'
             ]]);
+
+            Route::get('approve/{request_id}/{to_approve}/{type}', 'HumanResource\Request\ApproveController@approve')->name('human_resources.request.approve');
         });
 
         Route::resource('request', 'HumanResource\Request\RequestController', ['only' => [
