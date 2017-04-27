@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
+use Bame\Models\HumanResource\Request\Param;
 use Bame\Models\HumanResource\Request\HumanResourceRequest;
 
 class ApproveController extends Controller
@@ -62,5 +63,21 @@ class ApproveController extends Controller
         }
 
         return back()->with('success', 'La solicitud ha sido ' . ((bool) $to_approve ? 'aprobada' : 'rechazada') . ' correctamente.');
+    }
+
+    public function changestatus(Request $request)
+    {
+        $human_resource_request = HumanResourceRequest::find($request->request_id);
+
+        if (!$human_resource_request) {
+            return redirect(route('human_resources.request.index'))->with('warning', 'La solicitud no existe!');
+        }
+
+        $status = Param::where('type', 'EST')->where('id', $request->status)->first();
+
+        $human_resource_request->reqstatus = $status->name;
+        $human_resource_request->save();
+
+        return back()->with('success', 'El estatus ha sido cambiado correctamente');
     }
 }

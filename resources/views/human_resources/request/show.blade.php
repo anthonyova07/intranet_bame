@@ -20,7 +20,7 @@
                         <a class="btn btn-info btn-xs" href="{{ route('human_resources.request.index', Request::all()) }}"><i class="fa fa-arrow-left"></i> Atrás</a>
                     </div>
 
-                    <div class="col-xs-10 text-right" style="padding: 0 2px;">
+                    <div class="col-xs-10 text-right" style="padding: 5px 2px;">
 
                         @if (!can_not_do('human_resource_request_approverh') && $human_resource_request->approvesup && !$human_resource_request->rhuser)
                             <a class="btn btn-success btn-xs" href="{{ route('human_resources.request.approve', ['request_id' => $human_resource_request->id, 'to_approve' => 1, 'type' => 'rh']) }}"><i class="fa fa-check"></i> Aprobar</a>

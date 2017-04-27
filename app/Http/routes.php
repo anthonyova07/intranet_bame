@@ -207,6 +207,7 @@ Route::group(['middleware' => 'auth'], function () {
             ]]);
 
             Route::get('approve/{request_id}/{to_approve}/{type}', 'HumanResource\Request\ApproveController@approve')->name('human_resources.request.approve');
+            Route::post('changestatus/{request_id}', 'HumanResource\Request\ApproveController@changestatus')->name('human_resources.request.changestatus');
         });
 
         Route::resource('request', 'HumanResource\Request\RequestController', ['only' => [
