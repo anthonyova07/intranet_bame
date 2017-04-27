@@ -38,6 +38,8 @@ class ApproveController extends Controller
 
                 Notification::notify('Solicitud de RH', 'Tú solicitud #' . $human_resource_request->reqnumber . ' de RH ha sido ' . ((bool) $to_approve ? 'aprobada' : 'rechazada') . ' por tu supervisor.', route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->created_by);
 
+                do_log(((bool) $to_approve ? 'Aprob' : 'Rechaz') . 'ó como Supervisor la Solicitud de Recursos Humanos ( número:' . strip_tags($human_resource_request->reqnumber) . ' )');
+
                 if ($human_resource_request->approvesup) {
                     Notification::notifyUsersByPermission('human_resource_request_approverh', 'Solicitud de RH', 'Nueva solicitud de ' . rh_req_types($human_resource_request->reqtype) . ' creada (#' . $human_resource_request->reqnumber . ') pendiente.', route('human_resources.request.show', ['id' => $human_resource_request->id]));
                 }
@@ -61,6 +63,8 @@ class ApproveController extends Controller
                     Notification::notify('Solicitud de RH', 'Tú solicitud #' . $human_resource_request->reqnumber . ' de RH ha sido ' . ((bool) $to_approve ? 'aprobada' : 'rechazada') . ' por RRHH.', route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->created_by);
 
                     Notification::notify('Solicitud de RH', 'La solicitud #' . $human_resource_request->reqnumber . ' de ' . $human_resource_request->colname . ' ha sido ' . ((bool) $to_approve ? 'aprobada' : 'rechazada') . ' por RRHH.', route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->colsupuser);
+
+                    do_log(((bool) $to_approve ? 'Aprob' : 'Rechaz') . 'ó como RRHH la Solicitud de Recursos Humanos ( número:' . strip_tags($human_resource_request->reqnumber) . ' )');
                 }
             }
         }
