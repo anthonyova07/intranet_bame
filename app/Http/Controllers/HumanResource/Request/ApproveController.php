@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
+use Bame\Models\Notification\Notification;
 use Bame\Models\HumanResource\Request\Param;
 use Bame\Models\HumanResource\Request\HumanResourceRequest;
 
@@ -14,8 +15,6 @@ class ApproveController extends Controller
 {
     public function approve(Request $request, $request_id, $to_approve, $type)
     {
-        // dd($request_id, $to_approve, $type);
-
         $human_resource_request = HumanResourceRequest::find($request_id);
 
         if (!$human_resource_request || !in_array($type, ['sup', 'rh'])) {
@@ -38,6 +37,10 @@ class ApproveController extends Controller
                 $human_resource_request->save();
 
                 Notification::notify('Solicitud de RH', 'Tú solicitud #' . $human_resource_request->reqnumber . ' de RH ha sido ' . ((bool) $to_approve ? 'aprobada' : 'rechazada') . ' por tu supervisor.', route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->created_by);
+
+                if ($human_resource_request->approvesup) {
+                    Notification::notifyUsersByPermission('human_resource_request_approverh', 'Solicitud de RH', 'Nueva solicitud de ' . rh_req_types($human_resource_request->reqtype) . ' creada (#' . $human_resource_request->reqnumber . ') pendiente.', route('human_resources.request.show', ['id' => $human_resource_request->id]));
+                }
             }
         } else if ($type == 'rh') {
             if (can_not_do('human_resource_request_approverh')) {
@@ -57,7 +60,7 @@ class ApproveController extends Controller
 
                     Notification::notify('Solicitud de RH', 'Tú solicitud #' . $human_resource_request->reqnumber . ' de RH ha sido ' . ((bool) $to_approve ? 'aprobada' : 'rechazada') . ' por RRHH.', route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->created_by);
 
-                    Notification::notify('Solicitud de RH', 'La solicitud #' . $human_resource_request->reqnumber . ' de ' . $human_resource_request->colname . ' ha sido ' . ((bool) $to_approve ? 'aprobada' : 'rechazada') . ' por RRHH.', route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->created_by);
+                    Notification::notify('Solicitud de RH', 'La solicitud #' . $human_resource_request->reqnumber . ' de ' . $human_resource_request->colname . ' ha sido ' . ((bool) $to_approve ? 'aprobada' : 'rechazada') . ' por RRHH.', route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->colsupuser);
                 }
             }
         }
@@ -77,6 +80,8 @@ class ApproveController extends Controller
 
         $human_resource_request->reqstatus = $status->name;
         $human_resource_request->save();
+
+        Notification::notify('Solicitud de RH', 'Tú solicitud #' . $human_resource_request->reqnumber . ' de RH ha cambiado al estado (' . $status->name . ')', route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->created_by);
 
         return back()->with('success', 'El estatus ha sido cambiado correctamente');
     }
