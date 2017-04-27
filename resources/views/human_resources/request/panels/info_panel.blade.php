@@ -21,10 +21,27 @@
                     </div>
                 </div>
                 <div class="col-xs-4">
-                    <div class="form-group">
-                        <label class="control-label">Estado</label>
-                        <p class="form-control-static">{{ $human_resource_request->reqstatus }}</p>
-                    </div>
+                    @if (can_not_do('human_resource_request_approverh'))
+                        <div class="form-group">
+                            <label class="control-label">Estado</label>
+                            <p class="form-control-static">{{ $human_resource_request->reqstatus }}</p>
+                        </div>
+                    @else
+                        <form method="post" action="{{ route('human_resources.request.changestatus', ['request_id' => $human_resource_request->id]) }}" id="form">
+                            <div class="input-group">
+                                <label class="control-label">Estado</label>
+                                <select class="form-control input-sm" name="status">
+                                    @foreach ($statuses as $status)
+                                        <option value="{{ $status->id }}" {{ $human_resource_request->reqstatus == $status->name ? 'selected' : '' }}>{{ $status->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="input-group-btn" style="padding-top: 23px;">
+                                    <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Guardar</button>
+                                </span>
+                            </div>
+                            {{ csrf_field() }}
+                        </form>
+                    @endif
                 </div>
             </div>
         </div>
