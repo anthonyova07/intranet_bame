@@ -34,7 +34,6 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-6">
-                            <div class="well well-sm">
                                 <div class="row">
                                     <div class="col-xs-4">
                                         <div class="form-group{{ $errors->first('permission_date') ? ' has-error':'' }}">
@@ -46,14 +45,14 @@
                                     <div class="col-xs-4">
                                         <div class="form-group{{ $errors->first('permission_time_from') ? ' has-error':'' }}">
                                             <label class="control-label">Hora Desde</label>
-                                            <input type="time" class="form-control input-sm" name="permission_time_from" value="{{ old('permission_time_from') }}">
+                                            <input type="time" class="form-control input-sm" name="permission_time_from" value="{{ old('permission_time_from') ? old('permission_time_from') : '08:30' }}">
                                             <span class="help-block">{{ $errors->first('permission_time_from') }}</span>
                                         </div>
                                     </div>
                                     <div class="col-xs-4">
                                         <div class="form-group{{ $errors->first('permission_time_to') ? ' has-error':'' }}">
                                             <label class="control-label">Hora Hasta</label>
-                                            <input type="time" class="form-control input-sm" name="permission_time_to" value="{{ old('permission_time_to') }}">
+                                            <input type="time" class="form-control input-sm" name="permission_time_to" value="{{ old('permission_time_to') ? old('permission_time_to') : '17:30' }}">
                                             <span class="help-block">{{ $errors->first('permission_time_to') }}</span>
                                         </div>
                                     </div>
@@ -61,7 +60,6 @@
                             </div>
                         </div>
                         <div class="col-xs-6">
-                            <div class="well well-sm">
                                 <div class="row">
                                     <div class="col-xs-6">
                                         <div class="form-group{{ $errors->first('permission_date_from') ? ' has-error':'' }}">
@@ -124,3 +122,16 @@
     </div>
 
 </form>
+
+<script type="text/javascript">
+    $('input[name=permission_type]').change(function () {
+        var type = $(this).val();
+        if (type == 'one_day') {
+            $('#one_day').show('fast');
+            $('#multiple_days').hide('fast');
+        } else if (type == 'multiple_days') {
+            $('#multiple_days').show('fast');
+            $('#one_day').hide('fast');
+        }
+    });
+</script>
