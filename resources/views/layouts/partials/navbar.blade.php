@@ -136,7 +136,7 @@
                         <li>
                             <a href="#">
                                 <i class="fa fa-lock fa-fw"></i>
-                                {{ session()->get('menus')->where('men_codigo', '22')->first()->men_descri }}
+                                Recursos Humanos
                                 <span class="fa arrow"></span>
                             </a>
                             <ul class="nav nav-second-level animated zoomInLeft" style="animation-duration: 0.5s;">
