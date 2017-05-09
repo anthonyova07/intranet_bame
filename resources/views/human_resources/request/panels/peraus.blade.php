@@ -34,6 +34,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-6">
+                            <div class="well well-sm" id="one_day"{!! old('permission_type') == 'multiple_days' ? ' style="display: none;"' : '' !!}>
                                 <div class="row">
                                     <div class="col-xs-4">
                                         <div class="form-group{{ $errors->first('permission_date') ? ' has-error':'' }}">
@@ -60,6 +61,7 @@
                             </div>
                         </div>
                         <div class="col-xs-6">
+                            <div class="well well-sm" id="multiple_days"{!! old('permission_type') == 'one_day' ? ' style="display: none;"' : '' !!}>
                                 <div class="row">
                                     <div class="col-xs-6">
                                         <div class="form-group{{ $errors->first('permission_date_from') ? ' has-error':'' }}">
