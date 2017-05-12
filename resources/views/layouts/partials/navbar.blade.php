@@ -93,6 +93,12 @@
                     <a href="{{ route('home') }}"><i class="fa fa-home fa-fw"></i> Inicio</a>
                 </li>
                 <li>
+                    <a href="{{ route('home.faqs') }}">
+                        <i class="fa fa-question fa-fw"></i>
+                        Preguntas Frecuentes
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('home.gallery') }}">
                         <i class="fa fa-image fa-fw"></i>
                         Galería de Fotos

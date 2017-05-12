@@ -16,6 +16,8 @@ Route::get('news/{id}', 'Marketing\MarketingController@news')->name('home.news')
 
 Route::get('gallery/{gallery?}', 'Marketing\MarketingController@gallery')->name('home.gallery');
 
+Route::get('faqs', 'Marketing\MarketingController@faqs')->name('home.faqs');
+
 Route::get('event/{id}', 'HomeController@event')->name('home.event');
 Route::get('event/{id}/subscribers', 'HomeController@subscribers')->name('home.event.subscribers');
 
@@ -65,6 +67,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix' => 'marketing'], function () {
         Route::resource('news', 'Marketing\News\NewsController');
+
+        Route::group(['prefix' => 'faqs'], function () {
+            Route::resource('themes', 'Marketing\FAQs\ThemesController');
+        });
+
+        Route::resource('faqs', 'Marketing\FAQs\FAQsController');
 
         Route::resource('break_coco', 'Marketing\Coco\CocoController', ['only' => [
             'index', 'store'
