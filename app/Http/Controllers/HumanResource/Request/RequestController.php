@@ -109,34 +109,13 @@ class RequestController extends Controller
         $human_resource_request->created_by = session()->get('user');
         $human_resource_request->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
 
-        if ($request->type == 'PERAUS') {
-            $detail = new Detail;
-
-            $detail->id = uniqid(true);
-            $detail->req_id = $human_resource_request->id;
-            $detail->pertype = $request->permission_type;
-            if ($request->permission_type == 'one_day') {
-                $detail->perdatfrom = $request->permission_date;
-                $detail->pertimfrom = $request->permission_time_from . ':00';
-                $detail->pertimto = $request->permission_time_to . ':00';
-            }
-
-            if ($request->permission_type == 'multiple_days') {
-                $detail->perdatfrom = $request->permission_date_from;
-                $detail->perdatto = $request->permission_date_to;
-            }
-
-            if ($request->peraus == 'otro') {
-                $detail->reaforabse = $request->peraus_reason;
-            } else {
-                $param = Param::find($request->peraus);
-                $detail->reaforabse = $param->name;
-            }
-
-            $detail->created_by = session()->get('user');
-            $detail->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
-
-            $detail->save();
+        switch ($request->type) {
+            case 'PERAUS':
+                self::savePerAusRequest($human_resource_request->id, $request);
+                break;
+            case 'VAC':
+                self::saveVacRequest($human_resource_request->id, $request);
+                break;
         }
 
         $human_resource_request->reqnumber = get_next_request_rh_number();
@@ -166,5 +145,56 @@ class RequestController extends Controller
             'human_resource_request' => $human_resource_request,
             'statuses' => $statuses,
         ]);
+    }
+
+    private static function savePerAusRequest($requestId, $request)
+    {
+        $detail = new Detail;
+
+        $detail->id = uniqid(true);
+        $detail->req_id = $requestId;
+        $detail->pertype = $request->permission_type;
+        if ($request->permission_type == 'one_day') {
+            $detail->perdatfrom = $request->permission_date;
+            $detail->pertimfrom = $request->permission_time_from . ':00';
+            $detail->pertimto = $request->permission_time_to . ':00';
+        }
+
+        if ($request->permission_type == 'multiple_days') {
+            $detail->perdatfrom = $request->permission_date_from;
+            $detail->perdatto = $request->permission_date_to;
+        }
+
+        if ($request->peraus == 'otro') {
+            $detail->reaforabse = $request->peraus_reason;
+        } else {
+            $param = Param::find($request->peraus);
+            $detail->reaforabse = $param->name;
+        }
+
+        $detail->created_by = session()->get('user');
+        $detail->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
+
+        $detail->save();
+    }
+
+    private static function saveVacRequest($requestId, $request)
+    {
+        $detail = new Detail;
+
+        $detail->id = uniqid(true);
+        $detail->req_id = $requestId;
+        $detail->vacdatadmi = $request->vac_date_admission;
+        $detail->vacdatfrom = $request->vac_date_from;
+        $detail->vacdatto = $request->vac_date_to;
+        $detail->vactotdays = $request->vac_total_days;
+        $detail->vacoutdays = $request->vac_total_pending_days;
+        $detail->vacaccbonu = (bool) $request->vac_credited_bonds;
+        $detail->note = $request->vac_note;
+
+        $detail->created_by = session()->get('user');
+        $detail->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
+
+        $detail->save();
     }
 }
