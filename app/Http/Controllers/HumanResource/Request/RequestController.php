@@ -12,6 +12,7 @@ use Bame\Models\HumanResource\Request\Approval;
 use Bame\Models\HumanResource\Request\Detail;
 use Bame\Http\Requests\HumanResource\Request\RequestHumanResourceRequest;
 use Bame\Models\Notification\Notification;
+use Bame\Models\HumanResource\Calendar\Birthdate;
 
 class RequestController extends Controller
 {
@@ -76,6 +77,7 @@ class RequestController extends Controller
             'type' => $request->type,
             'request_type_exists' => array_key_exists($request->type, rh_req_types()->toArray()),
             'params' => $params,
+            'employee_date' => Birthdate::getOneEmployeeDate(),
         ]);
     }
 
@@ -189,7 +191,7 @@ class RequestController extends Controller
 
         $detail->id = uniqid(true);
         $detail->req_id = $requestId;
-        $detail->vacdatadmi = $request->vac_date_admission;
+        $detail->vacdatadmi = Birthdate::getOneEmployeeDate();
         $detail->vacdatfrom = $request->vac_date_from;
         $detail->vacdatto = HumanResourceRequest::getVacDateTo($request->vac_date_from, $request->vac_total_days);
         $detail->vactotdays = $request->vac_total_days;
