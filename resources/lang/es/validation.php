@@ -199,5 +199,10 @@ return [
       'permission_time_to' => 'Hora Final',
       'permission_date_from' => 'Fecha Inicio',
       'permission_date_to' => 'Fecha Final',
+      'vac_date_admission' => 'Fecha de Ingreso',
+      'vac_date_from' => 'Fecha de Inicio',
+      'vac_date_to' => 'Fecha de Reintegro',
+      'vac_total_days' => 'Días a Tomar',
+      'vac_total_pending_days' => 'Días Pendientes a Tomar',
     ],
 ];
