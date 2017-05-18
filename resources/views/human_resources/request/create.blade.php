@@ -59,7 +59,8 @@
     @else
         @include('human_resources.request.panels.' . strtolower($type), [
             'type' => $type,
-            'type_desc' => rh_req_types($type)
+            'type_desc' => rh_req_types($type),
+            'employee_date' => $employee_date,
         ])
 
         <script type="text/javascript">

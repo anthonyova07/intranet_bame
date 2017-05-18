@@ -18,7 +18,7 @@
                         <div class="col-xs-2">
                             <div class="form-group{{ $errors->first('vac_date_admission') ? ' has-error':'' }}">
                                 <label class="control-label">Fecha de Ingreso</label>
-                                <input type="date" class="form-control input-sm" name="vac_date_admission" value="{{ old('vac_date_admission') }}">
+                                <input type="date" disabled class="form-control input-sm" name="vac_date_admission" value="{{ $employee_date }}">
                                 <span class="help-block">{{ $errors->first('vac_date_admission') }}</span>
                             </div>
                         </div>
@@ -53,7 +53,7 @@
                         <div class="col-xs-2">
                             <div class="checkbox{{ $errors->first('vac_credited_bonds') ? ' has-error':'' }}" style="margin-top: 22px;">
                                 <label>
-                                    <input type="checkbox" name="vac_credited_bonds" {{ old('vac_credited_bonds') == 'multiple_days' ? 'checked' : '' }} value="acreditar_bono"> Acreditar Bono Vacacional
+                                    <input type="checkbox" name="vac_credited_bonds" {{ old('vac_credited_bonds') ? 'checked' : '' }} value="acreditar_bono"> Acreditar Bono Vacacional
                                 </label>
                                 <span class="help-block">{{ $errors->first('vac_credited_bonds') }}</span>
                             </div>
