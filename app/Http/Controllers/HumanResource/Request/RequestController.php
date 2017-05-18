@@ -109,13 +109,14 @@ class RequestController extends Controller
         $human_resource_request->created_by = session()->get('user');
         $human_resource_request->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
 
-        switch ($request->type) {
-            case 'PERAUS':
-                self::savePerAusRequest($human_resource_request->id, $request);
-                break;
-            case 'VAC':
+        if ($request->type == 'PERAUS') {
+            self::savePerAusRequest($human_resource_request->id, $request);
+        } else if ($request->type == 'VAC') {
+            if (HumanResourceRequest::isValidVacDateFrom($request->vac_date_from)) {
                 self::saveVacRequest($human_resource_request->id, $request);
-                break;
+            } else {
+                return back()->withInput()->with('error', 'Fecha de Inicio invalida. Favor valide que la misma no sea día feriado ni fin de semana.');
+            }
         }
 
         $human_resource_request->reqnumber = get_next_request_rh_number();
@@ -149,6 +150,8 @@ class RequestController extends Controller
 
     private static function savePerAusRequest($requestId, $request)
     {
+        $user_info = session()->get('user_info');
+
         $detail = new Detail;
 
         $detail->id = uniqid(true);
@@ -180,13 +183,15 @@ class RequestController extends Controller
 
     private static function saveVacRequest($requestId, $request)
     {
+        $user_info = session()->get('user_info');
+
         $detail = new Detail;
 
         $detail->id = uniqid(true);
         $detail->req_id = $requestId;
         $detail->vacdatadmi = $request->vac_date_admission;
         $detail->vacdatfrom = $request->vac_date_from;
-        $detail->vacdatto = $request->vac_date_to;
+        $detail->vacdatto = HumanResourceRequest::getVacDateTo($request->vac_date_from, $request->vac_total_days);
         $detail->vactotdays = $request->vac_total_days;
         $detail->vacoutdays = $request->vac_total_pending_days;
         $detail->vacaccbonu = (bool) $request->vac_credited_bonds;

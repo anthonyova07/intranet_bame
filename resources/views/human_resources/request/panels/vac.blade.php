@@ -53,7 +53,7 @@
                         <div class="col-xs-2">
                             <div class="checkbox{{ $errors->first('vac_credited_bonds') ? ' has-error':'' }}" style="margin-top: 22px;">
                                 <label>
-                                    <input type="checkbox" name="vac_credited_bonds" value="acreditar_bono"> Acreditar Bono Vacacional
+                                    <input type="checkbox" name="vac_credited_bonds" {{ old('vac_credited_bonds') == 'multiple_days' ? 'checked' : '' }} value="acreditar_bono"> Acreditar Bono Vacacional
                                 </label>
                                 <span class="help-block">{{ $errors->first('vac_credited_bonds') }}</span>
                             </div>
