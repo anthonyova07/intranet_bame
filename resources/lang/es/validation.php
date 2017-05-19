@@ -192,5 +192,6 @@ return [
       'full_name' => 'Nombre Completo',
       'birthdate' => 'Cumpleño',
       'initial_date' => 'Ingreso',
+      'image_banner' => 'Imagen Banner',
     ],
 ];
