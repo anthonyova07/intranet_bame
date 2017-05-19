@@ -80,7 +80,11 @@
                             <div class="carousel-inner">
                                 @foreach ($news as $index => $new)
                                     <div class="item {{ $index == 0 ? 'active':'' }}">
-                                        <img src="{{ route('home') . $new->image }}" style="height: 280px;margin: auto;">
+                                        @if ($new->imgbanner)
+                                            <img src="{{ route('home') . $new->imgbanner }}" style="height: 280px;margin: auto;">
+                                        @else
+                                            <img src="{{ route('home') . $new->image }}" style="height: 280px;margin: auto;">
+                                        @endif
                                         <div class="carousel-caption carousel-caption-noticias" style="right: 0;left: 0;margin-bottom: -47px;">
                                             <a data-toggle="tooltip" class="link_noticias" title="Click para más detalles" href="{{ route('home.news', ['id' => $new->id]) }}">{{ substr($new->title, 0, 85) . '...' }}</a>
                                         </div>
