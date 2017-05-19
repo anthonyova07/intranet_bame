@@ -391,6 +391,33 @@
             </div>
 
         </div>
+
+        <div class="col-xs-4" style="margin-top: -15px;">
+
+            <div class="panel panel-default panel-wiget">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Generador de Firmas</h3>
+                </div>
+                <div class="panel-body text-center">
+                    <button type="button" data-toggle="modal" data-target="#modal_firmas" style="margin-left: 42px;width: 210px;background-color:#d9534f;padding: 5px;" class="btn btn-danger btn-lg btn-block">Click para Generar Firma</button>
+
+                    <div class="modal fade" id="modal_firmas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header" style="padding: 6px 6px 6px 15px;color: #ffffff;background-color: #d82f27;">
+                                    <button style="margin: -5px 8px 0 0; font-size: 40px;" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" style="font-size: 25px;">Generador de Firmas Bancamérica</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <iframe src="http://meritdhost.com/firmas-bancamerica/" scrolling="yes" frameborder="0" height="500px" width="100%"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
     @if ($day_events->count() || $day_birthdays->count() || $day_services->count() || $day_dates->count())
