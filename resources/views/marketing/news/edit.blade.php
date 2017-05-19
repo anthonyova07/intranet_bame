@@ -54,14 +54,21 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-8">
+                            <div class="col-xs-5">
+                                <div class="form-group{{ $errors->first('image_banner') ? ' has-error':'' }}">
+                                    <label class="control-label">Imagen Banner <small class="label label-warning">MAX 2 MB</small></label>
+                                    <input type="file" name="image_banner">
+                                    <span class="help-block">{{ $errors->first('image_banner') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-5">
                                 <div class="form-group{{ $errors->first('image') ? ' has-error':'' }}">
-                                    <label class="control-label">Imagen <small class="label label-warning">MAX 2 MB</small></label>
+                                    <label class="control-label">Imagen Principal <small class="label label-warning">MAX 2 MB</small></label>
                                     <input type="file" name="image">
                                     <span class="help-block">{{ $errors->first('image') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-4">
+                            <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('repost') ? ' has-error':'' }}">
                                     <label>
                                         <input type="checkbox" name="repost" data-toggle="tooltip" title="Re-Publicar esta noticia" style="margin-top: 23px;"> Re-Publicar

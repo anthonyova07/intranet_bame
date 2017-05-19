@@ -63,6 +63,14 @@ class NewsController extends Controller
             $new->image = '/marketing/images/' . $file_name_destination;
         }
 
+        if ($request->hasFile('image_banner')) {
+            $file_name_destination = $new->id . '_banner.' . get_extensions_file($request->file('image_banner')->getClientOriginalName());
+
+            $request->file('image_banner')->move(public_path() . '\\marketing\\images\\', $file_name_destination);
+
+            $new->imgbanner = '/marketing/images/' . $file_name_destination;
+        }
+
         $new->type = $request->type;
         $new->link_name = $request->link_name;
         $new->link = $request->link;
@@ -124,6 +132,20 @@ class NewsController extends Controller
             $new->image = '/marketing/images/' . $file_name_destination;
         }
 
+        if ($request->hasFile('image_banner')) {
+            $file_name = public_path() . str_replace('/', '\\', $new->imgbanner);
+
+            if (file_exists($file_name) && is_file($file_name)) {
+                unlink($file_name);
+            }
+
+            $file_name_destination = $id . '_banner.' . get_extensions_file($request->file('image_banner')->getClientOriginalName());
+
+            $request->file('image_banner')->move(public_path() . '\\marketing\\images\\', $file_name_destination);
+
+            $new->imgbanner = '/marketing/images/' . $file_name_destination;
+        }
+
         $new->type = $request->type;
         $new->link_name = $request->link_name;
         $new->link = $request->link;
@@ -151,6 +173,12 @@ class NewsController extends Controller
         }
 
         $file_name = public_path() . str_replace('/', '\\', $new->image);
+
+        if (file_exists($file_name)) {
+            unlink($file_name);
+        }
+
+        $file_name = public_path() . str_replace('/', '\\', $new->imgbanner);
 
         if (file_exists($file_name)) {
             unlink($file_name);
