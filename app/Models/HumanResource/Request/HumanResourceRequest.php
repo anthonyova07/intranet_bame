@@ -38,7 +38,7 @@ class HumanResourceRequest extends Model
         $holidays_count = Date::holidaysDays()
             ->where('startdate', $date)
             ->count();
-            
+
         $week_day = (new DateTime($date))->format('l');
 
         if ($week_day == 'Saturday' || $week_day == 'Sunday' || $holidays_count >= 1) {
@@ -79,5 +79,25 @@ class HumanResourceRequest extends Model
         }
 
         return $date_to->format('Y-m-d');
+    }
+
+    public static function isBetweenXDays($date, $days = 5)
+    {
+        $current = new DateTime;
+        $current->modify('+1 day');
+        
+        $post_day = new DateTime($date);
+        $counter = 0;
+
+        while ($current <= $post_day) {
+            $week_day = $current->format('l');
+            $current->modify('+1 day');
+
+            if ($week_day != 'Saturday' && $week_day != 'Sunday') {
+                $counter++;
+            }
+        }
+
+        return $counter >= $days;
     }
 }
