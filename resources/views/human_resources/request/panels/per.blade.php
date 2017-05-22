@@ -83,31 +83,31 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12" style="height: 15px;">
-                            <div class="form-group{{ $errors->first('peraus') ? ' has-error':'' }}">
+                            <div class="form-group{{ $errors->first('per') ? ' has-error':'' }}">
                                 <label class="control-label" style="font-size: 16px;">
                                     Razón de la Ausencia
-                                    @if ($errors->first('peraus'))
-                                        <small>({{ $errors->first('peraus') }})</small>
+                                    @if ($errors->first('per'))
+                                        <small>({{ $errors->first('per') }})</small>
                                     @endif
                                 </label>
                             </div>
                         </div>
-                        @foreach ($params->where('type', 'PERAUS') as $param)
+                        @foreach ($params->where('type', 'PER') as $param)
                             <div class="col-xs-2" style="height: 35px;">
                                 <div class="radio">
                                     <label style="font-weight: bold;">
-                                        <input type="radio" name="peraus" {{ old('peraus') == $param->id ? 'checked' : '' }} value="{{ $param->id }}"> {{ $param->name }}
+                                        <input type="radio" name="per" {{ old('per') == $param->id ? 'checked' : '' }} value="{{ $param->id }}"> {{ $param->name }}
                                     </label>
                                 </div>
                             </div>
                         @endforeach
                         <div class="col-xs-12">
-                            <div class="form-group{{ $errors->first('peraus_reason') ? ' has-error':'' }}">
+                            <div class="form-group{{ $errors->first('per_reason') ? ' has-error':'' }}">
                                 <label class="control-label">
-                                    <input type="radio" name="peraus" {{ old('peraus') == 'otro' ? 'checked' : '' }} value="otro"> Otro
+                                    <input type="radio" name="per" {{ old('per') == 'otro' ? 'checked' : '' }} value="otro"> Otro
                                 </label>
-                                <textarea class="form-control input-sm" placeholder="Especifique la razón la ausencia..." name="peraus_reason">{{ old('peraus_reason') }}</textarea>
-                                <span class="help-block">{{ $errors->first('peraus_reason') }}</span>
+                                <textarea class="form-control input-sm" placeholder="Especifique la razón la ausencia..." name="per_reason">{{ old('per_reason') }}</textarea>
+                                <span class="help-block">{{ $errors->first('per_reason') }}</span>
                             </div>
                         </div>
                     </div>

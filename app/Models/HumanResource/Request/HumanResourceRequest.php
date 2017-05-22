@@ -85,7 +85,7 @@ class HumanResourceRequest extends Model
     {
         $current = new DateTime;
         $current->modify('+1 day');
-        
+
         $post_day = new DateTime($date);
         $counter = 0;
 

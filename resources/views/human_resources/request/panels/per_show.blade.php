@@ -98,7 +98,7 @@
                     <div class="col-xs-2" style="height: 35px;">
                         <div class="radio">
                             <label style="font-weight: bold;">
-                                <input type="radio" disabled name="peraus" checked> {{ $human_resource_request->detail->reaforabse }}
+                                <input type="radio" disabled name="per" checked> {{ $human_resource_request->detail->reaforabse }}
                             </label>
                         </div>
                     </div>
