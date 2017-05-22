@@ -32,6 +32,7 @@ class ApproveController extends Controller
                 return back()->with('info', 'La solicitud ya ha sido trabajada por el supervisor');
             } else {
                 $human_resource_request->approvesup = (bool) $to_approve;
+                $human_resource_request->reqstatus = $human_resource_request->approvesup ? 'Pendiente por RRHH' : 'Rechazado por Supervisor';
                 $human_resource_request->colsupname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
                 $human_resource_request->colsupposi = $user_info->getTitle();
                 $human_resource_request->save();
@@ -53,9 +54,11 @@ class ApproveController extends Controller
                 return back()->with('info', 'La solicitud no ha sido aprobada por el supervisor!');
             } else {
                 if ($human_resource_request->rhuser) {
-                    return back()->with('info', 'La solicitud ya ha sido trabajada por el supervisor');
+                    return back()->with('info', 'La solicitud ya ha sido trabajada por RRHH');
                 } else {
                     $human_resource_request->approverh = (bool) $to_approve;
+                    $human_resource_request->reqstatus = ($human_resource_request->approverh ? 'Aprobado' : 'Rechazado') . ' por RRHH';
+                    $human_resource_request->reasonreje = $human_resource_request->approverh ? '' : $request->reason;
                     $human_resource_request->rhuser = session()->get('user');
                     $human_resource_request->rhname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
                     $human_resource_request->save();

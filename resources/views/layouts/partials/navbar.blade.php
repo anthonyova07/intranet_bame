@@ -144,7 +144,7 @@
                                     <li>
                                         <a href="{{ route('human_resources.request.index') }}">
                                             <i class="fa fa-unlock-alt fa-fw"></i>
-                                            Mis Solicitudes
+                                            Solicitudes
                                         </a>
                                     </li>
                                 @endif
@@ -175,7 +175,7 @@
                                         <li>
                                             <a href="{{ route('human_resources.request.index') }}">
                                                 <i class="fa fa-unlock-alt fa-fw"></i>
-                                                Mis Solicitudes
+                                                Solicitudes
                                             </a>
                                         </li>
                                     @endif

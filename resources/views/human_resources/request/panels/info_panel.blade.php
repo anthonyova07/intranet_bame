@@ -21,7 +21,11 @@
                     </div>
                 </div>
                 <div class="col-xs-4">
-                    @if (can_not_do('human_resource_request_approverh'))
+                    <div class="form-group">
+                        <label class="control-label">Estado</label>
+                        <p class="form-control-static">{{ $human_resource_request->reqstatus }}</p>
+                    </div>
+                    {{-- @if (can_not_do('human_resource_request_approverh'))
                         <div class="form-group">
                             <label class="control-label">Estado</label>
                             <p class="form-control-static">{{ $human_resource_request->reqstatus }}</p>
@@ -41,7 +45,15 @@
                             </div>
                             {{ csrf_field() }}
                         </form>
-                    @endif
+                    @endif --}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Motivo en Caso de Rechazo por RRHH</label>
+                        <p class="form-control-static">{{ $human_resource_request->reasonreje }}</p>
+                    </div>
                 </div>
             </div>
         </div>
