@@ -4,6 +4,7 @@ namespace Bame\Http\Controllers\HumanResource\Request;
 
 use Illuminate\Http\Request;
 
+use DateTime;
 use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 use Bame\Models\HumanResource\Request\Param;
@@ -112,13 +113,13 @@ class RequestController extends Controller
         $human_resource_request->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
 
         if ($request->type == 'PERAUS') {
-            self::savePerAusRequest($human_resource_request->id, $request);
+            $result = self::savePerAusRequest($human_resource_request->id, $request);
         } else if ($request->type == 'VAC') {
-            if (HumanResourceRequest::isValidVacDateFrom($request->vac_date_from)) {
-                self::saveVacRequest($human_resource_request->id, $request);
-            } else {
-                return back()->withInput()->with('error', 'Fecha de Inicio invalida. Favor valide que la misma no sea día feriado ni fin de semana.');
-            }
+            $result = self::saveVacRequest($human_resource_request->id, $request);
+        }
+
+        if ($result) {
+            return $result;
         }
 
         $human_resource_request->reqnumber = get_next_request_rh_number();
@@ -174,6 +175,13 @@ class RequestController extends Controller
             $detail->reaforabse = $request->peraus_reason;
         } else {
             $param = Param::find($request->peraus);
+
+            if ($param->code == 'DIALIBRE') {
+                if (!HumanResourceRequest::isBetweenXDays($request->permission_date)) {
+                    return back()->withInput()->with('error', 'El día libre debe ser con 5 días laborables posterior a la fecha actual.');
+                }
+            }
+
             $detail->reaforabse = $param->name;
         }
 
@@ -181,10 +189,16 @@ class RequestController extends Controller
         $detail->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
 
         $detail->save();
+
+        return null;
     }
 
     private static function saveVacRequest($requestId, $request)
     {
+        if (!HumanResourceRequest::isValidVacDateFrom($request->vac_date_from)) {
+            return back()->withInput()->with('error', 'Fecha de Inicio invalida. Favor valide que la misma no sea día feriado ni fin de semana.');
+        }
+
         $user_info = session()->get('user_info');
 
         $detail = new Detail;
@@ -203,5 +217,7 @@ class RequestController extends Controller
         $detail->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
 
         $detail->save();
+
+        return null;
     }
 }
