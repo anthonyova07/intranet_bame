@@ -725,7 +725,7 @@ function get_employee_name_photo($code, $gender, $just_name = false)
 function rh_req_types($rh_req_type = null)
 {
     $rh_req_types = collect([
-        'PERAUS' => 'Permisos y Ausencias',
+        'PER' => 'Permisos',
         'VAC' => 'Vacaciones',
     ]);
 
@@ -739,7 +739,7 @@ function rh_req_types($rh_req_type = null)
 function rh_req_params($rh_req_param = null)
 {
     $rh_req_params = collect([
-        'PERAUS' => 'Permisos y Ausencias',
+        'PER' => 'Permisos',
         'EST' => 'Estatus',
     ]);
 

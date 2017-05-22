@@ -112,7 +112,7 @@ class RequestController extends Controller
         $human_resource_request->created_by = session()->get('user');
         $human_resource_request->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
 
-        if ($request->type == 'PERAUS') {
+        if ($request->type == 'PER') {
             $result = self::savePerAusRequest($human_resource_request->id, $request);
         } else if ($request->type == 'VAC') {
             $result = self::saveVacRequest($human_resource_request->id, $request);
@@ -171,10 +171,10 @@ class RequestController extends Controller
             $detail->perdatto = $request->permission_date_to;
         }
 
-        if ($request->peraus == 'otro') {
-            $detail->reaforabse = $request->peraus_reason;
+        if ($request->per == 'otro') {
+            $detail->reaforabse = $request->per_reason;
         } else {
-            $param = Param::find($request->peraus);
+            $param = Param::find($request->per);
 
             if ($param->code == 'DIALIBRE') {
                 if (!HumanResourceRequest::isBetweenXDays($request->permission_date)) {

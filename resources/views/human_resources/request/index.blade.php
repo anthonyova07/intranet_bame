@@ -144,10 +144,10 @@
             <div class="col-xs-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Permisos y Ausencias Predefinidos</h3>
+                        <h3 class="panel-title">Permisos Predefinidos</h3>
                     </div>
                     <div class="panel-body">
-                        <a class="btn btn-danger btn-xs" href="{{ route('human_resources.request.{type}.param.create', ['type' => 'PERAUS']) }}">Nuevo</a>
+                        <a class="btn btn-danger btn-xs" href="{{ route('human_resources.request.{type}.param.create', ['type' => 'PER']) }}">Nuevo</a>
                         <br>
                         <br>
                         <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
@@ -160,14 +160,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($params->where('type', 'PERAUS') as $peraus)
+                                @foreach ($params->where('type', 'PER') as $per)
                                     <tr>
-                                        <td>{{ $peraus->code }}</td>
-                                        <td>{{ $peraus->name }}</td>
-                                        <td>{{ $peraus->is_active ? 'Si':'No' }}</td>
+                                        <td>{{ $per->code }}</td>
+                                        <td>{{ $per->name }}</td>
+                                        <td>{{ $per->is_active ? 'Si':'No' }}</td>
                                         <td align="center">
                                             <a
-                                                href="{{ route('human_resources.request.{type}.param.edit', ['type' => 'PERAUS', 'param' => $peraus->id]) }}"
+                                                href="{{ route('human_resources.request.{type}.param.edit', ['type' => 'PER', 'param' => $per->id]) }}"
                                                 data-toggle="tooltip"
                                                 data-placement="top"
                                                 title="Editar"
