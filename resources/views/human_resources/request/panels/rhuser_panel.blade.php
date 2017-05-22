@@ -21,13 +21,15 @@
 
         <div class="panel-body">
             <div class="row">
-                <div class="col-xs-4">
+                <div class="col-xs-12">
                     <div class="form-group">
                         <label class="control-label">Usuario</label>
                         <p class="form-control-static">{{ $human_resource_request->rhuser }}</p>
                     </div>
                 </div>
-                <div class="col-xs-8">
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
                     <div class="form-group">
                         <label class="control-label">Nombre</label>
                         <p class="form-control-static">{{ isset($human_resource_request) ? $human_resource_request->rhname : 'Pendiente' }}</p>

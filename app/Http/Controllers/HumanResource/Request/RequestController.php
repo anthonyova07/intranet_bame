@@ -93,7 +93,7 @@ class RequestController extends Controller
 
         $human_resource_request->id = uniqid(true);
         $human_resource_request->reqtype = $request->type;
-        $human_resource_request->reqstatus = 'Pendiente';
+        $human_resource_request->reqstatus = 'Pendiente por Supervisor';
 
         $user_info = session()->get('user_info');
 
