@@ -17,7 +17,7 @@
                         <h3 style="margin-top: 0px;margin-bottom: 16px;">{{ html_entity_decode($new->title) }}</h3>
 
                         @if ($new->link_video == '' || !$new->link_video)
-                            @if ($new->imgbanner)
+                            @if ($new->imgbanner == '' || $new->imgbanner)
                                 <img class="img-thumbnail pull-left" src="{{ route('home') . $new->imgbanner }}">
                             @else
                                 <img class="img-thumbnail pull-left" src="{{ route('home') . $new->image }}">
