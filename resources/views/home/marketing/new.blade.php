@@ -17,7 +17,11 @@
                         <h3 style="margin-top: 0px;margin-bottom: 16px;">{{ html_entity_decode($new->title) }}</h3>
 
                         @if ($new->link_video == '' || !$new->link_video)
-                            <img class="img-thumbnail pull-left" src="{{ route('home') . $new->image }}">
+                            @if ($new->imgbanner)
+                                <img class="img-thumbnail pull-left" src="{{ route('home') . $new->imgbanner }}">
+                            @else
+                                <img class="img-thumbnail pull-left" src="{{ route('home') . $new->image }}">
+                            @endif
                         @else
                             <video autoplay controls class="img-thumbnail video-thumbnail" src="{{ $new->link_video }}"></video>
                         @endif
