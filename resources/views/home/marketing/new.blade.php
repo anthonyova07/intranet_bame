@@ -18,12 +18,12 @@
 
                         @if ($new->link_video == '' || !$new->link_video)
                             @if ($new->imgbanner == '' || $new->imgbanner)
-                                <img class="img-thumbnail pull-left" src="{{ route('home') . $new->imgbanner }}">
+                                <img class="img-thumbnail pull-left" src="{{ route('home') . $new->imgbanner . '?id=' . uniqid() }}">
                             @else
-                                <img class="img-thumbnail pull-left" src="{{ route('home') . $new->image }}">
+                                <img class="img-thumbnail pull-left" src="{{ route('home') . $new->image . '?id=' . uniqid() }}">
                             @endif
                         @else
-                            <video autoplay controls class="img-thumbnail video-thumbnail" src="{{ $new->link_video }}"></video>
+                            <video autoplay controls class="img-thumbnail video-thumbnail" src="{{ $new->link_video . '?id=' . uniqid() }}"></video>
                         @endif
 
                         <p>
