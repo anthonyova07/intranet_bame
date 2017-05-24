@@ -154,6 +154,7 @@ Route::group(['middleware' => 'auth'], function () {
 
             Route::get('approve/{request_id}/{to_approve}/{type}', 'HumanResource\Request\ApproveController@approve')->name('human_resources.request.approve');
             Route::post('changestatus/{request_id}', 'HumanResource\Request\ApproveController@changestatus')->name('human_resources.request.changestatus');
+            Route::get('attach/{request_id}/{file_name}', 'HumanResource\Request\RequestController@downloadAttach')->name('human_resources.request.downloadattach');
         });
 
         Route::resource('request', 'HumanResource\Request\RequestController', ['only' => [

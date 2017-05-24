@@ -5,7 +5,7 @@
 @if (!$request_type_exists)
     @section('page_title', 'Nueva Solicitud de Recursos Humanos')
 @else
-    @section('page_title', 'Nueva Solicitud de ' . rh_req_types($type))
+    @section('page_title', 'Nueva ' . rh_req_types($type))
 @endif
 
 {{-- @if (can_not_do('human_resource_request'))
@@ -37,7 +37,7 @@
                                     <i class="fa fa-wpforms fa-4x"></i>
                                 </div>
                                 <div class="col-xs-10 text-right">
-                                    Solicitud de {{ $rh_req_type }}
+                                    {{ $rh_req_type }}
                                 </div>
                             </div>
                         </div>

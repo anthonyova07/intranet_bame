@@ -33,6 +33,16 @@ class HumanResourceRequest extends Model
         return $this->hasOne(Detail::class, 'req_id');
     }
 
+    public function files()
+    {
+        $files = scandir($path = storage_path('app\\rrhh_request\\attaches\\' . $this->id));
+
+        unset($files[array_search('.', $files)]);
+        unset($files[array_search('..', $files)]);
+
+        return collect($files);
+    }
+
     public static function isValidVacDateFrom($date)
     {
         $holidays_count = Date::holidaysDays()

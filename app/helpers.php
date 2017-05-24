@@ -725,8 +725,9 @@ function get_employee_name_photo($code, $gender, $just_name = false)
 function rh_req_types($rh_req_type = null)
 {
     $rh_req_types = collect([
-        'PER' => 'Permisos',
-        'VAC' => 'Vacaciones',
+        'PER' => 'Solicitud de Permisos',
+        'VAC' => 'Solicitud de Vacaciones',
+        'AUS' => 'Notificación de Ausencia',
     ]);
 
     if (!$rh_req_type) {
