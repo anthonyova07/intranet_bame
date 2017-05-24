@@ -53,6 +53,6 @@
                 @endforeach
             </tbody>
         </table>
-        {{-- @include('layouts.partials.excel_file') --}}
+        @include('layouts.partials.excel_file')
     </body>
 </html>

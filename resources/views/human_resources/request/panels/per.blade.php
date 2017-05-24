@@ -1,9 +1,13 @@
 <form method="post" action="{{ route('human_resources.request.store', ['type' => $type]) }}" id="form">
 
     <div class="row">
-        @include('human_resources.request.panels.colaborator_panel')
+        @include('human_resources.request.panels.colaborator_panel', [
+            'type' => $type,
+        ])
 
-        @include('human_resources.request.panels.supervisor_panel')
+        @include('human_resources.request.panels.supervisor_panel', [
+            'type' => $type,
+        ])
     </div>
 
     <div class="row">
@@ -16,7 +20,7 @@
                 <div class="panel-body">
 
                     @include('human_resources.request.panels.permission_form')
-                    
+
                     <div class="row">
                         <div class="col-xs-4">
                             {{ csrf_field() }}

@@ -1,4 +1,4 @@
-@if (in_array($human_resource_request->reqtype, ['PER', 'VAC']))
+@if (in_array($type, ['PER', 'VAC']))
     <div class="col-xs-4">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -53,7 +53,7 @@
     </div>
 @endif
 
-@if (in_array($human_resource_request->reqtype, ['AUS']))
+@if (in_array($type, ['AUS']))
     <div class="col-xs-4">
         <div class="panel panel-default">
             <div class="panel-heading">
