@@ -23,15 +23,30 @@ class RequestHumanResourceRequest extends Request
      */
     public function rules()
     {
-        $v = [
-            'colsupuser' => 'required',
-        ];
+        $v = [];
 
-        if ($this->type == 'PERAUS') {
+        if (in_array($this->type, ['PER', 'VAC'])) {
+            $v = array_merge($v, [
+                'colsupuser' => 'required',
+            ]);
+        }
+
+        if ($this->type == 'VAC') {
+            $v = array_merge($v, [
+                // 'vac_date_admission' => 'required|date_format:"Y-m-d',
+                'vac_date_from' => 'required|date_format:"Y-m-d',
+                // 'vac_date_to' => 'required|date_format:"Y-m-d',
+                'vac_total_days' => 'required|integer|min:1|max:18',
+                'vac_total_pending_days' => 'required|integer|min:0|max:18',
+                'note' => 'max:1000',
+            ]);
+        }
+
+        if (in_array($this->type, ['PER', 'AUS'])) {
             $v = array_merge($v, [
                 'permission_type' => 'required',
-                'peraus' => 'required',
-                'peraus_reason' => 'required_if:peraus,otro|max:1000',
+                'per' => 'required',
+                'per_reason' => 'required_if:per,otro|max:1000',
             ]);
 
             if ($this->permission_type == 'one_day') {
@@ -50,25 +65,14 @@ class RequestHumanResourceRequest extends Request
             }
         }
 
-        if ($this->type == 'VAC') {
-            $v = array_merge($v, [
-                // 'vac_date_admission' => 'required|date_format:"Y-m-d',
-                'vac_date_from' => 'required|date_format:"Y-m-d',
-                // 'vac_date_to' => 'required|date_format:"Y-m-d',
-                'vac_total_days' => 'required|integer|min:1|max:18',
-                'vac_total_pending_days' => 'required|integer|min:0|max:18',
-                'note' => 'max:1000',
-            ]);
-        }
-
         return $v;
     }
 
     public function messages() {
         return [
             'permission_type.required' => 'Debe seleccionar un tipo de permiso',
-            'peraus.required' => 'Debe seleccionar una razón de la ausencia',
-            'peraus_reason.required_if' => 'Debe especificar el motivo de la ausencia.',
+            'per.required' => 'Debe seleccionar una razón de la ausencia',
+            'per_reason.required_if' => 'Debe especificar el motivo de la ausencia.',
         ];
     }
 }

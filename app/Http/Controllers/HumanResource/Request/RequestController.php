@@ -19,7 +19,7 @@ class RequestController extends Controller
 {
     public function index(Request $request)
     {
-        $params = Param::all();
+        $params = Param::orderBy('name')->get();
 
         $human_resource_requests = HumanResourceRequest::lastestFirst();
 
@@ -52,7 +52,7 @@ class RequestController extends Controller
         }
 
         if (can_not_do('human_resource_request_approverh')) {
-            $human_resource_requests->where('created_by', session()->get('user'))
+            $human_resource_requests->where('coluser', session()->get('user'))
                 ->orWhere('colsupuser', session()->get('user'));
         }
 
@@ -94,29 +94,49 @@ class RequestController extends Controller
 
         $human_resource_request->id = uniqid(true);
         $human_resource_request->reqtype = $request->type;
-        $human_resource_request->reqstatus = 'Pendiente por Supervisor';
 
         $user_info = session()->get('user_info');
 
-        $human_resource_request->coluser = session()->get('user');
-        $human_resource_request->colcode = $user_info->getPostalCode();
-        $human_resource_request->colname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
-        $human_resource_request->colposi = $user_info->getTitle();
-        $human_resource_request->coldepart = $user_info->getDepartment();
+        if (in_array($request->type, ['PER', 'VAC'])) {
+            $human_resource_request->reqstatus = 'Pendiente por Supervisor';
 
-        $human_resource_request->colsupuser = $request->colsupuser;
-        $human_resource_request->approvesup = false;
+            $human_resource_request->coluser = session()->get('user');
+            $human_resource_request->colcode = $user_info->getPostalCode();
+            $human_resource_request->colname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
+            $human_resource_request->colposi = $user_info->getTitle();
+            $human_resource_request->coldepart = $user_info->getDepartment();
+
+            $human_resource_request->colsupuser = $request->colsupuser;
+            $human_resource_request->approvesup = false;
+        }
+
+        if (in_array($request->type, ['AUS'])) {
+            $human_resource_request->reqstatus = 'Aprobado por Supervisor';
+
+            $human_resource_request->coluser = $request->coluser;
+            $human_resource_request->colcode = $request->colcode;
+            $human_resource_request->colname = $request->colname;
+            $human_resource_request->colposi = $request->colposi;
+            $human_resource_request->coldepart = $request->coldepart;
+
+            $human_resource_request->colsupuser = session()->get('user');
+            $human_resource_request->colsupname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
+            $human_resource_request->colsupposi = $user_info->getTitle();
+            $human_resource_request->approvesup = true;
+        }
 
         $human_resource_request->approverh = false;
 
         $human_resource_request->created_by = session()->get('user');
         $human_resource_request->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
 
-        if ($request->type == 'PER') {
+        if (in_array($request->type, ['PER', 'AUS'])) {
             $result = self::savePerAusRequest($human_resource_request->id, $request);
         } else if ($request->type == 'VAC') {
             $result = self::saveVacRequest($human_resource_request->id, $request);
         }
+
+        self::attachFiles($human_resource_request->id, $request);
 
         if ($result) {
             return $result;
@@ -125,7 +145,11 @@ class RequestController extends Controller
         $human_resource_request->reqnumber = get_next_request_rh_number();
         $human_resource_request->save();
 
-        Notification::notify('Solicitud de RH', 'Tiene un solicitud RH pendiente de aprobación', route('human_resources.request.show', ['request' => $human_resource_request->id]), $request->colsupuser);
+        if (in_array($request->type, ['AUS'])) {
+            Notification::notifyUsersByPermission('human_resource_request_approverh', 'Solicitud de RH', 'Nueva ' . rh_req_types($human_resource_request->reqtype) . ' creada (#' . $human_resource_request->reqnumber . ') pendiente.', route('human_resources.request.show', ['id' => $human_resource_request->id]));
+        } else {
+            Notification::notify('Solicitud de RH', 'Tiene un solicitud RH pendiente de aprobación', route('human_resources.request.show', ['request' => $human_resource_request->id]), $request->colsupuser);
+        }
 
         do_log('Creó la Solicitud de Recursos Humanos ( número:' . strip_tags($human_resource_request->reqnumber) . ' )');
 
@@ -160,6 +184,7 @@ class RequestController extends Controller
         $detail->id = uniqid(true);
         $detail->req_id = $requestId;
         $detail->pertype = $request->permission_type;
+
         if ($request->permission_type == 'one_day') {
             $detail->perdatfrom = $request->permission_date;
             $detail->pertimfrom = $request->permission_time_from . ':00';
@@ -191,6 +216,34 @@ class RequestController extends Controller
         $detail->save();
 
         return null;
+    }
+
+    private static function attachFiles($requestId, $request)
+    {
+        if ($request->hasFile('files')) {
+            $files = collect($request->file('files'));
+
+            $path = storage_path('app\\rrhh_request\\attaches\\' . $requestId . '\\');
+
+            $files->each(function ($file, $index) use ($path) {
+                $file_name_destination = str_replace(' ', '_', $file->getClientOriginalName());
+
+                $file_name_destination = remove_accents($file_name_destination);
+
+                $file->move($path, $file_name_destination);
+            });
+        }
+    }
+
+    public function downloadAttach($requestId, $file_name)
+    {
+        $path = storage_path('app\\rrhh_request\\attaches\\' . $requestId . '\\' . $file_name);
+
+        if (file_exists($path)) {
+            return response()->download($path);
+        }
+
+        return response('Archivo no encontrado', 404);
     }
 
     private static function saveVacRequest($requestId, $request)

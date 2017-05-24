@@ -42,7 +42,7 @@ class ApproveController extends Controller
                 do_log(((bool) $to_approve ? 'Aprob' : 'Rechaz') . 'ó como Supervisor la Solicitud de Recursos Humanos ( número:' . strip_tags($human_resource_request->reqnumber) . ' )');
 
                 if ($human_resource_request->approvesup) {
-                    Notification::notifyUsersByPermission('human_resource_request_approverh', 'Solicitud de RH', 'Nueva solicitud de ' . rh_req_types($human_resource_request->reqtype) . ' creada (#' . $human_resource_request->reqnumber . ') pendiente.', route('human_resources.request.show', ['id' => $human_resource_request->id]));
+                    Notification::notifyUsersByPermission('human_resource_request_approverh', 'Solicitud de RH', 'Nueva ' . rh_req_types($human_resource_request->reqtype) . ' creada (#' . $human_resource_request->reqnumber . ') pendiente.', route('human_resources.request.show', ['id' => $human_resource_request->id]));
                 }
             }
         } else if ($type == 'rh') {
