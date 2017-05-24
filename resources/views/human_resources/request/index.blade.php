@@ -87,7 +87,7 @@
                     <a class="btn btn-danger btn-xs" href="{{ route('human_resources.request.create') }}">Nueva Solicitud</a>
 
                     @if (!can_not_do('human_resource_request_admin'))
-                        {{-- <a style="font-size: 13px;" class="label btn-danger pull-right" target="__blank" href="{{ route('human_resources.request.export.status_count_pdf', Request::except(['term', 'page'])) }}">Exportar PDF</a> --}}
+                        <a style="font-size: 13px;" class="label btn-success pull-right" target="__blank" href="{{ route('human_resources.request.export.excel', Request::except(['term', 'page'])) }}">Exportar Excel</a>
                     @endif
                     <br>
                     <br>
