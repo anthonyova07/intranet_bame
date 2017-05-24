@@ -184,6 +184,7 @@ class RequestController extends Controller
         $detail->id = uniqid(true);
         $detail->req_id = $requestId;
         $detail->pertype = $request->permission_type;
+        $detail->paid = false;
 
         if ($request->permission_type == 'one_day') {
             $detail->perdatfrom = $request->permission_date;
@@ -272,5 +273,42 @@ class RequestController extends Controller
         $detail->save();
 
         return null;
+    }
+
+    public function excel(Request $request)
+    {
+        $human_resource_requests = HumanResourceRequest::lastestFirst();
+
+        if ($request->reqtype && $request->reqtype != 'todos') {
+            $human_resource_requests->where('reqtype', $request->reqtype);
+        }
+
+        if ($request->status && $request->status != 'todos') {
+            $human_resource_requests->where('reqstatus', $request->status);
+        }
+
+        if ($request->date_from) {
+            $human_resource_requests->where('created_at', '>=', $request->date_from . ' 00:00:00');
+        }
+
+        if ($request->date_to) {
+            $human_resource_requests->where('created_at', '<=', $request->date_to . ' 23:59:59');
+        }
+
+        do_log('Exportó a Excel las Solicitudes de RRHH ( desde:' . strip_tags($request->date_from) . ' hasta:' . strip_tags($request->date_to) . ' )');
+
+        return view('human_resources.request.export.excel')
+            ->with('rrhh_requests', $human_resource_requests->get());
+    }
+
+    public function paid(Request $request, $requestId)
+    {
+        $human_resource_request = HumanResourceRequest::find($requestId);
+
+        $human_resource_request->detail()->update([
+            'paid' => (bool) $request->paid,
+        ]);
+
+        return back()->with('success', 'Los cambios han sido guardados correctamente.');
     }
 }

@@ -16,6 +16,11 @@ class Detail extends Model
 
     public $timestamps = true;
 
+    protected $dates = [
+        'perdatfrom',
+        'perdatto',
+    ];
+
     public function scopeLastestFirst($query)
     {
         return $this->orderBy('created_at', 'desc');

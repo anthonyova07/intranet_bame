@@ -49,13 +49,33 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12">
+                <div class="col-xs-9">
                     <div class="form-group">
                         <label class="control-label">Motivo en Caso de Rechazo por RRHH</label>
                         <p class="form-control-static">{{ $human_resource_request->reasonreje }}</p>
                     </div>
                 </div>
+                <div class="col-xs-3">
+                    <form name="paid_form" action="{{ route('human_resources.request.paid', ['request_id' => $human_resource_request->id]) }}" method="post">
+                        <div class="radio" style="margin-top: 0px;">
+                            <label style="font-weight: bold;">
+                                @if (!can_not_do('human_resource_request_approverh'))
+                                    <input type="checkbox" id="paid_button" name="paid"{{ $human_resource_request->detail->paid ? ' checked':'' }}> Remunerado
+                                @else
+                                    <input type="checkbox" disabled name="paid"{{ $human_resource_request->detail->paid ? ' checked':'' }}> Remunerado
+                                @endif
+                            </label>
+                        </div>
+                        {{ csrf_field() }}
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $('#paid_button').change(function (e) {
+        $('form[name=paid_form]').submit();
+    });
+</script>
