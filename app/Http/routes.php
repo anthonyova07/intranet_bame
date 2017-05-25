@@ -156,6 +156,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('changestatus/{request_id}', 'HumanResource\Request\ApproveController@changestatus')->name('human_resources.request.changestatus');
             Route::get('attach/{request_id}/{file_name}', 'HumanResource\Request\RequestController@downloadAttach')->name('human_resources.request.downloadattach');
             Route::post('paid/{request_id}', 'HumanResource\Request\RequestController@paid')->name('human_resources.request.paid');
+            Route::post('savevacrhform/{request_id}', 'HumanResource\Request\RequestController@saveVacRHForm')->name('human_resources.request.savevacrhform');
 
             Route::group(['prefix' => 'export'], function () {
                 Route::get('excel', 'HumanResource\Request\RequestController@excel')->name('human_resources.request.export.excel');

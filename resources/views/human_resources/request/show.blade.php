@@ -68,7 +68,7 @@
                             </span>
                         @endif
 
-                        <a style="font-size: 13px;margin: 3px;" class="label btn-warning" target="__blank" href="">Imprimir</a>
+                        {{-- <a style="font-size: 13px;margin: 3px;" class="label btn-warning" target="__blank" href="">Imprimir</a> --}}
 
                     </div>
                 </div>

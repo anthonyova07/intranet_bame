@@ -311,4 +311,20 @@ class RequestController extends Controller
 
         return back()->with('success', 'Los cambios han sido guardados correctamente.');
     }
+
+    public function saveVacRHForm(Request $request, $requestId)
+    {
+        $human_resource_request = HumanResourceRequest::find($requestId);
+
+        $human_resource_request->detail()->update([
+            'dayscorres' => $request->vac_day_corresponding,
+            'daystakedm' => $request->vac_day_taken_at_moment,
+            'dayspendin' => $request->vac_day_pending,
+            'applybonus' => (bool) $request->applybonus,
+            'datebonus' => $request->vac_date_bonus,
+            'datebonusd' => $request->vac_date_bonus_sd,
+        ]);
+
+        return back()->with('success', 'Los cambios han sido guardados correctamente.');
+    }
 }

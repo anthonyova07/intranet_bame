@@ -1,10 +1,12 @@
 <div class="row">
     @include('human_resources.request.panels.colaborator_panel', [
         'human_resource_request' => $human_resource_request,
+        'type' => $human_resource_request->reqtype,
     ])
 
     @include('human_resources.request.panels.supervisor_panel', [
         'human_resource_request' => $human_resource_request,
+        'type' => $human_resource_request->reqtype,
     ])
 </div>
 
@@ -66,9 +68,14 @@
                         </div>
                     </div>
                     <div class="col-xs-12">
-                        <div class="form-group{{ $errors->first('vac_note') ? ' has-error':'' }}">
+                        @include('human_resources.request.panels.vac_show_rrhh', [
+                            'human_resource_request' => $human_resource_request,
+                        ])
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Observaciones</label>
                             <textarea class="form-control input-sm" placeholder="Observación" name="vac_note">{{ old('vac_note') }}</textarea>
-                            <span class="help-block">{{ $errors->first('vac_note') }}</span>
                         </div>
                     </div>
                 </div>
@@ -76,36 +83,3 @@
         </div>
     </div>
 </div>
-
-{{-- @if (!can_not_do('human_resource_request_approverh'))
-    <form method="post" action="" id="form">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Para Uso de Recursos Humanos</h3>
-                    </div>
-
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <div class="form-group{{ $errors->first('vac_total_days') ? ' has-error':'' }}">
-                                    <label class="control-label">Días a Tomar</label>
-                                    <input type="number" class="form-control input-sm" name="vac_total_days" value="{{ old('vac_total_days') }}">
-                                    <span class="help-block">{{ $errors->first('vac_total_days') }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-4">
-                                {{ csrf_field() }}
-                                <a class="btn btn-info btn-xs" href="{{ route('human_resources.request.index') }}"><i class="fa fa-arrow-left"></i> Atrás</a>
-                                <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Guardar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-@endif --}}
