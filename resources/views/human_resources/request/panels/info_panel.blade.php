@@ -55,20 +55,22 @@
                         <p class="form-control-static">{{ $human_resource_request->reasonreje }}</p>
                     </div>
                 </div>
-                <div class="col-xs-3">
-                    <form name="paid_form" action="{{ route('human_resources.request.paid', ['request_id' => $human_resource_request->id]) }}" method="post">
-                        <div class="radio" style="margin-top: 0px;">
-                            <label style="font-weight: bold;">
-                                @if (!can_not_do('human_resource_request_approverh'))
-                                    <input type="checkbox" id="paid_button" name="paid"{{ $human_resource_request->detail->paid ? ' checked':'' }}> Remunerado
-                                @else
-                                    <input type="checkbox" disabled name="paid"{{ $human_resource_request->detail->paid ? ' checked':'' }}> Remunerado
-                                @endif
-                            </label>
-                        </div>
-                        {{ csrf_field() }}
-                    </form>
-                </div>
+                @if (in_array($human_resource_request->reqtype, ['PER', 'AUS']))
+                    <div class="col-xs-3">
+                        <form name="paid_form" action="{{ route('human_resources.request.paid', ['request_id' => $human_resource_request->id]) }}" method="post">
+                            <div class="radio" style="margin-top: 0px;">
+                                <label style="font-weight: bold;">
+                                    @if (!can_not_do('human_resource_request_approverh'))
+                                        <input type="checkbox" id="paid_button" name="paid"{{ $human_resource_request->detail->paid ? ' checked':'' }}> Remunerado
+                                    @else
+                                        <input type="checkbox" disabled name="paid"{{ $human_resource_request->detail->paid ? ' checked':'' }}> Remunerado
+                                    @endif
+                                </label>
+                            </div>
+                            {{ csrf_field() }}
+                        </form>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

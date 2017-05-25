@@ -771,6 +771,7 @@ function rh_req_types($rh_req_type = null)
         'PER' => 'Solicitud de Permisos',
         'VAC' => 'Solicitud de Vacaciones',
         'AUS' => 'Notificación de Ausencia',
+        'ANT' => 'Solicitud de Anticipo',
     ]);
 
     if (!$rh_req_type) {

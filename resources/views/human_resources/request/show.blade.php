@@ -29,7 +29,7 @@
                             <a
                                 href="javascript:void(0)"
                                 data-toggle="popover"
-                                data-placement="right"
+                                data-placement="left"
                                 data-content="
                                 <form action='{{ route('human_resources.request.approve', ['request_id' => $human_resource_request->id, 'to_approve' => 0, 'type' => 'rh']) }}' method='get'>
                                     <div class='row'>

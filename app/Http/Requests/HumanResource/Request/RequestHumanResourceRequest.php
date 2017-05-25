@@ -42,6 +42,15 @@ class RequestHumanResourceRequest extends Request
             ]);
         }
 
+        if ($this->type == 'ANT') {
+            $v = array_merge($v, [
+                'identification' => 'required',
+                'ant_account_number' => 'required',
+                'ant_amount' => 'required|integer|min:1',
+                'ant_dues' => 'required|integer|min:1|max:12',
+            ]);
+        }
+
         if (in_array($this->type, ['PER', 'AUS'])) {
             $v = array_merge($v, [
                 'permission_type' => 'required',

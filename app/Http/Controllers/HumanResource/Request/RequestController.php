@@ -97,7 +97,7 @@ class RequestController extends Controller
 
         $user_info = session()->get('user_info');
 
-        if (in_array($request->type, ['PER', 'VAC'])) {
+        if (in_array($request->type, ['PER', 'VAC', 'ANT'])) {
             $human_resource_request->reqstatus = 'Pendiente por Supervisor';
 
             $human_resource_request->coluser = session()->get('user');
@@ -107,7 +107,15 @@ class RequestController extends Controller
             $human_resource_request->coldepart = $user_info->getDepartment();
 
             $human_resource_request->colsupuser = $request->colsupuser;
-            $human_resource_request->approvesup = false;
+
+            if (in_array($request->type, ['PER', 'VAC'])) {
+                $human_resource_request->approvesup = false;
+            }
+
+            if (in_array($request->type, ['ANT'])) {
+                $human_resource_request->reqstatus = 'Pendiente por RRHH';
+                $human_resource_request->approvesup = true;
+            }
         }
 
         if (in_array($request->type, ['AUS'])) {
@@ -134,6 +142,8 @@ class RequestController extends Controller
             $result = self::savePerAusRequest($human_resource_request->id, $request);
         } else if ($request->type == 'VAC') {
             $result = self::saveVacRequest($human_resource_request->id, $request);
+        } else if ($request->type == 'ANT') {
+            $result = self::saveAntRequest($human_resource_request->id, $request);
         }
 
         self::attachFiles($human_resource_request->id, $request);
@@ -145,7 +155,7 @@ class RequestController extends Controller
         $human_resource_request->reqnumber = get_next_request_rh_number();
         $human_resource_request->save();
 
-        if (in_array($request->type, ['AUS'])) {
+        if (in_array($request->type, ['AUS', 'ANT'])) {
             Notification::notifyUsersByPermission('human_resource_request_approverh', 'Solicitud de RH', 'Nueva ' . rh_req_types($human_resource_request->reqtype) . ' creada (#' . $human_resource_request->reqnumber . ') pendiente.', route('human_resources.request.show', ['id' => $human_resource_request->id]));
         } else {
             Notification::notify('Solicitud de RH', 'Tiene un solicitud RH pendiente de aprobación', route('human_resources.request.show', ['request' => $human_resource_request->id]), $request->colsupuser);
@@ -275,6 +285,32 @@ class RequestController extends Controller
         return null;
     }
 
+    private static function saveAntRequest($requestId, $request)
+    {
+        if (!$request->ant_dues || intval($request->ant_dues) < 1 || intval($request->ant_dues) > 12) {
+            return back()->withInput()->with('error', 'Debe colocar la cantidad de cuotas y la misma debe ser entre 1 y 12.');
+        }
+
+        $user_info = session()->get('user_info');
+
+        $detail = new Detail;
+
+        $detail->id = uniqid(true);
+        $detail->req_id = $requestId;
+        $detail->identifica = $request->identification;
+        $detail->savaccount = $request->ant_account_number;
+        $detail->advamount = round($request->ant_amount, 2);
+        $detail->advdues = $request->ant_dues;
+        $detail->advdueamou = round(intval($request->ant_amount) / intval($request->ant_dues), 2);
+
+        $detail->created_by = session()->get('user');
+        $detail->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
+
+        $detail->save();
+
+        return null;
+    }
+
     public function excel(Request $request)
     {
         $human_resource_requests = HumanResourceRequest::lastestFirst();
@@ -323,6 +359,22 @@ class RequestController extends Controller
             'applybonus' => (bool) $request->applybonus,
             'datebonus' => $request->vac_date_bonus,
             'datebonusd' => $request->vac_date_bonus_sd,
+        ]);
+
+        return back()->with('success', 'Los cambios han sido guardados correctamente.');
+    }
+
+    public function saveAntRHForm(Request $request, $requestId)
+    {
+        $human_resource_request = HumanResourceRequest::find($requestId);
+
+        $human_resource_request->detail()->update([
+            'clientnum' => $request->client_number,
+            'advnumber' => $request->ant_advance_number,
+            'advdatdepo' => $request->ant_deposit_date,
+            'firsduedat' => $request->ant_first_due_date,
+            'lastduedat' => $request->ant_last_due_date,
+            'note' => $request->ant_note,
         ]);
 
         return back()->with('success', 'Los cambios han sido guardados correctamente.');

@@ -211,6 +211,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('attach/{request_id}/{file_name}', 'HumanResource\Request\RequestController@downloadAttach')->name('human_resources.request.downloadattach');
             Route::post('paid/{request_id}', 'HumanResource\Request\RequestController@paid')->name('human_resources.request.paid');
             Route::post('savevacrhform/{request_id}', 'HumanResource\Request\RequestController@saveVacRHForm')->name('human_resources.request.savevacrhform');
+            Route::post('saveantrhform/{request_id}', 'HumanResource\Request\RequestController@saveAntRHForm')->name('human_resources.request.saveantrhform');
 
             Route::group(['prefix' => 'export'], function () {
                 Route::get('excel', 'HumanResource\Request\RequestController@excel')->name('human_resources.request.export.excel');
