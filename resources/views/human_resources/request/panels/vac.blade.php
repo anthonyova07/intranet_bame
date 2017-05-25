@@ -60,6 +60,7 @@
                         </div>
                         <div class="col-xs-12">
                             <div class="form-group{{ $errors->first('vac_note') ? ' has-error':'' }}">
+                                <label class="control-label">Observaciones</label>
                                 <textarea class="form-control input-sm" placeholder="Observación" name="vac_note">{{ old('vac_note') }}</textarea>
                                 <span class="help-block">{{ $errors->first('vac_note') }}</span>
                             </div>
