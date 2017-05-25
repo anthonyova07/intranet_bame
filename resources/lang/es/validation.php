@@ -204,5 +204,8 @@ return [
       'vac_date_to' => 'Fecha de Reintegro',
       'vac_total_days' => 'Días a Tomar',
       'vac_total_pending_days' => 'Días Pendientes a Tomar',
+      'ant_account_number' => '# Cuenta',
+      'ant_amount' => 'Monto',
+      'ant_dues' => 'Cuotas',
     ],
 ];
