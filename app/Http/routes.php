@@ -35,9 +35,9 @@ Route::group(['middleware' => 'auth'], function () {
     //Consulta del Historico
     Route::resource('consultas/historicoproducto','Consultas\HistoricoProducto\ProductoController');       
 
-    Route::get('consultas/historicoproducto/show/{codigo}','Consultas\HistoricoProducto\ProductoController@show');
+    //Route::get('consultas/historicoproducto/show}','Consultas\HistoricoProducto\ProductoController@show');
 
-    Route::get('reporteproductopdf/{cliente}', 'Consultas\HistoricoProducto\ProductoController@reportepdf');
+    Route::get('reporteproductopdf/{cliente}','Consultas\HistoricoProducto\ProductoController@reportepdf');
 
     Route::get('reportetransaccionpdf/{producto}','Consultas\HistoricoProducto\TransaccionController@reportetranspdf');
 

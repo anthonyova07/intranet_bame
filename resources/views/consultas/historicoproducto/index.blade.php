@@ -19,12 +19,12 @@
                     <h3 class="panel-title">Filtro de Búsqueda</h3>
                 </div>
                 <div class="panel-body">
-                    <form method="get" action="{{ route('consultas.historicoproducto.index') }}" id="form">
+                    <form method="get" action="{{ route('consultas.historicoproducto.index',$cliente) }}" id="form">
                         <div class="row">
                             <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('codigo') ? ' has-error':'' }}">
                                     <label class="control-label">Codigo Cliente</label>
-                                    <input type="number" class="form-control input-sm" name="codigo" placeholder="0" value="{{ old('codigo') }}">
+                                    <input type="number" class="form-control input-sm" name="codigo" placeholder="0" value="{{old('codigo')}}">
                                     <span class="help-block">{{ $errors->first('codigo') }}</span>
                                 </div>
                             </div>
@@ -85,8 +85,8 @@
                                     <td>{{ $prod->hislpm }}</td>
                                     <td>{{ $prod->hislpy }}</td>
 
-                                    <td>
-                                        <a href="{{URL::action('Consultas\HistoricoProducto\TransaccionController@reportetrans', $prod->hisacc)}}" title="Genera Movimientos"> <i class="fa fa-share fa-fw"></i></a>
+                                   <td>
+                                        <a href="{{URL::action('Consultas\HistoricoProducto\TransaccionController@reportetrans', array_merge(Request::all(),['cuenta' => $prod->hisacc,'codigo' => request('codigo')]))}}" title="Genera Movimientos"> <i class="fa fa-share fa-fw"></i></a>
                                     </td>
 
                                 </tr>

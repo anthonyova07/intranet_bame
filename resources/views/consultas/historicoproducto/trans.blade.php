@@ -18,7 +18,10 @@
             <div class="panel panel-default">
                 <div class="panel-body">                                                           
 
-                    <a class="btn btn-info btn-xs" href="{{ URL::previous() }}"><i class="fa fa-arrow-left"></i> Atras</a> 
+                    <a class="btn btn-info btn-xs"href="{{route('consultas.historicoproducto.index',array_merge(Request::all(),['page' => 1]))}}"><i class="fa fa-arrow-left"></i> Atras</a>     
+
+                    <a style="font-size: 13px;" class="label btn-warning pull-right" target="__blank" href="">Excel</a>
+                    
 
                     <a style="font-size: 13px;" class="label btn-warning pull-right" target="__blank" href="{{URL::action('Consultas\HistoricoProducto\TransaccionController@reportetranspdf',$cuenta)}}">PDF</a>
 
@@ -30,8 +33,7 @@
                                 <th>Producto</th>                                
                                 <th>Dia</th>
                                 <th>Mes</th>
-                                <th>Año</th>                                
-                                <th>Cta.Contable</th>                              
+                                <th>Año</th>                                                                
                                 <th>Descripcion</th>
                                 <th>Usuario</th>
                                 <th>Moneda</th>
@@ -46,8 +48,7 @@
                                     <td>{{ $tran->traacc }}</td>                                    
                                     <td>{{ $tran->travdd }}</td>
                                     <td>{{ $tran->travdm }}</td>
-                                    <td>{{ $tran->travdy }}</td>
-                                    <td>{{ $tran->tragln }}</td>
+                                    <td>{{ $tran->travdy }}</td>                                    
                                     <td>{{ $tran->tranar }}</td>
                                     <td>{{ $tran->trausr }}</td>
                                     <td>{{ $tran->traccy }}</td>
@@ -58,7 +59,7 @@
                             @endforeach
                         </tbody>
                     </table>  
-                    {{ $transacciones->appends(Request::all())->links() }}                                 
+                    {{ $transacciones->appends(Request::all())->links() }}  
                 </div>
             </div>
         </div>

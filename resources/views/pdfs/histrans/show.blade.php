@@ -70,9 +70,8 @@
                     <th valign="bottom" style="width: 8%;">Producto</th>
                     <th valign="bottom" style="width: 8%;">Dia</th>
                     <th valign="bottom" style="width: 12%;">Mes</th>
-                    <th valign="bottom" style="width: 12%;">Año</th>
-                    <th valign="bottom" style="width: 12%;">Cta.Contable</th>
-                    <th valign="bottom" style="width: 12%;">Descripcion</th>
+                    <th valign="bottom" style="width: 12%;">Año</th>                    
+                    <th valign="bottom" style="width: 25%;">Descripcion</th>
                     <th valign="bottom" style="width: 12%;">Usuario</th>
                     <th valign="bottom" style="width: 12%;">Moneda</th>
                     <th valign="bottom" style="width: 12%;">Monto</th>
@@ -88,8 +87,7 @@
                         <td style="border-bottom: 1px solid #CCCCCC;">{{ $trans->traacc }}</td>
                         <td style="border-bottom: 1px solid #CCCCCC;">{{ $trans->travdd }}</td>    
                         <td style="border-bottom: 1px solid #CCCCCC;">{{ $trans->travdm }}</td>  
-                        <td style="border-bottom: 1px solid #CCCCCC;">{{ $trans->travdy }}</td>    
-                        <td style="border-bottom: 1px solid #CCCCCC;">{{ $trans->tragln }}</td>    
+                        <td style="border-bottom: 1px solid #CCCCCC;">{{ $trans->travdy }}</td>                            
                         <td style="border-bottom: 1px solid #CCCCCC;">{{ $trans->tranar }}</td>    
                         <td style="border-bottom: 1px solid #CCCCCC;">{{ $trans->trausr }}</td> 
                         <td style="border-bottom: 1px solid #CCCCCC;">{{ $trans->traccy }}</td>    

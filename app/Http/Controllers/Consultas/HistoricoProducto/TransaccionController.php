@@ -22,7 +22,8 @@ class TransaccionController extends Controller
           $transacciones = Transaccion::orderBy('tracor', 'asc')
           ->where('traacc','=',$cuenta)  
           ->paginate(10);
-          return view('consultas.historicoproducto.trans',["transacciones"=>$transacciones])->with('cuenta', $cuenta);               
+          return view('consultas.historicoproducto.trans',["transacciones"=>$transacciones])->with('cuenta',$cuenta);              
+          
     }   
 
     public function reportetranspdf($producto)   
@@ -32,4 +33,6 @@ class TransaccionController extends Controller
            ->get();           
           return view('pdfs.histrans.show',["transaccionespdf"=>$transaccionespdf]);      
     }
+
+   
 }
