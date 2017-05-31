@@ -69,7 +69,7 @@ class RequestHumanResourceRequest extends Request
             if ($this->permission_type == 'multiple_days') {
                 $v = array_merge($v, [
                     'permission_date_from' => 'required|date_format:"Y-m-d',
-                    'permission_date_to' => 'required|date_format:"Y-m-d',
+                    'permission_date_to' => 'required|date_format:"Y-m-d|' . 'after:' . $this->permission_date_from,
                 ]);
             }
         }
