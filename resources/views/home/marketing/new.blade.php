@@ -17,7 +17,7 @@
                         <h3 style="margin-top: 0px;margin-bottom: 16px;">{{ html_entity_decode($new->title) }}</h3>
 
                         @if ($new->link_video == '' || !$new->link_video)
-                            @if ($new->imgbanner == '' || $new->imgbanner)
+                            @if ($new->image == '' || !$new->image)
                                 <img class="img-thumbnail pull-left" src="{{ route('home') . $new->imgbanner . '?id=' . uniqid() }}">
                             @else
                                 <img class="img-thumbnail pull-left" src="{{ route('home') . $new->image . '?id=' . uniqid() }}">
