@@ -28,6 +28,9 @@ function get_department_name($department)
         case 'process':
             return 'Procesos';
             break;
+        case 'compliance':
+            return 'Cumplimiento';
+            break;
     }
 }
 
@@ -505,12 +508,56 @@ function get_param($type, $plural = true)
     }
 }
 
+function get_proreq_param($type, $plural = true)
+{
+    switch ($type) {
+        case 'TIPSOL': //TIPO DE SOLICITUD
+            return ($plural ? 'Tipos ' : 'Tipo ') . 'de Solicitud';
+            break;
+        case 'EST': //TIPO DE SOLICITUD
+            return ($plural ? 'Estatus' : 'Estatus');
+            break;
+        case 'PRO': //TIPO DE SOLICITUD
+            return ($plural ? 'Procesos' : 'Proceso');
+            break;
+    }
+}
+
 function get_next_claim_number($last_claim_number)
 {
     $date = null;
 
     if ($last_claim_number) {
         $parts = explode('-', $last_claim_number);
+
+        $year = $parts[0];
+        $month = $parts[1];
+        $day = $parts[2];
+        $sequence = $parts[3];
+
+        $date = $year . '-' . $month . '-' . $day;
+    }
+
+    $date_current = (new \DateTime)->format('Y-m-d');
+
+    if ($date == $date_current) {
+        $number = $date_current . '-' . (str_pad((intval($sequence) + 1), 2, '0', STR_PAD_LEFT));
+    } else {
+        $number = $date_current . '-01';
+    }
+
+    return $number;
+}
+
+function get_next_request_number()
+{
+    $date = null;
+
+    $last_process_request = \Bame\Models\Process\Request\ProcessRequest::orderBy('created_at', 'desc')->first();
+    $last_request_number = $last_process_request ? $last_process_request->request_number : null;
+
+    if ($last_request_number) {
+        $parts = explode('-', $last_request_number);
 
         $year = $parts[0];
         $month = $parts[1];
@@ -575,7 +622,7 @@ function calculate_year_of_service($date, $with_diff = false)
 
         $service_date = new \Datetime(trim($parts[2]) . "-{$parts[1]}-{$parts[0]} 23:59:59");
 
-        $diff = ($service_date)-diff($current_date);
+        $diff = $service_date->diff($current_date);
 
         if ($with_diff) {
             if ($diff->y > 0) {
@@ -610,4 +657,38 @@ function calculate_year_of_service($date, $with_diff = false)
             return $str;
         }
     }
+}
+
+function datetime()
+{
+    return new \DateTime;
+}
+
+function get_employee_name_photo($code, $gender, $just_name = false)
+{
+    $file = public_path() . '\files\employee_images\\' . $code;
+
+    if ($just_name) {
+        if (file_exists($file . '.jpg')) {
+            return $code . '.jpg';
+        }
+
+        if (file_exists($file . '.png')) {
+            return $code . '.png';
+        }
+
+        return 'no_existe';
+    }
+
+    $id = uniqid();
+
+    if (file_exists($file . '.jpg')) {
+        return $code . '.jpg?' . $id;
+    }
+
+    if (file_exists($file . '.png')) {
+        return $code . '.png?' . $id;
+    }
+
+    return $gender . '.jpg';
 }
