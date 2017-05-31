@@ -214,7 +214,7 @@ class RequestController extends Controller
 
             if ($param->code == 'DIALIBRE') {
                 if (!HumanResourceRequest::isBetweenXDays($request->permission_date)) {
-                    return back()->withInput()->with('error', 'El día libre debe ser con 5 días laborables posterior a la fecha actual.');
+                    return back()->withInput()->with('error', 'El día libre debe ser solicitado al menos con 5 laborables de anticipación');
                 }
             }
 

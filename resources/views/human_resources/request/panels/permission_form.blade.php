@@ -76,19 +76,25 @@
             </label>
         </div>
     </div>
-    @foreach ($params->where('type', 'PER') as $param)
-        <div class="col-xs-2" style="height: 35px;">
-            <div class="radio">
-                <label style="font-weight: bold;">
-                    <input type="radio" name="per" {{ old('per') == $param->id ? 'checked' : '' }} value="{{ $param->id }}"> {{ $param->name }}
-                </label>
+    @if (in_array($type, ['PER']))
+        @foreach ($params->where('type', 'PER') as $param)
+            <div class="col-xs-2" style="height: 35px;">
+                <div class="radio">
+                    <label style="font-weight: bold;">
+                        <input type="radio" name="per" {{ old('per') == $param->id ? 'checked' : '' }} value="{{ $param->id }}"> {{ $param->name }}
+                    </label>
+                </div>
             </div>
-        </div>
-    @endforeach
+        @endforeach
+    @endif
     <div class="col-xs-12">
         <div class="form-group{{ $errors->first('per_reason') ? ' has-error':'' }}">
             <label class="control-label">
-                <input type="radio" name="per" {{ old('per') == 'otro' ? 'checked' : '' }} value="otro"> Otro
+                @if (in_array($type, ['PER']))
+                    <input type="radio" name="per" {{ old('per') == 'otro' ? 'checked' : '' }} value="otro"> Otro
+                @else
+                    <input type="radio" name="per" checked value="otro"> Otro
+                @endif
             </label>
             <textarea class="form-control input-sm" placeholder="Especifique la razón la ausencia..." name="per_reason">{{ old('per_reason') }}</textarea>
             <span class="help-block">{{ $errors->first('per_reason') }}</span>

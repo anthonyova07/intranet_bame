@@ -18,7 +18,7 @@
                     <th>Fecha Hasta</th>
                     <th>Hora Desde</th>
                     <th>Hora Hasta</th>
-                    <th>Tipo de Permiso</th>
+                    <th>Tipo de Solicitud</th>
                     <th>Remunerado</th>
                     <th>Razón del Permiso</th>
                 </tr>

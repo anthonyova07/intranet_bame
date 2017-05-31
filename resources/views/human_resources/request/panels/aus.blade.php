@@ -18,7 +18,9 @@
                 </div>
 
                 <div class="panel-body">
-                    @include('human_resources.request.panels.permission_form')
+                    @include('human_resources.request.panels.permission_form', [
+                        'type' => $type,
+                    ])
 
                     <div class="row">
                         <div class="col-xs-12">
