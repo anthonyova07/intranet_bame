@@ -26,7 +26,7 @@ class NewsRequest extends Request
         return [
             'title' => 'required|max:150',
             'type' => 'required|in:C,N,B',
-            'detail' => 'required|max:20000',
+            'detail' => 'max:20000',
             'image' => 'image',
             'image_banner' => 'image' . ($this->news ? '':'|required'),
             // 'link' => 'url',
