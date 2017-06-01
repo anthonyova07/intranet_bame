@@ -121,7 +121,7 @@ class NewsController extends Controller
         if ($request->hasFile('image')) {
             $file_name = public_path() . str_replace('/', '\\', $new->image);
 
-            if (file_exists($file_name)) {
+            if (file_exists($file_name) && is_file($file_name)) {
                 unlink($file_name);
             }
 
