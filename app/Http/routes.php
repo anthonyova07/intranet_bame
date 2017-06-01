@@ -31,24 +31,10 @@ Route::group(['prefix' => 'notification'], function () {
     Route::get('all/global', 'Notification\NotificationController@allGlobal')->name('all.global');
 });
 
-
-
 Route::group(['middleware' => 'auth'], function () {
 
     //Consulta del Historico
-    Route::resource('consultas/historicoproducto','Consultas\HistoricoProducto\ProductoController');       
-
-    //Route::get('consultas/historicoproducto/show}','Consultas\HistoricoProducto\ProductoController@show');
-
-    Route::get('reporteproductopdf/{cliente}','Consultas\HistoricoProducto\ProductoController@reportepdf');
-
-    Route::get('reportetransaccionpdf/{producto}','Consultas\HistoricoProducto\TransaccionController@reportetranspdf');
-
-    Route::get('consultas/historicoproducto/reportetrans/{cuenta}', 'Consultas\HistoricoProducto\TransaccionController@reportetrans');
-
-    //Actualizcion de clientes 
-    Route::resource('cumplimiento/cliente','Cumplimiento\Cliente\CumstController');     
-
+    Route::resource('consultas/historicoproducto','Consultas\HistoricoProducto\ProductoController');
 
     Route::group(['prefix' => 'security'], function () {
 
