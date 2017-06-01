@@ -85,7 +85,7 @@ class Birthdate extends Model
             mkdir(storage_path('app\\calendar'));
         }
 
-        file_put_contents($path, $birthdates->toJson());
+        file_put_contents($path, json_encode($birthdates->values()));
     }
 
     public static function getFile()
