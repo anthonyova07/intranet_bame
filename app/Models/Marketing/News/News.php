@@ -15,4 +15,9 @@ class News extends Model
     public $incrementing = false;
 
     public $timestamps = true;
+
+    public function hasDetail()
+    {
+        return trim($this->detail) != '';
+    }
 }

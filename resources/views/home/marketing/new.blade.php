@@ -13,14 +13,14 @@
 
                 <div class="panel-body">
 
-                    <div class="col-xs-6 text-center">
+                    <div class="col-xs-{{ $new->hasDetail() ? '6' : '12' }} text-center">
                         <h3 style="margin-top: 0px;margin-bottom: 16px;">{{ html_entity_decode($new->title) }}</h3>
 
                         @if ($new->link_video == '' || !$new->link_video)
                             @if ($new->image == '' || !$new->image)
-                                <img class="img-thumbnail pull-left" src="{{ route('home') . $new->imgbanner . '?id=' . uniqid() }}">
+                                <img class="img-thumbnail{{ $new->hasDetail() ? ' pull-left' : '' }}" src="{{ route('home') . $new->imgbanner . '?id=' . uniqid() }}">
                             @else
-                                <img class="img-thumbnail pull-left" src="{{ route('home') . $new->image . '?id=' . uniqid() }}">
+                                <img class="img-thumbnail{{ $new->hasDetail() ? ' pull-left' : '' }}" src="{{ route('home') . $new->image . '?id=' . uniqid() }}">
                             @endif
                         @else
                             <video autoplay controls class="img-thumbnail video-thumbnail" src="{{ $new->link_video . '?id=' . uniqid() }}"></video>
@@ -31,11 +31,13 @@
                         </p>
                     </div>
 
-                    <div class="col-xs-6">
-                        <div style="color: #616365;text-align: justify;">
-                            {!! html_entity_decode($new->detail) !!}
+                    @if ($new->hasDetail())
+                        <div class="col-xs-6">
+                            <div style="color: #616365;text-align: justify;">
+                                {!! html_entity_decode($new->detail) !!}
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
                 </div>
 
