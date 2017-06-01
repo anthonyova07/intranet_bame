@@ -26,7 +26,7 @@
                                 <th>Álbum</th>
                                 <th style="width: 40px;">Fecha</th>
                                 <th style="width: 50px;">Estatus</th>
-                                <th style="width: 25px;"></th>
+                                <th style="width: 40px;"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -54,6 +54,21 @@
                                             title="Cargar/Ver Imagenes">
                                             <i class="fa fa-share fa-fw"></i>
                                         </a>
+                                        <a
+                                            onclick="cancel('{{ $gallery->id }}', this)"
+                                            href="javascript:void(0)"
+                                            data-toggle="tooltip"
+                                            data-placement="left"
+                                            title="Eliminar {{ $gallery->name }}"
+                                            class="rojo link_delete">
+                                            <i class="fa fa-close fa-fw"></i>
+                                        </a>
+                                        <form
+                                            action="{{ route('marketing.gallery.destroy', ['id' => $gallery->id]) }}"
+                                            method="post" id="form_eliminar_{{ $gallery->id }}">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -69,6 +84,20 @@
         $('#form').submit(function (event) {
             $('#btn_submit').button('loading');
         });
+
+        function cancel(id, el)
+        {
+            res = confirm('Realmente desea eliminar este álbum?\n\nNota: Todas las imágenes asociadas serán eliminadas permanentemente.');
+
+            if (!res) {
+                event.preventDefault();
+                return;
+            }
+
+            $(el).remove();
+
+            $('#form_eliminar_' + id).submit();
+        }
     </script>
 
 @endsection

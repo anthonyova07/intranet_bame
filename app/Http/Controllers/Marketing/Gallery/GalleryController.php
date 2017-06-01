@@ -133,6 +133,21 @@ class GalleryController extends Controller
         return redirect(route('marketing.gallery.show', ['gallery' => $gallery->id]))->with('success', 'La álbum fue modificada correctamente.');
     }
 
+    public function destroy($id)
+    {
+        Gallery::deleteAlbum($id);
+
+        $gallery = Gallery::find($id);
+
+        if (!$gallery) {
+            return back()->with('warning', 'Esta álbum no existe!');
+        }
+
+        $gallery->delete();
+
+        return back()->with('success', 'El álbum ha sido eliminado correctamente.');
+    }
+
     public function upload(Request $request, $gallery)
     {
         $this->validate($request, ['images' => 'required']);

@@ -62,4 +62,27 @@ class Gallery extends Model
             unlink($file_name);
         }
     }
+
+    public static function deleteAlbum($gallery)
+    {
+        $folder = public_path('files\\gallery\\' . $gallery);
+
+        if (file_exists($folder)) {
+            $images = scandir($folder);
+
+            foreach ($images as $image) {
+                if ($image == '.' || $image == '..') {
+                    continue;
+                }
+
+                $file = $folder . '\\' . $image;
+
+                if (file_exists($file)) {
+                    unlink($file);
+                }
+            }
+            
+            rmdir($folder);
+        }
+    }
 }
