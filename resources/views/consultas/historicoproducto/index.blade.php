@@ -2,7 +2,7 @@
 
 @section('title', 'Historico Cliente')
 
-@section('page_title', 'Consulta Historico de Cliente ')
+@section('page_title', 'Consulta Historico de Cliente')
 
 @if (can_not_do('historico_producto'))
     @section('contents')
@@ -10,7 +10,7 @@
     @endsection
 @endif
 
-@section('contents') 
+@section('contents')
 
     <div class="row">
         <div class="col-xs-12">
@@ -19,24 +19,22 @@
                     <h3 class="panel-title">Filtro de Búsqueda</h3>
                 </div>
                 <div class="panel-body">
-                    <form method="get" action="{{ route('consultas.historicoproducto.index',$cliente) }}" id="form">
+                    <form method="get" action="{{ route('consultas.historicoproducto.index') }}" id="form">
                         <div class="row">
                             <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('codigo') ? ' has-error':'' }}">
                                     <label class="control-label">Codigo Cliente</label>
-                                    <input type="number" class="form-control input-sm" name="codigo" placeholder="0" value="{{old('codigo')}}">
+                                    <input type="number" class="form-control input-sm" name="codigo" placeholder="0" value="{{ old('codigo') }}>
                                     <span class="help-block">{{ $errors->first('codigo') }}</span>
                                 </div>
                             </div>
                             <div class="col-xs-2">
                                 {{ csrf_field() }}
-                                <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Consultando Historico..." style="margin-top: 22px;">Consultar Historico</button>                             
-                            </div>                             
-                        </div>                        
+                                <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Consultando Historico..." style="margin-top: 22px;">Consultar Historico</button>
+                            </div>
+                        </div>
                     </form>
-                </div>                     
-
-
+                </div>
             </div>
         </div>
     </div>
@@ -44,10 +42,7 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="panel panel-default">
-                <div class="panel-body">                       
-
-                      <a style="font-size: 13px;" class="label btn-warning pull-right" target="__blank" href="{{URL::action('Consultas\HistoricoProducto\ProductoController@reportepdf',$cliente)}}">PDF</a>   
-
+                <div class="panel-body">                                                           
                     <br>
                     <table class="table table-striped table-bordered table-hover table-condensed" order-by='0|desc'>
                         <thead>
@@ -65,7 +60,6 @@
                                 <th>DiaC</th>
                                 <th>MesC</th>
                                 <th>AñoC</th>
-                                <th>Movtos</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -84,18 +78,12 @@
                                     <td>{{ $prod->hislpd }}</td>
                                     <td>{{ $prod->hislpm }}</td>
                                     <td>{{ $prod->hislpy }}</td>
-
-                                   <td>
-                                        <a href="{{URL::action('Consultas\HistoricoProducto\TransaccionController@reportetrans', array_merge(Request::all(),['cuenta' => $prod->hisacc,'codigo' => request('codigo')]))}}" title="Genera Movimientos"> <i class="fa fa-share fa-fw"></i></a>
-                                    </td>
-
                                 </tr>
                             @endforeach
                         </tbody>
-                    </table>   
-                     {{ $productos->appends(Request::all())->links() }}                                    
-                    
-
+                    </table>
+                  
+                      
                 </div>
             </div>
         </div>
