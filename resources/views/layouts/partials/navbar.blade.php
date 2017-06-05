@@ -137,6 +137,12 @@
                         Preguntas Frecuentes
                     </a>
                 </li>
+                <li style="border-bottom: 5px solid #e7e7e7;">
+                    <a href="{{ route('home.rates') }}">
+                        <i class="fa fa-money fa-fw"></i>
+                        Tasas de Interés
+                    </a>
+                </li>
                 @if (session()->has('menus'))
                     @foreach (session()->get('menus') as $menu)
                         <li>
