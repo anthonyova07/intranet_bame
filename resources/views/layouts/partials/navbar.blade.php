@@ -93,12 +93,6 @@
                     <a href="{{ route('home') }}"><i class="fa fa-home fa-fw"></i> Inicio</a>
                 </li>
                 <li>
-                    <a href="{{ route('home.faqs') }}">
-                        <i class="fa fa-question fa-fw"></i>
-                        Preguntas Frecuentes
-                    </a>
-                </li>
-                <li>
                     <a href="{{ route('home.gallery') }}">
                         <i class="fa fa-image fa-fw"></i>
                         Galería de Fotos
@@ -112,15 +106,15 @@
                     </a>
                     <ul class="nav nav-second-level animated zoomInLeft" style="animation-duration: 0.5s;">
                         <li>
-                            <a href="{{ route('gestidoc.marketing') }}">
+                            <a href="{{ route('gestidoc.compliance') }}">
                                 <i class="fa fa-files-o fa-fw"></i>
-                                Mercadeo
+                                Cumplimiento
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('gestidoc.human_resources') }}">
+                            <a href="{{ route('gestidoc.marketing') }}">
                                 <i class="fa fa-files-o fa-fw"></i>
-                                Recursos Humanos
+                                Mercadeo
                             </a>
                         </li>
                         <li>
@@ -130,12 +124,18 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('gestidoc.compliance') }}">
+                            <a href="{{ route('gestidoc.human_resources') }}">
                                 <i class="fa fa-files-o fa-fw"></i>
-                                Cumplimiento
+                                Recursos Humanos
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li>
+                    <a href="{{ route('home.faqs') }}">
+                        <i class="fa fa-question fa-fw"></i>
+                        Preguntas Frecuentes
+                    </a>
                 </li>
                 @if (session()->has('menus'))
                     @foreach (session()->get('menus') as $menu)
