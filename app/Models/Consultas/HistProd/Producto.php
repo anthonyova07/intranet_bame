@@ -6,13 +6,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class Producto extends Model
 {
-    protected $connection = 'ibs';
+     protected $connection = 'ibs';
 
      protected $table='vwhistpro';
 
      protected $primaryKey='';
 
      public $timestamps=false;   
+
+     protected $fillable =[
+            'hiscun',
+            'hisacc',
+            'hisacd',
+            'hismto',
+            'hissts',
+            'hisodd',
+            'hisodm',
+            'hisody',
+            'hisccy',
+            'hiscor',
+            'hislpd',
+            'hislpm',
+            'hislpy'
+     ];
+
 
 
      public function Balance($with_format = true)
@@ -41,5 +58,6 @@ class Producto extends Model
        }       
         return ($mTipo);
     }
+ 
 }
     
