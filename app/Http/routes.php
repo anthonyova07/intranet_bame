@@ -18,6 +18,8 @@ Route::get('gallery/{gallery?}', 'Marketing\MarketingController@gallery')->name(
 
 Route::get('faqs', 'Marketing\MarketingController@faqs')->name('home.faqs');
 
+Route::get('rates', 'Treasury\TreasuryController@rates')->name('home.rates');
+
 Route::get('event/{id}', 'HomeController@event')->name('home.event');
 Route::get('event/{id}/subscribers', 'HomeController@subscribers')->name('home.event.subscribers');
 
