@@ -16,4 +16,17 @@ class RateController extends Controller {
         return view('treasury.rates.index')
             ->with('products', Product::all());
     }
+
+    public function create()
+    {
+        $products = Product::activeOnly()->get();
+        // dd($products->get(2)->ranges());
+        return view('treasury.rates.create')
+            ->with('products', $products);
+    }
+
+    public function store(Request $request)
+    {
+        dd($request->all());
+    }
 }

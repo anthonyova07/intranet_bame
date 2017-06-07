@@ -18,7 +18,7 @@ class ProductDetail extends Model
 
     public function scopeActiveOnly($query)
     {
-        return $query->where('is_active', true);
+        return $query->where('is_active', true)->orderBy('sequence');
     }
 
     public function product()

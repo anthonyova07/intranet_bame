@@ -18,11 +18,17 @@ class Product extends Model
 
     public function scopeActiveOnly($query)
     {
-        return $query->where('is_active', true);
+        return $query->where('is_active', true)->orderBy('name');
     }
 
     public function details()
     {
         return $this->hasMany(ProductDetail::class, 'pro_id', 'id');
+    }
+
+    public function ranges()
+    {
+        $ranges = explode(',', $this->ranges);
+        return $ranges;
     }
 }
