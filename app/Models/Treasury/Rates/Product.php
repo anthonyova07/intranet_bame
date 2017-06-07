@@ -20,4 +20,9 @@ class Product extends Model
     {
         return $query->where('is_active', true);
     }
+
+    public function details()
+    {
+        return $this->hasMany(ProductDetail::class, 'pro_id', 'id');
+    }
 }

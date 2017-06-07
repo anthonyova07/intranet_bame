@@ -4,7 +4,7 @@ namespace Bame\Models\Treasury\Rates;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class ProductDetail extends Model
 {
     protected $connection = 'ibs';
 
@@ -19,5 +19,10 @@ class Product extends Model
     public function scopeActiveOnly($query)
     {
         return $query->where('is_active', true);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'pro_id', 'id');
     }
 }

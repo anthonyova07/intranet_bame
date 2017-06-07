@@ -119,7 +119,7 @@
                                     <th>Tipo</th>
                                     <th>Contenido</th>
                                     <th>Activo</th>
-                                    <th style="width: 2px"></th>
+                                    <th style="width: 25px"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -138,13 +138,15 @@
                                                 class="naranja">
                                                 <i class="fa fa-edit fa-fw"></i>
                                             </a>
-                                            <a
-                                                href="{{ route('treasury.rates.product.index', array_merge(['product' => $product->id], Request::all())) }}"
-                                                data-toggle="tooltip"
-                                                data-placement="top"
-                                                title="Ver Solicitud">
-                                                <i class="fa fa-share fa-fw"></i>
-                                            </a>
+                                            @if (in_array($product->content, ['V', 'R']))
+                                                <a
+                                                    href="{{ route('treasury.rates.product.index', array_merge(['product' => $product->id], Request::all())) }}"
+                                                    data-toggle="tooltip"
+                                                    data-placement="top"
+                                                    title="Ver Detalle de {{ $product->name }}">
+                                                    <i class="fa fa-share fa-fw"></i>
+                                                </a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

@@ -12,6 +12,14 @@ use Bame\Http\Requests\Treasury\Rates\ProductRequest;
 
 class ProductController extends Controller
 {
+    public function index(Request $request)
+    {
+        $product = Product::find($request->product);
+
+        return view('treasury.rates.product.index')
+            ->with('product', $product);
+    }
+
     public function create()
     {
         return view('treasury.rates.product.create');
@@ -25,12 +33,17 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->rate_type = $request->rate_type;
         $product->content = $request->content;
+
+        if ($request->content == 'R') {
+            $product->ranges = $request->ranges;
+        }
+
         $product->is_active = $request->is_active ? true : false;
         $product->created_by = session()->get('user');
 
         $product->save();
 
-        do_log('Creó el Producto ' . $request->name . ' en Tasas Activas/Pasivas de Tesorería ( nombre:' . strip_tags($request->name) . ' )');
+        do_log('Creó un Producto en Tasas Activas/Pasivas de Tesorería ( nombre:' . strip_tags($request->name) . ' )');
 
         return redirect(route('treasury.rates.product.create'))
             ->with('success', 'El producto fue creado correctamente.');
@@ -59,12 +72,17 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->rate_type = $request->rate_type;
         $product->content = $request->content;
+
+        if ($request->content == 'R') {
+            $product->ranges = $request->ranges;
+        }
+
         $product->is_active = $request->is_active ? true : false;
         $product->updated_by = session()->get('user');
 
         $product->save();
 
-        do_log('Modificó el producto ' . $request->name . ' en en Tasas Activas/Pasivas de Tesorería ( nombre:' . strip_tags($product->name) . ' )');
+        do_log('Modificó un producto en en Tasas Activas/Pasivas de Tesorería ( nombre:' . strip_tags($product->name) . ' )');
 
         return redirect(route('treasury.rates.index'))
             ->with('success', 'El producto fue modificado correctamente.');

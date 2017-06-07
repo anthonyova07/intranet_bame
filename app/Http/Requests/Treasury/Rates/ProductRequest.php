@@ -27,6 +27,14 @@ class ProductRequest extends Request
             'name' => 'required|max:100',
             'rate_type' => 'required|in:' . get_treasury_rate_types()->keys()->implode(','),
             'content' => 'required|in:' . get_treasury_rate_contents()->keys()->implode(','),
+            'ranges' => 'required_if:content,R',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'ranges.required_if' => 'Debe indicar los rangos para las tasas de este producto. (Separados por Coma)',
         ];
     }
 }

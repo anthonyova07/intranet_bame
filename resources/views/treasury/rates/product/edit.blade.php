@@ -14,12 +14,12 @@
 
     <div class="row">
 
-        <div class="col-xs-8 col-xs-offset-2">
+        <div class="col-xs-10 col-xs-offset-1">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form method="post" action="{{ route('treasury.rates.product.update', ['id' => $product->id]) }}" id="form" novalidate>
                         <div class="row">
-                            <div class="col-xs-4">
+                            <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('name') ? ' has-error':'' }}">
                                     <label class="control-label">Nombre</label>
                                     <input type="text" class="form-control input-sm" name="name" value="{{ $product->name }}">
@@ -27,7 +27,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-xs-3">
+                            <div class="col-xs-2">
                                 <label class="control-label">Tipo</label>
                                 <select class="form-control input-sm" name="rate_type">
                                     @foreach (get_treasury_rate_types() as $key => $rate_type)
@@ -36,13 +36,21 @@
                                 </select>
                             </div>
 
-                            <div class="col-xs-3">
+                            <div class="col-xs-2">
                                 <label class="control-label">Contenido</label>
                                 <select class="form-control input-sm" name="content">
                                     @foreach (get_treasury_rate_contents() as $key => $content)
                                         <option value="{{ $key }}" {{ $product->content == $key ? 'selected':'' }}>{{ $content }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+
+                            <div class="col-xs-3">
+                                <div class="form-group{{ $errors->first('ranges') ? ' has-error':'' }}">
+                                    <label class="control-label">Rangos (Separados por Coma)</label>
+                                    <input type="text" class="form-control input-sm" name="ranges" value="{{ $product->ranges }}">
+                                    <span class="help-block">{{ $errors->first('ranges') }}</span>
+                                </div>
                             </div>
 
                             <div class="col-xs-2">

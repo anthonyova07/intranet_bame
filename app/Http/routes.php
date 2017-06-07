@@ -173,7 +173,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::group(['prefix' => 'rates'], function () {
             Route::group(['prefix' => 'product'], function () {
-                Route::resource('detail', 'Treasury\Rates\ProductDetailController', ['only' => [
+                Route::resource('{product}/detail', 'Treasury\Rates\ProductDetailController', ['only' => [
                     'create', 'store', 'edit', 'update'
                 ]]);
             });
