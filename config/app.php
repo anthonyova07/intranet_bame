@@ -163,7 +163,7 @@ return [
         Dsdevbe\LdapConnector\LdapConnectorServiceProvider::class,
         
 
-        Collective\Html\HtmlServiceProvider::class,
+        
 
     ],
 
