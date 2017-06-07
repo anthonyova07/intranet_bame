@@ -2,7 +2,7 @@
 
 @section('title', 'Intranet Bancamérica')
 
-@section('page_title', 'Tasas de Interés')
+@section('page_title', 'Tasas de Interés Vigencia desde el 05/04/2017')
 
 @section('contents')
 
