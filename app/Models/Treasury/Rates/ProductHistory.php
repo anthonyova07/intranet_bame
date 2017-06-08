@@ -20,4 +20,25 @@ class ProductHistory extends Model
     {
         return $this->hasMany(ProductDetailHistory::class, 'pro_id', 'id');
     }
+
+    public function ranges()
+    {
+        $ranges = explode(',', $this->ranges);
+
+        foreach ($ranges as $index => $range) {
+            $ranges[$index] = trim($range);
+        }
+
+        return $ranges;
+    }
+
+    public function scopeActiveRates($query)
+    {
+        return $query->where('rate_type', 'A')->orderBy('name');
+    }
+
+    public function scopePassiveRates($query)
+    {
+        return $query->where('rate_type', 'P')->orderBy('name');
+    }
 }

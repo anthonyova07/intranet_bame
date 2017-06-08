@@ -16,8 +16,15 @@ class DateHistory extends Model
 
     public $timestamps = true;
 
+    protected $dates = ['effec_date'];
+
     public function products()
     {
         return $this->hasMany(ProductHistory::class, 'date_id', 'id');
+    }
+
+    public function scopeLast($query)
+    {
+        return $query->orderBy('effec_date', 'desc')->take(1);
     }
 }
