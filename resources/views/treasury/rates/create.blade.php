@@ -43,7 +43,7 @@
                                         <td{!! $product->content == 'V' ? ' colspan="2"':'' !!} class="text-center" style="width: 50%;font-size: {{ $product->content == 'V' ? '18':'12' }}px;font-weight: bold;vertical-align: middle;">{{ $product->name }}</td>
                                         @if ($product->content == 'U')
                                             <td style="width: 50%;">
-                                                <input type="text" class="form-control input-sm" name="{{ $product->id }}">
+                                                <input type="text" class="form-control input-sm" name="{{ $product->content . '_' . $product->id }}">
                                             </td>
                                         @endif
 
@@ -59,7 +59,7 @@
                                             <tr>
                                                 <td class="text-center" style="width: 50%;font-size: 12px;font-weight: bold;vertical-align: middle;">{{ $detail->descrip }}</td>
                                                 <td style="width: 50%;">
-                                                    <input type="text" class="form-control input-sm" name="{{ $product->id . '_' . $detail->id }}">
+                                                    <input type="text" class="form-control input-sm" name="{{ $product->content . '_' . $product->id . '_' . $detail->id }}">
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -71,7 +71,7 @@
                                                 <td class="text-center" style="width: 50%;font-size: 12px;font-weight: bold;vertical-align: middle;">{{ $detail->descrip }}</td>
                                                 @foreach ($product->ranges() as $index => $range)
                                                     <td>
-                                                        <input type="text" class="form-control input-sm" name="{{ $product->id . '_' . $detail->id . '_' . $index }}">
+                                                        <input type="text" class="form-control input-sm" name="{{ $product->content . '_' . $product->id . '_' . $detail->id . '_' . $index }}">
                                                     </td>
                                                 @endforeach
                                             </tr>

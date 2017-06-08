@@ -29,6 +29,11 @@ class Product extends Model
     public function ranges()
     {
         $ranges = explode(',', $this->ranges);
+
+        foreach ($ranges as $index => $range) {
+            $ranges[$index] = trim($range);
+        }
+
         return $ranges;
     }
 }
