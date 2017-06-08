@@ -16,6 +16,7 @@ class TreasuryController extends Controller
         $date_history = DateHistory::last()->first();
 
         return view('home.treasury.rates')
+            ->with('backoffice', true)
             ->with('date_history', $date_history);
     }
 

@@ -20,7 +20,7 @@
                     <h3 class="panel-title">Búscar Solicitud</h3>
                 </div>
                 <div class="panel-body">
-                    <form method="get" action="{{ route('process.request.index') }}" id="form">
+                    <form method="get" action="{{ route('treasury.rates.index') }}" id="form">
                         <div class="row">
                             <div class="col-xs-6">
                                 <div class="form-group{{ $errors->first('date_from') ? ' has-error':'' }}">
@@ -66,17 +66,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($process_requests as $process_request)
+                            @foreach ($dates as $date)
                                 <tr>
-                                    <td>{{ $process_request->reqnumber }}</td>
-                                    <td>{{ $process_request->reqtype }}</td>
-                                    <td>{{ $process_request->process }}</td>
-                                    <td>{{ $process_request->reqstatus }}</td>
-                                    <td>{{ $process_request->created_at->format('d/m/Y H:i:s') }}</td>
-                                    <td>{{ $process_request->createname }}</td>
+                                    <td>{{ $date->effec_date->format('d/m/Y') }}</td>
+                                    <td>{{ $date->created_at->format('d/m/Y H:m:s') }}</td>
+                                    <td>{{ $date->createname }}</td>
                                     <td align="center">
                                         <a
-                                            href="{{ route('process.request.show', array_merge(['request' => $process_request->id], Request::all())) }}"
+                                            href="{{ route('treasury.rates.show', array_merge(['date' => $date->id], Request::all())) }}"
                                             data-toggle="tooltip"
                                             data-placement="top"
                                             title="Ver Solicitud">
@@ -84,11 +81,11 @@
                                         </a>
                                     </td>
                                 </tr>
-                            @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
 
-                    {{-- {{ $process_requests->links() }} --}}
+                    {{ $dates->links() }}
                 </div>
             </div>
         </div>

@@ -10,6 +10,12 @@
 
         <div class="col-xs-8 col-xs-offset-2">
 
+            <div class="panel panel-default">
+                <div class="panel-body">
+                <a class="btn btn-info btn-xs" href="{{ route('treasury.rates.index', Request::except('date')) }}"><i class="fa fa-arrow-left"></i> Atras</a>
+                </div>
+            </div>
+
             <div class="panel-group" id="rates">
                 <div class="panel panel-default">
                     <div class="panel-heading" style="padding: 9px 15px;">

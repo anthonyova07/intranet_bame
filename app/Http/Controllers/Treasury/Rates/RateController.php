@@ -17,7 +17,24 @@ class RateController extends Controller {
 
     public function index(Request $request)
     {
+        $dates = DateHistory::orderBy('effec_date', 'desc');
+
+        if ($request->date_from) {
+            $dates->where(function ($query) use ($request) {
+                // $query->where('created_at', '>=', $request->date_from . ' 00:00:00');
+                $query->where('effec_date', '>=', $request->date_from);
+            });
+        }
+
+        if ($request->date_to) {
+            $dates->where(function ($query) use ($request) {
+                // $query->where('created_at', '<=', $request->date_to . ' 23:59:59');
+                $query->where('effec_date', '<=', $request->date_to);
+            });
+        }
+
         return view('treasury.rates.index')
+            ->with('dates', $dates->paginate())
             ->with('products', Product::all());
     }
 
@@ -109,6 +126,15 @@ class RateController extends Controller {
 
             $product_detail_h->save();
         }
+    }
+
+    public function show($rates)
+    {
+        $date = DateHistory::find($rates);
+
+        return view('home.treasury.rates')
+            ->with('backoffice', true)
+            ->with('date_history', $date);
     }
 
     public function parts($name)

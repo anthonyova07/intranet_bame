@@ -186,7 +186,7 @@ Route::group(['middleware' => 'auth'], function () {
         });
 
         Route::resource('rates', 'Treasury\Rates\RateController', ['only' => [
-            'index', 'create', 'store'
+            'index', 'create', 'store', 'show'
         ]]);
     });
 
