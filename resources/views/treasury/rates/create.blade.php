@@ -71,7 +71,7 @@
                                                 <td class="text-center" style="width: 50%;font-size: 12px;font-weight: bold;vertical-align: middle;">{{ $detail->descrip }}</td>
                                                 @foreach ($product->ranges() as $index => $range)
                                                     <td>
-                                                        <input type="text" class="form-control input-sm" name="{{ $product->content . '_' . $product->id . '_' . $detail->id . '_' . $index }}">
+                                                        <input type="text" class="form-control input-sm" name="{{ $product->content . '_' . $product->id . '_' . $detail->id }}[]">
                                                     </td>
                                                 @endforeach
                                             </tr>

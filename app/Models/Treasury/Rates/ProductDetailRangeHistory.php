@@ -4,7 +4,7 @@ namespace Bame\Models\Treasury\Rates;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductDetail extends Model
+class ProductDetailRangeHistory extends Model
 {
     protected $connection = 'ibs';
 
@@ -14,10 +14,5 @@ class ProductDetail extends Model
 
     public $incrementing = false;
 
-    public $timestamps = true;
-
-    public function ranges()
-    {
-        return $this->hasMany(ProductRangeHistoryDetail::class, 'detail_id', 'id');
-    }
+    public $timestamps = false;    
 }

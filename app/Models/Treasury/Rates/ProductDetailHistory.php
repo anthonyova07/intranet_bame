@@ -14,10 +14,10 @@ class ProductDetailHistory extends Model
 
     public $incrementing = false;
 
-    public $timestamps = true;
+    public $timestamps = false;
 
-    public function product()
+    public function ranges()
     {
-        return $this->belongsTo(ProductHistory::class, 'pro_id', 'id');
+        return $this->hasMany(ProductDetailRangeHistory::class, 'detail_id', 'id');
     }
 }

@@ -31,6 +31,8 @@ class RateController extends Controller {
 
     public function store(Request $request)
     {
+        $products_p = [];
+
         $user_info =  session()->get('user_info');
 
         $products = Product::activeOnly()->get();
@@ -43,6 +45,8 @@ class RateController extends Controller {
         $date_h->created_by = session()->get('user');
         $date_h->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
 
+        $date_h->save();
+
         foreach ($request->all() as $key => $value) {
             if ($key == '_token' || $key == 'effective_date') {
                 continue;
@@ -50,16 +54,22 @@ class RateController extends Controller {
 
             $parts = self::parts($key);
 
-            $product = $products->where('id', $parts[1])->first();
+            if (!in_array($parts[1], $products_p)) {
+                $product = $products->where('id', $parts[1])->first();
 
-            $product_h = new ProductHistory;
+                $product_h = new ProductHistory;
 
-            $product_h->id = uniqid(true);
-            $product_h->date_id = $date_h->id;
-            $product_h->name = $product->name;
-            $product_h->rate_type = $product->rate_type;
-            $product_h->content = $product->content;
-            $product_h->ranges = $product->ranges;
+                $product_h->id = uniqid(true);
+                $product_h->date_id = $date_h->id;
+                $product_h->name = $product->name;
+                $product_h->rate_type = $product->rate_type;
+                $product_h->content = $product->content;
+                $product_h->ranges = $product->ranges;
+
+                $product_h->save();
+
+                array_push($products_p, $parts[1]);
+            }
 
             $product_detail_h = new ProductDetailHistory;
 
@@ -70,32 +80,34 @@ class RateController extends Controller {
                 $product_detail_h->value = $value;
             }
 
-            if ($parts[0] == 'V') {
+            if ($parts[0] == 'V' || $parts[0] == 'R') {
                 $detail = $product->details->where('id', $parts[2])->first();
 
                 $product_detail_h->sequence = $detail->sequence;
                 $product_detail_h->descrip = $detail->descrip;
+            }
+
+            if ($parts[0] == 'V') {
                 $product_detail_h->value = $value;
             }
 
             if ($parts[0] == 'R') {
-                $detail = $product->details->where('id', $parts[2])->first();
-
-                $product_detail_h->sequence = $detail->sequence;
-
-                $product_detail_h->descrip = $detail->descrip;
+                $ranges_h = collect();
 
                 foreach ($product->ranges() as $index => $range) {
                     $product_detail_range_h = new ProductDetailRangeHistory;
 
-                    $product_detail_range_h->id = uniqid(true);
+                    $product_detail_range_h->id = uniqid(true) . $index;
                     $product_detail_range_h->detail_id = $product_detail_h->id;
-                    $product_detail_range_h->value = $value;
+                    $product_detail_range_h->value = $value[$index];
+
+                    $ranges_h->push($product_detail_range_h);
                 }
 
+                $product_detail_h->ranges()->saveMany($ranges_h);
             }
 
-            dd($date_h, $product_h, $product_detail_h);
+            $product_detail_h->save();
         }
     }
 

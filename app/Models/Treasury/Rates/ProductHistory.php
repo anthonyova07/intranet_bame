@@ -14,7 +14,7 @@ class ProductHistory extends Model
 
     public $incrementing = false;
 
-    public $timestamps = true;
+    public $timestamps = false;
 
     public function details()
     {
