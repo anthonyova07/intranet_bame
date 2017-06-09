@@ -76,8 +76,12 @@ class CreditCardStatement extends Model
         return $this->monta_mtra;
     }
 
-    public function getCurrency()
+    public function getCurrency($value = false)
     {
+        if ($value) {
+            return $this->moned_mtra;
+        }
+
         switch ($this->moned_mtra) {
             case 214:
                 return 'RD$';

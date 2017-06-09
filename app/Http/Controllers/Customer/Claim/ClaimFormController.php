@@ -206,6 +206,7 @@ class ClaimFormController extends Controller
                     $transaction->merchant_name = $creditcard_statement->getMerchantName();
                     $transaction->country = $creditcard_statement->getCountry();
                     $transaction->city = $creditcard_statement->getCity();
+                    $transaction->currency = $creditcard_statement->getCurrency(true);
                     $transaction->amount = $creditcard_statement->getAmount();
 
                     $transactions->push($transaction);

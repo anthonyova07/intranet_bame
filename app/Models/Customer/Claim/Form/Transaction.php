@@ -24,4 +24,19 @@ class Transaction extends Model
     {
         return $this->belongsTo(Consumption::class, 'form_id')->where('form_type', 'CON');
     }
+
+    public function getCurrency()
+    {
+        switch ($this->currency) {
+            case '214':
+                return 'RD$';
+                break;
+            case '840':
+                return 'US$';
+                break;
+            default:
+                return '';
+                break;
+        }
+    }
 }
