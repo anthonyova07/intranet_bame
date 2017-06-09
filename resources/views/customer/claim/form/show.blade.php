@@ -324,7 +324,7 @@
                                         <td>{{ $transaction->transaction_date->format('d/m/Y H:i:s') }}</td>
                                         <td>{{ $transaction->merchant_name }}</td>
                                         <td>{{ $transaction->country . '_' . $transaction->city }}</td>
-                                        <td>{{ number_format($transaction->amount, 2) }}</td>
+                                        <td>{{ $transaction->getCurrency() . ' ' . number_format($transaction->amount, 2) }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
