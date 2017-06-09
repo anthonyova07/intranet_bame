@@ -244,7 +244,7 @@
                         <tr>
                             <td style="border-bottom: 1px solid #CCCCCC;">{{ $transaction->transaction_date->format('d/m/Y h:i:s a') }}</td>
                             <td style="border-bottom: 1px solid #CCCCCC;">{{ $transaction->merchant_name }}</td>
-                            <td align="center" style="border-bottom: 1px solid #CCCCCC;">{{ 'RD$ ' . number_format($transaction->amount, 2) }}</td>
+                            <td align="center" style="border-bottom: 1px solid #CCCCCC;">{{ number_format($transaction->amount, 2) }}</td>
                         </tr>
                     @endforeach
                 </tbody>
