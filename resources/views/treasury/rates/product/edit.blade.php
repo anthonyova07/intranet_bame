@@ -46,7 +46,7 @@
                             </div>
 
                             <div class="col-xs-3">
-                                <div class="form-group{{ $errors->first('ranges') ? ' has-error':'' }}">
+                                <div {!! $product->content == 'R' ? '':'style="display: none;"' !!} class="ranges form-group{{ $errors->first('ranges') ? ' has-error':'' }}">
                                     <label class="control-label">Rangos (Separados por Coma)</label>
                                     <input type="text" class="form-control input-sm" name="ranges" value="{{ $product->ranges }}">
                                     <span class="help-block">{{ $errors->first('ranges') }}</span>
@@ -76,6 +76,8 @@
         $('#form').submit(function (vacant) {
             $('#btn_submit').button('loading');
         });
+
+        @include('treasury.rates.product.partials.selector_ranges')
     </script>
 
 @endsection
