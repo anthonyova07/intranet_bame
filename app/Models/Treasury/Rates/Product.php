@@ -35,5 +35,5 @@ class Product extends Model
         }
 
         return $ranges;
-    }
+    }    
 }

@@ -76,7 +76,7 @@
                                             href="{{ route('treasury.rates.show', array_merge(['date' => $date->id], Request::all())) }}"
                                             data-toggle="tooltip"
                                             data-placement="top"
-                                            title="Ver Solicitud">
+                                            title="Ver Tasas">
                                             <i class="fa fa-share fa-fw"></i>
                                         </a>
                                     </td>

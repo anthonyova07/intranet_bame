@@ -25,4 +25,15 @@ class ProductDetail extends Model
     {
         return $this->belongsTo(Product::class, 'pro_id', 'id');
     }
+
+    public function old_values()
+    {
+        $old_values = explode('|', $this->old_value);
+
+        foreach ($old_values as $index => $old_value) {
+            $old_values[$index] = trim($old_value);
+        }
+
+        return $old_values;
+    }
 }

@@ -15,7 +15,7 @@
         {{ csrf_field() }}
         <div class="row">
 
-            <div class="col-xs-4 col-xs-offset-4">
+            {{-- <div class="col-xs-4 col-xs-offset-4">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="row">
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="col-xs-10 col-xs-offset-1">
 
@@ -40,10 +40,11 @@
                             <table class="table table-bordered table-condensed table-striped table-hover">
                                 <tbody>
                                     <tr>
-                                        <td{!! $product->content == 'V' ? ' colspan="2"':'' !!} class="text-center" style="width: 50%;font-size: {{ $product->content == 'V' ? '18':'12' }}px;font-weight: bold;vertical-align: middle;">{{ $product->name }}</td>
+                                        <td{!! $product->content == 'V' ? ' colspan="2"':'' !!} class="text-center" style="width: {{ $product->content == 'R' ? '30':'50' }}%;font-size: {{ $product->content == 'V' ? '18':'12' }}px;font-weight: bold;vertical-align: middle;">{{ $product->name }}</td>
+
                                         @if ($product->content == 'U')
                                             <td style="width: 50%;">
-                                                <input type="text" class="form-control input-sm" name="{{ $product->content . '_' . $product->id }}">
+                                                <input type="text" class="form-control input-sm" name="{{ $product->content . '_' . $product->id }}" value="{{ $product->old_value }}">
                                             </td>
                                         @endif
 
@@ -59,7 +60,7 @@
                                             <tr>
                                                 <td class="text-center" style="width: 50%;font-size: 12px;font-weight: bold;vertical-align: middle;">{{ $detail->descrip }}</td>
                                                 <td style="width: 50%;">
-                                                    <input type="text" class="form-control input-sm" name="{{ $product->content . '_' . $product->id . '_' . $detail->id }}">
+                                                    <input type="text" class="form-control input-sm" name="{{ $product->content . '_' . $product->id . '_' . $detail->id }}" value="{{ $detail->old_value }}">
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -68,10 +69,10 @@
                                     @if ($product->content == 'R')
                                         @foreach ($product->details()->activeOnly()->get() as $detail)
                                             <tr>
-                                                <td class="text-center" style="width: 50%;font-size: 12px;font-weight: bold;vertical-align: middle;">{{ $detail->descrip }}</td>
+                                                <td class="text-center" style="width: 30%;font-size: 12px;font-weight: bold;vertical-align: middle;">{{ $detail->descrip }}</td>
                                                 @foreach ($product->ranges() as $index => $range)
                                                     <td>
-                                                        <input type="text" class="form-control input-sm" name="{{ $product->content . '_' . $product->id . '_' . $detail->id }}[]">
+                                                        <input type="text" class="form-control input-sm" name="{{ $product->content . '_' . $product->id . '_' . $detail->id }}[]" value="{{ $detail->old_values()[$index] }}">
                                                     </td>
                                                 @endforeach
                                             </tr>
