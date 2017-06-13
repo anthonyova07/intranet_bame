@@ -2,7 +2,11 @@
 
 @section('title', 'Intranet Bancamérica')
 
-@section('page_title', 'Tasas de Interés - ' . ($date_history ? ('Vigencia desde ' . $date_history->effec_date->format('d/m/Y')) : 'No existen tasas definidas'))
+@if ($backoffice)
+    @section('page_title', 'Histórico de Tasas Interés - ' . ($date_history ? ('Actualizado en ' . $date_history->created_at->format('d/m/Y h:i:s a')) : 'No existen tasas definidas'))
+@else
+    @section('page_title', 'Tasas de Interés - ' . ($date_history ? ('Vigencia desde ' . $date_history->created_at->format('d/m/Y')) : 'No existen tasas definidas'))
+@endif
 
 @section('contents')
 

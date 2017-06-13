@@ -20,19 +20,19 @@ class RateController extends Controller {
 
     public function index(Request $request)
     {
-        $dates = DateHistory::orderBy('created_at', 'asc');
+        $dates = DateHistory::orderBy('created_at', 'desc');
 
         if ($request->date_from) {
             $dates->where(function ($query) use ($request) {
-                // $query->where('created_at', '>=', $request->date_from . ' 00:00:00');
-                $query->where('effec_date', '>=', $request->date_from);
+                $query->where('created_at', '>=', $request->date_from . ' 00:00:00');
+                // $query->where('effec_date', '>=', $request->date_from);
             });
         }
 
         if ($request->date_to) {
             $dates->where(function ($query) use ($request) {
-                // $query->where('created_at', '<=', $request->date_to . ' 23:59:59');
-                $query->where('effec_date', '<=', $request->date_to);
+                $query->where('created_at', '<=', $request->date_to . ' 23:59:59');
+                // $query->where('effec_date', '<=', $request->date_to);
             });
         }
 
@@ -82,7 +82,7 @@ class RateController extends Controller {
 
                     $product_h = new ProductHistory;
 
-                    $product_h->id = uniqid(true);
+                    $product_h->id = uniqid(true) . rand(0, 9);
                     $product_h->date_id = $date_h->id;
                     $product_h->name = $product->name;
                     $product_h->rate_type = $product->rate_type;

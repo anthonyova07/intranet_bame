@@ -25,6 +25,6 @@ class DateHistory extends Model
 
     public function scopeLast($query)
     {
-        return $query->orderBy('effec_date', 'desc')->take(1);
+        return $query->orderBy('created_at', 'desc')->take(1);
     }
 }

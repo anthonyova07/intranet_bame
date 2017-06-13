@@ -16,7 +16,7 @@
         <div class="col-xs-8 col-xs-offset-2">
             <div class="panel panel-default">
               <div class="panel-body">
-                  <a style="font-size: 25px;padding: 15px;font-weight: bold;" class="btn btn-danger btn-xs btn-block" href="{{ route('treasury.rates.create') }}">Nueva Tasa</a>
+                  <a style="font-size: 25px;padding: 15px;font-weight: bold;" class="btn btn-danger btn-xs btn-block" href="{{ route('treasury.rates.create') }}">Actualizar Tasa</a>
               </div>
             </div>
         </div>
@@ -132,8 +132,8 @@
                     <table class="table table-striped table-bordered table-hover table-condensed" order-by='2|desc'>
                         <thead>
                             <tr>
-                                <th style="width: 112px;">Creado por</th>
-                                <th style="width: 112px;">Fecha Creación</th>
+                                <th style="width: 112px;">Actualizado por</th>
+                                <th style="width: 112px;">Fecha de Actualización</th>
                                 {{-- <th>Fecha de la Tasa</th> --}}
                                 <th style="width: 52px"></th>
                             </tr>
@@ -142,7 +142,7 @@
                             @foreach ($dates as $date)
                                 <tr>
                                     <td>{{ $date->createname }}</td>
-                                    <td>{{ $date->created_at->format('d/m/Y H:m:s') }}</td>
+                                    <td>{{ $date->created_at->format('d/m/Y H:i:s') }}</td>
                                     {{-- <td>{{ $date->effec_date->format('d/m/Y') }}</td> --}}
                                     <td align="center">
                                         <a
