@@ -72,7 +72,7 @@
                                                 <td class="text-center" style="width: 30%;font-size: 12px;font-weight: bold;vertical-align: middle;">{{ $detail->descrip }}</td>
                                                 @foreach ($product->ranges() as $index => $range)
                                                     <td>
-                                                        <input type="text" class="form-control input-sm" name="{{ $product->content . '_' . $product->id . '_' . $detail->id }}[]" value="{{ $detail->old_values()[$index] }}">
+                                                        <input type="text" class="form-control input-sm" name="{{ $product->content . '_' . $product->id . '_' . $detail->id }}[]" value="{{ isset($detail->old_values()[$index]) ? $detail->old_values()[$index] : '' }}">
                                                     </td>
                                                 @endforeach
                                             </tr>
