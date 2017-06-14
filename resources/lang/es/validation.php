@@ -193,5 +193,9 @@ return [
       'birthdate' => 'Cumpleño',
       'initial_date' => 'Ingreso',
       'image_banner' => 'Imagen Banner',
+      'rate_type' => 'Tipo de Tasa',
+      'content' => 'Tipo de Contenido',
+      'sequence' => 'Secuencia',
+      'ranges' => 'Rangos',
     ],
 ];

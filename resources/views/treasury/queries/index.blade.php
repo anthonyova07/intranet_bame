@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Tesorería -> Vacantes')
+@section('title', 'Tesorería -> Reportes')
 
 @section('page_title', 'Reportes de Tesorería')
 

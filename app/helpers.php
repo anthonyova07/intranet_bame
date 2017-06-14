@@ -692,3 +692,32 @@ function get_employee_name_photo($code, $gender, $just_name = false)
 
     return $gender . '.jpg';
 }
+
+function get_treasury_rate_types($type = null)
+{
+    $types = collect([
+        'P' => 'Pasivo',
+        'A' => 'Activo',
+    ]);
+
+    if (!$type) {
+        return $types;
+    }
+
+    return $types->get($type);
+}
+
+function get_treasury_rate_contents($content = null)
+{
+    $contents = collect([
+        'V' => 'Valores',
+        'R' => 'Rangos',
+        'U' => 'Único',
+    ]);
+
+    if (!$content) {
+        return $contents;
+    }
+
+    return $contents->get($content);
+}
