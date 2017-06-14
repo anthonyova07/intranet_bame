@@ -24,7 +24,7 @@ class NotificationController extends Controller
     public function allGlobal(Request $request) {
         $noti = new Notification('global');
 
-        $ids = collect($request->cookie('ids_notifications'));
+        $ids = collect($request->cookie('notifications'));
 
         if ($noti->count()) {
 
@@ -37,8 +37,8 @@ class NotificationController extends Controller
                 return false;
             });
 
-            // $ids_cookies = cookie('ids_notifications', $ids, env('NOTIFICATION_EXPIRATIONS_MINUTES'));
-            $ids_cookies = cookie()->forever('ids_notifications', $ids);
+            // $ids_cookies = cookie('notifications', $ids, env('NOTIFICATION_EXPIRATIONS_MINUTES'));
+            $ids_cookies = cookie()->forever('notifications', $ids);
 
             $notifications = $notifications->each(function ($notificacion, $index) {
                 $notificacion->titulo = html_entity_decode($notificacion->titulo);
