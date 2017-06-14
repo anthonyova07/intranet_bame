@@ -4,11 +4,11 @@
 
 @section('page_title', 'Nueva Tasa')
 
-{{-- @if (can_not_do('treasury_rates_admin'))
+@if (can_not_do('treasury_rates'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
     <form method="post" action="{{ route('treasury.rates.store') }}" id="form" novalidate>

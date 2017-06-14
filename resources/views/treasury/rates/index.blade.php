@@ -4,7 +4,7 @@
 
 @section('page_title', 'Mantenimiento de Tasas')
 
-@if (can_not_do('process_request'))
+@if (can_not_do('treasury_rates'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection

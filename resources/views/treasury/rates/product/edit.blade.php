@@ -4,11 +4,11 @@
 
 @section('page_title', 'Edición Producto')
 
-{{-- @if (can_not_do('treasury_rates_admin'))
+@if (can_not_do('treasury_rates'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 
