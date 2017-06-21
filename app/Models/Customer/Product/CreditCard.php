@@ -48,6 +48,11 @@ class CreditCard extends Model
         return $this->hasOne(CreditCardBalance::class, 'tcact_msal', 'tcact_mtar')->where('moned_msal', $currency);
     }
 
+    public function address()
+    {
+        return $this->hasOne(CreditCardAddress::class, 'tcact_mdir', 'tcact_mtar');
+    }
+
     public function getIdentification()
     {
         return $this->indcl_mtar;

@@ -120,6 +120,21 @@ class Customer extends Model
         return cap_str($this->cusna2);
     }
 
+    public function getCountry()
+    {
+        return cap_str($this->cusctr);
+    }
+
+    public function getPostalMail()
+    {
+        return cap_str($this->cuspob);
+    }
+
+    public function getZipCode()
+    {
+        return cap_str($this->cuszpc);
+    }
+
     public function getResidentialOrBuilding()
     {
         return cap_str($this->cusna3);
@@ -188,6 +203,11 @@ class Customer extends Model
         return clear_str($this->cusiad);
     }
 
+    public function getMailType()
+    {
+        return clear_str($this->cusmlc);
+    }
+
     public static function getPhoto($identification)
     {
         $identification = clear_str($identification);
@@ -235,5 +255,10 @@ class Customer extends Model
         // return $this->hasMany(CreditCard::class, 'codcl_mtar')->where(function ($query) {
         //     $query->where('stsrd_mtar', 1)->orWhere('stsrd_mtar', 6);
         // });
+    }
+
+    public function scopeSearchByIdentification($query, $identification)
+    {
+        return $query->where('cusidn', $identification)->orWhere('cusln3', $identification);
     }
 }

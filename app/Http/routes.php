@@ -38,7 +38,7 @@ Route::group(['prefix' => 'notification'], function () {
 Route::group(['middleware' => 'auth'], function () {
 
     //Consulta del Historico
-    Route::resource('consultas/historicoproducto','Consultas\HistoricoProducto\ProductoController');       
+    Route::resource('consultas/historicoproducto','Consultas\HistoricoProducto\ProductoController');
 
     //Route::get('consultas/historicoproducto/show}','Consultas\HistoricoProducto\ProductoController@show');
 
@@ -48,8 +48,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('consultas/historicoproducto/reportetrans/{cuenta}', 'Consultas\HistoricoProducto\TransaccionController@reportetrans');
 
-    //Actualizcion de clientes 
-    Route::resource('cumplimiento/cliente','Cumplimiento\Cliente\CumstController');     
+    //Actualizcion de clientes
+    Route::resource('cumplimiento/cliente','Cumplimiento\Cliente\CumstController');
 
 
     Route::group(['prefix' => 'security'], function () {
@@ -309,6 +309,14 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('claim', 'Customer\Claim\ClaimController', ['only' => [
             'index', 'create', 'store', 'show'
+        ]]);
+
+        Route::group(['prefix' => 'maintenance'], function () {
+            Route::get('load', 'Customer\MaintenanceController@load')->name('customer.maintenance.load');
+        });
+
+        Route::resource('maintenance', 'Customer\MaintenanceController', ['only' => [
+            'create', 'store'
         ]]);
     });
 
