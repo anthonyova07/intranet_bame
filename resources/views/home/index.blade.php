@@ -14,7 +14,11 @@
                         La Columna del Presidente
                     </div>
                     <div class="row text-center" style="margin-bottom: 10px;">
-                        <img style="max-width: 402px;" src="{{ route('home') . $column_new->image }}">
+                        @if ($column_new->imgbanner == '' || !$column_new->imgbanner)
+                            <img src="{{ route('home') . $column_new->image . '?id=' . uniqid() }}" style="max-width: 402px;">
+                        @else
+                            <img src="{{ route('home') . $column_new->imgbanner . '?id=' . uniqid() }}" style="max-width: 402px;">
+                        @endif
                     </div>
                     <div class="row parrafo-columna text-justify">
                         <p style="height: 220px;max-height: 180px;"><b>{{ substr(strip_tags($column_new->title), 0, 80) . '...' }}</b> {!! substr(strip_tags(html_entity_decode($column_new->detail)), 0, 500)  . '...' !!}</p>
@@ -42,7 +46,11 @@
                             <div class="carousel-inner">
                                 @foreach ($banners_news as $index => $banner)
                                     <div class="item {{ $index == 0 ? 'active':'' }}">
-                                        <img src="{{ route('home') . $banner->image }}" style="height: 232px;margin: auto;">
+                                        @if ($banner->imgbanner == '' || !$banner->imgbanner)
+                                            <img src="{{ route('home') . $banner->image . '?id=' . uniqid() }}" style="height: 232px;margin: auto;">
+                                        @else
+                                            <img src="{{ route('home') . $banner->imgbanner . '?id=' . uniqid() }}" style="height: 232px;margin: auto;">
+                                        @endif
                                         <div class="carousel-caption" style="right: 0;left: 0;margin-bottom: -44px;">
                                             {{-- <a href="http://bancamerica.com.do/" target="__blank" class="link_noticias_no_effect">Ver Detalle</a> --}}
                                         </div>
