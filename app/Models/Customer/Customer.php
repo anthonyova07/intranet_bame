@@ -252,9 +252,13 @@ class Customer extends Model
     public function creditcards()
     {
         return $this->hasMany(CreditCard::class, 'codcl_mtar');
-        // return $this->hasMany(CreditCard::class, 'codcl_mtar')->where(function ($query) {
-        //     $query->where('stsrd_mtar', 1)->orWhere('stsrd_mtar', 6);
-        // });
+    }
+
+    public function actives_creditcards()
+    {
+        return $this->hasMany(CreditCard::class, 'codcl_mtar')->where(function ($query) {
+            $query->where('stsrd_mtar', 1)->orWhere('stsrd_mtar', 6);
+        });
     }
 
     public function scopeSearchByIdentification($query, $identification)

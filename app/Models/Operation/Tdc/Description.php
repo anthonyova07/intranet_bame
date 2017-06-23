@@ -30,4 +30,14 @@ class Description extends Model
     {
         return cap_str($this->fecpr_atrn);
     }
+
+    public function scopeWherePrefix($query, $prefix)
+    {
+        return $query->where('prefi_desc', $prefix);
+    }
+
+    public function scopeOrderByDescription($query)
+    {
+        return $query->orderBy('nombr_desc', 'asc');
+    }
 }

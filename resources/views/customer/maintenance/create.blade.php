@@ -24,25 +24,25 @@
                 <div class="col-xs-4 col-xs-offset-4">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <form method="get" action="{{ route('customer.maintenance.create', Request::all()) }}">
+                            <form method="get" id="actives_creditcards_form" action="{{ route('customer.maintenance.create', Request::all()) }}">
                                 @foreach (Request::except('_token') as $key => $value)
                                     <input type="hidden" name="{{ $key }}" value="{{ $value }}">
                                 @endforeach
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <div class="form-group{{ $errors->first('tdc') ? ' has-error':'' }}">
-                                            <label class="control-label">Tarjetas</label>
-                                            <select class="form-control input-sm" name="tdc" data-toggle="tooltip" title="Tarjetas de Credito">
-                                                @foreach ($customer->creditcards as $key => $creditcard)
+                                        <div class="form-group{{ $errors->first('tdc') ? ' has-error':'' }}" style="margin-bottom: 0px;">
+                                            {{-- <label class="control-label">Tarjetas</label> --}}
+                                            <select onchange="$('#actives_creditcards_form').submit();" class="form-control input-sm" name="tdc" data-toggle="tooltip" title="Tarjetas del Cliente" style="border-color: #ff0000;outline: 0;box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255,0,0,.6);">
+                                                @foreach ($customer->actives_creditcards as $key => $creditcard)
                                                     <option type="tdc" value="{{ $key }}" {{ $tdc == $key ? 'selected':'' }}>Tarjeta ( {{ $creditcard->getMaskedNumber() }} )</option>
                                                 @endforeach
                                             </select>
-                                            <span class="help-block">{{ $errors->first('tdc') }}</span>
+                                            {{-- <span class="help-block">{{ $errors->first('tdc') }}</span> --}}
                                         </div>
                                     </div>
                                 </div>
                                 {{ csrf_field() }}
-                                <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Buscando...">Buscar Dirección</button>
+                                {{-- <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Buscando...">Buscar Dirección</button> --}}
                             </form>
                         </div>
                     </div>
@@ -52,6 +52,9 @@
         @endif
 
         <form method="post" action="{{ route('customer.maintenance.store') }}" id="form">
+            {{ csrf_field() }}
+            <input type="hidden" name="tdc" value="{{ request('tdc') }}">
+            <input type="hidden" name="core" value="{{ request('core') }}">
 
             <div class="row">
                 @if ($core == 'ibs')
@@ -195,16 +198,16 @@
 
                 @if ($core == 'itc')
 
-                    <div class="col-xs-6 col-xs-offset-3">
+                    <div class="col-xs-6">
                         <div class="panel panel-default">
 
                             <div class="panel-body">
-                                <h1 class="text-center label label-warning" style="font-size: 40px;padding: 2px 206px;">ITC</h1>
+                                <h1 class="text-center label label-warning" style="font-size: 40px;padding: 2px 108px;">ITC Dirección 1</h1>
                             </div>
 
                             <div class="panel-body">
                                 <div class="row text-center" style="margin-bottom: 5px;">
-                                    <div class="label label-default" style="font-size: 16px;">Dirección de la TDC {{ $customer->creditcards->get($tdc)->getMaskedNumber() }}</div>
+                                    <div class="label label-default" style="font-size: 16px;">Dirección de la TDC {{ $customer->actives_creditcards->get($tdc)->getMaskedNumber() }}</div>
                                 </div>
 
                                 <div class="col-xs-6">
@@ -281,7 +284,7 @@
                                 <div class="col-xs-6">
                                     <div class="form-group{{ $errors->first('building_name_itc') ? ' has-error':'' }}">
                                         <label class="control-label">Nombre Edificio</label>
-                                        <input type="text" class="form-control input-sm" name="building_name_itc" value="{{ old('building_name_itc') ? old('building_name_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getBuildingName() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="building_name_itc" value="{{ old('building_name_itc') ? old('building_name_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getBuildingName() : '') }}">
                                         <span class="help-block">{{ $errors->first('building_name_itc') }}</span>
                                     </div>
                                 </div>
@@ -289,7 +292,7 @@
                                 <div class="col-xs-6">
                                     <div class="form-group{{ $errors->first('block_itc') ? ' has-error':'' }}">
                                         <label class="control-label">Manzana</label>
-                                        <input type="text" class="form-control input-sm" name="block_itc" value="{{ old('block_itc') ? old('block_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getBlock() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="block_itc" value="{{ old('block_itc') ? old('block_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getBlock() : '') }}">
                                         <span class="help-block">{{ $errors->first('block_itc') }}</span>
                                     </div>
                                 </div>
@@ -297,7 +300,7 @@
                                 <div class="col-xs-6">
                                     <div class="form-group{{ $errors->first('house_number_itc') ? ' has-error':'' }}">
                                         <label class="control-label">No. Casa/Apartamento</label>
-                                        <input type="text" class="form-control input-sm" name="house_number_itc" value="{{ old('house_number_itc') ? old('house_number_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getHouseNumber() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="house_number_itc" value="{{ old('house_number_itc') ? old('house_number_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getHouseNumber() : '') }}">
                                         <span class="help-block">{{ $errors->first('house_number_itc') }}</span>
                                     </div>
                                 </div>
@@ -305,7 +308,7 @@
                                 <div class="col-xs-6">
                                     <div class="form-group{{ $errors->first('km_itc') ? ' has-error':'' }}">
                                         <label class="control-label">KM</label>
-                                        <input type="text" class="form-control input-sm" name="km_itc" value="{{ old('km_itc') ? old('km_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getHouseNumber() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="km_itc" value="{{ old('km_itc') ? old('km_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getHouseNumber() : '') }}">
                                         <span class="help-block">{{ $errors->first('km_itc') }}</span>
                                     </div>
                                 </div>
@@ -313,7 +316,7 @@
                                 <div class="col-xs-6">
                                     <div class="form-group{{ $errors->first('postal_zone_itc') ? ' has-error':'' }}">
                                         <label class="control-label">Zona Postal</label>
-                                        <input type="text" class="form-control input-sm" name="postal_zone_itc" value="{{ old('postal_zone_itc') ? old('postal_zone_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getPostalZone() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="postal_zone_itc" value="{{ old('postal_zone_itc') ? old('postal_zone_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getPostalZone() : '') }}">
                                         <span class="help-block">{{ $errors->first('postal_zone_itc') }}</span>
                                     </div>
                                 </div>
@@ -321,7 +324,7 @@
                                 <div class="col-xs-6">
                                     <div class="form-group{{ $errors->first('postal_mail_itc') ? ' has-error':'' }}">
                                         <label class="control-label">Apartado Postal</label>
-                                        <input type="text" class="form-control input-sm" name="postal_mail_itc" value="{{ old('postal_mail_itc') ? old('postal_mail_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getPostalMail() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="postal_mail_itc" value="{{ old('postal_mail_itc') ? old('postal_mail_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getPostalMail() : '') }}">
                                         <span class="help-block">{{ $errors->first('postal_mail_itc') }}</span>
                                     </div>
                                 </div>
@@ -329,7 +332,7 @@
                                 <div class="col-xs-6">
                                     <div class="form-group{{ $errors->first('in_street_1_itc') ? ' has-error':'' }}">
                                         <label class="control-label">Entre Cuales Calles 1</label>
-                                        <input type="text" class="form-control input-sm" name="in_street_1_itc" value="{{ old('in_street_1_itc') ? old('in_street_1_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getInStreet1() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="in_street_1_itc" value="{{ old('in_street_1_itc') ? old('in_street_1_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getInStreet1() : '') }}">
                                         <span class="help-block">{{ $errors->first('in_street_1_itc') }}</span>
                                     </div>
                                 </div>
@@ -337,7 +340,7 @@
                                 <div class="col-xs-6">
                                     <div class="form-group{{ $errors->first('in_street_2_itc') ? ' has-error':'' }}">
                                         <label class="control-label">Entre Cuales Calles 2</label>
-                                        <input type="text" class="form-control input-sm" name="in_street_2_itc" value="{{ old('in_street_2_itc') ? old('in_street_2_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getInStreet2() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="in_street_2_itc" value="{{ old('in_street_2_itc') ? old('in_street_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getInStreet2() : '') }}">
                                         <span class="help-block">{{ $errors->first('in_street_2_itc') }}</span>
                                     </div>
                                 </div>
@@ -345,7 +348,7 @@
                                 <div class="col-xs-12">
                                     <div class="form-group{{ $errors->first('special_instruction_itc') ? ' has-error':'' }}">
                                         <label class="control-label">Intrucción Especial</label>
-                                        <input type="text" class="form-control input-sm" name="special_instruction_itc" value="{{ old('special_instruction_itc') ? old('special_instruction_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getSpecialInstruction() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="special_instruction_itc" value="{{ old('special_instruction_itc') ? old('special_instruction_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getSpecialInstruction() : '') }}">
                                         <span class="help-block">{{ $errors->first('special_instruction_itc') }}</span>
                                     </div>
                                 </div>
@@ -354,13 +357,13 @@
 
                             <div class="panel-body">
                                 <div class="row text-center" style="margin-bottom: 5px;">
-                                    <div class="label label-default" style="font-size: 16px;">Contacto de la TDC {{ $customer->creditcards->get($tdc)->getMaskedNumber() }}</div>
+                                    <div class="label label-default" style="font-size: 16px;">Contacto de la TDC {{ $customer->actives_creditcards->get($tdc)->getMaskedNumber() }}</div>
                                 </div>
 
                                 <div class="col-xs-4">
                                     <div class="form-group{{ $errors->first('main_phone_area_itc') ? ' has-error':'' }}">
                                         <label class="control-label">Teléfono Principal Área</label>
-                                        <input type="text" class="form-control input-sm" name="main_phone_area_itc" value="{{ old('main_phone_area_itc') ? old('main_phone_area_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getMainPhoneArea() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="main_phone_area_itc" value="{{ old('main_phone_area_itc') ? old('main_phone_area_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getMainPhoneArea() : '') }}">
                                         <span class="help-block">{{ $errors->first('main_phone_area_itc') }}</span>
                                     </div>
                                 </div>
@@ -368,7 +371,7 @@
                                 <div class="col-xs-4">
                                     <div class="form-group{{ $errors->first('main_phone_number_itc') ? ' has-error':'' }}">
                                         <label class="control-label">Teléfono Principal Núm.</label>
-                                        <input type="text" class="form-control input-sm" name="main_phone_number_itc" value="{{ old('main_phone_number_itc') ? old('main_phone_number_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getMainPhoneNumber() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="main_phone_number_itc" value="{{ old('main_phone_number_itc') ? old('main_phone_number_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getMainPhoneNumber() : '') }}">
                                         <span class="help-block">{{ $errors->first('main_phone_number_itc') }}</span>
                                     </div>
                                 </div>
@@ -376,7 +379,7 @@
                                 <div class="col-xs-4">
                                     <div class="form-group{{ $errors->first('main_phone_ext_itc') ? ' has-error':'' }}">
                                         <label class="control-label">Teléfono Principal Ext.</label>
-                                        <input type="text" class="form-control input-sm" name="main_phone_ext_itc" value="{{ old('main_phone_ext_itc') ? old('main_phone_ext_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getMainPhoneExt() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="main_phone_ext_itc" value="{{ old('main_phone_ext_itc') ? old('main_phone_ext_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getMainPhoneExt() : '') }}">
                                         <span class="help-block">{{ $errors->first('main_phone_ext_itc') }}</span>
                                     </div>
                                 </div>
@@ -384,7 +387,7 @@
                                 <div class="col-xs-4">
                                     <div class="form-group{{ $errors->first('secundary_phone_area_itc') ? ' has-error':'' }}">
                                         <label class="control-label">Teléfono Secun. Área</label>
-                                        <input type="text" class="form-control input-sm" name="secundary_phone_area_itc" value="{{ old('secundary_phone_area_itc') ? old('secundary_phone_area_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getMainPhoneArea() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="secundary_phone_area_itc" value="{{ old('secundary_phone_area_itc') ? old('secundary_phone_area_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getMainPhoneArea() : '') }}">
                                         <span class="help-block">{{ $errors->first('secundary_phone_area_itc') }}</span>
                                     </div>
                                 </div>
@@ -392,7 +395,7 @@
                                 <div class="col-xs-4">
                                     <div class="form-group{{ $errors->first('secundary_phone_number_itc') ? ' has-error':'' }}">
                                         <label class="control-label">Teléfono Secun. Núm.</label>
-                                        <input type="text" class="form-control input-sm" name="secundary_phone_number_itc" value="{{ old('secundary_phone_number_itc') ? old('secundary_phone_number_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getMainPhoneNumber() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="secundary_phone_number_itc" value="{{ old('secundary_phone_number_itc') ? old('secundary_phone_number_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getMainPhoneNumber() : '') }}">
                                         <span class="help-block">{{ $errors->first('secundary_phone_number_itc') }}</span>
                                     </div>
                                 </div>
@@ -400,7 +403,7 @@
                                 <div class="col-xs-4">
                                     <div class="form-group{{ $errors->first('secundary_phone_ext_itc') ? ' has-error':'' }}">
                                         <label class="control-label">Teléfono Secun. Ext.</label>
-                                        <input type="text" class="form-control input-sm" name="secundary_phone_ext_itc" value="{{ old('secundary_phone_ext_itc') ? old('secundary_phone_ext_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getMainPhoneExt() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="secundary_phone_ext_itc" value="{{ old('secundary_phone_ext_itc') ? old('secundary_phone_ext_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getMainPhoneExt() : '') }}">
                                         <span class="help-block">{{ $errors->first('secundary_phone_ext_itc') }}</span>
                                     </div>
                                 </div>
@@ -408,7 +411,7 @@
                                 <div class="col-xs-6">
                                     <div class="form-group{{ $errors->first('main_cell_area_itc') ? ' has-error':'' }}">
                                         <label class="control-label">Teléfono Principal Área</label>
-                                        <input type="text" class="form-control input-sm" name="main_cell_area_itc" value="{{ old('main_cell_area_itc') ? old('main_cell_area_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getMainCellArea() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="main_cell_area_itc" value="{{ old('main_cell_area_itc') ? old('main_cell_area_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getMainCellArea() : '') }}">
                                         <span class="help-block">{{ $errors->first('main_cell_area_itc') }}</span>
                                     </div>
                                 </div>
@@ -416,7 +419,7 @@
                                 <div class="col-xs-6">
                                     <div class="form-group{{ $errors->first('main_cell_number_itc') ? ' has-error':'' }}">
                                         <label class="control-label">Teléfono Principal Núm.</label>
-                                        <input type="text" class="form-control input-sm" name="main_cell_number_itc" value="{{ old('main_cell_number_itc') ? old('main_cell_number_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getMainCellNumber() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="main_cell_number_itc" value="{{ old('main_cell_number_itc') ? old('main_cell_number_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getMainCellNumber() : '') }}">
                                         <span class="help-block">{{ $errors->first('main_cell_number_itc') }}</span>
                                     </div>
                                 </div>
@@ -424,7 +427,7 @@
                                 <div class="col-xs-6">
                                     <div class="form-group{{ $errors->first('secundary_cell_area_itc') ? ' has-error':'' }}">
                                         <label class="control-label">Celular Secun. Área</label>
-                                        <input type="text" class="form-control input-sm" name="secundary_cell_area_itc" value="{{ old('secundary_cell_area_itc') ? old('secundary_cell_area_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getSecundaryCellArea() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="secundary_cell_area_itc" value="{{ old('secundary_cell_area_itc') ? old('secundary_cell_area_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getSecundaryCellArea() : '') }}">
                                         <span class="help-block">{{ $errors->first('secundary_cell_area_itc') }}</span>
                                     </div>
                                 </div>
@@ -432,7 +435,7 @@
                                 <div class="col-xs-6">
                                     <div class="form-group{{ $errors->first('secundary_cell_number_itc') ? ' has-error':'' }}">
                                         <label class="control-label">Celular Secun. Núm.</label>
-                                        <input type="text" class="form-control input-sm" name="secundary_cell_number_itc" value="{{ old('secundary_cell_number_itc') ? old('secundary_cell_number_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getSecundaryCellNumber() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="secundary_cell_number_itc" value="{{ old('secundary_cell_number_itc') ? old('secundary_cell_number_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getSecundaryCellNumber() : '') }}">
                                         <span class="help-block">{{ $errors->first('secundary_cell_number_itc') }}</span>
                                     </div>
                                 </div>
@@ -440,7 +443,7 @@
                                 <div class="col-xs-6">
                                     <div class="form-group{{ $errors->first('fax_area_itc') ? ' has-error':'' }}">
                                         <label class="control-label">Fax Área</label>
-                                        <input type="text" class="form-control input-sm" name="fax_area_itc" value="{{ old('fax_area_itc') ? old('fax_area_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getSecundaryCellArea() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="fax_area_itc" value="{{ old('fax_area_itc') ? old('fax_area_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getSecundaryCellArea() : '') }}">
                                         <span class="help-block">{{ $errors->first('fax_area_itc') }}</span>
                                     </div>
                                 </div>
@@ -448,7 +451,7 @@
                                 <div class="col-xs-6">
                                     <div class="form-group{{ $errors->first('fax_number_itc') ? ' has-error':'' }}">
                                         <label class="control-label">Fax Número</label>
-                                        <input type="text" class="form-control input-sm" name="fax_number_itc" value="{{ old('fax_number_itc') ? old('fax_number_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getSecundaryCellNumber() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="fax_number_itc" value="{{ old('fax_number_itc') ? old('fax_number_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getSecundaryCellNumber() : '') }}">
                                         <span class="help-block">{{ $errors->first('fax_number_itc') }}</span>
                                     </div>
                                 </div>
@@ -456,8 +459,307 @@
                                 <div class="col-xs-12">
                                     <div class="form-group{{ $errors->first('mail_itc') ? ' has-error':'' }}">
                                         <label class="control-label">Correo Electronico</label>
-                                        <input type="text" class="form-control input-sm" name="mail_itc" value="{{ old('mail_itc') ? old('mail_itc') : ($customer->creditcards->get($tdc)->address ? $customer->creditcards->get($tdc)->address->getSecundaryCellNumber() : '') }}">
+                                        <input type="text" class="form-control input-sm" name="mail_itc" value="{{ old('mail_itc') ? old('mail_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getSecundaryCellNumber() : '') }}">
                                         <span class="help-block">{{ $errors->first('mail_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <div class="form-group{{ $errors->first('ways_sending_statement_itc') ? ' has-error':'' }}">
+                                        <label class="control-label col-xs-12" style="padding-left: 0px;">Formas de Envio de Estados</label>
+                                        @foreach ($ways_sending_statements as $ways)
+                                            <div class="col-xs-4">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="ways_sending_statement_itc" value="{{ $ways->getCode() }}"> {{ $ways->getDescription() }}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                        <span class="help-block">{{ $errors->first('ways_sending_statement_itc') }}</span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6">
+                        <div class="panel panel-default">
+
+                            <div class="panel-body">
+                                <h1 class="text-center label label-warning" style="font-size: 40px;padding: 2px 103px;">ITC Dirección 2</h1>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="row text-center" style="margin-bottom: 5px;">
+                                    <div class="label label-default" style="font-size: 16px;">Dirección de la TDC {{ $customer->actives_creditcards->get($tdc)->getMaskedNumber() }}</div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('country_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">País</label>
+                                        <select class="form-control input-sm" name="country_2_itc">
+                                            <option value="DOM" selected>REPÚBLICA DOMINICANA</option>
+                                        </select>
+                                        <span class="help-block">{{ $errors->first('country_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('region_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Región</label>
+                                        <select class="form-control input-sm" name="region_2_itc">
+                                            <option value="">Seleccione una región</option>
+                                            @foreach ($regions as $region)
+                                                <option value="{{ $region->getCode() }}">{{ $region->getDesc() }}</option>
+                                            @endforeach
+                                        </select>
+                                        <span class="help-block">{{ $errors->first('region_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('province_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Provincia</label>
+                                        <select class="form-control input-sm" name="province_2_itc"></select>
+                                        <span class="help-block">{{ $errors->first('province_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('city_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Ciudad</label>
+                                        <select class="form-control input-sm" name="city_2_itc"></select>
+                                        <span class="help-block">{{ $errors->first('city_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('municipality_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Municipio</label>
+                                        <select class="form-control input-sm" name="municipality_2_itc"></select>
+                                        <span class="help-block">{{ $errors->first('municipality_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('sector_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Sector</label>
+                                        <select class="form-control input-sm" name="sector_2_itc"></select>
+                                        <span class="help-block">{{ $errors->first('sector_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('neighborhood_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Barrio</label>
+                                        <select class="form-control input-sm" name="neighborhood_2_itc"></select>
+                                        <span class="help-block">{{ $errors->first('neighborhood_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('street_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Calle</label>
+                                        <select class="form-control input-sm" name="street_2_itc"></select>
+                                        <span class="help-block">{{ $errors->first('street_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('building_name_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Nombre Edificio</label>
+                                        <input type="text" class="form-control input-sm" name="building_name_2_itc" value="{{ old('building_name_2_itc') ? old('building_name_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getBuildingName() : '') }}">
+                                        <span class="help-block">{{ $errors->first('building_name_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('block_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Manzana</label>
+                                        <input type="text" class="form-control input-sm" name="block_2_itc" value="{{ old('block_2_itc') ? old('block_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getBlock() : '') }}">
+                                        <span class="help-block">{{ $errors->first('block_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('house_number_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">No. Casa/Apartamento</label>
+                                        <input type="text" class="form-control input-sm" name="house_number_2_itc" value="{{ old('house_number_2_itc') ? old('house_number_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getHouseNumber() : '') }}">
+                                        <span class="help-block">{{ $errors->first('house_number_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('km_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">KM</label>
+                                        <input type="text" class="form-control input-sm" name="km_2_itc" value="{{ old('km_2_itc') ? old('km_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getHouseNumber() : '') }}">
+                                        <span class="help-block">{{ $errors->first('km_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('postal_zone_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Zona Postal</label>
+                                        <input type="text" class="form-control input-sm" name="postal_zone_2_itc" value="{{ old('postal_zone_2_itc') ? old('postal_zone_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getPostalZone() : '') }}">
+                                        <span class="help-block">{{ $errors->first('postal_zone_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('postal_mail_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Apartado Postal</label>
+                                        <input type="text" class="form-control input-sm" name="postal_mail_2_itc" value="{{ old('postal_mail_2_itc') ? old('postal_mail_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getPostalMail() : '') }}">
+                                        <span class="help-block">{{ $errors->first('postal_mail_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('in_street_1_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Entre Cuales Calles 1</label>
+                                        <input type="text" class="form-control input-sm" name="in_street_1_2_itc" value="{{ old('in_street_1_2_itc') ? old('in_street_1_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getInStreet1() : '') }}">
+                                        <span class="help-block">{{ $errors->first('in_street_1_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('in_street_2_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Entre Cuales Calles 2</label>
+                                        <input type="text" class="form-control input-sm" name="in_street_2_2_itc" value="{{ old('in_street_2_2_itc') ? old('in_street_2_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getInStreet2() : '') }}">
+                                        <span class="help-block">{{ $errors->first('in_street_2_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <div class="form-group{{ $errors->first('special_instruction_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Intrucción Especial</label>
+                                        <input type="text" class="form-control input-sm" name="special_instruction_2_itc" value="{{ old('special_instruction_2_itc') ? old('special_instruction_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getSpecialInstruction() : '') }}">
+                                        <span class="help-block">{{ $errors->first('special_instruction_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="row text-center" style="margin-bottom: 5px;">
+                                    <div class="label label-default" style="font-size: 16px;">Contacto de la TDC {{ $customer->actives_creditcards->get($tdc)->getMaskedNumber() }}</div>
+                                </div>
+
+                                <div class="col-xs-4">
+                                    <div class="form-group{{ $errors->first('main_phone_area_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Teléfono Principal Área</label>
+                                        <input type="text" class="form-control input-sm" name="main_phone_area_2_itc" value="{{ old('main_phone_area_2_itc') ? old('main_phone_area_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getMainPhoneArea() : '') }}">
+                                        <span class="help-block">{{ $errors->first('main_phone_area_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-4">
+                                    <div class="form-group{{ $errors->first('main_phone_number_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Teléfono Principal Núm.</label>
+                                        <input type="text" class="form-control input-sm" name="main_phone_number_2_itc" value="{{ old('main_phone_number_2_itc') ? old('main_phone_number_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getMainPhoneNumber() : '') }}">
+                                        <span class="help-block">{{ $errors->first('main_phone_number_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-4">
+                                    <div class="form-group{{ $errors->first('main_phone_ext_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Teléfono Principal Ext.</label>
+                                        <input type="text" class="form-control input-sm" name="main_phone_ext_2_itc" value="{{ old('main_phone_ext_2_itc') ? old('main_phone_ext_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getMainPhoneExt() : '') }}">
+                                        <span class="help-block">{{ $errors->first('main_phone_ext_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-4">
+                                    <div class="form-group{{ $errors->first('secundary_phone_area_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Teléfono Secun. Área</label>
+                                        <input type="text" class="form-control input-sm" name="secundary_phone_area_2_itc" value="{{ old('secundary_phone_area_2_itc') ? old('secundary_phone_area_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getMainPhoneArea() : '') }}">
+                                        <span class="help-block">{{ $errors->first('secundary_phone_area_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-4">
+                                    <div class="form-group{{ $errors->first('secundary_phone_number_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Teléfono Secun. Núm.</label>
+                                        <input type="text" class="form-control input-sm" name="secundary_phone_number_2_itc" value="{{ old('secundary_phone_number_2_itc') ? old('secundary_phone_number_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getMainPhoneNumber() : '') }}">
+                                        <span class="help-block">{{ $errors->first('secundary_phone_number_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-4">
+                                    <div class="form-group{{ $errors->first('secundary_phone_ext_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Teléfono Secun. Ext.</label>
+                                        <input type="text" class="form-control input-sm" name="secundary_phone_ext_2_itc" value="{{ old('secundary_phone_ext_2_itc') ? old('secundary_phone_ext_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getMainPhoneExt() : '') }}">
+                                        <span class="help-block">{{ $errors->first('secundary_phone_ext_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('main_cell_area_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Teléfono Principal Área</label>
+                                        <input type="text" class="form-control input-sm" name="main_cell_area_2_itc" value="{{ old('main_cell_area_2_itc') ? old('main_cell_area_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getMainCellArea() : '') }}">
+                                        <span class="help-block">{{ $errors->first('main_cell_area_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('main_cell_number_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Teléfono Principal Núm.</label>
+                                        <input type="text" class="form-control input-sm" name="main_cell_number_2_itc" value="{{ old('main_cell_number_2_itc') ? old('main_cell_number_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getMainCellNumber() : '') }}">
+                                        <span class="help-block">{{ $errors->first('main_cell_number_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('secundary_cell_area_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Celular Secun. Área</label>
+                                        <input type="text" class="form-control input-sm" name="secundary_cell_area_2_itc" value="{{ old('secundary_cell_area_2_itc') ? old('secundary_cell_area_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getSecundaryCellArea() : '') }}">
+                                        <span class="help-block">{{ $errors->first('secundary_cell_area_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('secundary_cell_number_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Celular Secun. Núm.</label>
+                                        <input type="text" class="form-control input-sm" name="secundary_cell_number_2_itc" value="{{ old('secundary_cell_number_2_itc') ? old('secundary_cell_number_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getSecundaryCellNumber() : '') }}">
+                                        <span class="help-block">{{ $errors->first('secundary_cell_number_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('fax_area_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Fax Área</label>
+                                        <input type="text" class="form-control input-sm" name="fax_area_2_itc" value="{{ old('fax_area_2_itc') ? old('fax_area_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getSecundaryCellArea() : '') }}">
+                                        <span class="help-block">{{ $errors->first('fax_area_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('fax_number_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Fax Número</label>
+                                        <input type="text" class="form-control input-sm" name="fax_number_2_itc" value="{{ old('fax_number_2_itc') ? old('fax_number_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getSecundaryCellNumber() : '') }}">
+                                        <span class="help-block">{{ $errors->first('fax_number_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <div class="form-group{{ $errors->first('mail_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label">Correo Electronico</label>
+                                        <input type="text" class="form-control input-sm" name="mail_2_itc" value="{{ old('mail_2_itc') ? old('mail_2_itc') : ($customer->actives_creditcards->get($tdc)->address ? $customer->actives_creditcards->get($tdc)->address->getSecundaryCellNumber() : '') }}">
+                                        <span class="help-block">{{ $errors->first('mail_2_itc') }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <div class="form-group{{ $errors->first('ways_sending_statement_2_itc') ? ' has-error':'' }}">
+                                        <label class="control-label col-xs-12" style="padding-left: 0px;">Formas de Envio de Estados</label>
+                                        @foreach ($ways_sending_statements as $ways)
+                                            <div class="col-xs-4">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="ways_sending_statement_2_itc" value="{{ $ways->getCode() }}"> {{ $ways->getDescription() }}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                        <span class="help-block">{{ $errors->first('ways_sending_statement_2_itc') }}</span>
                                     </div>
                                 </div>
 
@@ -698,6 +1000,184 @@
             },function (response) {
                 $.each(response, function (index, item) {
                     street.append($('<option>', {
+                        value: item.code,
+                        text: item.description
+                    }));
+                });
+            });
+        });
+
+
+        // ----------------------------------------
+
+        var country2 = $('select[name=country_2_itc]');
+        var region2 = $('select[name=region_2_itc]');
+        var province2 = $('select[name=province_2_itc]');
+        var city2 = $('select[name=city_2_itc]');
+        var municipality2 = $('select[name=municipality_2_itc]');
+        var sector2 = $('select[name=sector_2_itc]');
+        var neighborhood2 = $('select[name=neighborhood_2_itc]');
+        var street2 = $('select[name=street_2_itc]');
+
+        region2.change(function () {
+            province2.html('');
+            city2.html('');
+            municipality2.html('');
+            sector2.html('');
+            neighborhood2.html('');
+            street2.html('');
+
+            if (region2.val() == '') {
+                return;
+            }
+
+            $.getJSON(url, {
+                search: 'province',
+                country: country2.val(),
+                region: region2.val(),
+            },function (response) {
+                province2.append($('<option>', {value: '', text: ''}));
+
+                $.each(response, function (index, item) {
+                    province2.append($('<option>', {
+                        value: item.code,
+                        text: item.description
+                    }));
+                });
+            });
+        });
+
+        province2.change(function () {
+            city2.html('');
+            municipality2.html('');
+            sector2.html('');
+            neighborhood2.html('');
+            street2.html('');
+
+            if (province2.val() == '') {
+                return;
+            }
+
+            $.getJSON(url, {
+                search: 'city',
+                country: country2.val(),
+                region: region2.val(),
+                province: province2.val(),
+            },function (response) {
+                city2.append($('<option>', {value: '', text: ''}));
+
+                $.each(response, function (index, item) {
+                    city2.append($('<option>', {
+                        value: item.code,
+                        text: item.description
+                    }));
+                });
+            });
+        });
+
+        city2.change(function () {
+            municipality2.html('');
+            sector2.html('');
+            neighborhood2.html('');
+            street2.html('');
+
+            if (city2.val() == '') {
+                return;
+            }
+
+            $.getJSON(url, {
+                search: 'municipality',
+                country: country2.val(),
+                region: region2.val(),
+                province: province2.val(),
+                city: city2.val(),
+            },function (response) {
+                municipality2.append($('<option>', {value: '', text: ''}));
+
+                $.each(response, function (index, item) {
+                    municipality2.append($('<option>', {
+                        value: item.code,
+                        text: item.description
+                    }));
+                });
+            });
+        });
+
+        municipality2.change(function () {
+            sector2.html('');
+            neighborhood2.html('');
+            street2.html('');
+
+            if (municipality2.val() == '') {
+                return;
+            }
+
+            $.getJSON(url, {
+                search: 'sector',
+                country: country2.val(),
+                region: region2.val(),
+                province: province2.val(),
+                city: city2.val(),
+                municipality: municipality2.val(),
+            },function (response) {
+                sector2.append($('<option>', {value: '', text: ''}));
+
+                $.each(response, function (index, item) {
+                    sector2.append($('<option>', {
+                        value: item.code,
+                        text: item.description
+                    }));
+                });
+            });
+        });
+
+        sector2.change(function () {
+            neighborhood2.html('');
+            street2.html('');
+
+            if (sector2.val() == '') {
+                return;
+            }
+
+            $.getJSON(url, {
+                search: 'neighborhood',
+                country: country2.val(),
+                region: region2.val(),
+                province: province2.val(),
+                city: city2.val(),
+                municipality: municipality2.val(),
+                sector: sector2.val(),
+            },function (response) {
+                neighborhood2.append($('<option>', {value: '', text: ''}));
+
+                $.each(response, function (index, item) {
+                    neighborhood2.append($('<option>', {
+                        value: item.code,
+                        text: item.description
+                    }));
+                });
+            });
+        });
+
+        neighborhood2.change(function () {
+            street2.html('');
+
+            if (neighborhood2.val() == '') {
+                return;
+            }
+
+            $.getJSON(url, {
+                search: 'street',
+                country: country2.val(),
+                region: region2.val(),
+                province: province2.val(),
+                city: city2.val(),
+                municipality: municipality2.val(),
+                sector: sector2.val(),
+                neighborhood: neighborhood2.val(),
+            },function (response) {
+                $.each(response, function (index, item) {
+                    street2.append($('<option>', {
                         value: item.code,
                         text: item.description
                     }));
