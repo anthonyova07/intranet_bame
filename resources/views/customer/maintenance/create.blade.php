@@ -8,11 +8,11 @@
     @section('page_title', 'Nuevo Mantenimiento')
 @endif
 
-{{-- @if (can_not_do('customer_maintenance'))
+@if (can_not_do('customer_maintenance_address'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 
