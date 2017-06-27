@@ -270,7 +270,7 @@
                     @foreach ($ways_sending_statements as $ways)
                         <div class="col-xs-4">
                             <label class="radio-inline">
-                                <input type="radio" name="ways_sending_statement_2_itc"{{ $customer->actives_creditcards->get($tdc)->address_two->getWaySendingStatement() == $ways->getCode() ? ' checked':'' }} value="{{ $ways->getCode() }}"> {{ trim($ways->getDescription()) }}
+                                <input type="radio" name="ways_sending_statement_2_itc"{{ $customer->actives_creditcards->get($tdc)->address_two ? ($customer->actives_creditcards->get($tdc)->address_two->getWaySendingStatement() == $ways->getCode() ? ' checked':'') : '' }} value="{{ $ways->getCode() }}"> {{ trim($ways->getDescription()) }}
                             </label>
                         </div>
                     @endforeach
