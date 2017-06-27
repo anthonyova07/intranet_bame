@@ -18,7 +18,7 @@ class Description extends Model
 
     public function getCode()
     {
-        return $this->codig_desc;
+        return clear_str($this->codig_desc);
     }
 
     public function getDescription()

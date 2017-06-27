@@ -23,6 +23,11 @@ class MaintenanceRequest extends Request
      */
     public function rules()
     {
+        if ($this->core == 'ibs') {
+            return [
+                //
+            ];
+        }
         return [
             //
         ];

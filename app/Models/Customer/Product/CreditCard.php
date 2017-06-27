@@ -59,12 +59,12 @@ class CreditCard extends Model
         return cap_str($this->nompl_mtar);
     }
 
-    public function address_1()
+    public function address_one()
     {
         return $this->hasOne(CreditCardAddress::class, 'tcact_mdir', 'tcact_mtar')->where('iddir_mdir', '1');
     }
 
-    public function address_2()
+    public function address_two()
     {
         return $this->hasOne(CreditCardAddress::class, 'tcact_mdir', 'tcact_mtar')->where('iddir_mdir', '2');
     }

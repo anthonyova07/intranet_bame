@@ -198,6 +198,26 @@ class Customer extends Model
         return '(' . cod_tel($this->cusfax) . ') ' . tel($this->cusfax);
     }
 
+    public function getClearResidentialPhone()
+    {
+        return clear_str($this->cushpn);
+    }
+
+    public function getClearOfficePhone()
+    {
+        return clear_str($this->cusphn);
+    }
+
+    public function getClearCellPhone()
+    {
+        return clear_str($this->cusph1);
+    }
+
+    public function getClearFaxPhone()
+    {
+        return clear_str($this->cusfax);
+    }
+
     public function getMail()
     {
         return clear_str($this->cusiad);
