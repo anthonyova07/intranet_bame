@@ -41,16 +41,98 @@ class CreditCardAddress extends Model
         return cap_str($this->extep_mdir);
     }
 
-    public function getSecundaryPhoneArea() {
+    public function getSecundaryPhoneArea()
+    {
         return cap_str($this->areas_mdir);
     }
 
-    public function getSecundaryPhoneNumber() {
+    public function getSecundaryPhoneNumber()
+    {
         return cap_str($this->nutes_mdir);
     }
 
-    public function getSecundaryPhoneExt() {
+    public function getSecundaryPhoneExt()
+    {
         return cap_str($this->extes_mdir);
+    }
+
+    public function getMainCellArea() {
+        return cap_str($this->arecp_mdir);
+    }
+
+    public function getMainCellNumber() {
+        return cap_str($this->nutcp_mdir);
+    }
+
+    public function getSecundaryCellArea() {
+        return cap_str($this->arecs_mdir);
+    }
+
+    public function getSecundaryCellNumber() {
+        return cap_str($this->nutcs_mdir);
+    }
+
+    public function getFaxArea() {
+        return cap_str($this->areaf_mdir);
+    }
+
+    public function getFaxNumber() {
+        return cap_str($this->numfx_mdir);
+    }
+
+    public function getBuildingName()
+    {
+        return cap_str($this->edifc_mdir);
+    }
+
+    public function getBlock()
+    {
+        return cap_str($this->manzc_mdir);
+    }
+
+    public function getHouseNumber()
+    {
+        return cap_str($this->numca_mdir);
+    }
+
+    public function getKm()
+    {
+        return cap_str($this->kilom_mdir);
+    }
+
+    public function getPostalZone()
+    {
+        return cap_str($this->zonap_mdir);
+    }
+
+    public function getPostalMail()
+    {
+        return cap_str($this->apost_mdir);
+    }
+
+    public function getInStreet1()
+    {
+        return cap_str($this->call1_mdir);
+    }
+
+    public function getInStreet2()
+    {
+        return cap_str($this->call2_mdir);
+    }
+
+    public function getSpecialInstruction()
+    {
+        return cap_str($this->instd_mdir);
+    }
+
+    public function getWaySendingStatement()
+    {
+        return cap_str($this->foree_mdir);
+    }
+
+    public function getMail()
+    {
+        return cap_str($this->email_mdir);
     }
 
     public function scopeByCreditcard($query, $creditcard)

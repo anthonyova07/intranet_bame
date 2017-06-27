@@ -99,6 +99,12 @@ class MaintenanceController extends Controller
             $this->save_address_two($r, $customer, $datetime);
 
         }
+
+        do_log('Realizó Mantenimiento del cliente ( number:' . strip_tags($customer->getCode()) . ' )');
+
+        session()->forget('customer_maintenance');
+
+        return redirect(route('customer.maintenance.create'))->with('success', 'Los cambios fueron guardados correctamente.');
     }
 
     protected function load(Request $request)
