@@ -589,11 +589,11 @@
             $('input[name=secundary_phone_ext_2_itc]').val($('input[name=secundary_phone_ext_itc]').val());
             $('input[name=main_cell_area_2_itc]').val($('input[name=main_cell_area_itc]').val());
             $('input[name=main_cell_number_2_itc]').val($('input[name=main_cell_number_itc]').val());
-            $('input[name=secundary_phone_area_2_itc]').val($('input[name=secundary_phone_area_itc]').val());
-            $('input[name=secundary_phone_number_2_itc]').val($('input[name=secundary_phone_number_itc]').val());
+            $('input[name=secundary_cell_area_2_itc]').val($('input[name=secundary_cell_area_itc]').val());
+            $('input[name=secundary_cell_number_2_itc]').val($('input[name=secundary_cell_number_itc]').val());
             $('input[name=fax_area_2_itc]').val($('input[name=fax_area_itc]').val());
             $('input[name=fax_number_2_itc]').val($('input[name=fax_number_itc]').val());
-            $('input[name=main_itc]').val($('input[name=main_itc]').val());
+            $('input[name=mail_2_itc]').val($('input[name=mail_itc]').val());
 
             $('input[name=ways_sending_statement_2_itc]').each(function (index, radio) {
                 var radio = $(radio);
