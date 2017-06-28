@@ -135,6 +135,41 @@ class CreditCardAddress extends Model
         return cap_str($this->email_mdir);
     }
 
+    public function getRegion()
+    {
+        return cap_str($this->regio_mdir);
+    }
+
+    public function getProvince()
+    {
+        return cap_str($this->provi_mdir);
+    }
+
+    public function getCity()
+    {
+        return cap_str($this->ciucl_mdir);
+    }
+
+    public function getMunicipality()
+    {
+        return cap_str($this->munic_mdir);
+    }
+
+    public function getSector()
+    {
+        return cap_str($this->sectr_mdir);
+    }
+
+    public function getNeighborhood()
+    {
+        return cap_str($this->barri_mdir);
+    }
+
+    public function getStreet()
+    {
+        return cap_str($this->barri_mdir);
+    }
+
     public function scopeByCreditcard($query, $creditcard)
     {
         return $query->where('numta_mtra', $creditcard);

@@ -21,18 +21,36 @@ class MaintenanceController extends Controller
     {
         if ($request->cancel) {
             session()->forget('customer_maintenance');
+            session()->forget('customer_maintenance_core');
 
             return redirect(route('customer.maintenance.create'));
         }
 
         $customer = null;
-        $countries = collect();
-        // $provinces = collect();
+        $core = null;
+        $tdc = $request->tdc ?? 0;
 
-        if ($request->core == 'ibs') {
-            $countries = DB::connection('ibs')->table('cnofc')->select('cnorcd code, cnodsc description')->where('cnocfl', '03')->orderBy('description')->get();
-            // $provinces = DB::connection('ibs')->table('cnofc')->select('cnorcd code, cnodsc description')->where('cnocfl', 'PV')->orderBy('description')->get();
-        }
+        $countries_ibs = collect();
+        $provinces_ibs = collect();
+        $cities_ibs = collect();
+        $sectors_ibs = collect();
+
+        $provinces_itc = collect();
+        $cities_itc = collect();
+        $municipalities_itc = collect();
+        $sectors_itc = collect();
+        $neighborhoods_itc = collect();
+        $streets_itc = collect();
+
+        $provinces_2_itc = collect();
+        $cities_2_itc = collect();
+        $municipalities_2_itc = collect();
+        $sectors_2_itc = collect();
+        $neighborhoods_2_itc = collect();
+        $streets_2_itc = collect();
+
+        $address_one = null;
+        $address_two = null;
 
         if ($request->identification) {
 
@@ -49,7 +67,82 @@ class MaintenanceController extends Controller
                 return redirect(route('customer.maintenance.create'))->with('warning', 'La información suministrada no corresponde a ningún cliente en IBS.');
             }
 
+            $core = $request->core;
+
             session()->put('customer_maintenance', $request->identification);
+            session()->put('customer_maintenance_core', $core);
+        }
+
+        if (session()->has('customer_maintenance')) {
+            $customer = Customer::SearchByIdentification(session('customer_maintenance'))->first();
+            $core = session('customer_maintenance_core');
+        }
+
+        if ($core == 'ibs') {
+            $countries_ibs = DB::connection('ibs')->table('cnofc')->select('cnorcd code, cnodsc description')->where('cnocfl', '03')->orderBy('description')->get();
+
+            $provinces_ibs = DB::connection('ibs')->table('cnofc')->select('cnorcd code, cnodsc description')->where('cnocfl', 'PV')->orderBy('description')->get();
+
+            $cities_ibs = DB::connection('ibs')->table('cnofc')->select('cnorcd code, cnodsc description')->where('cnocfl', 'PI')->where('cnomid', $customer->getProvinceCode())->orderBy('description')->get();
+
+            $sectors_ibs = DB::connection('ibs')->table('cnofc')->select('cnorcd code, cnodsc description')->where('cnocfl', 'PE')->where('cnomid', $customer->getProvinceCode())->where('cnomic', $customer->getCityCode())->orderBy('description')->get();
+        }
+
+        if ($core == 'itc') {
+            $address_one = $customer->actives_creditcards->get($tdc)->address_one;
+            $address_two = $customer->actives_creditcards->get($tdc)->address_two;
+
+            $request->search = 'province';
+            $request->country = 'DOM';
+            $request->region = $address_one->getRegion();
+            $provinces_itc = $this->load($request);
+
+            $request->search = 'city';
+            $request->province = $address_one->getProvince();
+            $cities_itc = $this->load($request);
+
+            $request->search = 'municipality';
+            $request->city = $address_one->getCity();
+            $municipalities_itc = $this->load($request);
+
+            $request->search = 'sector';
+            $request->municipality = $address_one->getMunicipality();
+            $sectors_itc = $this->load($request);
+
+            $request->search = 'neighborhood';
+            $request->sector = $address_one->getSector();
+            $neighborhoods_itc = $this->load($request);
+
+            $request->search = 'street';
+            $request->neighborhood = $address_one->getNeighborhood();
+            $streets_itc = $this->load($request);
+
+            //--------------------------------------
+
+            $request->search = 'province';
+            $request->country = 'DOM';
+            $request->region = $address_two->getRegion();
+            $provinces_2_itc = $this->load($request);
+
+            $request->search = 'city';
+            $request->province = $address_two->getProvince();
+            $cities_2_itc = $this->load($request);
+
+            $request->search = 'municipality';
+            $request->city = $address_two->getCity();
+            $municipalities_2_itc = $this->load($request);
+
+            $request->search = 'sector';
+            $request->municipality = $address_two->getMunicipality();
+            $sectors_2_itc = $this->load($request);
+
+            $request->search = 'neighborhood';
+            $request->sector = $address_two->getSector();
+            $neighborhoods_2_itc = $this->load($request);
+
+            $request->search = 'street';
+            $request->neighborhood = $address_two->getNeighborhood();
+            $streets_2_itc = $this->load($request);
         }
 
         $regions = Region::orderByDesc()->get();
@@ -57,11 +150,31 @@ class MaintenanceController extends Controller
 
         return view('customer.maintenance.create')
             ->with('customer', $customer)
-            ->with('countries', $countries)
-            // ->with('provinces', $provinces)
+
+            ->with('countries_ibs', $countries_ibs)
+            ->with('provinces_ibs', $provinces_ibs)
+            ->with('cities_ibs', $cities_ibs)
+            ->with('sectors_ibs', $sectors_ibs)
+
+            ->with('provinces_itc', $provinces_itc)
+            ->with('cities_itc', $cities_itc)
+            ->with('municipalities_itc', $municipalities_itc)
+            ->with('sectors_itc', $sectors_itc)
+            ->with('neighborhoods_itc', $neighborhoods_itc)
+            ->with('streets_itc', $streets_itc)
+
+            ->with('provinces_2_itc', $provinces_2_itc)
+            ->with('cities_2_itc', $cities_2_itc)
+            ->with('municipalities_2_itc', $municipalities_2_itc)
+            ->with('sectors_2_itc', $sectors_2_itc)
+            ->with('neighborhoods_2_itc', $neighborhoods_2_itc)
+            ->with('streets_2_itc', $streets_2_itc)
+
             ->with('regions', $regions)
-            ->with('tdc', $request->tdc)
-            ->with('core', $request->core)
+            ->with('address_one', $address_one)
+            ->with('address_two', $address_two)
+            ->with('tdc', $tdc)
+            ->with('core', $core)
             ->with('ways_sending_statements', $ways_sending_statements);
     }
 
@@ -82,7 +195,7 @@ class MaintenanceController extends Controller
             $customer->cusuc7 = $r->sector_ibs;
             $customer->cuspob = $r->postal_mail_ibs;
             $customer->cuszpc = $r->zip_code_ibs;
-            $customer->cusmlc = $r->mail_type_ibs;
+            // $customer->cusmlc = $r->mail_type_ibs;
             $customer->cusiad = $r->mail_ibs;
             $customer->cushpn = $r->house_phone_ibs;
             $customer->cusphn = $r->office_phone_ibs;
@@ -207,7 +320,7 @@ class MaintenanceController extends Controller
         $sql = "SELECT TRIM({$field_code}) code, TRIM({$field_description}) description FROM {$table} WHERE {$field_code} IN ({$ids}) ORDER BY {$field_description}";
         $result = collect(DB::connection('itc')->select($sql));
 
-        return $result->toJson();
+        return $result;
     }
 
     private function save_address_one($r, $customer, $datetime)

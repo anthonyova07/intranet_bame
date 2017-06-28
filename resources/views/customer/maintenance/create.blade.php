@@ -59,15 +59,15 @@
             <div class="row">
                 @if ($core == 'ibs')
 
-                    @include('customer.maintenance.partials._ibs', compact('customer', 'errors'))
+                    @include('customer.maintenance.partials._ibs')
 
                 @endif
 
                 @if ($core == 'itc')
 
-                    @include('customer.maintenance.partials._tdc_1', compact('customer', 'errors'))
+                    @include('customer.maintenance.partials._tdc_1')
 
-                    @include('customer.maintenance.partials._tdc_2', compact('customer', 'errors'))
+                    @include('customer.maintenance.partials._tdc_2')
 
                 @endif
 
@@ -557,7 +557,7 @@
                 $.each(response, function (index, item) {
                     sector_ibs.append($('<option>', {
                         value: item.code,
-                        text: item.description
+                        text: item.description,
                     }));
                 });
             });

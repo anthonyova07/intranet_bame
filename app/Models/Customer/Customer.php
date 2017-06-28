@@ -145,6 +145,11 @@ class Customer extends Model
         return cap_str($this->cusna4);
     }
 
+    public function getProvinceCode()
+    {
+        return $this->cusste;
+    }
+
     public function getProvince()
     {
         $province = DB::connection('ibs')->table('cnofc')->where('cnocfl', 'PV')->where('cnorcd', $this->cusste)->first();
@@ -156,6 +161,11 @@ class Customer extends Model
         return cap_str($province->cnodsc);
     }
 
+    public function getCityCode()
+    {
+        return $this->cusuc8;
+    }
+
     public function getCity()
     {
         $city = DB::connection('ibs')->table('cnofc')->where('cnocfl', 'PI')->where('cnorcd', $this->cusuc8)->first();
@@ -165,6 +175,11 @@ class Customer extends Model
         }
 
         return cap_str($city->cnodsc);
+    }
+
+    public function getSectorCode()
+    {
+        return $this->cusuc7;
     }
 
     public function getSector()
