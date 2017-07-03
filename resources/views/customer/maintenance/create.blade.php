@@ -163,8 +163,8 @@
 
                 $.each(response, function (index, item) {
                     province.append($('<option>', {
-                        value: item.code,
-                        text: item.description
+                        value: item.code + '|' + $.trim(item.description),
+                        text: $.trim(item.description)
                     }));
                 });
             });
@@ -191,8 +191,8 @@
 
                 $.each(response, function (index, item) {
                     city.append($('<option>', {
-                        value: item.code,
-                        text: item.description
+                        value: item.code + '|' + $.trim(item.description),
+                        text: $.trim(item.description)
                     }));
                 });
             });
@@ -219,8 +219,8 @@
 
                 $.each(response, function (index, item) {
                     municipality.append($('<option>', {
-                        value: item.code,
-                        text: item.description
+                        value: item.code + '|' + $.trim(item.description),
+                        text: $.trim(item.description)
                     }));
                 });
             });
@@ -247,8 +247,8 @@
 
                 $.each(response, function (index, item) {
                     sector.append($('<option>', {
-                        value: item.code,
-                        text: item.description
+                        value: item.code + '|' + $.trim(item.description),
+                        text: $.trim(item.description)
                     }));
                 });
             });
@@ -275,8 +275,8 @@
 
                 $.each(response, function (index, item) {
                     neighborhood.append($('<option>', {
-                        value: item.code,
-                        text: item.description
+                        value: item.code + '|' + $.trim(item.description),
+                        text: $.trim(item.description)
                     }));
                 });
             });
@@ -301,8 +301,8 @@
             },function (response) {
                 $.each(response, function (index, item) {
                     street.append($('<option>', {
-                        value: item.code,
-                        text: item.description
+                        value: item.code + '|' + $.trim(item.description),
+                        text: $.trim(item.description)
                     }));
                 });
             });
@@ -341,8 +341,8 @@
 
                 $.each(response, function (index, item) {
                     province2.append($('<option>', {
-                        value: item.code,
-                        text: item.description
+                        value: item.code + '|' + $.trim(item.description),
+                        text: $.trim(item.description)
                     }));
                 });
             });
@@ -369,8 +369,8 @@
 
                 $.each(response, function (index, item) {
                     city2.append($('<option>', {
-                        value: item.code,
-                        text: item.description
+                        value: item.code + '|' + $.trim(item.description),
+                        text: $.trim(item.description)
                     }));
                 });
             });
@@ -397,8 +397,8 @@
 
                 $.each(response, function (index, item) {
                     municipality2.append($('<option>', {
-                        value: item.code,
-                        text: item.description
+                        value: item.code + '|' + $.trim(item.description),
+                        text: $.trim(item.description)
                     }));
                 });
             });
@@ -425,8 +425,8 @@
 
                 $.each(response, function (index, item) {
                     sector2.append($('<option>', {
-                        value: item.code,
-                        text: item.description
+                        value: item.code + '|' + $.trim(item.description),
+                        text: $.trim(item.description)
                     }));
                 });
             });
@@ -453,8 +453,8 @@
 
                 $.each(response, function (index, item) {
                     neighborhood2.append($('<option>', {
-                        value: item.code,
-                        text: item.description
+                        value: item.code + '|' + $.trim(item.description),
+                        text: $.trim(item.description)
                     }));
                 });
             });
@@ -479,8 +479,8 @@
             },function (response) {
                 $.each(response, function (index, item) {
                     street2.append($('<option>', {
-                        value: item.code,
-                        text: item.description
+                        value: item.code + '|' + $.trim(item.description),
+                        text: $.trim(item.description)
                     }));
                 });
             });
@@ -510,8 +510,8 @@
 
                 $.each(response, function (index, item) {
                     province_ibs.append($('<option>', {
-                        value: item.code,
-                        text: item.description
+                        value: item.code + '|' + $.trim(item.description),
+                        text: $.trim(item.description)
                     }));
                 });
             });
@@ -534,8 +534,8 @@
 
                 $.each(response, function (index, item) {
                     city_ibs.append($('<option>', {
-                        value: item.code,
-                        text: item.description
+                        value: item.code + '|' + $.trim(item.description),
+                        text: $.trim(item.description)
                     }));
                 });
             });
@@ -556,8 +556,8 @@
             },function (response) {
                 $.each(response, function (index, item) {
                     sector_ibs.append($('<option>', {
-                        value: item.code,
-                        text: item.description,
+                        value: item.code + '|' + $.trim(item.description),
+                        text: $.trim(item.description),
                     }));
                 });
             });

@@ -10,6 +10,7 @@ use Bame\Http\Controllers\Controller;
 use DB;
 use Datetime;
 use Bame\Models\Customer\Customer;
+use Bame\Models\Customer\{MaintenanceIbs, MaintenanceItc};
 use Bame\Models\Operation\Tdc\Description;
 use Bame\Http\Requests\Customer\MaintenanceRequest;
 use Bame\Models\Customer\Product\CreditCardAddress;
@@ -92,57 +93,59 @@ class MaintenanceController extends Controller
             $address_one = $customer->actives_creditcards->get($tdc)->address_one;
             $address_two = $customer->actives_creditcards->get($tdc)->address_two;
 
-            $request->search = 'province';
-            $request->country = 'DOM';
-            $request->region = $address_one->getRegion();
-            $provinces_itc = $this->load($request);
+            if ($address_one) {
+                $request->search = 'province';
+                $request->country = 'DOM';
+                $request->region = $address_one->getRegion();
+                $provinces_itc = $this->load($request);
 
-            $request->search = 'city';
-            $request->province = $address_one->getProvince();
-            $cities_itc = $this->load($request);
+                $request->search = 'city';
+                $request->province = $address_one->getProvince();
+                $cities_itc = $this->load($request);
 
-            $request->search = 'municipality';
-            $request->city = $address_one->getCity();
-            $municipalities_itc = $this->load($request);
+                $request->search = 'municipality';
+                $request->city = $address_one->getCity();
+                $municipalities_itc = $this->load($request);
 
-            $request->search = 'sector';
-            $request->municipality = $address_one->getMunicipality();
-            $sectors_itc = $this->load($request);
+                $request->search = 'sector';
+                $request->municipality = $address_one->getMunicipality();
+                $sectors_itc = $this->load($request);
 
-            $request->search = 'neighborhood';
-            $request->sector = $address_one->getSector();
-            $neighborhoods_itc = $this->load($request);
+                $request->search = 'neighborhood';
+                $request->sector = $address_one->getSector();
+                $neighborhoods_itc = $this->load($request);
 
-            $request->search = 'street';
-            $request->neighborhood = $address_one->getNeighborhood();
-            $streets_itc = $this->load($request);
+                $request->search = 'street';
+                $request->neighborhood = $address_one->getNeighborhood();
+                $streets_itc = $this->load($request);
+            }
 
-            //--------------------------------------
+            if ($address_two) {
+                $request->search = 'province';
+                $request->country = 'DOM';
+                $request->region = $address_two->getRegion();
+                $provinces_2_itc = $this->load($request);
 
-            $request->search = 'province';
-            $request->country = 'DOM';
-            $request->region = $address_two->getRegion();
-            $provinces_2_itc = $this->load($request);
+                $request->search = 'city';
+                $request->province = $address_two->getProvince();
+                $cities_2_itc = $this->load($request);
 
-            $request->search = 'city';
-            $request->province = $address_two->getProvince();
-            $cities_2_itc = $this->load($request);
+                $request->search = 'municipality';
+                $request->city = $address_two->getCity();
+                $municipalities_2_itc = $this->load($request);
 
-            $request->search = 'municipality';
-            $request->city = $address_two->getCity();
-            $municipalities_2_itc = $this->load($request);
+                $request->search = 'sector';
+                $request->municipality = $address_two->getMunicipality();
+                $sectors_2_itc = $this->load($request);
 
-            $request->search = 'sector';
-            $request->municipality = $address_two->getMunicipality();
-            $sectors_2_itc = $this->load($request);
+                $request->search = 'neighborhood';
+                $request->sector = $address_two->getSector();
+                $neighborhoods_2_itc = $this->load($request);
 
-            $request->search = 'neighborhood';
-            $request->sector = $address_two->getSector();
-            $neighborhoods_2_itc = $this->load($request);
-
-            $request->search = 'street';
-            $request->neighborhood = $address_two->getNeighborhood();
-            $streets_2_itc = $this->load($request);
+                $request->search = 'street';
+                $request->neighborhood = $address_two->getNeighborhood();
+                $streets_2_itc = $this->load($request);
+            }
         }
 
         $regions = Region::orderByDesc()->get();
@@ -180,44 +183,252 @@ class MaintenanceController extends Controller
 
     public function store(MaintenanceRequest $r)
     {
-        // dd($r->all());
-
         $datetime = new Datetime();
 
         $customer = Customer::SearchByIdentification(session('customer_maintenance'))->first();
 
-        if ($r->core == 'ibs') {
-            $customer->cusna2 = $r->street_ibs;
-            $customer->cusna4 = $r->building_house_number_ibs;
-            $customer->cusctr = substr(trim(DB::connection('ibs')->table('cnofc')->select('cnorcd code, cnodsc description')->where('cnocfl', '03')->where('cnorcd', $r->country_ibs)->orderBy('description')->first()->description), 0, 20);
-            $customer->cusste = $r->province_ibs;
-            $customer->cusuc8 = $r->city_ibs;
-            $customer->cusuc7 = $r->sector_ibs;
-            $customer->cuspob = $r->postal_mail_ibs;
-            $customer->cuszpc = $r->zip_code_ibs;
-            // $customer->cusmlc = $r->mail_type_ibs;
-            $customer->cusiad = $r->mail_ibs;
-            $customer->cushpn = $r->house_phone_ibs;
-            $customer->cusphn = $r->office_phone_ibs;
-            $customer->cusfax = $r->fax_phone_ibs;
-            $customer->cusph1 = $r->movil_phone_ibs;
+        $maintenance_ibs = new MaintenanceIbs;
 
-            $customer->save();
+        $maintenance_ibs->id = uniqid(true);
+        $maintenance_ibs->clinumber = $customer->getCode();
+        $maintenance_ibs->cliident = session('customer_maintenance');
+        $maintenance_ibs->typecore = $r->core;
+        $maintenance_ibs->tdcnumber = $customer->actives_creditcards->get($r->tdc)->getNumber();
+
+        if ($r->core == 'ibs') {
+            $maintenance_ibs->ibsstreet = $r->street_ibs;
+            $maintenance_ibs->ibsbuhounu = $r->building_house_number_ibs;
+
+            $maintenance_ibs->ibscountry = substr(trim(DB::connection('ibs')->table('cnofc')->select('cnorcd code, cnodsc description')->where('cnocfl', '03')->where('cnorcd', $this->getCode($r->country_ibs))->orderBy('description')->first()->description), 0, 20);
+
+            $maintenance_ibs->ibsprovinc = $this->getCode($r->province_ibs);
+            $maintenance_ibs->ibsprovind = $this->getDesc($r->province_ibs);
+
+            $maintenance_ibs->ibscityc = $this->getCode($r->city_ibs);
+            $maintenance_ibs->ibscityd = $this->getDesc($r->city_ibs);
+
+            $maintenance_ibs->ibssectorc = $this->getCode($r->sector_ibs);
+            $maintenance_ibs->ibssectord = $this->getDesc($r->sector_ibs);
+
+            $maintenance_ibs->ibsposmail = $r->postal_mail_ibs;
+            $maintenance_ibs->ibszipcode = $r->zip_code_ibs;
+            $maintenance_ibs->ibsmail = $r->mail_ibs;
+
+            $maintenance_ibs->ibshouphon = $r->house_phone_ibs;
+            $maintenance_ibs->ibsoffipho = $r->office_phone_ibs;
+            $maintenance_ibs->ibsfaxphon = $r->fax_phone_ibs;
+            $maintenance_ibs->ibsmovipho = $r->movil_phone_ibs;
         }
+
+        $maintenance_ibs->isapprov = false;
+
+        $maintenance_ibs->created_by = session()->get('user');
+        $maintenance_ibs->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+
+        $maintenance_ibs->save();
 
         if ($r->core == 'itc') {
 
-            $this->save_address_one($r, $customer, $datetime);
+            $itc_dir_1 = new MaintenanceItc;
 
-            $this->save_address_two($r, $customer, $datetime);
+            $itc_dir_1->id  = uniqid(true) . '1';
+            $itc_dir_1->parent_id = $maintenance_ibs->id;
+            $itc_dir_1->dir_type = 1;
+
+            $itc_dir_1->waysendsta = $r->ways_sending_statement_itc;
+
+            $itc_dir_1->itccountrc = $this->getCode($r->country_itc);
+            $itc_dir_1->itccountrd = $this->getDesc($r->country_itc);
+
+            $itc_dir_1->itcregionc = $this->getCode($r->region_itc);
+            $itc_dir_1->itcregiond = $this->getDesc($r->region_itc);
+
+            $itc_dir_1->itcprovinc = $this->getCode($r->province_itc);
+            $itc_dir_1->itcprovind = $this->getDesc($r->province_itc);
+
+            $itc_dir_1->itccityc = $this->getCode($r->city_itc);
+            $itc_dir_1->itccityd = $this->getDesc($r->city_itc);
+
+            $itc_dir_1->itcmunicic = $this->getCode($r->municipality_itc);
+            $itc_dir_1->itcmunicid = $this->getDesc($r->municipality_itc);
+
+            $itc_dir_1->itcsectorc = $this->getCode($r->sector_itc);
+            $itc_dir_1->itcsectord = $this->getDesc($r->sector_itc);
+
+            $itc_dir_1->itcneighoc = $this->getCode($r->neighborhood_itc);
+            $itc_dir_1->itcneighod = $this->getDesc($r->neighborhood_itc);
+
+            $itc_dir_1->itcstreetc = $this->getCode($r->street_itc);
+            $itc_dir_1->itcstreetd = $this->getDesc($r->street_itc);
+
+            $itc_dir_1->itcbuiname = $r->building_name_itc;
+            $itc_dir_1->itcblock = $r->block_itc;
+            $itc_dir_1->itchousnum = $r->house_number_itc;
+            $itc_dir_1->itckm = $r->km_itc;
+            $itc_dir_1->itcinstre1 = $r->in_street_1_itc;
+            $itc_dir_1->itcinstre2 = $r->in_street_2_itc;
+            $itc_dir_1->itcspeinst = $r->special_instruction_itc;
+            $itc_dir_1->itcposzone = $r->postal_zone_itc;
+            $itc_dir_1->itcposmail = $r->postal_mail_itc;
+
+            $itc_dir_1->itcmphoare = $r->main_phone_area_itc;
+            $itc_dir_1->itcmphonum = $r->main_phone_number_itc;
+            $itc_dir_1->itcmphoext = $r->main_phone_ext_itc;
+
+            $itc_dir_1->itcsphoare = $r->secundary_phone_area_itc;
+            $itc_dir_1->itcsphonum = $r->secundary_phone_number_itc;
+            $itc_dir_1->itcsphoext = $r->secundary_phone_ext_itc;
+
+            $itc_dir_1->itcmcelare = $r->main_cell_area_itc;
+            $itc_dir_1->itcmcelnum = $r->main_cell_number_itc;
+
+            $itc_dir_1->itcscelare = $r->secundary_cell_area_itc;
+            $itc_dir_1->itcscelnum = $r->secundary_cell_number_itc;
+
+            $itc_dir_1->itcfaxarea = $r->fax_area_itc;
+            $itc_dir_1->itcfaxnumb = $r->fax_number_itc;
+
+            $itc_dir_1->itcmail = $r->mail_itc;
+
+            //---------------------------------
+
+            $itc_dir_2 = new MaintenanceItc;
+
+            $itc_dir_2->id  = uniqid(true) . '2';
+
+            $itc_dir_2->parent_id = $maintenance_ibs->id;
+            $itc_dir_2->dir_type = 2;
+
+            $itc_dir_2->waysendsta = $r->ways_sending_statement_2_itc;
+
+            $itc_dir_2->itccountrc = $this->getCode($r->country_2_itc);
+            $itc_dir_2->itccountrd = $this->getDesc($r->country_2_itc);
+
+            $itc_dir_2->itcregionc = $this->getCode($r->region_2_itc);
+            $itc_dir_2->itcregiond = $this->getDesc($r->region_2_itc);
+
+            $itc_dir_2->itcprovinc = $this->getCode($r->province_2_itc);
+            $itc_dir_2->itcprovind = $this->getDesc($r->province_2_itc);
+
+            $itc_dir_2->itccityc = $this->getCode($r->city_2_itc);
+            $itc_dir_2->itccityd = $this->getDesc($r->city_2_itc);
+
+            $itc_dir_2->itcmunicic = $this->getCode($r->municipality_2_itc);
+            $itc_dir_2->itcmunicid = $this->getDesc($r->municipality_2_itc);
+
+            $itc_dir_2->itcsectorc = $this->getCode($r->sector_2_itc);
+            $itc_dir_2->itcsectord = $this->getDesc($r->sector_2_itc);
+
+            $itc_dir_2->itcneighoc = $this->getCode($r->neighborhood_2_itc);
+            $itc_dir_2->itcneighod = $this->getDesc($r->neighborhood_2_itc);
+
+            $itc_dir_2->itcstreetc = $this->getCode($r->street_2_itc);
+            $itc_dir_2->itcstreetd = $this->getDesc($r->street_2_itc);
+
+            $itc_dir_2->itcbuiname = $r->building_name_2_itc;
+            $itc_dir_2->itcblock = $r->block_2_itc;
+            $itc_dir_2->itchousnum = $r->house_number_2_itc;
+            $itc_dir_2->itckm = $r->km_2_itc;
+            $itc_dir_2->itcinstre1 = $r->in_street_1_2_itc;
+            $itc_dir_2->itcinstre2 = $r->in_street_2_2_itc;
+            $itc_dir_2->itcspeinst = $r->special_instruction_2_itc;
+            $itc_dir_2->itcposzone = $r->postal_zone_2_itc;
+            $itc_dir_2->itcposmail = $r->postal_mail_2_itc;
+
+            $itc_dir_2->itcmphoare = $r->main_phone_area_2_itc;
+            $itc_dir_2->itcmphonum = $r->main_phone_number_2_itc;
+            $itc_dir_2->itcmphoext = $r->main_phone_ext_2_itc;
+
+            $itc_dir_2->itcsphoare = $r->secundary_phone_area_2_itc;
+            $itc_dir_2->itcsphonum = $r->secundary_phone_number_2_itc;
+            $itc_dir_2->itcsphoext = $r->secundary_phone_ext_2_itc;
+
+            $itc_dir_2->itcmcelare = $r->main_cell_area_2_itc;
+            $itc_dir_2->itcmcelnum = $r->main_cell_number_2_itc;
+
+            $itc_dir_2->itcscelare = $r->secundary_cell_area_2_itc;
+            $itc_dir_2->itcscelnum = $r->secundary_cell_number_2_itc;
+
+            $itc_dir_2->itcfaxarea = $r->fax_area_2_itc;
+            $itc_dir_2->itcfaxnumb = $r->fax_number_2_itc;
+
+            $itc_dir_2->itcmail = $r->mail_2_itc;
+
+            $itc_dir_1->save();
+            $itc_dir_2->save();
 
         }
 
         do_log('Realizó Mantenimiento del cliente ( number:' . strip_tags($customer->getCode()) . ' )');
 
         session()->forget('customer_maintenance');
+        session()->forget('customer_maintenance_core');
 
-        return redirect(route('customer.maintenance.create'))->with('success', 'Los cambios fueron guardados correctamente.');
+        if (env('MAINTENANCE_NEED_APPROVALS') == 'true') {
+            return redirect(route('customer.maintenance.create'))->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.');
+        } else {
+            return redirect(route('customer.maintenance.approve', ['id' => $maintenance_ibs->id]))->with('success', 'Los cambios fueron guardados y aprobados correctamente.');
+        }
+    }
+
+    public function approve(Request $request, $id)
+    {
+        $maintenance = MaintenanceIbs::find($id);
+
+        $datetime = new Datetime();
+
+        $customer = Customer::SearchByIdentification($maintenance->cliident)->first();
+
+        if ($maintenance->typecore == 'ibs') {
+            $customer->cusna2 = $maintenance->ibsstreet;
+            $customer->cusna4 = $maintenance->ibsbuhounu;
+            $customer->cusctr = $maintenance->ibscountry;
+            $customer->cusste = $maintenance->ibsprovinc;
+            $customer->cusuc8 = $maintenance->ibscityc;
+            $customer->cusuc7 = $maintenance->ibssectorc;
+            $customer->cuspob = $maintenance->ibsposmail;
+            $customer->cuszpc = $maintenance->ibszipcode;
+            $customer->cusiad = $maintenance->ibsmail;
+            $customer->cushpn = $maintenance->ibshouphon;
+            $customer->cusphn = $maintenance->ibsoffipho;
+            $customer->cusfax = $maintenance->ibsfaxphon;
+            $customer->cusph1 = $maintenance->ibsmovipho;
+
+            $customer->save();
+        }
+
+        if ($maintenance->typecore == 'itc') {
+
+            $this->save_address_one($maintenance, $customer, $datetime);
+
+            $this->save_address_two($maintenance, $customer, $datetime);
+
+        }
+
+        $maintenance->isapprov = true;
+        $maintenance->approvby = session()->get('user');
+        $maintenance->approvname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+        $maintenance->approvdate = $datetime->format('Y-m-d H:i:s');
+
+        $maintenance->updated_by = $maintenance->approvby;
+        $maintenance->updatename = $maintenance->approvname;
+        $maintenance->updated_at = $maintenance->approvdate;
+
+        $maintenance->save();
+
+        do_log('Realizó Mantenimiento del cliente ( number:' . strip_tags($customer->getCode()) . ' )');
+
+        return redirect(route('customer.maintenance.create'))->with('success', 'Los cambios fueron guardados y aprobados correctamente.');
+    }
+
+    protected function getCode($value)
+    {
+        return explode('|', $value)[0];
+    }
+
+    protected function getDesc($value)
+    {
+        return explode('|', $value)[1];
     }
 
     protected function load(Request $request)
@@ -229,17 +440,17 @@ class MaintenanceController extends Controller
         }
 
         if ($request->search == 'city_ibs') {
-            if ($request->country == 'DR') {
-                $ibs_query->where('cnomid', $request->province);
+            if ($this->getCode($request->country) == 'DR') {
+                $ibs_query->where('cnomid', $this->getCode($request->province));
             }
 
             return $ibs_query->where('cnocfl', 'PI')->get();
         }
 
         if ($request->search == 'sector_ibs') {
-            if ($request->country == 'DR') {
-                $ibs_query->where('cnomid', $request->province);
-                $ibs_query->where('cnomic', $request->city);
+            if ($this->getCode($request->country == 'DR')){
+                $ibs_query->where('cnomid', $this->getCode($request->province));
+                $ibs_query->where('cnomic', $this->getCode($request->city));
             }
 
             return $ibs_query->where('cnocfl', 'PE')->get();
@@ -266,7 +477,7 @@ class MaintenanceController extends Controller
             $table = "SASTCIU00";
 
             $sql_search .= $field_rel;
-            $and_where = "AND PROVI_RELD = {$request->province}";
+            $and_where = "AND PROVI_RELD = {$this->getCode($request->province)}";
             $group_by = $field_rel;
         }
 
@@ -277,7 +488,7 @@ class MaintenanceController extends Controller
             $table = "SASTMUN00";
 
             $sql_search .= $field_rel;
-            $and_where = "AND PROVI_RELD = {$request->province} AND CIUDA_RELD = {$request->city}";
+            $and_where = "AND PROVI_RELD = {$this->getCode($request->province)} AND CIUDA_RELD = {$this->getCode($request->city)}";
             $group_by = $field_rel;
         }
 
@@ -288,7 +499,7 @@ class MaintenanceController extends Controller
             $table = "SASTDSE00";
 
             $sql_search .= $field_rel;
-            $and_where = "AND PROVI_RELD = {$request->province} AND CIUDA_RELD = {$request->city} AND MUNIC_RELD = {$request->municipality}";
+            $and_where = "AND PROVI_RELD = {$this->getCode($request->province)} AND CIUDA_RELD = {$this->getCode($request->city)} AND MUNIC_RELD = {$this->getCode($request->municipality)}";
             $group_by = $field_rel;
         }
 
@@ -299,7 +510,7 @@ class MaintenanceController extends Controller
             $table = "SASTDBA00";
 
             $sql_search .= $field_rel;
-            $and_where = "AND PROVI_RELD = {$request->province} AND CIUDA_RELD = {$request->city} AND MUNIC_RELD = {$request->municipality} AND SECTO_RELD = {$request->sector}";
+            $and_where = "AND PROVI_RELD = {$this->getCode($request->province)} AND CIUDA_RELD = {$this->getCode($request->city)} AND MUNIC_RELD = {$this->getCode($request->municipality)} AND SECTO_RELD = {$this->getCode($request->sector)}";
             $group_by = $field_rel;
         }
 
@@ -310,11 +521,11 @@ class MaintenanceController extends Controller
             $table = "SASTDCA00";
 
             $sql_search .= $field_rel;
-            $and_where = "AND PROVI_RELD = {$request->province} AND CIUDA_RELD = {$request->city} AND MUNIC_RELD = {$request->municipality} AND SECTO_RELD = {$request->sector} AND BARRI_RELD = {$request->neighborhood}";
+            $and_where = "AND PROVI_RELD = {$this->getCode($request->province)} AND CIUDA_RELD = {$this->getCode($request->city)} AND MUNIC_RELD = {$this->getCode($request->municipality)} AND SECTO_RELD = {$this->getCode($request->sector)} AND BARRI_RELD = {$this->getCode($request->neighborhood)}";
             $group_by = $field_rel;
         }
 
-        $sql_search .= " IDS FROM SASRELD00 WHERE CODPA_RELD = '{$request->country}' AND REGIO_RELD = '{$request->region}' {$and_where} GROUP BY {$group_by}";
+        $sql_search .= " IDS FROM SASRELD00 WHERE CODPA_RELD = '{$this->getCode($request->country)}' AND REGIO_RELD = '{$this->getCode($request->region)}' {$and_where} GROUP BY {$group_by}";
         $ids = collect(DB::connection('itc')->select($sql_search))->implode('ids', ',');
 
         $sql = "SELECT TRIM({$field_code}) code, TRIM({$field_description}) description FROM {$table} WHERE {$field_code} IN ({$ids}) ORDER BY {$field_description}";
@@ -323,54 +534,54 @@ class MaintenanceController extends Controller
         return $result;
     }
 
-    private function save_address_one($r, $customer, $datetime)
+    private function save_address_one($maintenance, $customer, $datetime)
     {
-        $tdc = $customer->actives_creditcards->get($r->tdc);
+        $d = $maintenance->itc_dir_one;
 
         $address = [
             'CODBA_MDIR' => 1, //Codigo Banco
             'CODCI_MDIR' => 1, //Cod. Cia a Procesar
             'NUSOL_MDIR' => 0, //Numero Solicitud
-            'TCACT_MDIR' => $tdc->getNumber(), //Numero de Tarjeta
-            'CODCL_MDIR' => $customer->getCode(), //Codigo Cliente
+            'TCACT_MDIR' => $maintenance->tdcnumber, //Numero de Tarjeta
+            'CODCL_MDIR' => $maintenance->clinumber, //Codigo Cliente
             'IDDIR_MDIR' => 1, //Tipo Direccion
-            'FOREE_MDIR' => $r->ways_sending_statement_itc, //Forma Envio Estado
+            'FOREE_MDIR' => $d->waysendsta, //Forma Envio Estado
             'SECTP_MDIR' => 0, //Secuencia Tipo/Direc
             'CIFCL_MDIR' => '', //LLave Cif Cliente
-            'CODPA_MDIR' => $r->country_itc, //Codigo Pais
-            'REGIO_MDIR' => $r->region_itc, //Codigo Region
-            'PROVI_MDIR' => $r->province_itc, //Codigo Provincia
-            'CIUCL_MDIR' => $r->city_itc, //Codigo Ciudad
-            'MUNIC_MDIR' => $r->municipality_itc, //Codigo Municipio
-            'SECTR_MDIR' => $r->sector_itc, //Codigo Sector
-            'BARRI_MDIR' => $r->neighborhood_itc, //Codigo Barrio
-            'CALCL_MDIR' => $r->street_itc, //Codigo Calles
-            'EDIFC_MDIR' => $r->building_name_itc, //Nombre Edificio
-            'MANZC_MDIR' => $r->block_itc, //Codigo Manzana
-            'NUMCA_MDIR' => $r->house_number_itc, //No. Casa/Apartamento
-            'KILOM_MDIR' => $r->km_itc, //Kilometro Si es Carr
-            'CALL1_MDIR' => $r->in_street_1_itc, //Entre Cuales Calle 1
-            'CALL2_MDIR' => $r->in_street_2_itc, //Entre Cuales Calle 2
-            'INSTD_MDIR' => $r->special_instruction_itc, //Instruccion Especial
-            'ZONAP_MDIR' => $r->postal_zone_itc, //Zona Postal
-            'APOST_MDIR' => $r->postal_mail_itc, //Apartado Postal
+            'CODPA_MDIR' => $d->itccountrc, //Codigo Pais
+            'REGIO_MDIR' => $d->itcregionc, //Codigo Region
+            'PROVI_MDIR' => $d->itcprovinc, //Codigo Provincia
+            'CIUCL_MDIR' => $d->itccityc, //Codigo Ciudad
+            'MUNIC_MDIR' => $d->itcmunicic, //Codigo Municipio
+            'SECTR_MDIR' => $d->itcsectorc, //Codigo Sector
+            'BARRI_MDIR' => $d->itcneighoc, //Codigo Barrio
+            'CALCL_MDIR' => $d->itcstreetc, //Codigo Calles
+            'EDIFC_MDIR' => $d->itcbuiname, //Nombre Edificio
+            'MANZC_MDIR' => $d->itcblock, //Codigo Manzana
+            'NUMCA_MDIR' => $d->itchousnum, //No. Casa/Apartamento
+            'KILOM_MDIR' => $d->itckm, //Kilometro Si es Carr
+            'CALL1_MDIR' => $d->itcinstre1, //Entre Cuales Calle 1
+            'CALL2_MDIR' => $d->itcinstre2, //Entre Cuales Calle 2
+            'INSTD_MDIR' => $d->itcspeinst, //Instruccion Especial
+            'ZONAP_MDIR' => $d->itcposzone, //Zona Postal
+            'APOST_MDIR' => $d->itcposmail, //Apartado Postal
             'IDTEP_MDIR' => 0, //Codigo Pais
-            'AREAP_MDIR' => $r->main_phone_area_itc, //Area Telefono
-            'NUTEP_MDIR' => $r->main_phone_number_itc, //Numero Telefono
-            'EXTEP_MDIR' => $r->main_phone_number_itc, //Extension Telefono
+            'AREAP_MDIR' => $d->itcmphoare, //Area Telefono
+            'NUTEP_MDIR' => $d->itcmphonum, //Numero Telefono
+            'EXTEP_MDIR' => $d->itcmphoext, //Extension Telefono
             'IDTES_MDIR' => 0, //Codigo Pais
-            'AREAS_MDIR' => $r->secundary_phone_area_itc, //Area Telefono
-            'NUTES_MDIR' => $r->secundary_phone_number_itc, //Numero Telefono
-            'EXTES_MDIR' => $r->secundary_phone_number_itc, //Extension Telefono
+            'AREAS_MDIR' => $d->itcsphoare, //Area Telefono
+            'NUTES_MDIR' => $d->itcsphonum, //Numero Telefono
+            'EXTES_MDIR' => $d->itcsphoext, //Extension Telefono
             'IDTCP_MDIR' => 0, //Codigo Pais
-            'ARECP_MDIR' => $r->main_cell_area_itc, //Area Telefono
-            'NUTCP_MDIR' => $r->main_cell_number_itc, //Numero Telefono
+            'ARECP_MDIR' => $d->itcmcelare, //Area Telefono
+            'NUTCP_MDIR' => $d->itcmcelnum, //Numero Telefono
             'IDTCS_MDIR' => 0, //Codigo Pais
-            'ARECS_MDIR' => $r->secundary_cell_area_itc, //Area Telefono
-            'NUTCS_MDIR' => $r->secundary_cell_number_itc, //Numero Telefono
-            'AREAF_MDIR' => $r->fax_area_itc, //Area Fax
-            'NUMFX_MDIR' => $r->fax_number_itc, //Numero de Fax
-            'EMAIL_MDIR' => $r->mail_itc, //Correo Electronico
+            'ARECS_MDIR' => $d->itcscelare, //Area Telefono
+            'NUTCS_MDIR' => $d->itcscelnum, //Numero Telefono
+            'AREAF_MDIR' => $d->itcfaxarea, //Area Fax
+            'NUMFX_MDIR' => $d->itcfaxnumb, //Numero de Fax
+            'EMAIL_MDIR' => $d->itcmail, //Correo Electronico
             'STSDI_MDIR' => '', //Status Direccion
             'STSCA_MDIR' => '', //Status de Cambios
             // 'USRDI_MDIR' => 'BADINTRANE', //Usuario Digitacion
@@ -381,14 +592,14 @@ class MaintenanceController extends Controller
             // 'HORMO_MDIR' => 1, //Hora Modificacion
         ];
 
-        if ($customer->actives_creditcards->get($r->tdc)->address_one) {
+        if ($customer->actives_creditcards->where('tcact_mtar', $maintenance->tdcnumber)->first()->address_one) {
             $address = array_merge($address, [
                 'USRMO_MDIR' => 'BADINTRANE', //Usuario Modificacion
                 'FECMO_MDIR' => $datetime->format('Ymd'), //Fecha Modificacion
                 'HORMO_MDIR' => $datetime->format('His'), //Hora Modificacion
             ]);
 
-            $customer->actives_creditcards->get($r->tdc)->address_one()->update($address);
+            $customer->actives_creditcards->where('tcact_mtar', $maintenance->tdcnumber)->first()->address_one()->update($address);
         } else {
             $address = array_merge($address, [
                 'USRDI_MDIR' => 'BADINTRANE', //Usuario Digitacion
@@ -396,58 +607,58 @@ class MaintenanceController extends Controller
                 'HORDI_MDIR' => $datetime->format('His'), //Hora Digitacion
             ]);
 
-            $customer->actives_creditcards->get($r->tdc)->address_one()->insert($address);
+            $customer->actives_creditcards->where('tcact_mtar', $maintenance->tdcnumber)->first()->address_one()->insert($address);
         }
     }
 
-    private function save_address_two($r, $customer, $datetime)
+    private function save_address_two($maintenance, $customer, $datetime)
     {
-        $tdc = $customer->actives_creditcards->get($r->tdc);
+        $d = $maintenance->itc_dir_two;
 
         $address = [
             'CODBA_MDIR' => 1, //Codigo Banco
             'CODCI_MDIR' => 1, //Cod. Cia a Procesar
             'NUSOL_MDIR' => 0, //Numero Solicitud
-            'TCACT_MDIR' => $tdc->getNumber(), //Numero de Tarjeta
-            'CODCL_MDIR' => $customer->getCode(), //Codigo Cliente
+            'TCACT_MDIR' => $maintenance->tdcnumber, //Numero de Tarjeta
+            'CODCL_MDIR' => $maintenance->clinumber, //Codigo Cliente
             'IDDIR_MDIR' => 2, //Tipo Direccion
-            'FOREE_MDIR' => $r->ways_sending_statement_2_itc, //Forma Envio Estado
+            'FOREE_MDIR' => $d->waysendsta, //Forma Envio Estado
             'SECTP_MDIR' => 0, //Secuencia Tipo/Direc
             'CIFCL_MDIR' => '', //LLave Cif Cliente
-            'CODPA_MDIR' => $r->country_2_itc, //Codigo Pais
-            'REGIO_MDIR' => $r->region_2_itc, //Codigo Region
-            'PROVI_MDIR' => $r->province_2_itc, //Codigo Provincia
-            'CIUCL_MDIR' => $r->city_2_itc, //Codigo Ciudad
-            'MUNIC_MDIR' => $r->municipality_2_itc, //Codigo Municipio
-            'SECTR_MDIR' => $r->sector_2_itc, //Codigo Sector
-            'BARRI_MDIR' => $r->neighborhood_2_itc, //Codigo Barrio
-            'CALCL_MDIR' => $r->street_2_itc, //Codigo Calles
-            'EDIFC_MDIR' => $r->building_name_2_itc, //Nombre Edificio
-            'MANZC_MDIR' => $r->block_2_itc, //Codigo Manzana
-            'NUMCA_MDIR' => $r->house_number_2_itc, //No. Casa/Apartamento
-            'KILOM_MDIR' => $r->km_2_itc, //Kilometro Si es Carr
-            'CALL1_MDIR' => $r->in_street_1_2_itc, //Entre Cuales Calle 1
-            'CALL2_MDIR' => $r->in_street_2_2_itc, //Entre Cuales Calle 2
-            'INSTD_MDIR' => $r->special_instruction_2_itc, //Instruccion Especial
-            'ZONAP_MDIR' => $r->postal_zone_2_itc, //Zona Postal
-            'APOST_MDIR' => $r->postal_mail_2_itc, //Apartado Postal
+            'CODPA_MDIR' => $d->itccountrc, //Codigo Pais
+            'REGIO_MDIR' => $d->itcregionc, //Codigo Region
+            'PROVI_MDIR' => $d->itcprovinc, //Codigo Provincia
+            'CIUCL_MDIR' => $d->itccityc, //Codigo Ciudad
+            'MUNIC_MDIR' => $d->itcmunicic, //Codigo Municipio
+            'SECTR_MDIR' => $d->itcsectorc, //Codigo Sector
+            'BARRI_MDIR' => $d->itcneighoc, //Codigo Barrio
+            'CALCL_MDIR' => $d->itcstreetc, //Codigo Calles
+            'EDIFC_MDIR' => $d->itcbuiname, //Nombre Edificio
+            'MANZC_MDIR' => $d->itcblock, //Codigo Manzana
+            'NUMCA_MDIR' => $d->itchousnum, //No. Casa/Apartamento
+            'KILOM_MDIR' => $d->itckm, //Kilometro Si es Carr
+            'CALL1_MDIR' => $d->itcinstre1, //Entre Cuales Calle 1
+            'CALL2_MDIR' => $d->itcinstre2, //Entre Cuales Calle 2
+            'INSTD_MDIR' => $d->itcspeinst, //Instruccion Especial
+            'ZONAP_MDIR' => $d->itcposzone, //Zona Postal
+            'APOST_MDIR' => $d->itcposmail, //Apartado Postal
             'IDTEP_MDIR' => 0, //Codigo Pais
-            'AREAP_MDIR' => $r->main_phone_area_2_itc, //Area Telefono
-            'NUTEP_MDIR' => $r->main_phone_number_2_itc, //Numero Telefono
-            'EXTEP_MDIR' => $r->main_phone_number_2_itc, //Extension Telefono
+            'AREAP_MDIR' => $d->itcmphoare, //Area Telefono
+            'NUTEP_MDIR' => $d->itcmphonum, //Numero Telefono
+            'EXTEP_MDIR' => $d->itcmphoext, //Extension Telefono
             'IDTES_MDIR' => 0, //Codigo Pais
-            'AREAS_MDIR' => $r->secundary_phone_area_2_itc, //Area Telefono
-            'NUTES_MDIR' => $r->secundary_phone_number_2_itc, //Numero Telefono
-            'EXTES_MDIR' => $r->secundary_phone_number_2_itc, //Extension Telefono
+            'AREAS_MDIR' => $d->itcsphoare, //Area Telefono
+            'NUTES_MDIR' => $d->itcsphonum, //Numero Telefono
+            'EXTES_MDIR' => $d->itcsphoext, //Extension Telefono
             'IDTCP_MDIR' => 0, //Codigo Pais
-            'ARECP_MDIR' => $r->main_cell_area_2_itc, //Area Telefono
-            'NUTCP_MDIR' => $r->main_cell_number_2_itc, //Numero Telefono
+            'ARECP_MDIR' => $d->itcmcelare, //Area Telefono
+            'NUTCP_MDIR' => $d->itcmcelnum, //Numero Telefono
             'IDTCS_MDIR' => 0, //Codigo Pais
-            'ARECS_MDIR' => $r->secundary_cell_area_2_itc, //Area Telefono
-            'NUTCS_MDIR' => $r->secundary_cell_number_2_itc, //Numero Telefono
-            'AREAF_MDIR' => $r->fax_area_2_itc, //Area Fax
-            'NUMFX_MDIR' => $r->fax_number_2_itc, //Numero de Fax
-            'EMAIL_MDIR' => $r->mail_2_itc, //Correo Electronico
+            'ARECS_MDIR' => $d->itcscelare, //Area Telefono
+            'NUTCS_MDIR' => $d->itcscelnum, //Numero Telefono
+            'AREAF_MDIR' => $d->itcfaxarea, //Area Fax
+            'NUMFX_MDIR' => $d->itcfaxnumb, //Numero de Fax
+            'EMAIL_MDIR' => $d->itcmail, //Correo Electronico
             'STSDI_MDIR' => '', //Status Direccion
             'STSCA_MDIR' => '', //Status de Cambios
             // 'USRDI_MDIR' => 'BADINTRANE', //Usuario Digitacion
@@ -458,14 +669,14 @@ class MaintenanceController extends Controller
             // 'HORMO_MDIR' => 1, //Hora Modificacion
         ];
 
-        if ($customer->actives_creditcards->get($r->tdc)->address_two) {
+        if ($customer->actives_creditcards->where('tcact_mtar', $maintenance->tdcnumber)->first()->address_two) {
             $address = array_merge($address, [
                 'USRMO_MDIR' => 'BADINTRANE', //Usuario Modificacion
                 'FECMO_MDIR' => $datetime->format('Ymd'), //Fecha Modificacion
                 'HORMO_MDIR' => $datetime->format('His'), //Hora Modificacion
             ]);
 
-            $customer->actives_creditcards->get($r->tdc)->address_two()->update($address);
+            $customer->actives_creditcards->where('tcact_mtar', $maintenance->tdcnumber)->first()->address_two()->update($address);
         } else {
             $address = array_merge($address, [
                 'USRDI_MDIR' => 'BADINTRANE', //Usuario Digitacion
@@ -473,7 +684,7 @@ class MaintenanceController extends Controller
                 'HORDI_MDIR' => $datetime->format('His'), //Hora Digitacion
             ]);
 
-            $customer->actives_creditcards->get($r->tdc)->address_two()->insert($address);
+            $customer->actives_creditcards->where('tcact_mtar', $maintenance->tdcnumber)->first()->address_two()->insert($address);
         }
     }
 }

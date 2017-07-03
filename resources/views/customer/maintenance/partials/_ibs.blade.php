@@ -35,7 +35,7 @@
                         <select class="form-control input-sm" name="country_ibs">
                             <option value="">Selecciona un país</option>
                             @foreach ($countries_ibs as $country)
-                                <option value="{{ trim($country->code) }}"{{ $customer->getCountry() == cap_str($country->description) ? ' selected' : '' }}>{{ trim($country->description) }}</option>
+                                <option value="{{ trim($country->code) }}|{{ trim($country->description) }}"{{ $customer->getCountry() == cap_str($country->description) ? ' selected' : '' }}>{{ trim($country->description) }}</option>
                             @endforeach
                         </select>
                         <span class="help-block">{{ $errors->first('country_ibs') }}</span>
@@ -47,7 +47,7 @@
                         <label class="control-label">Provincia</label>
                         <select class="form-control input-sm" name="province_ibs">
                             @foreach ($provinces_ibs as $province)
-                                <option value="{{ $province->code }}"{{ $province->code == $customer->getProvinceCode() ? ' selected':'' }}>{{ $province->description }}</option>
+                                <option value="{{ $province->code }}|{{ trim($province->description) }}"{{ $province->code == $customer->getProvinceCode() ? ' selected':'' }}>{{ $province->description }}</option>
                             @endforeach
                         </select>
                         <span class="help-block">{{ $errors->first('province_ibs') }}</span>
@@ -61,7 +61,7 @@
                         <label class="control-label">Ciudad</label>
                         <select class="form-control input-sm" name="city_ibs">
                             @foreach ($cities_ibs as $city)
-                                <option value="{{ $city->code }}"{{ $city->code == $customer->getCityCode() ? 'selected':'' }}>{{ $city->description }}</option>
+                                <option value="{{ $city->code }}|{{ trim($city->description) }}"{{ $city->code == $customer->getCityCode() ? 'selected':'' }}>{{ $city->description }}</option>
                             @endforeach
                         </select>
                         <span class="help-block">{{ $errors->first('city_ibs') }}</span>
@@ -73,7 +73,7 @@
                         <label class="control-label">Sector</label>
                         <select class="form-control input-sm" name="sector_ibs">
                             @foreach ($sectors_ibs as $sector)
-                                <option value="{{ $sector->code }}"{{ $sector->code == $customer->getSectorCode() ? 'selected':'' }}>{{ $sector->description }}</option>
+                                <option value="{{ $sector->code }}|{{ trim($sector->description) }}"{{ $sector->code == $customer->getSectorCode() ? 'selected':'' }}>{{ $sector->description }}</option>
                             @endforeach
                         </select>
                         <span class="help-block">{{ $errors->first('sector_ibs') }}</span>

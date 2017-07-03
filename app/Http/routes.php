@@ -313,6 +313,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::group(['prefix' => 'maintenance'], function () {
             Route::get('load', 'Customer\MaintenanceController@load')->name('customer.maintenance.load');
+            Route::get('approve/{id}', 'Customer\MaintenanceController@approve')->name('customer.maintenance.approve');
         });
 
         Route::resource('maintenance', 'Customer\MaintenanceController', ['only' => [

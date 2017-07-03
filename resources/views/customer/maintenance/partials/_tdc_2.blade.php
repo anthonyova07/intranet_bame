@@ -15,7 +15,7 @@
                     <div class="form-group{{ $errors->first('country_2_itc') ? ' has-error':'' }}">
                         <label class="control-label">País</label>
                         <select class="form-control input-sm" name="country_2_itc">
-                            <option value="DOM" selected>REPÚBLICA DOMINICANA</option>
+                            <option value="DOM|REPÚBLICA DOMINICANA" selected>REPÚBLICA DOMINICANA</option>
                         </select>
                         <span class="help-block">{{ $errors->first('country_2_itc') }}</span>
                     </div>
@@ -27,7 +27,7 @@
                         <select class="form-control input-sm" name="region_2_itc">
                             <option value="">Seleccione una región</option>
                             @foreach ($regions as $region)
-                                <option value="{{ $region->getCode() }}"{{ $region->getCode() == $address_two->getRegion() ? ' selected':'' }}>{{ $region->getDesc() }}</option>
+                                <option value="{{ $region->getCode() }}|{{ trim($region->getDesc()) }}"{{ $region->getCode() == ($address_two ? $address_two->getRegion() : '') ? ' selected':'' }}>{{ $region->getDesc() }}</option>
                             @endforeach
                         </select>
                         <span class="help-block">{{ $errors->first('region_2_itc') }}</span>
@@ -41,7 +41,7 @@
                         <label class="control-label">Provincia</label>
                         <select class="form-control input-sm" name="province_2_itc">
                             @foreach ($provinces_2_itc as $province)
-                                <option value="{{ $province->code }}"{{ $province->code == $address_two->getProvince() ? ' selected':'' }}>{{ $province->description }}</option>
+                                <option value="{{ $province->code }}|{{ trim($province->description) }}"{{ $province->code == $address_two->getProvince() ? ' selected':'' }}>{{ $province->description }}</option>
                             @endforeach
                         </select>
                         <span class="help-block">{{ $errors->first('province_2_itc') }}</span>
@@ -53,7 +53,7 @@
                         <label class="control-label">Ciudad</label>
                         <select class="form-control input-sm" name="city_2_itc">
                             @foreach ($cities_2_itc as $city)
-                                <option value="{{ $city->code }}"{{ $city->code == $address_two->getCity() ? ' selected':'' }}>{{ $city->description }}</option>
+                                <option value="{{ $city->code }}|{{ trim($city->description) }}"{{ $city->code == $address_two->getCity() ? ' selected':'' }}>{{ $city->description }}</option>
                             @endforeach
                         </select>
                         <span class="help-block">{{ $errors->first('city_2_itc') }}</span>
@@ -67,7 +67,7 @@
                         <label class="control-label">Municipio</label>
                         <select class="form-control input-sm" name="municipality_2_itc">
                             @foreach ($municipalities_2_itc as $municipality)
-                                <option value="{{ $municipality->code }}"{{ $municipality->code == $address_two->getMunicipality() ? ' selected':'' }}>{{ $municipality->description }}</option>
+                                <option value="{{ $municipality->code }}|{{ trim($municipality->description) }}"{{ $municipality->code == $address_two->getMunicipality() ? ' selected':'' }}>{{ $municipality->description }}</option>
                             @endforeach
                         </select>
                         <span class="help-block">{{ $errors->first('municipality_2_itc') }}</span>
@@ -79,7 +79,7 @@
                         <label class="control-label">Sector</label>
                         <select class="form-control input-sm" name="sector_2_itc">
                             @foreach ($sectors_2_itc as $sector)
-                                <option value="{{ $sector->code }}"{{ $sector->code == $address_two->getSector() ? ' selected':'' }}>{{ $sector->description }}</option>
+                                <option value="{{ $sector->code }}|{{ trim($sector->description) }}"{{ $sector->code == $address_two->getSector() ? ' selected':'' }}>{{ $sector->description }}</option>
                             @endforeach
                         </select>
                         <span class="help-block">{{ $errors->first('sector_2_itc') }}</span>
@@ -93,7 +93,7 @@
                         <label class="control-label">Barrio</label>
                         <select class="form-control input-sm" name="neighborhood_2_itc">
                             @foreach ($neighborhoods_2_itc as $neighborhood)
-                                <option value="{{ $neighborhood->code }}"{{ $neighborhood->code == $address_two->getNeighborhood() ? ' selected':'' }}>{{ $neighborhood->description }}</option>
+                                <option value="{{ $neighborhood->code }}|{{ trim($neighborhood->description) }}"{{ $neighborhood->code == $address_two->getNeighborhood() ? ' selected':'' }}>{{ $neighborhood->description }}</option>
                             @endforeach
                         </select>
                         <span class="help-block">{{ $errors->first('neighborhood_2_itc') }}</span>
@@ -105,7 +105,7 @@
                         <label class="control-label">Calle</label>
                         <select class="form-control input-sm" name="street_2_itc">
                             @foreach ($streets_2_itc as $street)
-                                <option value="{{ $street->code }}"{{ $street->code == $address_two->getNeighborhood() ? ' selected':'' }}>{{ $street->description }}</option>
+                                <option value="{{ $street->code }}|{{ trim($street->description) }}"{{ $street->code == $address_two->getNeighborhood() ? ' selected':'' }}>{{ $street->description }}</option>
                             @endforeach
                         </select>
                         <span class="help-block">{{ $errors->first('street_2_itc') }}</span>
