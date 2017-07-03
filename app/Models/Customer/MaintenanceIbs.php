@@ -14,9 +14,11 @@ class MaintenanceIbs extends Model
 
     public $incrementing = false;
 
-    public $timestamps = true;
+    // protected $dates = ['approvdate'];
 
-    protected $dateFormat = 'Y-m-d H:i:s';
+    public $timestamps = false;
+
+    // protected $dateFormat = 'Y-m-d H:i:s';
 
     public function itc_dir_one()
     {
@@ -26,5 +28,12 @@ class MaintenanceIbs extends Model
     public function itc_dir_two()
     {
         return $this->hasOne(MaintenanceItc::class, 'parent_id', 'id')->where('dir_type', 2);
+    }
+
+    public function scopeLastest($query)
+    {
+        $this->dateFormat = 'Y-m-d H:i:s';
+
+        return $query->orderBy('created_at', 'asc')->orderBy('isapprov', 'desc');
     }
 }

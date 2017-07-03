@@ -27,6 +27,8 @@ class MaintenanceController extends Controller
             return redirect(route('customer.maintenance.create'));
         }
 
+        $maintenances = collect();
+
         $customer = null;
         $core = null;
         $tdc = $request->tdc ?? 0;
@@ -77,6 +79,8 @@ class MaintenanceController extends Controller
         if (session()->has('customer_maintenance')) {
             $customer = Customer::SearchByIdentification(session('customer_maintenance'))->first();
             $core = session('customer_maintenance_core');
+        } else {
+            $maintenances = MaintenanceIbs::lastest()->paginate(1);
         }
 
         if ($core == 'ibs') {
@@ -152,6 +156,8 @@ class MaintenanceController extends Controller
         $ways_sending_statements = Description::wherePrefix('SAS_ENVCOR')->orderByDescription()->get();
 
         return view('customer.maintenance.create')
+            ->with('maintenances', $maintenances)
+
             ->with('customer', $customer)
 
             ->with('countries_ibs', $countries_ibs)
@@ -418,7 +424,7 @@ class MaintenanceController extends Controller
 
         do_log('Realizó Mantenimiento del cliente ( number:' . strip_tags($customer->getCode()) . ' )');
 
-        return redirect(route('customer.maintenance.create'))->with('success', 'Los cambios fueron guardados y aprobados correctamente.');
+        return redirect(route('customer.maintenance.create', ['page' => $request->page]))->with('success', 'Los cambios fueron guardados y aprobados correctamente.');
     }
 
     protected function getCode($value)
