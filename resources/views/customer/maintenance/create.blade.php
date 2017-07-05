@@ -124,64 +124,66 @@
             </div>
         </div>
 
-        <div class="row" style="border-bottom: 1px solid #777;border-top: 1px solid #777;margin: 8px 0 25px 0;border-width: 5px;">
-            <h1 style="margin: 0;text-align: center;">Aprovaciones</h1>
-        </div>
-
-        <div class="row">
-
-            <div class="col-xs-12">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <table class="table table-striped table-bordered table-hover table-condensed" order-by='2|desc'>
-                            <thead>
-                                <tr>
-                                    <th># Cliente</th>
-                                    <th># Identificación</th>
-                                    <th>Core</th>
-                                    <th>Aprobado</th>
-                                    <th>Aprobado por</th>
-                                    <th>Aprobado el</th>
-                                    <th style="width: 112px;">Fecha Creación</th>
-                                    <th style="width: 112px;">Creado por</th>
-                                    <th style="width: 52px"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($maintenances as $m)
-                                    <tr>
-                                        <td>{{ $m->clinumber }}</td>
-                                        <td>{{ $m->cliident }}</td>
-                                        <td>{{ strtoupper($m->typecore) }}</td>
-                                        <td>{{ $m->isapprov ? 'Si' : 'No' }}</td>
-                                        <td>{{ $m->approvname }}</td>
-                                        <td>{{ $m->isapprov ? date_create($m->approvdate)->format('d/m/Y H:i:s') : '' }}</td>
-                                        <td>{{ date_create($m->created_at)->format('d/m/Y H:i:s') }}</td>
-                                        <td>{{ $m->createname }}</td>
-                                        <td align="center">
-                                            @if (!$m->isapprov)
-                                                <a
-                                                    href="{{ route('customer.maintenance.approve', array_merge(['id' => $m->id], Request::only('page'))) }}"
-                                                    class="verde link_approv"
-                                                    onclick="approve(this)"
-                                                    data-toggle="tooltip"
-                                                    data-placement="top"
-                                                    title="Aprobar">
-                                                    <i class="fa fa-check fa-fw"></i>
-                                                </a>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-
-                        {{ $maintenances->appends(Request::only(['page']))->links() }}
-                    </div>
-                </div>
+        @if (!can_not_do('customer_approvals_address'))
+            <div class="row" style="border-bottom: 1px solid #777;border-top: 1px solid #777;margin: 8px 0 25px 0;border-width: 5px;">
+                <h1 style="margin: 0;text-align: center;">Aprobaciones</h1>
             </div>
 
-        </div>
+            <div class="row">
+
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <table class="table table-striped table-bordered table-hover table-condensed" order-by='2|desc'>
+                                <thead>
+                                    <tr>
+                                        <th># Cliente</th>
+                                        <th># Identificación</th>
+                                        <th>Core</th>
+                                        <th>Aprobado</th>
+                                        <th>Aprobado por</th>
+                                        <th>Aprobado el</th>
+                                        <th style="width: 112px;">Fecha Creación</th>
+                                        <th style="width: 112px;">Creado por</th>
+                                        <th style="width: 52px"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($maintenances as $m)
+                                        <tr>
+                                            <td>{{ $m->clinumber }}</td>
+                                            <td>{{ $m->cliident }}</td>
+                                            <td>{{ strtoupper($m->typecore) }}</td>
+                                            <td>{{ $m->isapprov ? 'Si' : 'No' }}</td>
+                                            <td>{{ $m->approvname }}</td>
+                                            <td>{{ $m->isapprov ? date_create($m->approvdate)->format('d/m/Y H:i:s') : '' }}</td>
+                                            <td>{{ date_create($m->created_at)->format('d/m/Y H:i:s') }}</td>
+                                            <td>{{ $m->createname }}</td>
+                                            <td align="center">
+                                                @if (!$m->isapprov)
+                                                    <a
+                                                        href="{{ route('customer.maintenance.approve', array_merge(['id' => $m->id], Request::only('page'))) }}"
+                                                        class="verde link_approv"
+                                                        onclick="approve(this)"
+                                                        data-toggle="tooltip"
+                                                        data-placement="top"
+                                                        title="Aprobar">
+                                                        <i class="fa fa-check fa-fw"></i>
+                                                    </a>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+                            {{ $maintenances->appends(Request::only(['page']))->links() }}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        @endif
 
     @endif
 

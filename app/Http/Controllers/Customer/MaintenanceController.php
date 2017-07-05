@@ -80,7 +80,7 @@ class MaintenanceController extends Controller
             $customer = Customer::SearchByIdentification(session('customer_maintenance'))->first();
             $core = session('customer_maintenance_core');
         } else {
-            $maintenances = MaintenanceIbs::lastest()->paginate(1);
+            $maintenances = MaintenanceIbs::lastest()->paginate();
         }
 
         if ($core == 'ibs') {
@@ -379,6 +379,10 @@ class MaintenanceController extends Controller
 
     public function approve(Request $request, $id)
     {
+        if (can_not_do('customer_approvals_address')) {
+            return redirect(route('customer.maintenance.create'))->with('error', 'Usted no tiene los permisos necesarios para aprobar los mantenimientos.');
+        }
+
         $maintenance = MaintenanceIbs::find($id);
 
         $datetime = new Datetime();
