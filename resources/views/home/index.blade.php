@@ -177,7 +177,7 @@
                                     <tbody>
                                         <tr>
                                             <td class="text-center">
-                                                <a target="_blank" href="http://intranet_bame:8077/files/gesti_doc/human_resources/Codigo_de_Etica_y_Conducta/Manual_de_Normas_Codigo_de_Etica_y_Conducta.pdf">
+                                                <a target="_blank" href="{{ env('LINK_CODIGO_ETICA', '#') }}">
                                                     <i style="font-size: 183px;color: #d82f27;margin-top: 24px;" data-toggle="tooltip" title="Click para ver" class="fa fa-book"></i>
                                                 </a>
                                             </td>
@@ -205,7 +205,7 @@
                                     <tbody>
                                         <tr>
                                             <td class="text-center">
-                                                <a target="_blank" href="http://intranet_bame:8077/gestidoc/compliance?folder=Marco_Legal">
+                                                <a target="_blank" href="{{ env('LINK_NORMATIVA_LEGAL', '#') }}">
                                                     <i style="font-size: 183px;color: #d82f27;margin-top: 13px;" data-toggle="tooltip" title="Click para ver" class="fa fa-gavel"></i>
                                                 </a>
                                             </td>
