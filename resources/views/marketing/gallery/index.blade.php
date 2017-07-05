@@ -32,7 +32,7 @@
                         <tbody>
                             @foreach ($galleries as $gallery)
                                 <tr>
-                                    <td><img style="width: 100px;" alt="No encontrada" src="{{ route('home') . '/files/gallery/' . $gallery->id . '/' . $gallery->image }}"></td>
+                                    <td><img style="width: 100px;" alt="No encontrada" src="{{ route('home') . '/files/gallery/' . $gallery->id . '/' . $gallery->image . '?' . uniqid() }}"></td>
                                     <td>{{ $gallery->name }}</td>
                                     <td>{{ $gallery->galdate->format('Y-m-d') }}</td>
                                     <td>
