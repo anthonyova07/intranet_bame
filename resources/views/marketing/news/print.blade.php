@@ -24,8 +24,8 @@
             border-right: 1px solid #CCCCCC;
         }
         .fecha {
-            border: 1px solid #616365;
-            width: 185px;
+            /*border: 1px solid #616365;*/
+            width: 90px;
             padding: 3px;
             margin: 10px;
             border-radius: 6px;
@@ -74,19 +74,12 @@
                 <tr align="right">
                     <td class="table_td" style="border: 0;">
                         <div class="fecha">
-                            <div class="fecha_title">Fecha</div>
+                            <div class="fecha_title">Fecha: </div>
                             {{ $news->created_at->format('d') }}
                             <b>/</b>
                             {{ $news->created_at->format('m') }}
                             <b>/</b>
                             {{ $news->created_at->format('Y') }}
-                            &nbsp;&nbsp;&nbsp;
-                            {{ $news->created_at->format('h') }}
-                            <b>:</b>
-                            {{ $news->created_at->format('i') }}
-                            <b>:</b>
-                            {{ $news->created_at->format('s') }}
-                            {{ $news->created_at->format('a') }}
                         </div>
                     </td>
                 </tr>
@@ -107,6 +100,6 @@
             {!! html_entity_decode($news->detail) !!}
         </div>
 
-        @include('layouts.partials.print_and_exit')
+        {{-- @include('layouts.partials.print_and_exit') --}}
     </body>
 </html>
