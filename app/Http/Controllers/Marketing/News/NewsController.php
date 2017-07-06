@@ -190,4 +190,15 @@ class NewsController extends Controller
 
         return redirect(route('marketing.news.index'))->with('success', 'La noticia ha sido eliminada correctamente.');
     }
+
+    public function print(Request $request, $id)
+    {
+        $news = News::find($id);
+
+        do_log('Imprimió la Noticia ( título:' . strip_tags($news->title) . ' )');
+
+        return view('marketing.news.print')
+                ->with('datetime', new DateTime)
+                ->with('news', $news);
+    }
 }

@@ -86,6 +86,14 @@
                                             class="naranja">
                                             <i class="fa fa-edit fa-fw"></i>
                                         </a>
+                                        <a
+                                            href="{{ route('marketing.news.print', ['id' => $new->id]) }}"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            target="_blank"
+                                            title="Imprimir">
+                                            <i class="fa fa-print fa-fw"></i>
+                                        </a>
                                         {{-- <a
                                             onclick="cancel('{{ $new->id }}', this)"
                                             href="javascript:void(0)"
