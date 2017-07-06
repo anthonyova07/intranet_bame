@@ -100,6 +100,6 @@
             {!! html_entity_decode($news->detail) !!}
         </div>
 
-        @include('layouts.partials.print_and_exit')
+        {{-- @include('layouts.partials.print_and_exit') --}}
     </body>
 </html>
