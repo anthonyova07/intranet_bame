@@ -25,7 +25,7 @@
                         <div class="col-xs-2">
                             <div class="form-group{{ $errors->first('vac_total_days') ? ' has-error':'' }}">
                                 <label class="control-label">Días a Tomar</label>
-                                <input type="number" class="form-control input-sm" name="vac_total_days" value="{{ old('vac_total_days') }}">
+                                <input type="number" class="form-control input-sm" min="1" name="vac_total_days" value="{{ old('vac_total_days') ?? 1 }}">
                                 <span class="help-block">{{ $errors->first('vac_total_days') }}</span>
                             </div>
                         </div>
@@ -91,4 +91,25 @@
             $('#one_day').hide('fast');
         }
     });
+
+    var total_days = $('input[name=vac_total_days]');
+    var date_from = $('input[name=vac_date_from]');
+    var date_to = $('input[name=vac_date_to]');
+
+    total_days.change(function (e) {
+        calculate(total_days.val(), date_from.val());
+    });
+
+    date_from.change(function (e) {
+        calculate(total_days.val(), date_from.val());
+    });
+
+    function calculate(total_days, date_from) {
+        $.getJSON('{{ route('human_resources.request.calculate_vac_date_to') }}', {
+            total_days: total_days,
+            date_from: date_from
+        }, function (response) {
+            date_to.val(response.date_to);
+        });
+    }
 </script>

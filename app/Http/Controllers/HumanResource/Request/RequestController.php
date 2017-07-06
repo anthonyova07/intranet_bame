@@ -379,4 +379,17 @@ class RequestController extends Controller
 
         return back()->with('success', 'Los cambios han sido guardados correctamente.');
     }
+
+    public function calculate_vac_date_to(Request $request)
+    {
+        if ($request->date_from == '' || $request->total_days == '') {
+            return '';
+        }
+
+        $date_to = HumanResourceRequest::getVacDateTo($request->date_from, $request->total_days);
+
+        return response()->json([
+            'date_to' => $date_to,
+        ]);
+    }
 }
