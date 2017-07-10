@@ -108,17 +108,27 @@ class PayrollController extends Controller
     public function getPayRoll(Request $request)
     {
         $payroll = null;
+        $total_discharge = 0;
+        $total_ingress = 0;
 
-        $dates = Payroll::byActualUser()->get();
+        if ($request->year && $request->month && $request->day) {
+            $payroll = Payroll::byActualUser()->date("{$request->year}-{$request->month}-{$request->day}")->first();
 
-        if ($request->payroll_date) {
-            $payroll = Payroll::date($request->payroll_date)->first();
-        } else {
-            // if ($dates->count()) {
-            //     $payroll = Payroll::date($dates->first()->payroldate)->first();
-            // }
+            if (!$payroll) {
+                session()->flash('error', "No existe nómina registrada para la fecha {$request->day}/{$request->month}/{$request->year}. Favor contactar con RRHH.");
+            } else {
+                $last_detail = $payroll->details->pop();
+
+                $payroll->details->each(function ($detail, $index) use (&$total_discharge, &$total_ingress) {
+                    if ($detail->amount < 0) {
+                        $total_discharge += $detail->amount;
+                    } else {
+                        $total_ingress += $detail->amount;
+                    }
+                });
+            }
         }
 
-        return view('human_resources.payroll.my', compact('dates', 'payroll'));
+        return view('human_resources.payroll.my', compact('payroll', 'total_ingress', 'total_discharge', 'last_detail'));
     }
 }
