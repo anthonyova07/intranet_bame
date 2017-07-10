@@ -13,14 +13,17 @@
                     <form method="get" action="{{ route('human_resources.payroll.my') }}" id="form">
                         <div class="row">
                             <div class="col-xs-12">
-                                <div class="form-group" style="margin-bottom: 0;">
+                                <div class="form-group">
                                     {{-- <label class="control-label">Seleccione una nómina</label> --}}
                                     <select name="payroll_date" id="payroll_date" class="form-control">
                                         @foreach ($dates as $date)
-                                            <option value="{{ $date->payroldate->format('Y-m-d') }}"{{ $date->payroldate->format('Y-m-d') == Request::get('payroll_date') ? ' selected':'' }}>{{ $date->payroldate->format('d/m/Y') }}</option>
+                                            <option value="{{ $date->payroldate->format('Y-m-d') }}"{{ $date->payroldate->format('Y-m-d') == Request::get('payroll_date') ? ' selected':'' }}>{{ ($date->payroldate->format('d') > 15 ? '2da Quincena' : '1ra Quincena') . ' de ' . get_months($date->payroldate->format('m')) . ' del ' . $date->payroldate->format('Y') }}</option>
                                         @endforeach
                                     </select>
                                 </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Cargando nómina...">Cargar</button>
                             </div>
                         </div>
                     </form>
@@ -63,9 +66,9 @@
             $('#btn_submit').button('loading');
         });
 
-        $('select[name=payroll_date]').change(function () {
-            $('#form').submit();
-        });
+        // $('select[name=payroll_date]').change(function () {
+        //     $('#form').submit();
+        // });
     </script>
 
 @endsection

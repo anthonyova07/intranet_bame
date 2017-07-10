@@ -61,6 +61,10 @@
                     </li>
                     <li class="divider"></li>
                     <li>
+                        <a href="{{ route('human_resources.payroll.my') }}"><i class="fa fa-money fa-fw"></i> Nóminas</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
                         <a href="{{ route('auth.logout') }}"><i class="fa fa-sign-out fa-fw"></i> Cerrar sesión</a>
                     </li>
                 @else

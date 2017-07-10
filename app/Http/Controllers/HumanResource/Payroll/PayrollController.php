@@ -24,6 +24,8 @@ class PayrollController extends Controller
             $verified = false;
             $exists = true;
             $payroll_date = '';
+            $quantity_lines = 0;
+            $quantity_employee = 0;
 
             $content = file($request->payrolls->path());
 
@@ -51,17 +53,19 @@ class PayrollController extends Controller
 
                     $payroll->id = uniqid(true);
                     $payroll->payroldate = $payroll_date;
-                    $payroll->useremp = trim(explode('@', $parts[12])[0]);
+                    $payroll->useremp = trim(explode('@', $parts[11])[0]);
                     $payroll->recordcard = trim($parts[5]);
                     $payroll->identifica = trim($parts[6]);
                     $payroll->name = trim(utf8_encode($parts[2]));
                     $payroll->position = trim($parts[3]);
                     $payroll->department = trim($parts[4]);
-                    $payroll->mail = trim($parts[12]);
+                    $payroll->mail = trim($parts[11]);
 
                     $payroll->created_by = session()->get('user');
 
                     $payroll->save();
+
+                    $quantity_employee++;
 
                     if (trim($payroll->useremp)) {
                         Notification::notify('Tu nómina ha sido procesada.', 'Su nómina ya ha sido procesada.', 'url', $payroll->useremp);
@@ -79,9 +83,11 @@ class PayrollController extends Controller
                 $payroll_detail->amount = trim($parts[10]);
 
                 $payroll_detail->save();
+
+                $quantity_lines++;
             }
 
-            do_log('Procesó la Nómina ( fecha:' . $payroll_date . ' )');
+            do_log('Procesó la Nómina ( fecha:' . $payroll_date . ' cantidad_empleados:' . $quantity_employee . ' cantidad_registros:' . $quantity_lines . ' )');
 
             $msg = 'La nómina de fecha ' . $payroll_date;
 
@@ -92,6 +98,8 @@ class PayrollController extends Controller
                 $type = 'success';
                 $msg .= ' ha sido procesada correctamente.';
             }
+
+            $msg .= ' (Empleados Procesados: ' . $quantity_employee . ', Registros Procesados: ' . $quantity_lines . ')';
 
             return redirect(route('human_resources.payroll.create'))->with($type, $msg);
         }
@@ -106,9 +114,9 @@ class PayrollController extends Controller
         if ($request->payroll_date) {
             $payroll = Payroll::date($request->payroll_date)->first();
         } else {
-            if ($dates->count()) {
-                $payroll = Payroll::date($dates->first()->payroldate)->first();
-            }
+            // if ($dates->count()) {
+            //     $payroll = Payroll::date($dates->first()->payroldate)->first();
+            // }
         }
 
         return view('human_resources.payroll.my', compact('dates', 'payroll'));
