@@ -57,8 +57,8 @@ class PayrollController extends Controller
                     $payroll->recordcard = trim($parts[5]);
                     $payroll->identifica = trim($parts[6]);
                     $payroll->name = trim(utf8_encode($parts[2]));
-                    $payroll->position = trim($parts[3]);
-                    $payroll->department = trim($parts[4]);
+                    $payroll->position = trim(utf8_encode($parts[3]));
+                    $payroll->department = trim(utf8_encode($parts[4]));
                     $payroll->mail = trim($parts[11]);
 
                     $payroll->created_by = session()->get('user');
@@ -68,7 +68,13 @@ class PayrollController extends Controller
                     $quantity_employee++;
 
                     if (trim($payroll->useremp)) {
-                        Notification::notify('Tu nómina ha sido procesada.', 'Su nómina ya ha sido procesada.', 'url', $payroll->useremp);
+                        $parts_date = explode('-', $payroll_date);
+                        
+                        Notification::notify('Tu nómina ha sido procesada.', 'Su nómina ya ha sido procesada.', route('human_resources.payroll.my', [
+                            'year' => $parts_date[0],
+                             'month' => $parts_date[1],
+                             'day' => $parts_date[2]
+                        ]), $payroll->useremp);
                     }
                 }
 
@@ -79,7 +85,7 @@ class PayrollController extends Controller
 
                 $payroll_detail->transdate = trim($parts[7]);
                 $payroll_detail->code = trim($parts[8]);
-                $payroll_detail->comment = trim($parts[9]);
+                $payroll_detail->comment = trim(utf8_encode($parts[9]));
                 $payroll_detail->amount = trim($parts[10]);
 
                 $payroll_detail->save();

@@ -41,7 +41,7 @@
             list-style: none;
         }
         .header_ncf ul li span {
-            border-bottom: 1px solid #CCCCCC;
+            /*border-bottom: 1px solid #CCCCCC;*/
         }
     </style>
 </head>
@@ -53,12 +53,12 @@
                         <img src="{{ route('home') . '/images/logo.jpg' }}" style="width: 220px;">
                     </td>
                     <td align="right" width="408">
-                        <b style="font-size: 14px;font-style: italic;">Comprobante de Pago de Nómina</b>
+                        <div style="color: #777777;font-size: 14px;margin-top: 5px;">RNC: 101-11784-2</div>
                         <br>
-                        <div style="color: #777777;font-size: 12px;">Emitido por Bancamérica 101-11784-2</div>
+                        <b style="font-size: 14px;font-style: italic;">Comprobante de Pago de Nómina</b>
                     </td>
                 </tr>
-                <tr align="right">
+                {{-- <tr align="right">
                     <td>
                         <div class="fecha">
                             <div class="fecha_title">Fecha del Recibo</div>
@@ -69,7 +69,7 @@
                             {{ $payroll->payroldate->format('Y') }}
                         </div>
                     </td>
-                </tr>
+                </tr> --}}
             </tbody>
         </table>
         <div class="header_ncf">
@@ -100,9 +100,9 @@
         <table style="width: 100%">
             <thead>
                 <tr>
-                    <th valign="bottom" style="width: 4%;">Código</th>
+                    <th valign="bottom" align="left" style="width: 10%;">Transacción</th>
                     <th valign="bottom" align="left">Descripción</th>
-                    <th valign="bottom" style="width: 8%;">Deducciones</th>
+                    <th valign="bottom" style="width: 12%;">Deducciones</th>
                     <th valign="bottom" style="width: 12%;">Pagos</th>
                 </tr>
             </thead>
@@ -121,6 +121,9 @@
                     <td align="right">{{ number_format($total_discharge, 2) }}</td>
                     <td align="right">{{ number_format($total_ingress, 2) }}</td>
                 </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
                 <tr style="font-weight: bold;">
                     <td>{{ $last_detail->code }}</td>
                     <td>Monto Neto</td>
@@ -129,10 +132,10 @@
             </tbody>
         </table>
 
-        <div style="text-align: center;">
+        <div style="text-align: center;margin-top: 100px;">
             <img src="{{ route('home') . '/images/goesgreen.png' }}" style="width: 60px;">
             <p style="font-size: 10px;">
-                Por favor, tenga en cuenta su responsabilidad ambiental. Antes de imprimir este recibo de nómina, pregúntese si realmente necesita una copia en papel.
+                Por favor, tenga en cuenta su responsabilidad ambiental. Antes de imprimir este documento, pregúntese si realmente necesita una copia en papel.
             </p>
         </div>
 
