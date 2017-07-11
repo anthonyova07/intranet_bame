@@ -30,9 +30,9 @@ class PayrollController extends Controller
             $content = file($request->payrolls->path());
 
             foreach ($content as $index => $line) {
-                if ($index == 0) {
-                    continue;
-                }
+                // if ($index == 0) {
+                //     continue;
+                // }
 
                 $parts = explode(',', $line);
 
@@ -129,6 +129,10 @@ class PayrollController extends Controller
             }
         }
 
-        return view('human_resources.payroll.my', compact('payroll', 'total_ingress', 'total_discharge', 'last_detail'));
+        if ($request->print == '1') {
+            return view('human_resources.payroll.print', compact('payroll', 'total_ingress', 'total_discharge', 'last_detail'))->with('datetime', datetime());
+        } else {
+            return view('human_resources.payroll.my', compact('payroll', 'total_ingress', 'total_discharge', 'last_detail'));
+        }
     }
 }

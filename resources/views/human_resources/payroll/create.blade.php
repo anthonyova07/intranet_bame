@@ -4,11 +4,11 @@
 
 @section('page_title', 'Carga de Nómina')
 
-{{-- @if (can_not_do('human_resources_calendar'))
+@if (can_not_do('human_resources_payroll'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 

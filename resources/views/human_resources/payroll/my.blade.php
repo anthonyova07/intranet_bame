@@ -68,7 +68,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Comprobante de Pago de Nómina</h3>
-                        <a style="font-size: 13px;font-size: 13px;margin-top: -18px;margin-right: -8px;" class="label btn-warning pull-right" target="__blank" href="">Imprimir</a>
+                        <a style="font-size: 13px;font-size: 13px;margin-top: -18px;margin-right: -8px;" class="label btn-warning pull-right" target="__blank" href="{{ route('human_resources.payroll.my', array_merge(request()->only(['year', 'month', 'day']), ['print' => 1])) }}">Imprimir</a>
                     </div>
                     <div class="panel-body">
                         <table class="table table-bordered table-condensed table-striped">
