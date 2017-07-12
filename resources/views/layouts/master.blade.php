@@ -52,6 +52,23 @@
                 setInterval(check_notifications, {{ env('NOTIFICACIONES_INTERVALO') }});
             </script>
         @endif
+        <script>
+            var time = {{ env('TIMEOUT_LOGOUT', 180000) }};
+
+            var func = function () {
+                window.location = '{{ route('auth.logout') }}';
+            };
+
+            var timeout = setTimeout(func, time);
+
+            $('body').mousemove(function (e) {
+                clearTimeout(timeout);
+                timeout = setTimeout(func, time);
+            }).keypress(function (e) {
+                clearTimeout(timeout);
+                timeout = setTimeout(func, time);
+            });
+        </script>
     </body>
 
 </html>
