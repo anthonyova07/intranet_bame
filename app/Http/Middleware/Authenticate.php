@@ -19,9 +19,9 @@ class Authenticate
     {
         if (!$request->session()->has('user')) {
             if (!$request->ajax()) {
-                $request->session()->put('url_anterior', url()->current());
+                $request->session()->put('url_anterior', url()->current() . '?' . http_build_query($request->all()));
             }
-            return redirect()->route('auth.login');
+            return redirect()->route('auth.login', $request->all());
         }
 
         $request->session()->forget('url_anterior');

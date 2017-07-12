@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
+use Auth;
 use DateTime;
 use Bame\Models\HumanResource\Payroll\{Payroll, PayrollDetail};
 use Bame\Models\Notification\Notification;
@@ -69,7 +70,7 @@ class PayrollController extends Controller
 
                     if (trim($payroll->useremp)) {
                         $parts_date = explode('-', $payroll_date);
-                        
+
                         Notification::notify('Tu nómina ha sido procesada.', 'Su nómina ya ha sido procesada.', route('human_resources.payroll.my', [
                             'year' => $parts_date[0],
                              'month' => $parts_date[1],
@@ -116,6 +117,13 @@ class PayrollController extends Controller
         $payroll = null;
         $total_discharge = 0;
         $total_ingress = 0;
+
+        if (!$request->authenticated) {
+            $request->session()->flush();
+            Auth::logout();
+
+            return redirect(route('human_resources.payroll.my', array_merge($request->all(), ['authenticated' => 1])));
+        }
 
         if ($request->year && $request->month && $request->day) {
             $payroll = Payroll::byActualUser()->date("{$request->year}-{$request->month}-{$request->day}")->first();

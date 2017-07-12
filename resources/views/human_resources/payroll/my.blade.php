@@ -11,6 +11,9 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form method="get" action="{{ route('human_resources.payroll.my') }}" id="form">
+                        @if (request()->has('authenticated'))
+                            <input type="hidden" name="authenticated" value="1">
+                        @endif
                         <div class="row">
                             <div class="col-xs-4">
                                 <div class="form-group">
@@ -68,7 +71,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Comprobante de Pago de Nómina</h3>
-                        <a style="font-size: 13px;font-size: 13px;margin-top: -18px;margin-right: -8px;" class="label btn-warning pull-right" target="__blank" href="{{ route('human_resources.payroll.my', array_merge(request()->only(['year', 'month', 'day']), ['print' => 1])) }}">Imprimir</a>
+                        <a style="font-size: 13px;font-size: 13px;margin-top: -18px;margin-right: -8px;" class="label btn-warning pull-right" target="__blank" href="{{ route('human_resources.payroll.my', array_merge(request()->only(['authenticated', 'year', 'month', 'day']), ['print' => 1])) }}">Imprimir</a>
                     </div>
                     <div class="panel-body">
                         <table class="table table-bordered table-condensed table-striped">
