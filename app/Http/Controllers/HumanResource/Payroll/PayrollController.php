@@ -109,6 +109,8 @@ class PayrollController extends Controller
             $msg .= ' (Empleados Procesados: ' . $quantity_employee . ', Registros Procesados: ' . $quantity_lines . ')';
 
             return redirect(route('human_resources.payroll.create'))->with($type, $msg);
+        } else {
+            return redirect(route('human_resources.payroll.create'))->with('warning', 'No se ha suministrado ningún archivo para cargar.');
         }
     }
 
