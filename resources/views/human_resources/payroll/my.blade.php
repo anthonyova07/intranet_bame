@@ -30,7 +30,7 @@
                                     <label class="control-label">Mes</label>
                                     <select name="month" id="month" class="form-control">
                                         @foreach (get_months() as $key => $month)
-                                            <option value="{{ $key }}"{{ $key == Request::get('month') ? ' selected':'' }} }}>{{ $month }}</option>
+                                            <option value="{{ $key }}"{{ $key == request()->get('month') || (!request()->has('month') && $key == datetime()->format('m')) ? ' selected':'' }} }}>{{ $month }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -39,8 +39,8 @@
                                 <div class="form-group">
                                     <label class="control-label">Quincena</label>
                                     <select name="day" id="day" class="form-control">
-                                        <option value="15"{{ 15 == Request::get('day') ? ' selected':'' }}>1ra Quincena</option>
-                                        <option value="{{ Request::get('month') == 2 ? '28' : '30' }}"{{ in_array(Request::get('day'), [28, 30]) ? ' selected':'' }}>2da Quincena</option>
+                                        <option value="15"{{ 15 == request()->get('day') || datetime()->format('d') <= 15 ? ' selected':'' }}>1ra Quincena</option>
+                                        <option value="{{ 2 == request()->get('month') ? '28' : '30' }}"{{ in_array(request()->get('day'), [28, 30]) || datetime()->format('d') > 15 ? ' selected':'' }}>2da Quincena</option>
                                     </select>
                                 </div>
                             </div>
@@ -135,7 +135,7 @@
                             </tr>
                             <tr class="active" style="font-weight: bold;">
                                 <td>{{ $last_detail->code }}</td>
-                                <td>{{ $last_detail->comment }}</td>
+                                <td>Monto Neto</td>
                                 <td class="text-center" colspan="2">{{ $last_detail->amount > 0 ? number_format($last_detail->amount, 2) : '' }}</td>
                             </tr>
                         </tbody>
