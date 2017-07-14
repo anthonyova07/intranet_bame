@@ -23,97 +23,40 @@ class AccessController extends Controller
             ->with('menus', $menus);
     }
 
-    public function create()
-    {
-        return redirect(route('security.access.index'));
-    }
-
     public function store(AccessRequest $request)
     {
-        if (!$request->submenu) {
+        if (!$request->save) {
             $submenus = SubMenu::where('sub_codmen', $request->menu)->orderBy('sub_descri')->get();
+            $user_access = Access::where('acc_user', $request->user)->where('acc_codmen', $request->menu)->get();
 
             return back()
                 ->with('submenus', $submenus)
-                ->with('info', 'Ahora seleccione un submenú.')
+                ->with('user_access', $user_access)
+                ->with('info', 'Ahora seleccione los submenús.')
                 ->withInput();
         }
 
-        $access = Access::where('acc_user', $request->user)->where('acc_codmen', $request->menu)->where('acc_submen', $request->submenu)->first();
+        Access::where('acc_user', $request->user)->where('acc_codmen', $request->menu)->delete();
 
-        $log = '';
+        $access = [];
 
-        switch ($request->action) {
-            case 'i':
-                $log .= 'Deshabilitó ';
+        if ($request->submenu) {
+            foreach ($request->submenu as $index => $value) {
+                array_push($access, [
+                    'acc_user' => $request->user,
+                    'acc_codmen' => $request->menu,
+                    'acc_submen' => $value,
+                    'acc_estado' => 'A',
+                ]);
+            }
 
-                if ($access) {
-                    Access::where('acc_user', $request->user)
-                        ->where('acc_codmen', $request->menu)
-                        ->where('acc_submen', $request->submenu)
-                        ->update([
-                            'acc_estado' => 'I'
-                        ]);
-                }
-
-                break;
-            case 'a':
-                $log .= 'Agregó ';
-
-                if ($access) {
-                    Access::where('acc_user', $request->user)
-                        ->where('acc_codmen', $request->menu)
-                        ->where('acc_submen', $request->submenu)
-                        ->update([
-                            'acc_estado' => 'A'
-                        ]);
-                } else {
-                    $access = new Access;
-
-                    $access->acc_user = $request->user;
-                    $access->acc_codmen = $request->menu;
-                    $access->acc_submen = $request->submenu;
-                    $access->acc_estado = 'A';
-
-                    $access->save();
-                }
-
-                break;
-            case 'e':
-                $log .= 'Eliminó ';
-
-                if ($access) {
-                    Access::where('acc_user', $request->user)
-                        ->where('acc_codmen', $request->menu)
-                        ->where('acc_submen', $request->submenu)
-                        ->delete();
-                }
-
-                break;
+            do_log('Concedió el acceso a ( usuario:' . $request->user . ' menu:' . $request->menu . ' submenu:' . implode(',', $request->submenu) . ' )');
+        } else {
+            do_log('Removió los accesos de ( usuario:' . $request->user . ' menu:' . $request->menu . ')');
         }
 
-        do_log($log . 'el acceso a ( usuario:' . $request->user . ' menu:' . $request->menu . ' submenu:' . $request->submenu . ' )');
+        Access::insert($access);
 
-        return back()->with('success', 'La solicitud ha sido procesada correctamente.');
-    }
-
-    public function show($id)
-    {
-        return redirect(route('security.access.index'));
-    }
-
-    public function edit($id)
-    {
-        return redirect(route('security.access.index'));
-    }
-
-    public function update(MenuRequest $request, $id)
-    {
-        return redirect(route('security.access.index'));
-    }
-
-    public function destroy($id)
-    {
-        return redirect(route('security.access.index'));
+        return back()->with('success', 'Los cambios han sido guardados correctamente.');
     }
 }
