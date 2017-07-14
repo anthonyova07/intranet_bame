@@ -17,7 +17,7 @@ class AccessController extends Controller
 
     public function index()
     {
-        $menus = Menu::orderBy('men_descri')->get();
+        $menus = Menu::onlyWeb()->get();
 
         return view('security.access.index')
             ->with('menus', $menus);
@@ -25,7 +25,7 @@ class AccessController extends Controller
 
     public function store(AccessRequest $request)
     {
-        if (!$request->save) {
+        if ($request->save == '0') {
             $submenus = SubMenu::where('sub_codmen', $request->menu)->orderBy('sub_descri')->get();
             $user_access = Access::where('acc_user', $request->user)->where('acc_codmen', $request->menu)->get();
 

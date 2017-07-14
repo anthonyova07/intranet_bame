@@ -25,4 +25,9 @@ class Menu extends Model
     {
         $this->attributes['men_descri'] = cap_str($value);
     }
+
+    public function scopeOnlyWeb($query)
+    {
+        return $this->where('men_web', 'S')->orderBy('men_descri');
+    }
 }

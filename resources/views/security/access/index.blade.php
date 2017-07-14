@@ -17,9 +17,8 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form method="post" action="{{ route('security.access.store') }}" id="form">
-                        @if (session()->has('submenus'))
-                            <input type="hidden" name="save" value="1">
-                        @endif
+                        <input type="hidden" name="save" id="save" value="1">
+
                         <div class="col-xs-4">
                             <div class="form-group{{ $errors->first('user') ? ' has-error':'' }}">
                                 <label class="control-label">Usuario</label>
@@ -68,6 +67,7 @@
         });
 
         $('#menu').change(function () {
+            $('#save').val(0);
             $('#submenu').val(0);
             $('#form').submit();
         });
