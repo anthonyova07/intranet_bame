@@ -197,5 +197,7 @@ return [
       'content' => 'Tipo de Contenido',
       'sequence' => 'Secuencia',
       'ranges' => 'Rangos',
+      'recordcard' => 'Código',
+      'servicedat' => 'Fecha de Ingreso',
     ],
 ];

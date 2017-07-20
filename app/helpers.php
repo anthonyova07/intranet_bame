@@ -721,3 +721,17 @@ function get_treasury_rate_contents($content = null)
 
     return $contents->get($content);
 }
+
+function get_employee_params($param = null)
+{
+    $params = collect([
+        'DEP' => 'Departmento',
+        'POS' => 'Posición',
+    ]);
+
+    if (!$param) {
+        return $params;
+    }
+
+    return $params->get($param);
+}
