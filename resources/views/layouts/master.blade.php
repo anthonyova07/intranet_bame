@@ -48,7 +48,7 @@
         </script>
         @if (session()->has('user'))
             <script>
-                var time = {{ env('TIMEOUT_LOGOUT', 180000) }};
+                var time = {{ config('bame.timeout.logout') }};
 
                 var func = function () {
                     window.location = '{{ route('auth.logout') }}';
@@ -65,7 +65,7 @@
                 });
 
                 setTimeout(check_notifications, 3000);
-                setInterval(check_notifications, {{ env('NOTIFICACIONES_INTERVALO') }});
+                setInterval(check_notifications, {{ config('bame.notificaciones.internvalo') }});
             </script>
         @endif
     </body>

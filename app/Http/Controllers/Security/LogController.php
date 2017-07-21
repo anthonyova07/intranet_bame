@@ -13,7 +13,7 @@ class LogController extends Controller
 {
     public function index(Request $request)
     {
-        $logs = Log::lastestFirst()->take(env('LOG_MAX_ROWS'));
+        $logs = Log::lastestFirst()->take(config('bame.log_max_rows'));
 
         if ($request->id) {
             $logs->where('id', $request->id);

@@ -81,7 +81,7 @@ class TdcReceiptGeneratorJob extends Job implements ShouldQueue
         $current_time = (new \Datetime)->format('H:i:s');
 
         $wrapped_dates->unique()->each(function ($wrapped_date, $index) use ($credit_cards, $current_time, $request_types, $descriptions_tdc_bin) {
-            $chunks = $credit_cards->where('fecen_entr', $wrapped_date)->chunk(env('ENCARTE_CANTIDAD_POR_ARCHIVO'));
+            $chunks = $credit_cards->where('fecen_entr', $wrapped_date)->chunk(config('bame.encartes.cantidad_x_archivo'));
 
             $chunks->each(function ($credit_cards, $index) use ($wrapped_date, $current_time, $request_types, $descriptions_tdc_bin) {
                 $html = view('pdfs.tdc_receipt')
@@ -90,7 +90,7 @@ class TdcReceiptGeneratorJob extends Job implements ShouldQueue
                     ->with('descriptions_tdc_bin', $descriptions_tdc_bin)
                     ->render();
 
-                $archivo = env('ENCARTES_CARPETA_PDF') . format_datetime_to_file($wrapped_date, $current_time) . '_' . $index . '_encartes.pdf';
+                $archivo = config('bame.encartes.carpeta_pdf') . format_datetime_to_file($wrapped_date, $current_time) . '_' . $index . '_encartes.pdf';
 
                 TdcReceipt::generatePdf($html, $archivo);
             });

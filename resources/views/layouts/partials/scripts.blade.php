@@ -26,5 +26,5 @@
 
 <!-- Custom JavaScript -->
 <script src="{{ route('home') }}/js/jquery.animatecss.min.js"></script>
-<script src="{{ route('home') }}/js/funciones.js?last_update={{ env('JS_NOT_CACHE') }}"></script>
-<script src="{{ route('home') }}/js/bame.js?last_update={{ env('JS_NOT_CACHE') }}"></script>
+<script src="{{ route('home') }}/js/funciones.js?last_update={{ config('bame.js.not_cache') }}"></script>
+<script src="{{ route('home') }}/js/bame.js?last_update={{ config('bame.js.not_cache') }}"></script>
