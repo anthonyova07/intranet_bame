@@ -4,16 +4,16 @@
 
 @section('page_title', 'Consulta de Transacciones IB (ACH)')
 
-{{-- @if (can_not_do('marketing_event'))
+@if (can_not_do('ib_transactions'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 
     <div class="row">
-        <div class="col-xs-6 col-xs-offset-3">
+        <div class="col-xs-8 col-xs-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Filtros de Búsqueda</h3>
@@ -21,25 +21,24 @@
                 <div class="panel-body">
                     <form method="get" action="{{ route('ib.transactions.index') }}" id="form">
                         <div class="row">
-                            {{-- <div class="col-xs-6">
+                            <div class="col-xs-4">
                                 <div class="form-group">
                                     <label class="control-label">Tipo de Transacción</label>
                                     <select class="form-control input-sm" name="transaction_type">
                                         @foreach ($transaction_types as $transaction_type)
-                                            <option value="{{ $transaction_type->transactionTypeID }}"{{ Request::get('transaction_type') == $transaction_type->transactionTypeID ? ' selected':'' }}>{{ $transaction_type->longName }}</option>
-                                            <option value="{{ $transaction_type->transactionTypeID }}"{{ 11 == $transaction_type->transactionTypeID ? ' selected':'' }}>{{ $transaction_type->longName }}</option>
+                                            <option value="{{ $transaction_type->transactionTypeID }}"{{ request('transaction_type') == $transaction_type->transactionTypeID ? ' selected':'' }}>{{ $transaction_type->longName }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                            </div> --}}
-                            <div class="col-xs-6">
+                            </div>
+                            <div class="col-xs-4">
                                 <div class="form-group{{ $errors->first('date_from') ? ' has-error':'' }}">
                                     <label class="control-label">Fecha Desde</label>
                                     <input type="datetime-local" class="form-control input-sm" name="date_from" value="{{ old('date_from') }}">
                                     <span class="help-block">{{ $errors->first('date_from') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-6">
+                            <div class="col-xs-4">
                                 <div class="form-group{{ $errors->first('date_to') ? ' has-error':'' }}">
                                     <label class="control-label">Fecha Hasta</label>
                                     <input type="datetime-local" class="form-control input-sm" name="date_to" value="{{ old('date_to') }}">
