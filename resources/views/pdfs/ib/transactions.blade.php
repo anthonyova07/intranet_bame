@@ -95,7 +95,7 @@
                         <td>{{ $transaction->accountFromNumber }}</td>
                         <td style="text-align: right;">{{ number_format($transaction->amountFrom, 2) }}</td>
                         @if ($transaction->transactionExt->bank)
-                            <td style="text-align: center;">{{ $transaction->transactionExt->bank->referenceInfo == '' ? $transaction->transactionExt->bank->swiftBankID : $transaction->transactionExt->bank->referenceInfo}}</td>
+                            <td style="text-align: center;">{{ $transaction->transactionExt->bank->swiftBankID == '' ? $transaction->transactionExt->bank->referenceInfo : $transaction->transactionExt->bank->swiftBankID }}</td>
                         @else
                             <td style="text-align: center;">BAME</td>
                         @endif
