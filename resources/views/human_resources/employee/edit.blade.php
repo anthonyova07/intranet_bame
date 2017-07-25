@@ -92,7 +92,7 @@
                                     <select name="supervisor" class="form-control input-sm">
                                         <option value="">Ninguno</option>
                                         @foreach ($employees as $emp)
-                                            <option value="{{ $emp->id }}"{{ $employee->id_sup == $emp->id ? ' selected':'' }}>{{ $emp->name }}</option>
+                                            <option value="{{ $emp->position->id }}"{{ $employee->position->id == $emp->position->id ? ' selected':'' }}>{{ $emp->position->name . ' - ' . $emp->name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('supervisor') }}</span>

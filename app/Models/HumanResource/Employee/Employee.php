@@ -30,6 +30,6 @@ class Employee extends Model
 
     public function supervisor()
     {
-        return $this->hasOne(Employee::class, 'id', 'id_sup');
+        return $this->hasOne(Param::class, 'id', 'id_sup');
     }
 }
