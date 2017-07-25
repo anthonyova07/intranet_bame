@@ -150,12 +150,20 @@ Route::group(['middleware' => 'auth'], function () {
         });
 
         Route::group(['prefix' => 'employee'], function () {
-            Route::resource('{type}/param', 'HumanResource\Employee\ParamController', ['only' => [
-                'create', 'store', 'edit', 'update'
-            ]]);
+            Route::group(['prefix' => '{type}'], function () {
+                Route::resource('param', 'HumanResource\Employee\ParamController', ['only' => [
+                    'create', 'store', 'edit', 'update'
+                ]]);
+
+                Route::post('loadparams', 'HumanResource\Employee\ParamController@loadparams')->name('human_resources.employee.{type}.params.loadparams');
+            });
         });
 
         Route::resource('employee', 'HumanResource\Employee\EmployeeController');
+
+        Route::group(['prefix' => 'employee'], function () {
+            Route::post('load', 'HumanResource\Employee\EmployeeController@load')->name('human_resources.employee.load');
+        });
 
         Route::resource('calendar', 'HumanResource\Calendar\CalendarController', ['only' => [
             'index'

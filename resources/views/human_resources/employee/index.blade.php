@@ -58,6 +58,17 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <a class="btn btn-danger btn-xs" href="{{ route('human_resources.employee.create') }}">Nueva</a>
+                    <div class="pull-right">
+                        <form method="post" class="form-inline" action="{{ route('human_resources.employee.load') }}" id="form" enctype="multipart/form-data" novalidate>
+                            <div class="form-group{{ $errors->first('date_file') ? ' has-error':'' }}">
+                                <label class="control-label">Cargar Masiva</label>
+                                <input type="file" name="params">
+                                <span class="help-block">{{ $errors->first('date_file') }}</span>
+                            </div>
+                            {{ csrf_field() }}
+                            <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Cargando...">Cargar</button>
+                        </form>
+                    </div>
                     <br>
                     <br>
                     <table class="table table-striped table-bordered table-hover table-condensed" order-by='2|desc'>
@@ -133,13 +144,18 @@
 
     <div class="row">
 
-        <div class="col-xs-6">
+        <div class="col-xs-10 col-xs-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Departamentos</h3>
                 </div>
                 <div class="panel-body">
-                    <a class="btn btn-danger btn-xs" href="{{ route('human_resources.employee.{type}.param.create', ['type' => 'DEP']) }}">Nuevo</a>
+                    <div class="col-xs-2">
+                        <a class="btn btn-danger btn-xs" href="{{ route('human_resources.employee.{type}.param.create', ['type' => 'DEP']) }}">Nuevo</a>
+                    </div>
+                    <div class="col-xs-10 pull-right text-right">
+                        @include('human_resources.employee._loadparams', ['type' => 'DEP'])
+                    </div>
                     <br>
                     <br>
                     <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|asc'>
@@ -171,13 +187,18 @@
             </div>
         </div>
 
-        <div class="col-xs-6">
+        <div class="col-xs-10 col-xs-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Posiciones</h3>
                 </div>
                 <div class="panel-body">
-                    <a class="btn btn-danger btn-xs" href="{{ route('human_resources.employee.{type}.param.create', ['type' => 'POS']) }}">Nuevo</a>
+                    <div class="col-xs-2">
+                        <a class="btn btn-danger btn-xs" href="{{ route('human_resources.employee.{type}.param.create', ['type' => 'POS']) }}">Nuevo</a>
+                    </div>
+                    <div class="col-xs-10 pull-right text-right">
+                        @include('human_resources.employee._loadparams', ['type' => 'POS'])
+                    </div>
                     <br>
                     <br>
                     <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|asc'>

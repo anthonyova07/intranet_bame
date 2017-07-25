@@ -8,6 +8,7 @@ use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
 use DateTime;
+use Bame\Models\HumanResource\Calendar\Birthdate;
 use Bame\Models\HumanResource\Employee\Employee;
 use Bame\Models\HumanResource\Employee\Param;
 use Bame\Http\Requests\HumanResource\Employee\EmployeeRequest;
@@ -137,5 +138,76 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         return redirect(route('human_resources.employee.index'));
+    }
+
+    public function load(Request $request)
+    {
+        if ($request->hasFile('params')) {
+            $content = file($request->file('params')->path());
+
+            $emps = Birthdate::getFile();
+
+            $employees = collect();
+            $time = (new DateTime)->format('Y-m-d H:i:s');
+            $year = (new DateTime)->format('Y');
+            $date = (new DateTime)->format('Y-m-d');
+
+            foreach ($content as $index => $line) {
+                if ($index == 0) {
+                    continue;
+                }
+
+                $parts = explode(',', $line);
+
+                $emp = $emps->where('code', trim($parts[0]))->first();
+
+                if (isset($parts[1]) && !empty($parts[1])) {
+                    $employee = [];
+
+                    $employee['id'] = uniqid(true) . $index;
+                    $employee['recordcard'] = trim($parts[0]);
+                    $employee['name'] = trim(utf8_encode($parts[1]));
+                    $employee['identifica'] = trim($parts[2]);
+
+                    $employee['useremp'] = '';
+                    $employee['mail'] = '';
+
+                    if ($emp) {
+                        $employee['birthdate'] = ($emp->month_day == '00-00' ? $date : ($year . '-' . $emp->month_day));
+
+                        $service_date_parts = explode('/', $emp->services_date);
+                        $employee['servicedat'] = $service_date_parts[2] . '-' . $service_date_parts[1] . '-' . $service_date_parts[0];
+
+                        $employee['gender'] = $emp->gender == 'Femenino' ? 'f' : 'm';
+                    } else {
+                        $employee['birthdate'] = $date;
+
+                        $employee['servicedat'] = $date;
+
+                        $employee['gender'] = '';
+                    }
+
+                    $employee['is_active'] = true;
+
+                    $employee['id_pos'] = trim($parts[3]);
+                    $employee['id_dep'] = trim($parts[4]);
+                    $employee['id_sup'] = '';
+
+                    $employee['created_by'] = session()->get('user');
+                    $employee['created_at'] = $time;
+                    $employee['updated_at'] = $time;
+
+                    $employees->push($employee);
+                }
+            }
+
+            Employee::insert($employees->toArray());
+
+            do_log('Realizó una carga masiva de empleados');
+
+            return back()->with('success', 'Los empleados fueron cargadas correctamente.');
+        } else {
+            return back()->with('warning', 'No se ha indicado ningún archivo.');
+        }
     }
 }

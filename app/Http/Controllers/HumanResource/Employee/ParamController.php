@@ -66,4 +66,43 @@ class ParamController extends Controller
 
         return redirect(route('human_resources.employee.index'))->with('success', 'El ' . get_employee_params($type) . ' fue creado correctamente.');
     }
+
+    public function loadparams(Request $request, $type)
+    {
+        if ($request->hasFile('params')) {
+            $content = file($request->file('params')->path());
+
+            $params = collect();
+            $time = (new DateTime)->format('Y-m-d H:i:s');
+
+            foreach ($content as $index => $line) {
+                if ($index == 0) {
+                    continue;
+                }
+
+                $parts = explode(',', $line);
+
+                if (isset($parts[1]) && !empty($parts[1])) {
+                    $param = [];
+
+                    $param['id'] = trim($parts[0]);
+                    $param['type'] = $type;
+                    $param['name'] = trim(utf8_encode($parts[1]));
+                    $param['created_by'] = session()->get('user');
+                    $param['created_at'] = $time;
+                    $param['updated_at'] = $time;
+
+                    $params->push($param);
+                }
+            }
+
+            Param::insert($params->toArray());
+
+            do_log('Realizó una carga masiva de ' . get_employee_params($type) . ' de empleados');
+
+            return back()->with('success', 'Los ' . get_employee_params($type) . ' fueron cargadas correctamente.');
+        } else {
+            return back()->with('warning', 'No se ha indicado ningún archivo.');
+        }
+    }
 }
