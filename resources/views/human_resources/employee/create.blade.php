@@ -52,12 +52,7 @@
                             <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('name') ? ' has-error':'' }}">
                                     <label class="control-label">Nombre Completo</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control input-sm" name="name" value="{{ old('name') }}">
-                                        <span class="input-group-addon">
-                                            <input type="checkbox" name="is_active" data-toggle="tooltip" title="Activo"{{ old('is_active') ? ' checked':'' }}>
-                                        </span>
-                                    </div>
+                                    <input type="text" class="form-control input-sm" name="name" value="{{ old('name') }}">
                                     <span class="help-block">{{ $errors->first('name') }}</span>
                                 </div>
                             </div>

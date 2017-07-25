@@ -70,7 +70,7 @@ class EmployeeController extends Controller
         $employee->birthdate = $request->birthdate;
         $employee->servicedat = $request->servicedat;
         $employee->gender = $request->gender;
-        $employee->is_active = $request->is_active ? true : false;
+        $employee->is_active = true;
 
         $employee->id_pos = $request->position;
         $employee->id_dep = $request->department;
