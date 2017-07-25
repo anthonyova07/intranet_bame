@@ -16,6 +16,22 @@
         <div class="col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
+                    <h3 class="panel-title">Parametros</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="nav nav-pills">
+                        <li><a href="#panel-departamentos">Departametos</a></li>
+                        <li><a href="#panel-posiciones">Posiciones</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
                     <h3 class="panel-title">Filtros de Búsqueda</h3>
                 </div>
                 <div class="panel-body">
@@ -145,7 +161,7 @@
     <div class="row">
 
         <div class="col-xs-10 col-xs-offset-1">
-            <div class="panel panel-default">
+            <div class="panel panel-default" id="panel-departamentos">
                 <div class="panel-heading">
                     <h3 class="panel-title">Departamentos</h3>
                 </div>
@@ -188,7 +204,7 @@
         </div>
 
         <div class="col-xs-10 col-xs-offset-1">
-            <div class="panel panel-default">
+            <div class="panel panel-default" id="panel-posiciones">
                 <div class="panel-heading">
                     <h3 class="panel-title">Posiciones</h3>
                 </div>
