@@ -4,11 +4,11 @@
 
 @section('page_title', 'Nuevo Empleado')
 
-{{-- @if (can_not_do('marketing_news'))
+@if (can_not_do('human_resources_employee'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 
