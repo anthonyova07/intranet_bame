@@ -111,7 +111,7 @@
                                     <td>{{ $employee->name }}</td>
                                     <td>{{ $employee->identifica }}</td>
                                     <td>{{ $employee->mail }}</td>
-                                    <td>{{ $employee->position->name }}</td>
+                                    <td>{{ $employee->position ? $employee->position->name : '' }}</td>
                                     <td>{{ $employee->supervisor ? $employee->supervisor->name : '' }}</td>
                                     <td>{{ date_create($employee->birthdate)->format('d/m/Y') }}</td>
                                     <td>{{ date_create($employee->servicedat)->format('d/m/Y') }}</td>
@@ -254,6 +254,7 @@
                         <thead>
                             <tr>
                                 <th>Descripción</th>
+                                <th>Departamento</th>
                                 <th style="width: 2px"></th>
                             </tr>
                         </thead>
@@ -261,6 +262,7 @@
                             @foreach ($params->where('type', 'POS') as $param)
                                 <tr>
                                     <td>{{ $param->name }}</td>
+                                    <td>{{ $param->department ? $param->department->name : '' }}</td>
                                     <td align="center">
                                         <a
                                             href="{{ route('human_resources.employee.{type}.param.edit', ['type' => 'POS', 'param' => $param->id]) }}"

@@ -15,7 +15,10 @@ class ParamController extends Controller
 {
     public function create($type)
     {
+        $departments = Param::where('type', 'DEP')->get();
+
         return view('human_resources.employee.param.create')
+            ->with('departments', $departments)
             ->with('type', $type);
     }
 
@@ -27,6 +30,7 @@ class ParamController extends Controller
 
         $param->type = $type;
         $param->name = $request->name;
+        $param->dep_id = $request->department;
 
         $param->created_by = session()->get('user');
 
@@ -40,6 +44,7 @@ class ParamController extends Controller
 
     public function edit($type, $param)
     {
+        $departments = Param::where('type', 'DEP')->get();
         $param = Param::where('type', $type)->find($param);
 
         if (!$param) {
@@ -48,6 +53,7 @@ class ParamController extends Controller
 
         return view('human_resources.employee.param.edit')
             ->with('type', $type)
+            ->with('departments', $departments)
             ->with('param', $param);
     }
 
@@ -57,6 +63,7 @@ class ParamController extends Controller
 
         $param->type = $type;
         $param->name = $request->name;
+        $param->dep_id = $request->department;
 
         $param->updated_by = session()->get('user');
 
@@ -88,6 +95,7 @@ class ParamController extends Controller
                     $param['id'] = trim($parts[0]);
                     $param['type'] = $type;
                     $param['name'] = trim(utf8_encode($parts[1]));
+                    $param['dep_id'] = isset($parts[2]) ? trim($parts[2]) : null;
                     $param['created_by'] = session()->get('user');
                     $param['created_at'] = $time;
                     $param['updated_at'] = $time;

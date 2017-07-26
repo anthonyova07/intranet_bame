@@ -75,7 +75,7 @@
                                     <label class="control-label">Posición</label>
                                     <select name="position" class="form-control input-sm">
                                         @foreach ($params->where('type', 'POS') as $param)
-                                            <option value="{{ $param->id }}"{{ old('position') == $param->id ? ' selected':'' }}>{{ $param->name }}</option>
+                                            <option department="{{ $param->dep_id }}" value="{{ $param->id }}"{{ old('position') == $param->id ? ' selected':'' }}>{{ $param->name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('position') }}</span>
@@ -87,7 +87,7 @@
                                     <select name="supervisor" class="form-control input-sm">
                                         <option value="">Ninguno</option>
                                         @foreach ($employees as $employee)
-                                            <option value="{{ $employee->position->id }}"{{ old('supervisor') == $employee->position->id ? ' selected':'' }}>{{ $employee->position->name . ' - ' . $employee->name }}</option>
+                                            <option department="{{ $employee->position->dep_id }}" value="{{ $employee->position->id }}"{{ old('supervisor') == $employee->position->id ? ' selected':'' }}>{{ $employee->position->name . ' - ' . $employee->name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('supervisor') }}</span>
@@ -123,6 +123,32 @@
     <script type="text/javascript">
         $('#form').submit(function (event) {
             $('#btn_submit').button('loading');
+        });
+
+        var department = $('select[name=department]');
+        var position = $('select[name=position]');
+        var positions = $('select[name=position] option');
+        var supervisor = $('select[name=supervisor]');
+        var supervisors = $('select[name=supervisor] option');
+
+        department.change(function (e) {
+            position.val(-1);
+            positions.each(function (index, item) {
+                if ($(item).attr('department') == department.val()) {
+                    $(item).show();
+                } else {
+                    $(item).hide();
+                }
+            });
+
+            supervisor.val(-1);
+            supervisors.each(function (index, item) {
+                if ($(item).attr('department') == department.val()) {
+                    $(item).show();
+                } else {
+                    $(item).hide();
+                }
+            });
         });
     </script>
 

@@ -18,9 +18,20 @@
                 <div class="panel-body">
                     <form method="post" action="{{ route('human_resources.employee.{type}.param.update', ['type' => $type, 'param' => $param->id]) }}" id="form" enctype="multipart/form-data">
                         <div class="row">
+                            @if ($type == 'POS')
+                                <div class="col-xs-6">
+                                    <label class="control-label">Departamento</label>
+                                    <select name="department" class="form-control input-sm">
+                                        @foreach ($departments as $department)
+                                            <option value="{{ $department->id }}"{{ $param->dep_id == $department->id ? ' selected':'' }}>{{ $department->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="help-block">{{ $errors->first('department') }}</span>
+                                </div>
+                            @endif
                             <div class="col-xs-12">
                                 <div class="form-group{{ $errors->first('name') ? ' has-error':'' }}">
-                                    <label class="control-label">Descripción</label>
+                                    <label class="control-label">Nombre</label>
                                     <input type="text" class="form-control input-sm" name="name" value="{{ $param->name }}">
                                     <span class="help-block">{{ $errors->first('name') }}</span>
                                 </div>

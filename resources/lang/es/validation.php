@@ -190,7 +190,7 @@ return [
       'users' => 'Usuarios',
       'status' => 'Estatus',
       'full_name' => 'Nombre Completo',
-      'birthdate' => 'Cumpleño',
+      'birthdate' => 'Cumpleaño',
       'initial_date' => 'Ingreso',
       'image_banner' => 'Imagen Banner',
       'rate_type' => 'Tipo de Tasa',
@@ -199,5 +199,6 @@ return [
       'ranges' => 'Rangos',
       'recordcard' => 'Código',
       'servicedat' => 'Fecha de Ingreso',
+      'position ' => 'Posición',
     ],
 ];

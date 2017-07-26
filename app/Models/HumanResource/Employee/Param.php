@@ -17,4 +17,9 @@ class Param extends Model
     public $timestamps = true;
 
     protected $dates = [];
+
+    public function department()
+    {
+        return $this->belongsTo(Param::class, 'dep_id', 'id')->where('type', 'DEP');
+    }
 }
