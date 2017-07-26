@@ -70,7 +70,7 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-10">
+        <div class="col-xs-{{ $bulk_load == 'true' ? '10' : '12' }}">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <a class="btn btn-danger btn-xs" href="{{ route('human_resources.employee.create') }}">Nueva</a>
@@ -141,23 +141,26 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Carga Masiva</h3>
-                </div>
-                <div class="panel-body" style="padding-left: 2px;">
-                    <form method="post" class="form-inline" action="{{ route('human_resources.employee.load') }}" id="form" enctype="multipart/form-data" novalidate>
-                        <div class="form-group{{ $errors->first('date_file') ? ' has-error':'' }}">
-                            <input type="file" style="width: 140px;" name="params" id="params">
-                            <span class="help-block">{{ $errors->first('date_file') }}</span>
-                        </div>
-                        {{ csrf_field() }}
-                        <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Cargando...">Cargar</button>
-                    </form>
+
+        @if ($bulk_load == 'true')
+            <div class="col-xs-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Carga Masiva</h3>
+                    </div>
+                    <div class="panel-body" style="padding-left: 2px;">
+                        <form method="post" class="form-inline" action="{{ route('human_resources.employee.load') }}" id="form" enctype="multipart/form-data" novalidate>
+                            <div class="form-group{{ $errors->first('date_file') ? ' has-error':'' }}">
+                                <input type="file" style="width: 140px;" name="params" id="params">
+                                <span class="help-block">{{ $errors->first('date_file') }}</span>
+                            </div>
+                            {{ csrf_field() }}
+                            <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Cargando...">Cargar</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 
     <div class="row" style="border-bottom: 1px solid #777;border-top: 1px solid #777;margin: 8px 0 25px 0;border-width: 5px;">
@@ -166,7 +169,7 @@
 
     <div class="row">
 
-        <div class="col-xs-10">
+        <div class="col-xs-{{ $bulk_load == 'true' ? '10' : '12' }}">
             <div class="panel panel-default" id="panel-departamentos">
                 <div class="panel-heading">
                     <h3 class="panel-title">Departamentos</h3>
@@ -204,18 +207,20 @@
             </div>
         </div>
 
-        <div class="col-xs-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Carga Masiva</h3>
-                </div>
-                <div class="panel-body" style="padding-left: 2px;">
-                    @include('human_resources.employee._loadparams', ['type' => 'DEP'])
+        @if ($bulk_load == 'true')
+            <div class="col-xs-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Carga Masiva</h3>
+                    </div>
+                    <div class="panel-body" style="padding-left: 2px;">
+                        @include('human_resources.employee._loadparams', ['type' => 'DEP'])
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
 
-        <div class="col-xs-10">
+        <div class="col-xs-{{ $bulk_load == 'true' ? '10' : '12' }}">
             <div class="panel panel-default" id="panel-posiciones">
                 <div class="panel-heading">
                     <h3 class="panel-title">Posiciones</h3>
@@ -253,7 +258,8 @@
             </div>
         </div>
 
-        <div class="col-xs-2">
+        @if ($bulk_load == 'true')
+            <div class="col-xs-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Carga Masiva</h3>
@@ -263,7 +269,7 @@
                 </div>
             </div>
         </div>
-
+        @endif
     </div>
 
     <script type="text/javascript">

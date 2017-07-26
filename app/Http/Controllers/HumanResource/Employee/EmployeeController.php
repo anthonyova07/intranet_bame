@@ -42,8 +42,11 @@ class EmployeeController extends Controller
         //
         $employees = $employees->paginate();
 
+        $bulk_load = env('EMPLOYEE_BULK_LOAD', 'false');
+
         return view('human_resources.employee.index')
             ->with('params', $params)
+            ->with('bulk_load', $bulk_load)
             ->with('employees', $employees);
     }
 
