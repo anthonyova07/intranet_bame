@@ -33,7 +33,14 @@ class EmployeeController extends Controller
         }
 
         if ($request->with_inactive) {
-            $employees->orWhere('is_active', false);
+            $employees->where(function ($query) use ($request) {
+                $query->where('is_active', false)
+                    ->orWhere('is_active', true);
+            });
+        } else {
+            $employees->where(function ($query) use ($request) {
+                $query->where('is_active', true);
+            });
         }
 
         if ($request->date_from) {
@@ -48,7 +55,7 @@ class EmployeeController extends Controller
             });
         }
 
-        $employees = $employees->where('is_active', true)->paginate();
+        $employees = $employees->paginate();
 
         $bulk_load = env('EMPLOYEE_BULK_LOAD', 'false');
 
@@ -219,6 +226,66 @@ class EmployeeController extends Controller
             return back()->with('success', 'Los empleados fueron cargadas correctamente.');
         } else {
             return back()->with('warning', 'No se ha indicado ningún archivo.');
+        }
+    }
+
+    public function export(Request $request)
+    {
+        if (!in_array($request->type, ['excel', 'pdf', 'employee'])) {
+            return false;
+        }
+
+        if (in_array($request->type, ['excel', 'pdf'])) {
+            $employees = Employee::orderBy('recordcard');
+
+            if ($request->term) {
+                $term = "%{$request->term}%";
+                $employees->where(function ($query) use ($request, $term) {
+                    $query->where('recordcard', 'like', $term)
+                        ->orWhere('name', 'like', $term)
+                        ->orWhere('identifica', 'like', $term)
+                        ->orWhere('useremp', 'like', $term)
+                        ->orWhere('mail', 'like', $term);
+                });
+            }
+
+            if ($request->with_inactive) {
+                $employees->where(function ($query) use ($request) {
+                    $query->where('is_active', false)
+                        ->orWhere('is_active', true);
+                });
+            } else {
+                $employees->where(function ($query) use ($request) {
+                    $query->where('is_active', true);
+                });
+            }
+
+            if ($request->date_from) {
+                $employees->where(function ($query) use ($request) {
+                    $query->where('servicedat', '>=', $request->date_from);
+                });
+            }
+
+            if ($request->date_to) {
+                $employees->where(function ($query) use ($request) {
+                    $query->where('servicedat', '<=', $request->date_to);
+                });
+            }
+
+            $employees = $employees->get();
+
+            return view('human_resources.employee.export.' . $request->type)
+                ->with('datetime', new DateTime)
+                ->with('type', $request->type)
+                ->with('employees', $employees);
+        }
+
+        if ($request->type == 'employee') {
+            $employee = Employee::find($request->id);
+
+            return view('human_resources.employee.export.' . $request->type)
+                ->with('datetime', new DateTime)
+                ->with('employee', $employee);
         }
     }
 }

@@ -159,11 +159,13 @@ Route::group(['middleware' => 'auth'], function () {
             });
         });
 
-        Route::resource('employee', 'HumanResource\Employee\EmployeeController');
-
         Route::group(['prefix' => 'employee'], function () {
+            Route::get('export', 'HumanResource\Employee\EmployeeController@export')->name('human_resources.employee.export');
+
             Route::post('load', 'HumanResource\Employee\EmployeeController@load')->name('human_resources.employee.load');
         });
+
+        Route::resource('employee', 'HumanResource\Employee\EmployeeController');
 
         Route::resource('calendar', 'HumanResource\Calendar\CalendarController', ['only' => [
             'index'

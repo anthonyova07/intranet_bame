@@ -81,6 +81,11 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <a class="btn btn-danger btn-xs" href="{{ route('human_resources.employee.create') }}">Nueva</a>
+
+                    <a style="font-size: 13px;margin: 0 4px;" class="label btn-danger pull-right" target="__blank" href="{{ route('human_resources.employee.export', array_merge(request()->except(['page']), ['type' => 'pdf'])) }}">Exportar PDF</a>
+
+                    <a style="font-size: 13px;margin: 0 4px;" class="label btn-success pull-right" target="__blank" href="{{ route('human_resources.employee.export', array_merge(request()->except(['page']), ['type' => 'excel'])) }}">Exportar Excel</a>
+
                     <br>
                     <br>
                     <table class="table table-striped table-bordered table-hover table-condensed" order-by='2|desc'>
@@ -122,6 +127,15 @@
                                             title="Editar"
                                             class="naranja">
                                             <i class="fa fa-edit fa-fw"></i>
+                                        </a>
+                                        <a
+                                            href="{{ route('human_resources.employee.export', ['id' => $employee->id, 'type' => 'employee']) }}"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            target="__blank"
+                                            title="Imprimir"
+                                            class="">
+                                            <i class="fa fa-print fa-fw"></i>
                                         </a>
                                         {{-- <a
                                             onclick="cancel('{{ $new->id }}', this)"
@@ -283,20 +297,6 @@
         $('#form').submit(function (event) {
             $('#btn_submit').button('loading');
         });
-
-        // function cancel(id, el)
-        // {
-        //     res = confirm('Realmente desea eliminar esta noticia?');
-        //
-        //     if (!res) {
-        //         event.preventDefault();
-        //         return;
-        //     }
-        //
-        //     $(el).remove();
-        //
-        //     $('#form_eliminar_' + id).submit();
-        // }
     </script>
 
 @endsection
