@@ -32,6 +32,10 @@ class EmployeeController extends Controller
             });
         }
 
+        if ($request->with_inactive) {
+            $employees->orWhere('is_active', false);
+        }
+
         if ($request->date_from) {
             $employees->where(function ($query) use ($request) {
                 $query->where('servicedat', '>=', $request->date_from);
@@ -44,7 +48,7 @@ class EmployeeController extends Controller
             });
         }
 
-        $employees = $employees->paginate();
+        $employees = $employees->where('is_active', true)->paginate();
 
         $bulk_load = env('EMPLOYEE_BULK_LOAD', 'false');
 

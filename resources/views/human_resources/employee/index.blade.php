@@ -37,24 +37,31 @@
                 <div class="panel-body">
                     <form method="get" action="{{ route('human_resources.employee.index') }}" id="form">
                         <div class="row">
-                            <div class="col-xs-6">
+                            <div class="col-xs-4">
                                 <div class="form-group{{ $errors->first('term') ? ' has-error':'' }}">
                                     <label class="control-label">Término</label>
-                                    <input type="text" class="form-control input-sm" name="term" placeholder="término de busqueda..." value="{{ old('term') }}">
+                                    <input type="text" class="form-control input-sm" name="term" placeholder="término de busqueda..." value="{{ request('term') }}">
                                     <span class="help-block">{{ $errors->first('term') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div class="checkbox" style="margin-top: 25px;">
+                                    <label>
+                                        <input type="checkbox" name="with_inactive"{{ request('with_inactive') ? ' checked':'' }}> Incluir Inactivos
+                                    </label>
                                 </div>
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('date_from') ? ' has-error':'' }}">
                                     <label class="control-label">Fecha de Ingreso Desde</label>
-                                    <input type="date" class="form-control input-sm" name="date_from" value="{{ old('date_from') }}">
+                                    <input type="date" class="form-control input-sm" name="date_from" value="{{ request('date_from') }}">
                                     <span class="help-block">{{ $errors->first('date_from') }}</span>
                                 </div>
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('date_to') ? ' has-error':'' }}">
                                     <label class="control-label">Fecha de Ingreso Hasta</label>
-                                    <input type="date" class="form-control input-sm" name="date_to" value="{{ old('date_to') }}">
+                                    <input type="date" class="form-control input-sm" name="date_to" value="{{ request('date_to') }}">
                                     <span class="help-block">{{ $errors->first('date_to') }}</span>
                                 </div>
                             </div>
