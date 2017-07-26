@@ -46,14 +46,14 @@
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('date_from') ? ' has-error':'' }}">
-                                    <label class="control-label">Desde</label>
+                                    <label class="control-label">Fecha de Ingreso Desde</label>
                                     <input type="date" class="form-control input-sm" name="date_from" value="{{ old('date_from') }}">
                                     <span class="help-block">{{ $errors->first('date_from') }}</span>
                                 </div>
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('date_to') ? ' has-error':'' }}">
-                                    <label class="control-label">Hasta</label>
+                                    <label class="control-label">Fecha de Ingreso Hasta</label>
                                     <input type="date" class="form-control input-sm" name="date_to" value="{{ old('date_to') }}">
                                     <span class="help-block">{{ $errors->first('date_to') }}</span>
                                 </div>

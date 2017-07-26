@@ -20,26 +20,30 @@ class EmployeeController extends Controller
         $employees = Employee::orderBy('recordcard');
 
         $params = Param::get();
-        //
-        // if ($request->term) {
-        //     $employees->where(function ($query) use ($request) {
-        //         $query->where('title', 'like', '%' . $request->term . '%')
-        //             ->where('detail', 'like', '%' . $request->term . '%');
-        //     });
-        // }
-        //
-        // if ($request->date_from) {
-        //     $employees->where(function ($query) use ($request) {
-        //         $query->where('created_at', '>=', $request->date_from . ' 00:00:00');
-        //     });
-        // }
-        //
-        // if ($request->date_to) {
-        //     $employees->where(function ($query) use ($request) {
-        //         $query->where('created_at', '<=', $request->date_to . ' 23:59:59');
-        //     });
-        // }
-        //
+
+        if ($request->term) {
+            $term = "%{$request->term}%";
+            $employees->where(function ($query) use ($request, $term) {
+                $query->where('recordcard', 'like', $term)
+                    ->orWhere('name', 'like', $term)
+                    ->orWhere('identifica', 'like', $term)
+                    ->orWhere('useremp', 'like', $term)
+                    ->orWhere('mail', 'like', $term);
+            });
+        }
+
+        if ($request->date_from) {
+            $employees->where(function ($query) use ($request) {
+                $query->where('servicedat', '>=', $request->date_from);
+            });
+        }
+
+        if ($request->date_to) {
+            $employees->where(function ($query) use ($request) {
+                $query->where('servicedat', '<=', $request->date_to);
+            });
+        }
+
         $employees = $employees->paginate();
 
         $bulk_load = env('EMPLOYEE_BULK_LOAD', 'false');
