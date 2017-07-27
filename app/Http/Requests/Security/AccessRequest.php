@@ -26,7 +26,6 @@ class AccessRequest extends Request
         return [
             'user' => 'required',
             'menu' => 'required|integer',
-            'submenu' => 'required|integer',
         ];
     }
 }
