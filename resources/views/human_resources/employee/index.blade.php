@@ -91,9 +91,9 @@
                     <table class="table table-striped table-bordered table-hover table-condensed" order-by='2|desc'>
                         <thead>
                             <tr>
-                                <th>Código</th>
-                                <th>Nombre</th>
-                                <th>Identificación</th>
+                                <th>COD</th>
+                                <th style="width: 170px;">Nombre</th>
+                                <th style="width: 90px;">Identificación</th>
                                 <th>Correo</th>
                                 <th>Posición</th>
                                 <th>Supervisor</th>
