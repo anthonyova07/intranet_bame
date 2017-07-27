@@ -94,7 +94,7 @@ class ParamController extends Controller
 
                     $param['id'] = trim($parts[0]);
                     $param['type'] = $type;
-                    $param['name'] = trim(utf8_encode($parts[1]));
+                    $param['name'] = utf8_encode(trim($parts[1]));
                     $param['dep_id'] = isset($parts[2]) ? trim($parts[2]) : null;
                     $param['created_by'] = session()->get('user');
                     $param['created_at'] = $time;
