@@ -38,6 +38,10 @@ class EmployeeController extends Controller
             }
         }
 
+        if ($request->status == null) {
+            $employees->where('is_active', true);
+        }
+
         if ($request->date_from) {
             $employees->where('servicedat', '>=', $request->date_from);
         }
@@ -244,6 +248,10 @@ class EmployeeController extends Controller
                 if (in_array($request->status, ['1', '0'])) {
                     $employees->where('is_active', $request->status);
                 }
+            }
+
+            if ($request->status == null) {
+                $employees->where('is_active', true);
             }
 
             if ($request->date_from) {

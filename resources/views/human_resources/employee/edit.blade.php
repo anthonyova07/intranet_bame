@@ -80,7 +80,7 @@
                                     <label class="control-label">Posición</label>
                                     <select name="position" class="form-control input-sm">
                                         @foreach ($params->where('type', 'POS') as $param)
-                                            <option department="{{ $param->dep_id }}" value="{{ $param->id }}"{{ $employee->id_pos == $param->id ? ' selected':'' }}>{{ $param->name }}</option>
+                                            <option department="{{ $param->dep_id }}" style="{{ $param->dep_id == $employee->id_dep ? '':'display:none;' }}" value="{{ $param->id }}"{{ $employee->id_pos == $param->id ? ' selected':'' }}>{{ $param->name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('position') }}</span>
@@ -92,7 +92,7 @@
                                     <select name="supervisor" class="form-control input-sm">
                                         <option value="">Ninguno</option>
                                         @foreach ($employees as $emp)
-                                            <option department="{{ $emp->position->dep_id }}" value="{{ $emp->position->id }}"{{ $employee->id_sup == $emp->position->id ? ' selected':'' }}>{{ $emp->position->name . ' - ' . $emp->name }}</option>
+                                            <option department="{{ $emp->position->dep_id }}" style="{{ $emp->position->dep_id == $employee->id_dep ? '':'display:none;' }}" value="{{ $emp->position->id }}"{{ $employee->id_sup == $emp->position->id ? ' selected':'' }}>{{ $emp->position->name . ' - ' . $emp->name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('supervisor') }}</span>
