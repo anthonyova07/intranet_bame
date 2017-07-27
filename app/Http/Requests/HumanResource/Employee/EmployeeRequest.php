@@ -27,7 +27,7 @@ class EmployeeRequest extends Request
             'recordcard' => 'required|integer|unique:ibs.intrhemplo,recordcard,' . $this->employee,
             'name' => 'required|string|max:150',
             'identification' => 'required|max:45|unique:ibs.intrhemplo,identifica,' . $this->employee,
-            'mail' => 'required|email|max:150|unique:ibs.intrhemplo,mail,' . $this->employee,
+            'mail' => 'email|max:150|unique:ibs.intrhemplo,mail,' . $this->employee,
             'birthdate' => 'required|date_format:"Y-m-d"',
             'servicedat' => 'required|date_format:"Y-m-d"',
             'gender' => 'required|in:f,m',
