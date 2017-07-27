@@ -45,10 +45,14 @@
                                 </div>
                             </div>
                             <div class="col-xs-2">
-                                <div class="checkbox" style="margin-top: 25px;">
-                                    <label>
-                                        <input type="checkbox" name="with_inactive"{{ request('with_inactive') ? ' checked':'' }}> Incluir Inactivos
-                                    </label>
+                                <div class="form-group{{ $errors->first('status') ? ' has-error':'' }}">
+                                    <label class="control-label">Estatus</label>
+                                    <select class="form-control input-sm" name="status">
+                                        <option value="1"{{ request('status') == '1' ? ' selected':'' }}>Activos</option>
+                                        <option value="0"{{ request('status') == '0' ? ' selected':'' }}>Inactivos</option>
+                                        <option value="all"{{ request('status') == 'all' ? ' selected':'' }}>Todos</option>
+                                    </select>
+                                    <span class="help-block">{{ $errors->first('status') }}</span>
                                 </div>
                             </div>
                             <div class="col-xs-3">

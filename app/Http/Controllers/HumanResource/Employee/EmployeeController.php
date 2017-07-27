@@ -32,27 +32,18 @@ class EmployeeController extends Controller
             });
         }
 
-        if ($request->with_inactive) {
-            $employees->where(function ($query) use ($request) {
-                $query->where('is_active', false)
-                    ->orWhere('is_active', true);
-            });
-        } else {
-            $employees->where(function ($query) use ($request) {
-                $query->where('is_active', true);
-            });
+        if ($request->status != '') {
+            if (in_array($request->status, ['1', '0'])) {
+                $employees->where('is_active', $request->status);
+            }
         }
 
         if ($request->date_from) {
-            $employees->where(function ($query) use ($request) {
-                $query->where('servicedat', '>=', $request->date_from);
-            });
+            $employees->where('servicedat', '>=', $request->date_from);
         }
 
         if ($request->date_to) {
-            $employees->where(function ($query) use ($request) {
-                $query->where('servicedat', '<=', $request->date_to);
-            });
+            $employees->where('servicedat', '<=', $request->date_to);
         }
 
         $employees = $employees->paginate();
@@ -249,27 +240,18 @@ class EmployeeController extends Controller
                 });
             }
 
-            if ($request->with_inactive) {
-                $employees->where(function ($query) use ($request) {
-                    $query->where('is_active', false)
-                        ->orWhere('is_active', true);
-                });
-            } else {
-                $employees->where(function ($query) use ($request) {
-                    $query->where('is_active', true);
-                });
+            if ($request->status != '') {
+                if (in_array($request->status, ['1', '0'])) {
+                    $employees->where('is_active', $request->status);
+                }
             }
 
             if ($request->date_from) {
-                $employees->where(function ($query) use ($request) {
-                    $query->where('servicedat', '>=', $request->date_from);
-                });
+                $employees->where('servicedat', '>=', $request->date_from);
             }
 
             if ($request->date_to) {
-                $employees->where(function ($query) use ($request) {
-                    $query->where('servicedat', '<=', $request->date_to);
-                });
+                $employees->where('servicedat', '<=', $request->date_to);
             }
 
             $employees = $employees->get();
@@ -277,6 +259,7 @@ class EmployeeController extends Controller
             return view('human_resources.employee.export.' . $request->type)
                 ->with('datetime', new DateTime)
                 ->with('type', $request->type)
+                ->with('status', $request->status)
                 ->with('employees', $employees);
         }
 
