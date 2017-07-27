@@ -63,6 +63,7 @@
                                 <div class="form-group{{ $errors->first('department') ? ' has-error':'' }}">
                                     <label class="control-label">Departamento</label>
                                     <select name="department" class="form-control input-sm">
+                                        <option value="">Ninguno</option>
                                         @foreach ($params->where('type', 'DEP') as $param)
                                             <option value="{{ $param->id }}"{{ old('department') == $param->id ? ' selected':'' }}>{{ $param->name }}</option>
                                         @endforeach
@@ -74,6 +75,7 @@
                                 <div class="form-group{{ $errors->first('position') ? ' has-error':'' }}">
                                     <label class="control-label">Posición</label>
                                     <select name="position" class="form-control input-sm">
+                                        <option value="">Ninguno</option>
                                         @foreach ($params->where('type', 'POS') as $param)
                                             <option department="{{ $param->dep_id }}" value="{{ $param->id }}"{{ old('position') == $param->id ? ' selected':'' }}>{{ $param->name }}</option>
                                         @endforeach
