@@ -30,7 +30,7 @@
     <!-- Custom Fonts -->
     <link href="{{ route('home') }}/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <link href="{{ route('home') }}/css/bame.css?last_update={{ env('JS_NOT_CACHE') }}" rel="stylesheet" type="text/css">
+    <link href="{{ route('home') }}/css/bame.css?last_update={{ config('bame.js.not_cache') }}" rel="stylesheet" type="text/css">
 
     <style>
         .birthdate {

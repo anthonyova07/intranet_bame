@@ -196,7 +196,7 @@ class Customer extends Model
         $c2 = substr($identification, 3, 2);
         $c3 = substr($identification, 5, 2);
 
-        $photo = env('ENCARTES_CARPETA_FOTO') . $c1 . '\\' . $c2 . '\\' . $c3 . '\\' . format_identification($identification) . '.jpg';
+        $photo = config('bame.encartes.carpeta_foto') . $c1 . '\\' . $c2 . '\\' . $c3 . '\\' . format_identification($identification) . '.jpg';
 
         if (!file_exists($photo)) {
             $photo = base_path('\\public\\images\\noFoto.jpg');

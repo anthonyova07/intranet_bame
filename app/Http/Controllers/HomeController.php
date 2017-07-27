@@ -29,13 +29,13 @@ class HomeController extends Controller {
         $banners_news = News::where('type', 'B')
             ->where('is_active', true)
             ->orderBy('created_at', 'desc')
-            ->take(env('BANNERS_QUANTITY'))
+            ->take(config('bame.banners_quantity'))
             ->get();
 
         $news = News::where('type', 'N')
             ->where('is_active', true)
             ->orderBy('created_at', 'desc')
-            ->take(env('NEWS_QUANTITY'))
+            ->take(config('bame.news_quantity'))
             ->get();
 
         $coco = new Coco();
