@@ -187,8 +187,8 @@ class EmployeeController extends Controller
                     $employee['name'] = trim(utf8_encode($parts[1]));
                     $employee['identifica'] = trim($parts[2]);
 
-                    $employee['useremp'] = '';
-                    $employee['mail'] = '';
+                    $employee['useremp'] = trim($parts[5]) == '' ? '' : explode('@', $parts[5])[0];
+                    $employee['mail'] = trim($parts[5]);
 
                     if ($emp) {
                         $employee['birthdate'] = ($emp->month_day == '00-00' ? $date : ($year . '-' . $emp->month_day));
