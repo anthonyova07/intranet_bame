@@ -100,7 +100,7 @@
                                 <th>Fecha Nacimiento</th>
                                 <th>Fecha Ingreso</th>
                                 <th>Género</th>
-                                <th>Activo</th>
+                                {{-- <th>Activo</th> --}}
                                 <th></th>
                             </tr>
                         </thead>
@@ -116,9 +116,9 @@
                                     <td>{{ date_create($employee->birthdate)->format('d/m/Y') }}</td>
                                     <td>{{ date_create($employee->servicedat)->format('d/m/Y') }}</td>
                                     <td>{{ get_gender($employee->gender) }}</td>
-                                    <td class="text-center">
+                                    {{-- <td class="text-center">
                                         <span style="font-size: 12px;" class="label label-{{ $employee->is_active ? 'success':'danger' }}">{{ $employee->is_active ? 'Si':'No' }}</span>
-                                    </td>
+                                    </td> --}}
                                     <td align="center">
                                         <a
                                             href="{{ route('human_resources.employee.edit', ['id' => $employee->id]) }}"
