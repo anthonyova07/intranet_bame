@@ -80,7 +80,7 @@
                                     <label class="control-label">Posición</label>
                                     <select name="position" class="form-control input-sm">
                                         @foreach ($params->where('type', 'POS') as $param)
-                                            <option value="{{ $param->id }}"{{ $employee->id_pos == $param->id ? ' selected':'' }}>{{ $param->name }}</option>
+                                            <option department="{{ $param->dep_id }}" value="{{ $param->id }}"{{ $employee->id_pos == $param->id ? ' selected':'' }}>{{ $param->name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('position') }}</span>
@@ -92,7 +92,7 @@
                                     <select name="supervisor" class="form-control input-sm">
                                         <option value="">Ninguno</option>
                                         @foreach ($employees as $emp)
-                                            <option value="{{ $emp->position->id }}"{{ $employee->id_sup == $emp->position->id ? ' selected':'' }}>{{ $emp->position->name . ' - ' . $emp->name }}</option>
+                                            <option department="{{ $emp->position->dep_id }}" value="{{ $emp->position->id }}"{{ $employee->id_sup == $emp->position->id ? ' selected':'' }}>{{ $emp->position->name . ' - ' . $emp->name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('supervisor') }}</span>
@@ -131,5 +131,7 @@
             $('#btn_submit').button('loading');
         });
     </script>
+
+    @include('human_resources.employee._filtro_pos_sup_js')
 
 @endsection
