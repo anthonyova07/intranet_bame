@@ -38,4 +38,8 @@ return [
         'logout' => env('TIMEOUT_LOGOUT', 180000),
     ],
 
+    'employee' => [
+        'bulk_load' => env('EMPLOYEE_BULK_LOAD', 'false'),
+    ],
+
 ];
