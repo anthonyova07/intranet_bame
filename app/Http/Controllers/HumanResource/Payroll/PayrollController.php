@@ -59,7 +59,6 @@ class PayrollController extends Controller
 
                     $payroll->id = uniqid(true);
                     $payroll->payroldate = $payroll_date;
-                    $payroll->useremp = trim(explode('@', $parts[11])[0]);
                     $payroll->recordcard = trim($parts[5]);
                     $payroll->identifica = trim($parts[6]);
 
@@ -67,13 +66,22 @@ class PayrollController extends Controller
                         $payroll->name = $employee->name;
                         $payroll->position = $employee->position->name;
                         $payroll->department = $employee->department->name;
+
+                        if (trim($employee->mail) == '') {
+                            $payroll->mail = trim($parts[11]);
+                        } else {
+                            $payroll->mail = $employee->mail;
+                        }
+
+                        $payroll->useremp = trim(explode('@', $payroll->mail)[0]);
+
                     } else {
                         $payroll->name = trim(utf8_encode($parts[2]));
                         $payroll->position = trim(utf8_encode($parts[3]));
                         $payroll->department = trim(utf8_encode($parts[4]));
+                        $payroll->mail = trim($parts[11]);
+                        $payroll->useremp = trim(explode('@', $payroll->mail)[0]);
                     }
-
-                    $payroll->mail = trim($parts[11]);
 
                     $payroll->created_by = session()->get('user');
 
