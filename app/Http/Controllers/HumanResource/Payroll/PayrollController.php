@@ -9,6 +9,7 @@ use Bame\Http\Controllers\Controller;
 
 use Auth;
 use DateTime;
+use Bame\Models\HumanResource\Employee\Employee;
 use Bame\Models\HumanResource\Payroll\{Payroll, PayrollDetail};
 use Bame\Models\Notification\Notification;
 
@@ -27,6 +28,8 @@ class PayrollController extends Controller
             $payroll_date = '';
             $quantity_lines = 0;
             $quantity_employee = 0;
+
+            $employees = Employee::where('is_active', true)->get();
 
             $content = file($request->payrolls->path());
 
@@ -50,6 +53,8 @@ class PayrollController extends Controller
                 }
 
                 if ($parts[0] == 'I') {
+                    $employee = $employees->where('recordcard', trim($parts[5]))->first();
+
                     $payroll = new Payroll;
 
                     $payroll->id = uniqid(true);
@@ -57,9 +62,17 @@ class PayrollController extends Controller
                     $payroll->useremp = trim(explode('@', $parts[11])[0]);
                     $payroll->recordcard = trim($parts[5]);
                     $payroll->identifica = trim($parts[6]);
-                    $payroll->name = trim(utf8_encode($parts[2]));
-                    $payroll->position = trim(utf8_encode($parts[3]));
-                    $payroll->department = trim(utf8_encode($parts[4]));
+
+                    if ($employee) {
+                        $payroll->name = $employee->name;
+                        $payroll->position = $employee->position->name;
+                        $payroll->department = $employee->department->name;
+                    } else {
+                        $payroll->name = trim(utf8_encode($parts[2]));
+                        $payroll->position = trim(utf8_encode($parts[3]));
+                        $payroll->department = trim(utf8_encode($parts[4]));
+                    }
+
                     $payroll->mail = trim($parts[11]);
 
                     $payroll->created_by = session()->get('user');

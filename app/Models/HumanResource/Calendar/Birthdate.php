@@ -135,6 +135,13 @@ class Birthdate extends Model
         return $message;
     }
 
+    public static function getEmployeeDataFromJson($recordcard)
+    {
+        $birthdates = self::getFile();
+
+        return $birthdates->where('code', $recordcard)->first();
+    }
+
     //optener el numero de empleado del formato "Nombre Empleado (###).jpg"
     public static function getName($str)
     {

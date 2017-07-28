@@ -38,7 +38,7 @@ Route::group(['prefix' => 'notification'], function () {
 Route::group(['middleware' => 'auth'], function () {
 
     //Consulta del Historico
-    Route::resource('consultas/historicoproducto','Consultas\HistoricoProducto\ProductoController');       
+    Route::resource('consultas/historicoproducto','Consultas\HistoricoProducto\ProductoController');
 
     //Route::get('consultas/historicoproducto/show}','Consultas\HistoricoProducto\ProductoController@show');
 
@@ -48,8 +48,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('consultas/historicoproducto/reportetrans/{cuenta}', 'Consultas\HistoricoProducto\TransaccionController@reportetrans');
 
-    //Actualizcion de clientes 
-    Route::resource('cumplimiento/cliente','Cumplimiento\Cliente\CumstController');     
+    //Actualizcion de clientes
+    Route::resource('cumplimiento/cliente','Cumplimiento\Cliente\CumstController');
 
 
     Route::group(['prefix' => 'security'], function () {
@@ -148,6 +148,24 @@ Route::group(['middleware' => 'auth'], function () {
                 'store'
             ]]);
         });
+
+        Route::group(['prefix' => 'employee'], function () {
+            Route::group(['prefix' => '{type}'], function () {
+                Route::resource('param', 'HumanResource\Employee\ParamController', ['only' => [
+                    'create', 'store', 'edit', 'update'
+                ]]);
+
+                Route::post('loadparams', 'HumanResource\Employee\ParamController@loadparams')->name('human_resources.employee.{type}.params.loadparams');
+            });
+        });
+
+        Route::group(['prefix' => 'employee'], function () {
+            Route::get('export', 'HumanResource\Employee\EmployeeController@export')->name('human_resources.employee.export');
+
+            Route::post('load', 'HumanResource\Employee\EmployeeController@load')->name('human_resources.employee.load');
+        });
+
+        Route::resource('employee', 'HumanResource\Employee\EmployeeController');
 
         Route::resource('calendar', 'HumanResource\Calendar\CalendarController', ['only' => [
             'index'
