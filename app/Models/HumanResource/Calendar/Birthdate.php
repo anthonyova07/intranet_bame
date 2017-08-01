@@ -103,6 +103,21 @@ class Birthdate extends Model
         return $date;
     }
 
+    public static function getOneEmployeeDate()
+    {
+        $employees = self::getFile();
+        $date = '';
+
+        foreach ($employees as $employee) {
+            if ($employee->code == session()->get('user_info')->getPostalCode()) {
+                $parts = explode('/', $employee->services_date);
+                return $parts[2] . '-' . $parts[1] . '-' . $parts[0];
+            }
+        }
+
+        return $date;
+    }
+
     public static function getFile()
     {
         if (file_exists(storage_path('app\\calendar\\birthdates.json'))) {
