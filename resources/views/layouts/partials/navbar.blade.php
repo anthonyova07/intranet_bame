@@ -61,7 +61,7 @@
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="{{ route('human_resources.payroll.my') }}"><i class="fa fa-money fa-fw"></i> Nóminas</a>
+                        <a href="{{ route('human_resources.payroll.my') }}"><i class="fa fa-money fa-fw"></i> Mis Nóminas</a>
                     </li>
                     <li class="divider"></li>
                     <li>
@@ -148,25 +148,27 @@
                     </a>
                 </li>
                 @if (session()->has('menus'))
-                    @if (!session()->get('menus')->contains('men_codigo', '22'))
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-lock fa-fw"></i>
-                                Recursos Humanos
-                                <span class="fa arrow"></span>
-                            </a>
-                            <ul class="nav nav-second-level animated zoomInLeft" style="animation-duration: 0.5s;">
-                                @if (Route::has('home'))
-                                    <li>
-                                        <a href="{{ route('human_resources.request.index') }}">
-                                            <i class="fa fa-unlock-alt fa-fw"></i>
-                                            Solicitudes
-                                        </a>
-                                    </li>
-                                @endif
-                            </ul>
-                        </li>
-                    @endif
+                    <li style="border-bottom: 5px solid #e7e7e7;">
+                        <a href="#">
+                            <i class="fa fa-universal-access fa-fw"></i>
+                            Empleado Bancamérica
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level animated zoomInLeft" style="animation-duration: 0.5s;">
+                            <li>
+                                <a href="{{ route('human_resources.payroll.my') }}">
+                                    <i class="fa fa-money fa-fw"></i>
+                                    Mis Nóminas
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('human_resources.request.index') }}">
+                                    <i class="fa fa-wpforms fa-fw"></i>
+                                    Solicitudes
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
                     @foreach (session()->get('menus') as $menu)
                         <li>
@@ -187,14 +189,6 @@
                                             </li>
                                         @endif
                                     @endforeach
-                                    @if ($menu->men_codigo == '22')
-                                        <li>
-                                            <a href="{{ route('human_resources.request.index') }}">
-                                                <i class="fa fa-unlock-alt fa-fw"></i>
-                                                Solicitudes
-                                            </a>
-                                        </li>
-                                    @endif
                                 </ul>
                             @endif
                         </li>
