@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use DateTime;
 use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
+use Bame\Models\HumanResource\Employee\Employee;
 use Bame\Models\HumanResource\Request\Param;
 use Bame\Models\HumanResource\Request\HumanResourceRequest;
 use Bame\Models\HumanResource\Request\Approval;
@@ -51,9 +52,14 @@ class RequestController extends Controller
             $human_resource_requests->where('created_at', '<=', $request->date_to . ' 23:59:59');
         }
 
-        if (can_not_do('human_resource_request_approverh')) {
-            $human_resource_requests->where('coluser', session()->get('user'))
-                ->orWhere('colsupuser', session()->get('user'));
+        if (!$request->has('access')) {
+            $human_resource_requests->where(function ($query) {
+                $query->where('coluser', session()->get('user'));
+
+                if (session('employee')->isSupervisor()) {
+                    $query->orWhereIn('coluser', session('employee')->getSubordinatesUsers());
+                }
+            });
         }
 
         $human_resource_requests =  $human_resource_requests->paginate();
@@ -68,15 +74,17 @@ class RequestController extends Controller
     {
         $params = Param::where('is_active', '1')->get();
 
+        $request_type_exists = array_key_exists($request->type, rh_req_types()->toArray());
+
         if ($request->type) {
-            if (!array_key_exists($request->type, rh_req_types()->toArray())) {
+            if (!$request_type_exists) {
                 return redirect(route('human_resources.request.create'))->with('warning', 'El tipo de solicitud seleccionado no existe.');
             }
         }
 
         return view('human_resources.request.create', [
             'type' => $request->type,
-            'request_type_exists' => array_key_exists($request->type, rh_req_types()->toArray()),
+            'request_type_exists' => $request_type_exists,
             'params' => $params,
             'employee_date' => Birthdate::getOneEmployeeDate(),
         ]);
@@ -100,37 +108,41 @@ class RequestController extends Controller
         if (in_array($request->type, ['PER', 'VAC', 'ANT'])) {
             $human_resource_request->reqstatus = 'Pendiente por Supervisor';
 
-            $human_resource_request->coluser = session()->get('user');
-            $human_resource_request->colcode = $user_info->getPostalCode();
-            $human_resource_request->colname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
-            $human_resource_request->colposi = $user_info->getTitle();
-            $human_resource_request->coldepart = $user_info->getDepartment();
+            $human_resource_request->coluser = session('employee')->useremp;
+            $human_resource_request->colcode = session('employee')->recordcard;
+            $human_resource_request->colname = session('employee')->name;
+            $human_resource_request->colposi = session('employee')->position->name;
+            $human_resource_request->coldepart = session('employee')->department->name;
 
-            $human_resource_request->colsupuser = $request->colsupuser;
+            $human_resource_request->colsupuser = session('employee')->supervisor_emp->useremp;
+            $human_resource_request->colsupname = session('employee')->supervisor_emp->name;
+            $human_resource_request->colsupposi = session('employee')->supervisor_emp->position->name;
 
             if (in_array($request->type, ['PER', 'VAC'])) {
-                $human_resource_request->approvesup = false;
+                $human_resource_request->approvesup = 'p';
             }
 
             if (in_array($request->type, ['ANT'])) {
                 $human_resource_request->reqstatus = 'Pendiente por RRHH';
-                $human_resource_request->approvesup = true;
+                $human_resource_request->approvesup = 'a';
             }
         }
 
         if (in_array($request->type, ['AUS'])) {
+            $subordinate = Employee::byUser($request->subordinate)->first();
+
             $human_resource_request->reqstatus = 'Aprobado por Supervisor';
 
-            $human_resource_request->coluser = $request->coluser;
-            $human_resource_request->colcode = $request->colcode;
-            $human_resource_request->colname = $request->colname;
-            $human_resource_request->colposi = $request->colposi;
-            $human_resource_request->coldepart = $request->coldepart;
+            $human_resource_request->coluser = $subordinate->useremp;
+            $human_resource_request->colcode = $subordinate->recordcard;
+            $human_resource_request->colname = $subordinate->name;
+            $human_resource_request->colposi = $subordinate->position->name;
+            $human_resource_request->coldepart = $subordinate->department->name;
 
-            $human_resource_request->colsupuser = session()->get('user');
-            $human_resource_request->colsupname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
-            $human_resource_request->colsupposi = $user_info->getTitle();
-            $human_resource_request->approvesup = true;
+            $human_resource_request->colsupuser = session('employee')->useremp;
+            $human_resource_request->colsupname = session('employee')->name;
+            $human_resource_request->colsupposi = session('employee')->position->name;
+            $human_resource_request->approvesup = 'a';
         }
 
         $human_resource_request->approverh = false;
@@ -156,9 +168,9 @@ class RequestController extends Controller
         $human_resource_request->save();
 
         if (in_array($request->type, ['AUS', 'ANT'])) {
-            Notification::notifyUsersByPermission('human_resource_request_approverh', 'Solicitud de RH', 'Nueva ' . rh_req_types($human_resource_request->reqtype) . ' creada (#' . $human_resource_request->reqnumber . ') pendiente.', route('human_resources.request.show', ['id' => $human_resource_request->id]));
+            Notification::notifyUsersByPermission('human_resource_request_admin', 'Solicitud de RH', 'Nueva ' . rh_req_types($human_resource_request->reqtype) . ' creada (#' . $human_resource_request->reqnumber . ') pendiente.', route('human_resources.request.show', ['id' => $human_resource_request->id]));
         } else {
-            Notification::notify('Solicitud de RH', 'Tiene un solicitud RH pendiente de aprobación', route('human_resources.request.show', ['request' => $human_resource_request->id]), $request->colsupuser);
+            Notification::notify('Solicitud de RH', 'Tiene un solicitud RH pendiente de aprobación', route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->colsupuser);
         }
 
         do_log('Creó la Solicitud de Recursos Humanos ( número:' . strip_tags($human_resource_request->reqnumber) . ' )');
@@ -187,8 +199,6 @@ class RequestController extends Controller
 
     private static function savePerAusRequest($requestId, $request)
     {
-        $user_info = session()->get('user_info');
-
         $detail = new Detail;
 
         $detail->id = uniqid(true);
@@ -218,11 +228,20 @@ class RequestController extends Controller
                 }
             }
 
+            if ($param->code == 'CUMPLE') {
+                $time = new DateTime;
+                $birthdate = $time->format('Y-') . date_create(session('employee')->birthdate)->format('m-d');
+
+                if (HumanResourceRequest::isBetweenXDays($request->permission_date, 7, $birthdate)) {
+                    return back()->withInput()->with('error', 'El día libre de cumpleaños debe ser solicitado entre los 7 días despues del cumpleaños');
+                }
+            }
+
             $detail->reaforabse = $param->name;
         }
 
-        $detail->created_by = session()->get('user');
-        $detail->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
+        $detail->created_by = session('employee')->useremp;
+        $detail->createname = session('employee')->name;
 
         $detail->save();
 
@@ -297,7 +316,7 @@ class RequestController extends Controller
 
         $detail->id = uniqid(true);
         $detail->req_id = $requestId;
-        $detail->identifica = $request->identification;
+        $detail->identifica = session('employee')->identifica;
         $detail->savaccount = $request->ant_account_number;
         $detail->advamount = round($request->ant_amount, 2);
         $detail->advdues = $request->ant_dues;
@@ -354,7 +373,7 @@ class RequestController extends Controller
 
         $human_resource_request->detail()->update([
             'dayscorres' => $request->vac_day_corresponding,
-            'daystakedm' => $request->vac_day_taken_at_moment,
+            // 'daystakedm' => $request->vac_day_taken_at_moment,
             'dayspendin' => $request->vac_day_pending,
             'applybonus' => (bool) $request->applybonus,
             'datebonus' => $request->vac_date_bonus,
@@ -367,6 +386,11 @@ class RequestController extends Controller
     public function saveAntRHForm(Request $request, $requestId)
     {
         $human_resource_request = HumanResourceRequest::find($requestId);
+
+        if ($human_resource_request->reqtype == 'ANT') {
+            $human_resource_request->reqstatus = 'Desembolsado';
+            $human_resource_request->save();
+        }
 
         $human_resource_request->detail()->update([
             'clientnum' => $request->client_number,

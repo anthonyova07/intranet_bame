@@ -215,5 +215,6 @@ return [
       'ant_account_number' => '# Cuenta',
       'ant_amount' => 'Monto',
       'ant_dues' => 'Cuotas',
+      'subordinate' => 'Empleado',
     ],
 ];

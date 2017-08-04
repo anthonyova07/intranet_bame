@@ -193,12 +193,6 @@ Route::group(['middleware' => 'auth'], function () {
             'index'
         ]]);
 
-        Route::group(['prefix' => 'request', 'namespace' => 'HumanResource\Request\\'], function () {
-            Route::resource('{type}/param', 'ParamController', ['only' => [
-                'create', 'store', 'edit', 'update'
-            ]]);
-        });
-
         Route::group(['prefix' => 'payroll'], function () {
             Route::get('my', 'HumanResource\Payroll\PayrollController@getPayRoll')->name('human_resources.payroll.my');
         });
@@ -207,8 +201,8 @@ Route::group(['middleware' => 'auth'], function () {
             'create', 'store'
         ]]);
 
-        Route::group(['prefix' => 'request'], function () {
-            Route::resource('{type}/param', 'HumanResource\Request\ParamController', ['only' => [
+        Route::group(['prefix' => 'request', 'namespace' => 'HumanResource\Request\\'], function () {
+            Route::resource('{type}/param', 'ParamController', ['only' => [
                 'create', 'store', 'edit', 'update'
             ]]);
 
@@ -221,7 +215,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('saveantrhform/{request_id}', 'RequestController@saveAntRHForm')->name('human_resources.request.saveantrhform');
 
             Route::group(['prefix' => 'export'], function () {
-                Route::get('excel', 'HumanResource\Request\RequestController@excel')->name('human_resources.request.export.excel');
+                Route::get('excel', 'RequestController@excel')->name('human_resources.request.export.excel');
             });
         });
 

@@ -25,18 +25,12 @@ class RequestHumanResourceRequest extends Request
     {
         $v = [];
 
-        if (in_array($this->type, ['PER', 'VAC'])) {
-            $v = array_merge($v, [
-                'colsupuser' => 'required',
-            ]);
-        }
-
         if ($this->type == 'VAC') {
             $v = array_merge($v, [
                 // 'vac_date_admission' => 'required|date_format:"Y-m-d',
                 'vac_date_from' => 'required|date_format:"Y-m-d',
                 // 'vac_date_to' => 'required|date_format:"Y-m-d',
-                'vac_total_days' => 'required|integer|min:1|max:18',
+                'vac_total_days' => 'required|integer|min:1|max:20',
                 'vac_total_pending_days' => 'required|integer|min:0|max:18',
                 'note' => 'max:1000',
             ]);
@@ -44,7 +38,6 @@ class RequestHumanResourceRequest extends Request
 
         if ($this->type == 'ANT') {
             $v = array_merge($v, [
-                'identification' => 'required',
                 'ant_account_number' => 'required',
                 'ant_amount' => 'required|integer|min:1',
                 'ant_dues' => 'required|integer|min:1|max:12',
@@ -57,6 +50,12 @@ class RequestHumanResourceRequest extends Request
                 'per' => 'required',
                 'per_reason' => 'required_if:per,otro|max:1000',
             ]);
+
+            if (in_array($this->type, ['AUS'])) {
+                $v = array_merge($v, [
+                    'subordinate' => 'required',
+                ]);
+            }
 
             if ($this->permission_type == 'one_day') {
                 $v = array_merge($v, [

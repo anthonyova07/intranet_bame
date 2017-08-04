@@ -16,7 +16,7 @@ class HumanResourceRequest extends Model
 
     public $incrementing = false;
 
-    public $timestamps = true;    
+    public $timestamps = true;
 
     public function scopeActiveOnly($query)
     {
@@ -35,7 +35,13 @@ class HumanResourceRequest extends Model
 
     public function files()
     {
-        $files = scandir($path = storage_path('app\\rrhh_request\\attaches\\' . $this->id));
+        $path = storage_path('app\\rrhh_request\\attaches\\' . $this->id);
+
+        $files = [];
+
+        if (file_exists($path)) {
+            $files = scandir($path);
+        }
 
         unset($files[array_search('.', $files)]);
         unset($files[array_search('..', $files)]);
@@ -91,9 +97,14 @@ class HumanResourceRequest extends Model
         return $date_to->format('Y-m-d');
     }
 
-    public static function isBetweenXDays($date, $days = 5)
+    public static function isBetweenXDays($date, $days = 5, $date_from = null)
     {
-        $current = new DateTime;
+        if ($date_from) {
+            $current = new DateTime($date_from);
+        } else {
+            $current = new DateTime;
+        }
+
         $current->modify('+1 day');
 
         $post_day = new DateTime($date);

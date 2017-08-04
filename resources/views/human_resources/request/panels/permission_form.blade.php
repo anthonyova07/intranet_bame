@@ -7,14 +7,16 @@
             <span class="help-block">{{ $errors->first('permission_type') }}</span>
         </div>
     </div>
-    <div class="col-xs-6">
-        <div class="radio{{ $errors->first('permission_type') ? ' has-error':'' }}">
-            <label style="font-size: 16px;font-weight: bold;">
-                <input type="radio" name="permission_type" {{ old('permission_type') == 'multiple_days' ? 'checked' : '' }} value="multiple_days"> Por varios días
-            </label>
-            <span class="help-block">{{ $errors->first('permission_type') }}</span>
+    @if (!in_array($type, ['AUS']))
+        <div class="col-xs-6">
+            <div class="radio{{ $errors->first('permission_type') ? ' has-error':'' }}">
+                <label style="font-size: 16px;font-weight: bold;">
+                    <input type="radio" name="permission_type" {{ old('permission_type') == 'multiple_days' ? 'checked' : '' }} value="multiple_days"> Por varios días
+                </label>
+                <span class="help-block">{{ $errors->first('permission_type') }}</span>
+            </div>
         </div>
-    </div>
+    @endif
 </div>
 <div class="row">
     <div class="col-xs-6">
@@ -44,26 +46,29 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-6">
-        <div class="well well-sm" id="multiple_days"{!! old('permission_type') == 'one_day' ? ' style="display: none;"' : '' !!}>
-            <div class="row">
-                <div class="col-xs-6">
-                    <div class="form-group{{ $errors->first('permission_date_from') ? ' has-error':'' }}">
-                        <label class="control-label">Fecha Desde</label>
-                        <input type="date" class="form-control input-sm" name="permission_date_from" value="{{ old('permission_date_from') }}">
-                        <span class="help-block">{{ $errors->first('permission_date_from') }}</span>
+
+    @if (!in_array($type, ['AUS']))
+        <div class="col-xs-6">
+            <div class="well well-sm" id="multiple_days"{!! old('permission_type') == 'one_day' ? ' style="display: none;"' : '' !!}>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group{{ $errors->first('permission_date_from') ? ' has-error':'' }}">
+                            <label class="control-label">Fecha Desde</label>
+                            <input type="date" class="form-control input-sm" name="permission_date_from" value="{{ old('permission_date_from') }}">
+                            <span class="help-block">{{ $errors->first('permission_date_from') }}</span>
+                        </div>
                     </div>
-                </div>
-                <div class="col-xs-6">
-                    <div class="form-group{{ $errors->first('permission_date_to') ? ' has-error':'' }}">
-                        <label class="control-label">Fecha Hasta</label>
-                        <input type="date" class="form-control input-sm" name="permission_date_to" value="{{ old('permission_date_to') }}">
-                        <span class="help-block">{{ $errors->first('permission_date_to') }}</span>
+                    <div class="col-xs-6">
+                        <div class="form-group{{ $errors->first('permission_date_to') ? ' has-error':'' }}">
+                            <label class="control-label">Fecha Hasta</label>
+                            <input type="date" class="form-control input-sm" name="permission_date_to" value="{{ old('permission_date_to') }}">
+                            <span class="help-block">{{ $errors->first('permission_date_to') }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 </div>
 <div class="row">
     <div class="col-xs-12" style="height: 15px;">

@@ -6,10 +6,10 @@
                     Datos del Supervisor
                     @if (isset($human_resource_request))
                         (
-                        @if (!$human_resource_request->colsupname)
+                        @if ($human_resource_request->approvesup == 'p')
                             Pendiente
                         @else
-                            @if ($human_resource_request->approvesup)
+                            @if ($human_resource_request->approvesup == 'a')
                                 Aprobada
                             @else
                                 Rechazada
@@ -28,7 +28,7 @@
                             @if (isset($human_resource_request))
                                 <p class="form-control-static">{{ $human_resource_request->colsupuser }}</p>
                             @else
-                                <input type="text" class="form-control input-sm" name="colsupuser" value="{{ old('colsupuser') }}">
+                                <p class="form-control-static">{{ isset($human_resource_request) ? $human_resource_request->colsupname : session('employee')->supervisor_emp->useremp }}</p>
                                 <span class="help-block">{{ $errors->first('colsupuser') }}</span>
                             @endif
                         </div>
@@ -36,7 +36,7 @@
                     <div class="col-xs-8">
                         <div class="form-group">
                             <label class="control-label">Nombre</label>
-                            <p class="form-control-static">{{ isset($human_resource_request) ? $human_resource_request->colsupname : '' }}</p>
+                            <p class="form-control-static">{{ isset($human_resource_request) ? $human_resource_request->colsupname : session('employee')->supervisor_emp->name }}</p>
                         </div>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                     <div class="col-xs-12">
                         <div class="form-group">
                             <label class="control-label">Posición</label>
-                            <p class="form-control-static">{{ isset($human_resource_request) ? $human_resource_request->colsupposi : '' }}</p>
+                            <p class="form-control-static">{{ isset($human_resource_request) ? $human_resource_request->colsupposi : session('employee')->supervisor_emp->position->name }}</p>
                         </div>
                     </div>
                 </div>
@@ -67,13 +67,13 @@
                     <div class="col-xs-4">
                         <div class="form-group">
                             <label class="control-label">Usuario</label>
-                            <p class="form-control-static">{{ session()->get('user') }}</p>
+                            <p class="form-control-static">{{ session('employee')->useremp }}</p>
                         </div>
                     </div>
                     <div class="col-xs-8">
                         <div class="form-group">
                             <label class="control-label">Nombre</label>
-                            <p class="form-control-static">{{ session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName() }}</p>
+                            <p class="form-control-static">{{ session('employee')->name }}</p>
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                     <div class="col-xs-12">
                         <div class="form-group">
                             <label class="control-label">Posición</label>
-                            <p class="form-control-static">{{ session()->get('user_info')->getTitle() }}</p>
+                            <p class="form-control-static">{{ session('employee')->position->name }}</p>
                         </div>
                     </div>
                 </div>

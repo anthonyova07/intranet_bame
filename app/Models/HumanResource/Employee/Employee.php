@@ -32,4 +32,33 @@ class Employee extends Model
     {
         return $this->hasOne(Param::class, 'id', 'id_sup');
     }
+
+    public function supervisor_emp()
+    {
+        return $this->hasOne(Employee::class, 'id_pos', 'id_sup');
+    }
+
+    public function subordinates()
+    {
+        return $this->hasMany(Employee::class, 'id_sup', 'id_pos');
+    }
+
+    public function scopeByUser($query, $user = null)
+    {
+        if ($user) {
+            return $query->where('useremp', $user);
+        }
+
+        return $query->where('useremp', session('user'));
+    }
+
+    public function isSupervisor()
+    {
+        return (bool) $this->subordinates->count();
+    }
+
+    public function getSubordinatesUsers()
+    {
+        return $this->subordinates->pluck('useremp')->toArray();
+    }
 }

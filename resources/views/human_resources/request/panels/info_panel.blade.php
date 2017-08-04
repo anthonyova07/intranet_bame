@@ -25,7 +25,7 @@
                         <label class="control-label">Estado</label>
                         <p class="form-control-static">{{ $human_resource_request->reqstatus }}</p>
                     </div>
-                    {{-- @if (can_not_do('human_resource_request_approverh'))
+                    {{-- @if (can_not_do('human_resource_request_admin'))
                         <div class="form-group">
                             <label class="control-label">Estado</label>
                             <p class="form-control-static">{{ $human_resource_request->reqstatus }}</p>
@@ -60,7 +60,7 @@
                         <form name="paid_form" action="{{ route('human_resources.request.paid', ['request_id' => $human_resource_request->id]) }}" method="post">
                             <div class="radio" style="margin-top: 0px;">
                                 <label style="font-weight: bold;">
-                                    @if (!can_not_do('human_resource_request_approverh'))
+                                    @if (!can_not_do('human_resource_request_admin'))
                                         <input type="checkbox" id="paid_button" name="paid"{{ $human_resource_request->detail->paid ? ' checked':'' }}> Remunerado
                                     @else
                                         <input type="checkbox" disabled name="paid"{{ $human_resource_request->detail->paid ? ' checked':'' }}> Remunerado

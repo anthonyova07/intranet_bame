@@ -182,10 +182,17 @@
                                     @foreach ($menu->submenus as $submenu)
                                         @if (Route::has($submenu->sub_link))
                                             <li>
-                                                <a href="{{ route($submenu->sub_link) }}">
-                                                    <i class="fa fa-unlock-alt fa-fw"></i>
-                                                    {{ $submenu->sub_descri }}
-                                                </a>
+                                                @if ($submenu->sub_coduni == 'human_resource_request_admin')
+                                                    <a href="{{ route($submenu->sub_link, ['access' => 'admin']) }}">
+                                                        <i class="fa fa-unlock-alt fa-fw"></i>
+                                                        {{ $submenu->sub_descri }}
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route($submenu->sub_link) }}">
+                                                        <i class="fa fa-unlock-alt fa-fw"></i>
+                                                        {{ $submenu->sub_descri }}
+                                                    </a>
+                                                @endif
                                             </li>
                                         @endif
                                     @endforeach

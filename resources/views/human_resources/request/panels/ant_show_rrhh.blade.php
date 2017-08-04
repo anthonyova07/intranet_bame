@@ -1,4 +1,4 @@
-@if (!can_not_do('human_resource_request_approverh'))
+@if (!can_not_do('human_resource_request_admin'))
     <form method="post" action="{{ route('human_resources.request.saveantrhform', ['request_id' => $human_resource_request->id]) }}" id="form">
         <div class="row">
             <div class="col-xs-12">

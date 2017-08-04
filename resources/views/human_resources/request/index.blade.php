@@ -21,6 +21,9 @@
                 </div>
                 <div class="panel-body">
                     <form method="get" action="{{ route('human_resources.request.index') }}" id="form">
+                        @foreach (request()->only(['access']) as $key => $value)
+                            <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                        @endforeach
                         <div class="row">
                             <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('term') ? ' has-error':'' }}">

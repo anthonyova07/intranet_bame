@@ -1,5 +1,8 @@
-@if (!can_not_do('human_resource_request_approverh'))
+@if (!can_not_do('human_resource_request_admin'))
     <form method="post" action="{{ route('human_resources.request.savevacrhform', ['request_id' => $human_resource_request->id]) }}" id="form">
+        @foreach (request()->only(['access']) as $key => $value)
+            <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+        @endforeach
         <div class="row">
             <div class="col-xs-12">
                 <h3 class="text-center" style="font-size: 16px;margin-top: 0px;">Para Uso de Recursos Humanos</h3>
@@ -12,13 +15,13 @@
                                 <span class="help-block">{{ $errors->first('vac_day_corresponding') }}</span>
                             </div>
                         </div>
-                        <div class="col-xs-2">
+                        {{-- <div class="col-xs-2">
                             <div class="form-group{{ $errors->first('vac_day_taken_at_moment') ? ' has-error':'' }}">
                                 <label class="control-label">Días Tomados al Moment.</label>
                                 <input type="number" class="form-control input-sm" name="vac_day_taken_at_moment" value="{{ $human_resource_request->detail->daystakedm }}">
                                 <span class="help-block">{{ $errors->first('vac_day_taken_at_moment') }}</span>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-xs-2">
                             <div class="form-group{{ $errors->first('vac_day_pending') ? ' has-error':'' }}">
                                 <label class="control-label">Días Pendientes</label>

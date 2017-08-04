@@ -14,7 +14,7 @@
                                 @if (isset($human_resource_request))
                                     {{ $human_resource_request->coluser }}
                                 @else
-                                    {{ session()->get('user') }}
+                                    {{ session('employee')->useremp }}
                                 @endif
                             </p>
                             <span class="help-block">{{ $errors->first('coluser') }}</span>
@@ -27,7 +27,7 @@
                                 @if (isset($human_resource_request))
                                     {{ $human_resource_request->colcode }}
                                 @else
-                                    {{ session()->get('user_info')->getPostalCode() }}
+                                    {{ session('employee')->recordcard }}
                                 @endif
                             </p>
                             <span class="help-block">{{ $errors->first('colcode') }}</span>
@@ -40,7 +40,7 @@
                                 @if (isset($human_resource_request))
                                     {{ $human_resource_request->colname }}
                                 @else
-                                    {{ session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName() }}
+                                    {{ session('employee')->name }}
                                 @endif
                             </p>
                             <span class="help-block">{{ $errors->first('colname') }}</span>
@@ -55,7 +55,7 @@
                                 @if (isset($human_resource_request))
                                     {{ $human_resource_request->colposi }}
                                 @else
-                                    {{ session()->get('user_info')->getTitle() }}
+                                    {{ session('employee')->position->name }}
                                 @endif
                             </p>
                             <span class="help-block">{{ $errors->first('colposi') }}</span>
@@ -68,7 +68,7 @@
                                 @if (isset($human_resource_request))
                                     {{ $human_resource_request->coldepart }}
                                 @else
-                                    {{ session()->get('user_info')->getDepartment() }}
+                                    {{ session('employee')->department->name }}
                                 @endif
                             </p>
                             <span class="help-block">{{ $errors->first('coldepart') }}</span>
@@ -82,7 +82,7 @@
                                     @if (isset($human_resource_request))
                                         {{ $human_resource_request->detail->identifica }}
                                     @else
-                                        <input type="text" class="form-control input-sm" name="identification" value="{{ old('identification') }}">
+                                        {{ session('employee')->identifica }}
                                     @endif
                                 </p>
                                 <span class="help-block">{{ $errors->first('identification') }}</span>
@@ -104,61 +104,15 @@
 
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-xs-4">
-                        <div class="form-group{{ $errors->first('coluser') ? ' has-error':'' }}">
-                            <label class="control-label">Usuario</label>
-                            @if (isset($human_resource_request))
-                                <p class="form-control-static">{{ $human_resource_request->coluser }}</p>
-                            @else
-                                <input type="text" class="form-control input-sm" name="coluser" value="{{ old('coluser') }}">
-                            @endif
-                            <span class="help-block">{{ $errors->first('coluser') }}</span>
-                        </div>
-                    </div>
-                    <div class="col-xs-4">
-                        <div class="form-group{{ $errors->first('colcode') ? ' has-error':'' }}">
-                            <label class="control-label">Código</label>
-                            @if (isset($human_resource_request))
-                                <p class="form-control-static">{{ $human_resource_request->colcode }}</p>
-                            @else
-                                <input type="text" class="form-control input-sm" name="colcode" value="{{ old('colcode') }}">
-                            @endif
-                            <span class="help-block">{{ $errors->first('colcode') }}</span>
-                        </div>
-                    </div>
-                    <div class="col-xs-4">
-                        <div class="form-group{{ $errors->first('colname') ? ' has-error':'' }}">
-                            <label class="control-label">Nombre</label>
-                            @if (isset($human_resource_request))
-                                <p class="form-control-static">{{ $human_resource_request->colname }}</p>
-                            @else
-                                <input type="text" class="form-control input-sm" name="colname" value="{{ old('colname') }}">
-                            @endif
-                            <span class="help-block">{{ $errors->first('colname') }}</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <div class="form-group{{ $errors->first('colposi') ? ' has-error':'' }}">
-                            <label class="control-label">Posición</label>
-                            @if (isset($human_resource_request))
-                                <p class="form-control-static">{{ $human_resource_request->colposi }}</p>
-                            @else
-                                <input type="text" class="form-control input-sm" name="colposi" value="{{ old('colposi') }}">
-                            @endif
-                            <span class="help-block">{{ $errors->first('colposi') }}</span>
-                        </div>
-                    </div>
-                    <div class="col-xs-4">
-                        <div class="form-group{{ $errors->first('coldepart') ? ' has-error':'' }}">
-                            <label class="control-label">Departamento</label>
-                            @if (isset($human_resource_request))
-                                <p class="form-control-static">{{ $human_resource_request->coldepart }}</p>
-                            @else
-                                <input type="text" class="form-control input-sm" name="coldepart" value="{{ old('coldepart') }}">
-                            @endif
-                            <span class="help-block">{{ $errors->first('coldepart') }}</span>
+                    <div class="col-xs-6">
+                        <div class="form-group{{ $errors->first('subordinate') ? ' has-error':'' }}">
+                            <label class="control-label">Seleccionar Empleado</label>
+                            <select name="subordinate" class="form-control input-sm">
+                                @foreach (session('employee')->subordinates as $subordinate)
+                                    <option value="{{ $subordinate->useremp }}">{{ $subordinate->name }}</option>
+                                @endforeach
+                            </select>
+                            <span class="help-block">{{ $errors->first('subordinate') }}</span>
                         </div>
                     </div>
                 </div>
