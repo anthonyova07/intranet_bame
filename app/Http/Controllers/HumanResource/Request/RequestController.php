@@ -293,7 +293,7 @@ class RequestController extends Controller
         $detail->vacdatfrom = $request->vac_date_from;
         $detail->vacdatto = HumanResourceRequest::getVacDateTo($request->vac_date_from, $request->vac_total_days);
         $detail->vactotdays = $request->vac_total_days;
-        // $detail->vacoutdays = $request->vac_total_pending_days;
+        $detail->vacadddays = $request->vac_additional_days;
         $detail->vacaccbonu = (bool) $request->vac_credited_bonds;
 
         $detail->created_by = session()->get('user');

@@ -44,6 +44,12 @@
                     </div>
                     <div class="col-xs-2">
                         <div class="form-group">
+                            <label class="control-label">Días Adicionales</label>
+                            <input type="number" disabled class="form-control input-sm" name="vac_additional_days" value="{{ $human_resource_request->detail->vacadddays }}">
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        <div class="form-group">
                             <label class="control-label">Días Pendientes por Tomar</label>
                             <input type="number" disabled class="form-control input-sm" name="vac_total_pending_days" value="{{ $human_resource_request->detail->vacoutdays }}">
                         </div>

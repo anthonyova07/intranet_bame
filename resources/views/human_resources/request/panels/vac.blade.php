@@ -28,7 +28,14 @@
                                 <input type="number" class="form-control input-sm" min="1" name="vac_total_days" value="{{ old('vac_total_days') ?? 1 }}">
                                 <span class="help-block">{{ $errors->first('vac_total_days') }}</span>
                             </div>
-                        </div>                        
+                        </div>
+                        <div class="col-xs-2">
+                            <div class="form-group{{ $errors->first('vac_additional_days') ? ' has-error':'' }}">
+                                <label class="control-label">Días Adicionales</label>
+                                <input type="number" class="form-control input-sm" min="0" name="vac_additional_days" value="{{ old('vac_additional_days') ?? 0 }}">
+                                <span class="help-block">{{ $errors->first('vac_additional_days') }}</span>
+                            </div>
+                        </div>
                         <div class="col-xs-3">
                             <div class="form-group{{ $errors->first('vac_date_from') ? ' has-error':'' }}">
                                 <label class="control-label">Fecha de Inicio</label>
@@ -44,7 +51,7 @@
                             </div>
                         </div>
                         <div class="col-xs-2">
-                            <div class="checkbox{{ $errors->first('vac_credited_bonds') ? ' has-error':'' }}" style="margin-top: 22px;">
+                            <div class="checkbox{{ $errors->first('vac_credited_bonds') ? ' has-error':'' }}">
                                 <label>
                                     <input type="checkbox" name="vac_credited_bonds" {{ old('vac_credited_bonds') ? 'checked' : '' }} value="acreditar_bono"> Acreditar Bono Vacacional
                                 </label>
@@ -79,15 +86,20 @@
     });
 
     var total_days = $('input[name=vac_total_days]');
+    var add_days = $('input[name=vac_additional_days]');
     var date_from = $('input[name=vac_date_from]');
     var date_to = $('input[name=vac_date_to]');
 
     total_days.change(function (e) {
-        calculate(total_days.val(), date_from.val());
+        calculate(parseInt(total_days.val()) + parseInt(add_days.val()), date_from.val());
+    });
+
+    add_days.change(function (e) {
+        calculate(parseInt(total_days.val()) + parseInt(add_days.val()), date_from.val());
     });
 
     date_from.change(function (e) {
-        calculate(total_days.val(), date_from.val());
+        calculate(parseInt(total_days.val()) + parseInt(add_days.val()), date_from.val());
     });
 
     function calculate(total_days, date_from) {
