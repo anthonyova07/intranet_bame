@@ -45,6 +45,12 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-xs-12{{ $errors->first('ant_observa') ? ' has-error':'' }}">
+                            <textarea class="form-control input-sm" placeholder="Observaciones" name="ant_observa">{{ old('ant_observa') }}</textarea>
+                            <span class="help-block">{{ $errors->first('ant_observa') }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-xs-12">
                             <div class="alert alert-info">
                                 En caso de que por cualquier razón terminara la relación laboral que actualmente mantengo con <b>Banco Múltiple de las Américas, S.A.</b>, autorizo a dicha institución a descontar de cualesquiera, prestaciones o derechos adquiridos, en virtud de la relación laboral mantenida con la misma, la cantidad adeudada por concepto de <b>anticipo de salario</b>, para que proceda al pago de la misma, comprometiéndome a pagar cualquier diferencia que no pueda cubrirse con los valores correspondientes a las prestaciones o derechos adquiridos.

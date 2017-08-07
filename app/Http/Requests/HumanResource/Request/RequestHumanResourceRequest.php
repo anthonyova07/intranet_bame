@@ -41,6 +41,7 @@ class RequestHumanResourceRequest extends Request
                 'ant_account_number' => 'required',
                 'ant_amount' => 'required|integer|min:1',
                 'ant_dues' => 'required|integer|min:1|max:12',
+                'ant_observa' => 'required',
             ]);
         }
 

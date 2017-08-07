@@ -322,6 +322,7 @@ class RequestController extends Controller
         $detail->advamount = round($request->ant_amount, 2);
         $detail->advdues = $request->ant_dues;
         $detail->advdueamou = round(intval($request->ant_amount) / intval($request->ant_dues), 2);
+        $detail->observa = $request->ant_observa;
 
         $detail->created_by = session()->get('user');
         $detail->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();

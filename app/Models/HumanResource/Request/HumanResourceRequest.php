@@ -124,6 +124,10 @@ class HumanResourceRequest extends Model
 
     public function canByCancelled()
     {
-        return $this->detail->perdatfrom->format('Y-m-d') >= datetime()->format('Y-m-d');
+        if ($this->reqtype == 'PER') {
+            return $this->detail->perdatfrom->format('Y-m-d') >= datetime()->format('Y-m-d');
+        }
+
+        return false;
     }
 }

@@ -55,6 +55,12 @@
                         </div>
                     </div>
                     <div class="col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Monto de Cuotas</label>
+                            <textarea class="form-control input-sm" disabled placeholder="Observaciones" name="ant_observa">{{ $human_resource_request->detail->observa }}</textarea>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
                         @include('human_resources.request.panels.ant_show_rrhh', [
                             'human_resource_request' => $human_resource_request,
                         ])
