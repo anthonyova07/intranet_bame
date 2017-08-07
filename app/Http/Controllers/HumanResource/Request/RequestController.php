@@ -293,9 +293,8 @@ class RequestController extends Controller
         $detail->vacdatfrom = $request->vac_date_from;
         $detail->vacdatto = HumanResourceRequest::getVacDateTo($request->vac_date_from, $request->vac_total_days);
         $detail->vactotdays = $request->vac_total_days;
-        $detail->vacoutdays = $request->vac_total_pending_days;
+        // $detail->vacoutdays = $request->vac_total_pending_days;
         $detail->vacaccbonu = (bool) $request->vac_credited_bonds;
-        $detail->note = $request->vac_note;
 
         $detail->created_by = session()->get('user');
         $detail->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
@@ -375,11 +374,15 @@ class RequestController extends Controller
 
         $human_resource_request->detail()->update([
             'dayscorres' => $request->vac_day_corresponding,
-            // 'daystakedm' => $request->vac_day_taken_at_moment,
+            'daystakedm' => $request->vac_day_taken_at_moment,
             'dayspendin' => $request->vac_day_pending,
             'applybonus' => (bool) $request->applybonus,
+            'bonusyear' => $request->bonusyear,
+            'bonusrea' => $request->bonusrea,
             'datebonus' => $request->vac_date_bonus,
             'datebonusd' => $request->vac_date_bonus_sd,
+            'note' => $request->vac_note,
+            'vacoutdays' => $request->vac_day_pending,
         ]);
 
         return back()->with('success', 'Los cambios han sido guardados correctamente.');

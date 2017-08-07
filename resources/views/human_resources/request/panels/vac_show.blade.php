@@ -44,7 +44,7 @@
                     </div>
                     <div class="col-xs-2">
                         <div class="form-group">
-                            <label class="control-label">Días Pendientes a Tomar</label>
+                            <label class="control-label">Días Pendientes por Tomar</label>
                             <input type="number" disabled class="form-control input-sm" name="vac_total_pending_days" value="{{ $human_resource_request->detail->vacoutdays }}">
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                     <div class="col-xs-2">
                         <div class="checkbox" style="margin-top: 22px;">
                             <label>
-                                <input type="checkbox" name="vac_credited_bonds" {{ $human_resource_request->detail->vacaccbonu ? 'checked' : '' }} value="acreditar_bono"> Acreditar Bono Vacacional
+                                <input type="checkbox" disabled name="vac_credited_bonds" {{ $human_resource_request->detail->vacaccbonu ? 'checked' : '' }} value="acreditar_bono"> Acreditar Bono Vacacional
                             </label>
                         </div>
                     </div>
@@ -71,12 +71,6 @@
                         @include('human_resources.request.panels.vac_show_rrhh', [
                             'human_resource_request' => $human_resource_request,
                         ])
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="form-group">
-                            <label class="control-label">Observaciones</label>
-                            <textarea class="form-control input-sm" placeholder="Observación" name="vac_note">{{ old('vac_note') }}</textarea>
-                        </div>
                     </div>
                 </div>
             </div>
