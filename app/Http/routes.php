@@ -213,6 +213,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('paid/{request_id}', 'RequestController@paid')->name('human_resources.request.paid');
             Route::post('savevacrhform/{request_id}', 'RequestController@saveVacRHForm')->name('human_resources.request.savevacrhform');
             Route::post('saveantrhform/{request_id}', 'RequestController@saveAntRHForm')->name('human_resources.request.saveantrhform');
+            Route::get('cancel/{request_id}', 'RequestController@cancel')->name('human_resources.request.cancel');
 
             Route::group(['prefix' => 'export'], function () {
                 Route::get('excel', 'RequestController@excel')->name('human_resources.request.export.excel');

@@ -165,6 +165,7 @@ class RequestController extends Controller
         }
 
         $human_resource_request->reqnumber = get_next_request_rh_number();
+        $human_resource_request->cancelled = false;
         $human_resource_request->save();
 
         if (in_array($request->type, ['AUS', 'ANT'])) {
@@ -415,5 +416,21 @@ class RequestController extends Controller
         return response()->json([
             'date_to' => $date_to,
         ]);
+    }
+
+    public function cancel(Request $request, $request_id)
+    {
+        $human_resource_request = HumanResourceRequest::find($request_id);
+
+        if (!$human_resource_request->canByCancelled()) {
+            return back()->with('warning', 'La solicitud no puede ser cancelada.');
+        }
+
+        $human_resource_request->reqstatus = 'Cancelado';
+        $human_resource_request->cancelled = true;
+
+        $human_resource_request->save();
+
+        return back()->with('success', 'Los solicitud ha sido cancelada correctamente.');
     }
 }

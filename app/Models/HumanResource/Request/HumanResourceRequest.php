@@ -121,4 +121,9 @@ class HumanResourceRequest extends Model
 
         return $counter >= $days;
     }
+
+    public function canByCancelled()
+    {
+        return $this->detail->perdatfrom->format('Y-m-d') >= datetime()->format('Y-m-d');
+    }
 }
