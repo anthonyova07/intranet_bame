@@ -13,6 +13,7 @@ Route::get('break_coco', 'Marketing\MarketingController@coco')->name('coco');
 Route::post('break_coco', 'Marketing\MarketingController@idea');
 
 Route::get('news/{id}', 'Marketing\MarketingController@news')->name('home.news');
+Route::get('news_list', 'Marketing\MarketingController@news_list')->name('home.news_list');
 
 Route::get('gallery/{gallery?}', 'Marketing\MarketingController@gallery')->name('home.gallery');
 

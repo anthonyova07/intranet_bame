@@ -36,10 +36,13 @@
                                     <span class="help-block">{{ $errors->first('type') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-2">
+                            <div class="col-xs-2" style="padding-left: 6px;">
                                 <div class="checkbox">
                                     <label style="margin-top: 18px;">
                                         <input type="checkbox" name="is_active" {{ old('is_active') ? 'checked' : '' }}> Activo
+                                    </label>
+                                    <label style="margin-top: 18px;">
+                                        <input type="checkbox" name="menu" {{ old('menu') ? 'checked' : '' }}> Menú
                                     </label>
                                 </div>
                             </div>

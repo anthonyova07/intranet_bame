@@ -22,18 +22,19 @@ class HomeController extends Controller {
     public function index(Request $request) {
         $datetime = new DateTime;
 
-        $column_new = News::where('type', 'C')
+        $column_new = News::column()
             ->where('is_active', true)
             ->orderBy('created_at', 'desc')->first();
 
-        $banners_news = News::where('type', 'B')
+        $banners_news = News::banners()
             ->where('is_active', true)
             ->orderBy('created_at', 'desc')
             ->take(config('bame.banners_quantity'))
             ->get();
 
-        $news = News::where('type', 'N')
+        $news = News::news()
             ->where('is_active', true)
+            ->where('menu', false)
             ->orderBy('created_at', 'desc')
             ->take(config('bame.news_quantity'))
             ->get();

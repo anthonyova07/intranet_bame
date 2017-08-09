@@ -76,6 +76,7 @@ class NewsController extends Controller
         $new->link = $request->link;
         $new->link_video = $request->link_video;
         $new->is_active = $request->is_active ? true : false;
+        $new->menu = $request->menu ? true : false;
         $new->created_by = session()->get('user');
 
         $new->save();
@@ -151,6 +152,7 @@ class NewsController extends Controller
         $new->link = $request->link;
         $new->link_video = $request->link_video;
         $new->is_active = $request->is_active ? true : false;
+        $new->menu = $request->menu ? true : false;
         $new->updated_by = session()->get('user');
 
         if ($request->repost) {

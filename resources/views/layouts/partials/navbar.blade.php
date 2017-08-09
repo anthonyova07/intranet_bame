@@ -136,6 +136,12 @@
                     </ul>
                 </li>
                 <li>
+                    <a href="{{ route('home.news_list') }}">
+                        <i class="fa fa-newspaper-o fa-fw"></i>
+                        Noticias
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('home.faqs') }}">
                         <i class="fa fa-question fa-fw"></i>
                         Preguntas Frecuentes
