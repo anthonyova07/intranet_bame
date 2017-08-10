@@ -16,25 +16,21 @@ class NewsController extends Controller
 {
     public function index(Request $request)
     {
-        $news = News::where('created_by', session()->get('user'));
+        $news = News::orderBy('created_at', 'desc');
 
         if ($request->term) {
             $news->where(function ($query) use ($request) {
                 $query->where('title', 'like', '%' . $request->term . '%')
-                    ->where('detail', 'like', '%' . $request->term . '%');
+                    ->orWhere('detail', 'like', '%' . $request->term . '%');
             });
         }
 
         if ($request->date_from) {
-            $news->where(function ($query) use ($request) {
-                $query->where('created_at', '>=', $request->date_from . ' 00:00:00');
-            });
+            $news->where('created_at', '>=', $request->date_from . ' 00:00:00');
         }
 
         if ($request->date_to) {
-            $news->where(function ($query) use ($request) {
-                $query->where('created_at', '<=', $request->date_to . ' 23:59:59');
-            });
+            $news->where('created_at', '<=', $request->date_to . ' 23:59:59');
         }
 
         $news = $news->paginate();
@@ -98,7 +94,7 @@ class NewsController extends Controller
 
     public function edit($id)
     {
-        $new = News::where('created_by', session()->get('user'))->find($id);
+        $new = News::find($id);
 
         if (!$new) {
             return back()->with('warning', 'Esta noticia no existe!');
@@ -110,7 +106,7 @@ class NewsController extends Controller
 
     public function update(NewsRequest $request, $id)
     {
-        $new = News::where('created_by', session()->get('user'))->find($id);
+        $new = News::find($id);
 
         if (!$new) {
             return back()->with('warning', 'Esta noticia no existe!');
@@ -168,7 +164,7 @@ class NewsController extends Controller
 
     public function destroy($id)
     {
-        $new = News::where('created_by', session()->get('user'))->find($id);
+        $new = News::find($id);
 
         if (!$new) {
             return back()->with('warning', 'Esta noticia no existe!');
