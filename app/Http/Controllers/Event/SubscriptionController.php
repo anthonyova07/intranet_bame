@@ -205,6 +205,7 @@ class SubscriptionController extends Controller
 
         $subscriptions = Subscription::where('event_id', $event->id)
                                         ->where('is_subscribe', '1')
+                                        ->orderBy('names')
                                         ->get();
 
         $accompanist_subscriptions = SubscriptionAccompanist::with('accompanist')
