@@ -24,7 +24,7 @@
                             <div class="col-xs-6">
                                 <div class="form-group{{ $errors->first('term') ? ' has-error':'' }}">
                                     <label class="control-label">Término</label>
-                                    <input type="text" class="form-control input-sm" name="term" placeholder="término de busqueda..." value="{{ old('term') }}">
+                                    <input type="text" class="form-control input-sm" name="term" placeholder="término de busqueda..." value="{{ request('term') }}">
                                     <span class="help-block">{{ $errors->first('term') }}</span>
                                 </div>
                             </div>

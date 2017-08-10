@@ -24,6 +24,7 @@ class HomeController extends Controller {
 
         $column_new = News::column()
             ->where('is_active', true)
+            ->where('menu', false)
             ->orderBy('created_at', 'desc')->first();
 
         $banners_news = News::banners()

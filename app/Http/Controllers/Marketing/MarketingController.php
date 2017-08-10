@@ -36,7 +36,7 @@ class MarketingController extends Controller
 
     public function news_list()
     {
-        $news = News::news()
+        $news = News::newscolumns()
             ->where('is_active', true)
             ->orderBy('created_at', 'desc')
             ->paginate(7);

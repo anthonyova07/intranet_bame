@@ -35,4 +35,9 @@ class News extends Model
     {
         return $query->where('type', 'C');
     }
+
+    public function scopeNewsColumns($query)
+    {
+        return $query->where('type', 'N')->orWhere('type', 'C');
+    }
 }
