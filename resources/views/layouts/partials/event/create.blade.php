@@ -22,27 +22,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12">
+                        <div class="col-xs-10">
                             <div class="form-group{{ $errors->first('image') ? ' has-error':'' }}">
                                 <label class="control-label">Imagen <small class="label label-warning">MAX 2 MB</small></label>
                                 <input type="file" name="image">
                                 <span class="help-block">{{ $errors->first('image') }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-4">
-                            <div class="form-group{{ $errors->first('start_event') ? ' has-error':'' }}">
-                                <label class="control-label">Fecha del Evento</label>
-                                <input type="datetime-local" class="form-control input-sm" name="start_event" value="">
-                                <span class="help-block">{{ $errors->first('start_event') }}</span>
-                            </div>
-                        </div>
-                        <div class="col-xs-4">
-                            <div class="form-group{{ $errors->first('end_subscriptions') ? ' has-error':'' }}">
-                                <label class="control-label">Fecha Limite Suscripciones</label>
-                                <input type="datetime-local" class="form-control input-sm" name="end_subscriptions" value="">
-                                <span class="help-block">{{ $errors->first('end_subscriptions') }}</span>
                             </div>
                         </div>
                         <div class="col-xs-2">
@@ -50,6 +34,29 @@
                                 <label style="margin-top: 18px;">
                                     <input type="checkbox" name="is_active" {{ old('is_active') ? 'checked' : '' }}> Activo
                                 </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="form-group{{ $errors->first('start_event') ? ' has-error':'' }}">
+                                <label class="control-label">Fecha Inicio(Evento)</label>
+                                <input type="datetime-local" class="form-control input-sm" name="start_event" value="">
+                                <span class="help-block">{{ $errors->first('start_event') }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group{{ $errors->first('end_event') ? ' has-error':'' }}">
+                                <label class="control-label">Fecha Final(Evento)</label>
+                                <input type="datetime-local" class="form-control input-sm" name="end_event" value="">
+                                <span class="help-block">{{ $errors->first('end_event') }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group{{ $errors->first('end_subscriptions') ? ' has-error':'' }}">
+                                <label class="control-label">Fecha Limite Suscripciones</label>
+                                <input type="datetime-local" class="form-control input-sm" name="end_subscriptions" value="">
+                                <span class="help-block">{{ $errors->first('end_subscriptions') }}</span>
                             </div>
                         </div>
                     </div>

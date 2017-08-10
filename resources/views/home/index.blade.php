@@ -467,6 +467,7 @@
                                         <tr>
                                             <td style="vertical-align: middle;">
                                                 <a style="color: #FF8849;" href="{{ route('home.event', ['id' => $event->id]) }}" target="__blank">{{ $event->title }}</a>
+                                                <small style="margin-top: -6px;margin-bottom: 0;font-size: 12px;" class="help-block">Limite de Suscripciones {{ $event->end_subscriptions->format('d/m/y h:i a') }}</small>
                                             </td>
                                             <td style="text-align: right;width: 120px;font-size: 15px;letter-spacing: 1px;">
                                                 {{ $event->start_event->format('d/m/y') }}
@@ -474,9 +475,9 @@
                                                 {{ $event->start_event->format('h:i a') }}
                                             </td>
                                             <td style="text-align: right;width: 120px;font-size: 15px;letter-spacing: 1px;">
-                                                {{ $event->end_subscriptions->format('d/m/y') }}
+                                                {{ $event->end_event->format('d/m/y') }}
                                                 <br>
-                                                {{ $event->end_subscriptions->format('h:i a') }}
+                                                {{ $event->end_event->format('h:i a') }}
                                             </td>
                                         </tr>
                                     @endforeach
