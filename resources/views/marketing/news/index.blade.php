@@ -24,7 +24,7 @@
                             <div class="col-xs-6">
                                 <div class="form-group{{ $errors->first('term') ? ' has-error':'' }}">
                                     <label class="control-label">Término</label>
-                                    <input type="text" class="form-control input-sm" name="term" placeholder="término de busqueda..." value="{{ old('term') }}">
+                                    <input type="text" class="form-control input-sm" name="term" placeholder="término de busqueda..." value="{{ request('term') }}">
                                     <span class="help-block">{{ $errors->first('term') }}</span>
                                 </div>
                             </div>
@@ -66,6 +66,7 @@
                                 <th>Título</th>
                                 <th style="width:50px;">Tipo</th>
                                 <th style="width: 30px;">Activa</th>
+                                <th style="width: 30px;">Menú</th>
                                 <th style="width: 132px;">Fecha Creada</th>
                                 <th style="width: 52px"></th>
                             </tr>
@@ -76,6 +77,7 @@
                                     <td>{{ $new->title }}</td>
                                     <td>{{ get_news_types($new->type) }}</td>
                                     <td>{{ $new->is_active ? 'Si' : 'No' }}</td>
+                                    <td>{{ $new->menu ? 'Si' : 'No' }}</td>
                                     <td>{{ $new->created_at->format('d/m/Y h:i:s A') }}</td>
                                     <td align="center">
                                         <a

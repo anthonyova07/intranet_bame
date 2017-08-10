@@ -32,8 +32,16 @@ class MarketingController extends Controller
             return view('home.marketing.banner')
                 ->with('banner', $new);
         }
+    }
 
-        return view('home.marketing.new.index');
+    public function news_list()
+    {
+        $news = News::newscolumns()
+            ->where('is_active', true)
+            ->orderBy('created_at', 'desc')
+            ->paginate(7);
+
+        return view('home.marketing.new_list')->with('news', $news);
     }
 
     public function coco()

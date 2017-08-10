@@ -16,25 +16,21 @@ class NewsController extends Controller
 {
     public function index(Request $request)
     {
-        $news = News::where('created_by', session()->get('user'));
+        $news = News::orderBy('created_at', 'desc');
 
         if ($request->term) {
             $news->where(function ($query) use ($request) {
                 $query->where('title', 'like', '%' . $request->term . '%')
-                    ->where('detail', 'like', '%' . $request->term . '%');
+                    ->orWhere('detail', 'like', '%' . $request->term . '%');
             });
         }
 
         if ($request->date_from) {
-            $news->where(function ($query) use ($request) {
-                $query->where('created_at', '>=', $request->date_from . ' 00:00:00');
-            });
+            $news->where('created_at', '>=', $request->date_from . ' 00:00:00');
         }
 
         if ($request->date_to) {
-            $news->where(function ($query) use ($request) {
-                $query->where('created_at', '<=', $request->date_to . ' 23:59:59');
-            });
+            $news->where('created_at', '<=', $request->date_to . ' 23:59:59');
         }
 
         $news = $news->paginate();
@@ -76,6 +72,7 @@ class NewsController extends Controller
         $new->link = $request->link;
         $new->link_video = $request->link_video;
         $new->is_active = $request->is_active ? true : false;
+        $new->menu = $request->menu ? true : false;
         $new->created_by = session()->get('user');
 
         $new->save();
@@ -97,7 +94,7 @@ class NewsController extends Controller
 
     public function edit($id)
     {
-        $new = News::where('created_by', session()->get('user'))->find($id);
+        $new = News::find($id);
 
         if (!$new) {
             return back()->with('warning', 'Esta noticia no existe!');
@@ -109,7 +106,7 @@ class NewsController extends Controller
 
     public function update(NewsRequest $request, $id)
     {
-        $new = News::where('created_by', session()->get('user'))->find($id);
+        $new = News::find($id);
 
         if (!$new) {
             return back()->with('warning', 'Esta noticia no existe!');
@@ -151,6 +148,7 @@ class NewsController extends Controller
         $new->link = $request->link;
         $new->link_video = $request->link_video;
         $new->is_active = $request->is_active ? true : false;
+        $new->menu = $request->menu ? true : false;
         $new->updated_by = session()->get('user');
 
         if ($request->repost) {
@@ -166,7 +164,7 @@ class NewsController extends Controller
 
     public function destroy($id)
     {
-        $new = News::where('created_by', session()->get('user'))->find($id);
+        $new = News::find($id);
 
         if (!$new) {
             return back()->with('warning', 'Esta noticia no existe!');

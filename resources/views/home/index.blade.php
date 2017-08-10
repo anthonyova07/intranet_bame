@@ -34,48 +34,6 @@
                 <div class="row" style="margin-bottom: 13px;">
                     <div class="col-xs-12 news" style="margin-left: 12px;">
 
-                        <div class="carousel slide carousel-banners" data-ride="carousel" data-interval="3000" style="width: 100%;height: 226px;margin-top: 9px;">
-                            <!-- Indicators -->
-                            <ol class="carousel-indicators" style="display: none;">
-                                @foreach ($banners_news as $index => $banner)
-                                    <li data-slide-to="{{ $index }}" class="{{ $index == 0 ? 'active':'' }}"></li>
-                                @endforeach
-                            </ol>
-
-                            <!-- Wrapper for slides -->
-                            <div class="carousel-inner">
-                                @foreach ($banners_news as $index => $banner)
-                                    <div class="item {{ $index == 0 ? 'active':'' }}">
-                                        @if ($banner->imgbanner == '' || !$banner->imgbanner)
-                                            <img src="{{ route('home') . $banner->image . '?id=' . uniqid() }}" style="height: 232px;margin: auto;">
-                                        @else
-                                            <img src="{{ route('home') . $banner->imgbanner . '?id=' . uniqid() }}" style="height: 232px;margin: auto;">
-                                        @endif
-                                        <div class="carousel-caption" style="right: 0;left: 0;margin-bottom: -44px;">
-                                            {{-- <a href="http://bancamerica.com.do/" target="__blank" class="link_noticias_no_effect">Ver Detalle</a> --}}
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-
-                            <!-- Controls -->
-                            <a class="left carousel-control" href="javascript:void(0)" onclick="$('.carousel-banners').carousel('prev')" data-slide="prev">
-                                <span class="icon-prev"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="right carousel-control"  href="javascript:void(0)" onclick="$('.carousel-banners').carousel('next')" data-slide="next">
-                                <span class="icon-next"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
-
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-12 news" style="margin-top: 5px;margin-left: 12px;">
-
                         <div class="carousel slide carousel-noticias" data-ride="carousel" data-interval="5000" style="width: 100%;height: 281px;margin-top: 9px;">
                             <!-- Indicators -->
                             <ol class="carousel-indicators" style="display: none;">
@@ -106,6 +64,48 @@
                                 <span class="sr-only">Previous</span>
                             </a>
                             <a class="right carousel-control"  href="javascript:void(0)" onclick="$('.carousel-noticias').carousel('next')" data-slide="next">
+                                <span class="icon-next"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 news" style="margin-top: 5px;margin-left: 12px;">
+
+                        <div class="carousel slide carousel-banners" data-ride="carousel" data-interval="3000" style="width: 100%;height: 226px;margin-top: 9px;">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators" style="display: none;">
+                                @foreach ($banners_news as $index => $banner)
+                                    <li data-slide-to="{{ $index }}" class="{{ $index == 0 ? 'active':'' }}"></li>
+                                @endforeach
+                            </ol>
+
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner">
+                                @foreach ($banners_news as $index => $banner)
+                                    <div class="item {{ $index == 0 ? 'active':'' }}">
+                                        @if ($banner->imgbanner == '' || !$banner->imgbanner)
+                                            <img src="{{ route('home') . $banner->image . '?id=' . uniqid() }}" style="height: 232px;margin: auto;">
+                                        @else
+                                            <img src="{{ route('home') . $banner->imgbanner . '?id=' . uniqid() }}" style="height: 232px;margin: auto;">
+                                        @endif
+                                        <div class="carousel-caption" style="right: 0;left: 0;margin-bottom: -44px;">
+                                            {{-- <a href="http://bancamerica.com.do/" target="__blank" class="link_noticias_no_effect">Ver Detalle</a> --}}
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="javascript:void(0)" onclick="$('.carousel-banners').carousel('prev')" data-slide="prev">
+                                <span class="icon-prev"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control"  href="javascript:void(0)" onclick="$('.carousel-banners').carousel('next')" data-slide="next">
                                 <span class="icon-next"></span>
                                 <span class="sr-only">Next</span>
                             </a>

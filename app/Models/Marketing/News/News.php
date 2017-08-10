@@ -20,4 +20,24 @@ class News extends Model
     {
         return trim($this->detail) != '';
     }
+
+    public function scopeBanners($query)
+    {
+        return $query->where('type', 'B');
+    }
+
+    public function scopeNews($query)
+    {
+        return $query->where('type', 'N');
+    }
+
+    public function scopeColumn($query)
+    {
+        return $query->where('type', 'C');
+    }
+
+    public function scopeNewsColumns($query)
+    {
+        return $query->where('type', 'N')->orWhere('type', 'C');
+    }
 }

@@ -24,7 +24,7 @@ class NewsRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'required|max:150',
+            'title' => 'required_if:type,C|required_if:type,N|max:150',
             'type' => 'required|in:C,N,B',
             'detail' => 'max:20000',
             'image' => 'image',
