@@ -64,7 +64,7 @@
                             <tr>
                                 <td>{{ $event->title }}</td>
                                 <td>{{ $event->start_event->format('d/m/Y h:i A') }}</td>
-                                <td>{{ $event->end_event->format('d/m/Y h:i A') }}</td>
+                                <td>{{ $event->end_event ? $event->end_event->format('d/m/Y h:i A') : '' }}</td>
                                 <td>{{ $event->end_subscriptions->format('d/m/Y') }}</td>
                                 <td>{{ $event->number_persons }}</td>
                                 <td>{{ $event->number_accompanists }}</td>

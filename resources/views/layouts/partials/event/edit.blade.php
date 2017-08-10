@@ -48,7 +48,7 @@
                         <div class="col-xs-4">
                             <div class="form-group{{ $errors->first('end_event') ? ' has-error':'' }}">
                                 <label class="control-label">Fecha Final(Evento)</label>
-                                <input type="datetime-local" class="form-control input-sm" name="end_event" value="{{ $event->end_event->format('Y-m-d\TH:i') }}">
+                                <input type="datetime-local" class="form-control input-sm" name="end_event" value="{{ $event->end_event ? $event->end_event->format('Y-m-d\TH:i') : '' }}">
                                 <span class="help-block">{{ $errors->first('end_event') }}</span>
                             </div>
                         </div>

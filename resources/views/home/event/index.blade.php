@@ -40,8 +40,12 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Fecha del Evento</td>
+                                <td>Fecha Inicio(Evento)</td>
                                 <td>{{ $event->start_event->format('d/m/Y h:i:s A') }}</td>
+                            </tr>
+                            <tr>
+                                <td>Fecha Final(Evento)</td>
+                                <td>{{ $event->end_event ? $event->end_event->format('d/m/Y h:i:s A') : '' }}</td>
                             </tr>
                             <tr>
                                 <td>Fecha Limite Suscripciones</td>

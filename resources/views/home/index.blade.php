@@ -475,9 +475,11 @@
                                                 {{ $event->start_event->format('h:i a') }}
                                             </td>
                                             <td style="text-align: right;width: 120px;font-size: 15px;letter-spacing: 1px;">
-                                                {{ $event->end_event->format('d/m/y') }}
-                                                <br>
-                                                {{ $event->end_event->format('h:i a') }}
+                                                @if ($event->end_event)
+                                                    {{ $event->end_event->format('d/m/y') }}
+                                                    <br>
+                                                    {{ $event->end_event->format('h:i a') }}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
