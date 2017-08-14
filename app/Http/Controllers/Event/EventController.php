@@ -78,6 +78,7 @@ class EventController extends Controller
 
         $event->end_subscriptions = new DateTime($request->end_subscriptions);
         $event->start_event = new DateTime($request->start_event);
+        $event->end_event = new DateTime($request->end_event);
         $event->limit_persons = $request->limit_persons ? true : false;
         $event->limit_accompanists = $request->limit_accompanists ? true : false;
         $event->is_active = $request->is_active ? true : false;
@@ -172,6 +173,7 @@ class EventController extends Controller
 
         $event->end_subscriptions = new DateTime($request->end_subscriptions);
         $event->start_event = new DateTime($request->start_event);
+        $event->end_event = new DateTime($request->end_event);
         $event->limit_persons = $request->limit_persons ? true : false;
         $event->limit_accompanists = $request->limit_accompanists ? true : false;
         $event->is_active = $request->is_active ? true : false;

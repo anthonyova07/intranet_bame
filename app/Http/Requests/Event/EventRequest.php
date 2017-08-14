@@ -28,7 +28,8 @@ class EventRequest extends Request
             'detail' => 'required|max:10000',
             'image' => 'image' . ($this->event ? '':'|required'),
             'start_event' => 'required|date_format:"Y-m-d\TH:i"',
-            'end_subscriptions' => 'required|date_format:"Y-m-d\TH:i"',
+            'end_event' => 'required|after:'.$this->start_event.'|date_format:"Y-m-d\TH:i"',
+            'end_subscriptions' => 'required|before:'.$this->end_event.'||date_format:"Y-m-d\TH:i"',
             'number_persons' => 'required_if:limit_persons,on|integer',
             'number_companions' => 'required_if:limit_companions,on|integer',
         ];

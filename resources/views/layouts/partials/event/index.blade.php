@@ -50,7 +50,8 @@
                     <thead>
                         <tr>
                             <th>Título</th>
-                            <th style="width: 100px;">Fecha del Evento</th>
+                            <th style="width: 100px;">Fecha Inicio(Evento)</th>
+                            <th style="width: 100px;">Fecha Final(Evento)</th>
                             <th style="width: 90px;">Fecha Limite Suscripciones</th>
                             <th style="width: 70px;">Maximo de Personas</th>
                             <th style="width: 50px;">Maximo de Invitados</th>
@@ -63,6 +64,7 @@
                             <tr>
                                 <td>{{ $event->title }}</td>
                                 <td>{{ $event->start_event->format('d/m/Y h:i A') }}</td>
+                                <td>{{ $event->end_event ? $event->end_event->format('d/m/Y h:i A') : '' }}</td>
                                 <td>{{ $event->end_subscriptions->format('d/m/Y') }}</td>
                                 <td>{{ $event->number_persons }}</td>
                                 <td>{{ $event->number_accompanists }}</td>

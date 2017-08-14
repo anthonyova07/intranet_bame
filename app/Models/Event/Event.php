@@ -22,7 +22,7 @@ class Event extends Model
 
     public $timestamps = true;
 
-    protected $dates = ['end_subscriptions', 'start_event'];
+    protected $dates = ['end_subscriptions', 'start_event', 'end_event'];
 
     public function subscriptions()
     {
