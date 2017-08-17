@@ -49,7 +49,7 @@ class HumanResourceRequest extends Model
         return collect($files);
     }
 
-    public static function isValidVacDateFrom($date)
+    public static function isValidDateFrom($date)
     {
         $holidays_count = Date::holidaysDays()
             ->where('startdate', $date)

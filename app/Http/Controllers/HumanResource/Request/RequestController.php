@@ -208,12 +208,20 @@ class RequestController extends Controller
         $detail->paid = false;
 
         if ($request->permission_type == 'one_day') {
+            if (!HumanResourceRequest::isValidDateFrom($request->permission_date)) {
+                return back()->withInput()->with('error', 'Fecha de Inicio invalida. Favor valide que la misma no sea día feriado ni fin de semana.');
+            }
+
             $detail->perdatfrom = $request->permission_date;
             $detail->pertimfrom = $request->permission_time_from . ':00';
             $detail->pertimto = $request->permission_time_to . ':00';
         }
 
         if ($request->permission_type == 'multiple_days') {
+            if (!HumanResourceRequest::isValidDateFrom($request->permission_date_from)) {
+                return back()->withInput()->with('error', 'Fecha de Inicio invalida. Favor valide que la misma no sea día feriado ni fin de semana.');
+            }
+
             $detail->perdatfrom = $request->permission_date_from;
             $detail->perdatto = $request->permission_date_to;
         }
@@ -279,7 +287,7 @@ class RequestController extends Controller
 
     private static function saveVacRequest($requestId, $request)
     {
-        if (!HumanResourceRequest::isValidVacDateFrom($request->vac_date_from)) {
+        if (!HumanResourceRequest::isValidDateFrom($request->vac_date_from)) {
             return back()->withInput()->with('error', 'Fecha de Inicio invalida. Favor valide que la misma no sea día feriado ni fin de semana.');
         }
 
