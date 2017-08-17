@@ -2,7 +2,7 @@
     <div class="col-xs-6">
         <div class="radio{{ $errors->first('permission_type') ? ' has-error':'' }}">
             <label style="font-size: 16px;font-weight: bold;">
-                <input type="radio" name="permission_type" {{ old('permission_type') == 'one_day' ? 'checked' : '' }} value="one_day"> Por un día o menos
+                <input type="radio"{{ in_array($type, ['AUS']) ? ' checked' : '' }} name="permission_type" {{ old('permission_type') == 'one_day' ? 'checked' : '' }} value="one_day"> Por un día o menos
             </label>
             <span class="help-block">{{ $errors->first('permission_type') }}</span>
         </div>
