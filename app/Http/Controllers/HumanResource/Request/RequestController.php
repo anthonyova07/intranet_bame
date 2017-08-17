@@ -291,6 +291,13 @@ class RequestController extends Controller
             return back()->withInput()->with('error', 'Fecha de Inicio invalida. Favor valide que la misma no sea día feriado ni fin de semana.');
         }
 
+        // aplicar bono colocar dias correspondientes para aplicar el bono
+        // if ((bool) $request->vac_credited_bonds) {
+        //     if (session('employee')->applyBonus($request->vac_total_days)) {
+        //         return back()->withInput()->with('error', 'Los días a tomar para aplicar al bono vacacional es ' . session('employee')->);
+        //     }
+        // }
+
         $user_info = session()->get('user_info');
 
         $detail = new Detail;

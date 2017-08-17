@@ -66,12 +66,29 @@ class Employee extends Model
     {
         $years = get_year_of_service($this->servicedat);
 
-        if ($years < 5) {
+        if ($years >= 1 && $years < 5) {
             return 14;
-        } else {
+        }
+
+        if ($years >= 5) {
             return 18;
         }
 
         return 0;
+    }
+
+    public function applyBonus($days)
+    {
+        $years = get_year_of_service($this->servicedat);
+
+        if ($years >= 1 && $years <= 5) {
+            return $days >= 8;
+        }
+
+        if ($years > 5) {
+            return $days >= 10;
+        }
+
+        return false;
     }
 }
