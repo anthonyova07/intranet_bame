@@ -36,7 +36,7 @@
                                 <div class="col-xs-2">
                                     <i class="fa fa-wpforms fa-4x"></i>
                                 </div>
-                                <div class="col-xs-10 text-right">
+                                <div class="col-xs-10 text-right" style="padding-right: 4px;">
                                     {{ $rh_req_type }}
                                 </div>
                             </div>
