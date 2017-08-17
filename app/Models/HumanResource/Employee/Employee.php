@@ -61,4 +61,17 @@ class Employee extends Model
     {
         return $this->subordinates->pluck('useremp')->toArray();
     }
+
+    public function getMaxDayTakeVac()
+    {
+        $years = get_year_of_service($this->servicedat);
+
+        if ($years < 5) {
+            return 14;
+        } else {
+            return 18;
+        }
+
+        return 0;
+    }
 }
