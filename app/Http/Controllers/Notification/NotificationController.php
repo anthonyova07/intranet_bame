@@ -37,8 +37,8 @@ class NotificationController extends Controller
                 return false;
             });
 
-            // $ids_cookies = cookie('notifications', $ids, config('bame.notificaciones.expiracion'));
-            $ids_cookies = cookie()->forever('notifications', $ids);
+            $ids_cookies = cookie('notifications', $ids, config('bame.notificaciones.expiracion'));
+            // $ids_cookies = cookie()->forever('notifications', $ids);
 
             $notifications = $notifications->each(function ($notificacion, $index) {
                 $notificacion->titulo = html_entity_decode($notificacion->titulo);
