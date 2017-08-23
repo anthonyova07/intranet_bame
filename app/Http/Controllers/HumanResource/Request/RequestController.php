@@ -209,7 +209,7 @@ class RequestController extends Controller
 
         if ($request->permission_type == 'one_day') {
             if (!HumanResourceRequest::isValidDateFrom($request->permission_date)) {
-                return back()->withInput()->with('error', 'Fecha de Inicio invalida. Favor valide que la misma no sea día feriado ni fin de semana.');
+                return back()->withInput()->with('error', 'Fecha de Inicio inválida. Favor valide que la misma no sea día feriado ni fin de semana.');
             }
 
             $detail->perdatfrom = $request->permission_date;
@@ -219,7 +219,7 @@ class RequestController extends Controller
 
         if ($request->permission_type == 'multiple_days') {
             if (!HumanResourceRequest::isValidDateFrom($request->permission_date_from)) {
-                return back()->withInput()->with('error', 'Fecha de Inicio invalida. Favor valide que la misma no sea día feriado ni fin de semana.');
+                return back()->withInput()->with('error', 'Fecha de Inicio inválida. Favor valide que la misma no sea día feriado ni fin de semana.');
             }
 
             $detail->perdatfrom = $request->permission_date_from;
@@ -242,7 +242,7 @@ class RequestController extends Controller
                 $birthdate = $time->format('Y-') . date_create(session('employee')->birthdate)->format('m-d');
 
                 if (HumanResourceRequest::isBetweenXDays($request->permission_date, 7, $birthdate)) {
-                    return back()->withInput()->with('error', 'El día libre de cumpleaños debe ser solicitado entre los 7 días despues del cumpleaños');
+                    return back()->withInput()->with('error', 'El día libre de cumpleaños debe ser solicitado entre los 7 días después del cumpleaños');
                 }
             }
 
@@ -288,7 +288,7 @@ class RequestController extends Controller
     private static function saveVacRequest($requestId, $request)
     {
         if (!HumanResourceRequest::isValidDateFrom($request->vac_date_from)) {
-            return back()->withInput()->with('error', 'Fecha de Inicio invalida. Favor valide que la misma no sea día feriado ni fin de semana.');
+            return back()->withInput()->with('error', 'Fecha de Inicio inválida. Favor valide que la misma no sea día feriado ni fin de semana.');
         }
 
         // aplicar bono colocar dias correspondientes para aplicar el bono
