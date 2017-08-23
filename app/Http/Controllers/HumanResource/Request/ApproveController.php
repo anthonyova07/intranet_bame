@@ -28,7 +28,7 @@ class ApproveController extends Controller
                 return back()->with('warning', 'Usted no esta autorizado a aprobar esta solicitud!');
             }
 
-            if ($human_resource_request->colsupname) {
+            if ($human_resource_request->approvesup != 'p') {
                 return back()->with('info', 'La solicitud ya ha sido trabajada por el supervisor');
             } else {
                 $human_resource_request->approvesup = $to_approve;
