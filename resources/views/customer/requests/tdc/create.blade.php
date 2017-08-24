@@ -171,7 +171,7 @@
                             <h3 class="panel-title">Dirección Personal</h3>
                             <span class="pull-right" style="margin-top: -20px;">
                                 Recibir plástico aquí
-                                <input type="radio" name="send_dir_plastic" checked value="dir_personal">
+                                <input type="radio" name="send_dir_plastic" checked value="Dirección Personal">
                             </span>
                         </div>
 
@@ -317,7 +317,7 @@
                             <h3 class="panel-title">Dirección Laboral</h3>
                             <span class="pull-right" style="margin-top: -20px;">
                                 Recibir plástico aquí
-                                <input type="radio" name="send_dir_plastic" value="dir_laboral">
+                                <input type="radio" name="send_dir_plastic" value="Dirección Laboral">
                             </span>
                         </div>
 
