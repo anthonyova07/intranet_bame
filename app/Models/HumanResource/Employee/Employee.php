@@ -32,4 +32,13 @@ class Employee extends Model
     {
         return $this->hasOne(Param::class, 'id', 'id_sup');
     }
+
+    public function scopeByUser($query, $user = null)
+    {
+        if ($user) {
+            return $query->where('useremp', $user);
+        }
+
+        return $query->where('useremp', session('user'));
+    }
 }
