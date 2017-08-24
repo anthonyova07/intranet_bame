@@ -14,37 +14,28 @@ class TdcRequestController extends Controller
 {
     public function index(Request $request)
     {
-        $process_requests = TdcRequest::lastestFirst();
+        $requests_tdc = TdcRequest::lastestFirst();
 
-        // if ($request->term) {
-        //     $term = cap_str($request->term);
-        //
-        //     $process_requests = $process_requests->orWhere('reqnumber', 'like', '%' . $term . '%')
-        //                 ->orWhere('reqtype', 'like', '%' . $term . '%')
-        //                 ->orWhere('process', 'like', '%' . $term . '%')
-        //                 ->orWhere('note', 'like', '%' . $term . '%')
-        //                 ->orWhere('causeanaly', 'like', '%' . $term . '%')
-        //                 ->orWhere('peoinvolve', 'like', '%' . $term . '%');
-        // }
-        //
-        // if ($request->request_type) {
-        //     $process_requests->where('reqtype', $request->request_type);
-        // }
-        //
-        // if ($request->process) {
-        //     $process_requests->where('process', $request->process);
-        // }
-        //
-        // if ($request->date_from) {
-        //     $process_requests->where('created_at', '>=', $request->date_from . ' 00:00:00');
-        // }
-        //
-        // if ($request->date_to) {
-        //     $process_requests->where('created_at', '<=', $request->date_to . ' 23:59:59');
-        // }
+        if ($request->term) {
+            $term = $request->term;
+            
+            $requests_tdc->orWhere('reqnumber', 'like', '%' . $term . '%')
+                        ->orWhere('names', 'like', '%' . $term . '%')
+                        ->orWhere('identifica', 'like', '%' . $term . '%')
+                        ->orWhere('pphone_res', 'like', '%' . $term . '%')
+                        ->orWhere('pphone_cel', 'like', '%' . $term . '%');
+        }
+
+        if ($request->date_from) {
+            $process_requests->where('created_at', '>=', $request->date_from . ' 00:00:00');
+        }
+
+        if ($request->date_to) {
+            $process_requests->where('created_at', '<=', $request->date_to . ' 23:59:59');
+        }
 
         return view('customer.requests.tdc.index', [
-            'process_requests' => $process_requests->get(),
+            'requests_tdc' => $requests_tdc->paginate(),
         ]);
     }
 
@@ -84,7 +75,7 @@ class TdcRequestController extends Controller
         $request_tdc->producttyp = $customer->product;
         $request_tdc->limitrd = $customer->limit_rd;
         $request_tdc->limitus = $customer->limit_us;
-        $request_tdc->senddirpla = $customer->send_dir_plastic;
+        $request_tdc->senddirpla = $request->send_dir_plastic;
         $request_tdc->plastiname = $request->plastic_name;
 
         $request_tdc->names = $customer->names;
@@ -97,7 +88,7 @@ class TdcRequestController extends Controller
         $request_tdc->pstreet = $request->pstreet;
         $request_tdc->pnum = $request->pnum;
         $request_tdc->pbuilding = $request->pbuilding;
-        $request_tdc->papartmen = $request->papartment;
+        $request_tdc->papartment = $request->papartment;
         $request_tdc->psector = $request->psector;
         $request_tdc->pcountry = $request->pcountry;
         $request_tdc->pmail = $request->pmail;
@@ -115,7 +106,7 @@ class TdcRequestController extends Controller
         $request_tdc->lstreet = $request->lstreet;
         $request_tdc->lnum = $request->lnum;
         $request_tdc->lbuilding = $request->lbuilding;
-        $request_tdc->lapartmen = $request->lapartment;
+        $request_tdc->lapartment = $request->lapartment;
         $request_tdc->lsector = $request->lsector;
         $request_tdc->lcountry = $request->lcountry;
         $request_tdc->lmail = $request->lmail;
@@ -141,22 +132,22 @@ class TdcRequestController extends Controller
 
         do_log('Creó la Solicitud de Tarjeta ( número:' . strip_tags($request_tdc->reqnumber) . ' )');
 
-        return redirect(route('process.request.show', ['request' => $request_tdc->id]))->with('success', 'La solicitud ha sido creada correctamente.');
+        return redirect(route('customer.request.tdc.show', [$request_tdc->id]))->with('success', 'La solicitud ha sido creada correctamente.');
 
     }
 
-    public function show($request)
+    public function show($tdc)
     {
-        $process_request = TdcRequest::find($request);
+        $request_tdc = TdcRequest::find($tdc);
 
-        if (!$process_request) {
+        if (!$request_tdc) {
             return redirect(route('process.request.index'));
         }
 
-        do_log('Consultó la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' )');
+        do_log('Consultó la Solicitud de Procesos ( número:' . strip_tags($request_tdc->reqnumber) . ' )');
 
-        return view('process.request.show', [
-            'process_request' => $process_request,
+        return view('customer.requests.tdc.show', [
+            'request_tdc' => $request_tdc,
         ]);
     }
 }
