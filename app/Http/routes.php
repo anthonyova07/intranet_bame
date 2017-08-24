@@ -341,6 +341,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('claim', 'Customer\Claim\ClaimController', ['only' => [
             'index', 'create', 'store', 'show'
         ]]);
+
+        Route::group(['prefix' => 'request'], function () {
+            Route::resource('tdc', 'Customer\Requests\Tdc\TdcRequestController', ['only' => [
+                'index', 'create', 'store', 'show'
+            ]]);
+        });
     });
 
     Route::group(['prefix' => 'operation'], function () {
