@@ -735,3 +735,67 @@ function get_employee_params($param = null)
 
     return $params->get($param);
 }
+
+function get_marital($marital = null)
+{
+    $maritals = collect([
+        1 => 'Soltero(a)',
+        2 => 'Casado(a)',
+        3 => 'Divorciado(a)',
+        4 => 'Viudo(a)',
+        5 => 'Otro',
+    ]);
+
+    if (!$marital) {
+        return $maritals;
+    }
+
+    return $maritals->get($marital);
+}
+
+function get_tdc_products($product = null)
+{
+    $products = collect([
+        'VC' => 'Visa Clásica',
+        'VG' => 'Visa Gold',
+        'VP' => 'Visa Platinum',
+        'VS' => 'Visa Signature',
+        'VCO' => 'Visa Combustible',
+        'VE' => 'Visa Empresarial',
+    ]);
+
+    if (!$product) {
+        return $products;
+    }
+
+    return $products->get($product);
+}
+
+function get_next_request_tdc_number()
+{
+    $date = null;
+
+    $last_process_request = \Bame\Models\Customer\Requests\Tdc\TdcRequest::orderBy('created_at', 'desc')->first();
+    $last_request_number = $last_process_request ? $last_process_request->reqnumber : null;
+
+    if ($last_request_number) {
+        $parts = explode('-', $last_request_number);
+
+        $year = $parts[0];
+        $month = $parts[1];
+        $day = $parts[2];
+        $sequence = $parts[3];
+
+        $date = $year . '-' . $month . '-' . $day;
+    }
+
+    $date_current = (new \DateTime)->format('Y-m-d');
+
+    if ($date == $date_current) {
+        $number = $date_current . '-' . (str_pad((intval($sequence) + 1), 3, '0', STR_PAD_LEFT));
+    } else {
+        $number = $date_current . '-001';
+    }
+
+    return $number;
+}
