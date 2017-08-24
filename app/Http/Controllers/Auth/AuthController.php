@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Bame\Models\Security\Access;
 use Bame\Http\Requests\AuthRequest;
 use Bame\Http\Controllers\Controller;
+use Bame\Models\HumanResource\Employee\Employee;
 
 use Auth;
 
@@ -22,6 +23,7 @@ class AuthController extends Controller
             if (Auth::attempt(['username' => $request->user, 'password' => $request->password])) {
                 $request->session()->put('user', strtolower($request->user));
                 $request->session()->put('user_info', Auth::user()->getAdLDAP());
+                $request->session()->put('employee', Employee::byUser()->first());
 
                 $menus = Access::getUserAccess(clear_str($request->user));
 
