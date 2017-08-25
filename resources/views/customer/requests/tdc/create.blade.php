@@ -274,43 +274,44 @@
 
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-xs-4">
+                                <div class="col-xs-3">
                                     <div class="form-group{{ $errors->first('business_name') ? ' has-error':'' }}">
                                         <label class="control-label">Nombre Empresa</label>
                                         <input type="text" class="form-control input-sm" name="business_name" value="{{ old('business_name') }}">
                                         <span class="help-block">{{ $errors->first('business_name') }}</span>
                                     </div>
                                 </div>
-                                <div class="col-xs-4">
+                                <div class="col-xs-3">
                                     <div class="form-group{{ $errors->first('position') ? ' has-error':'' }}">
                                         <label class="control-label">Cargo que Ocupa</label>
                                         <input type="text" class="form-control input-sm" name="position" value="{{ old('position') }}">
                                         <span class="help-block">{{ $errors->first('position') }}</span>
                                     </div>
                                 </div>
-                                <div class="col-xs-4">
+                                <div class="col-xs-2">
                                     <div class="form-group{{ $errors->first('working_time') ? ' has-error':'' }}">
                                         <label class="control-label">Tiempo Laboral</label>
                                         <input type="text" class="form-control input-sm" name="working_time" value="{{ old('working_time') }}">
                                         <span class="help-block">{{ $errors->first('working_time') }}</span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-6">
+                                <div class="col-xs-2">
                                     <div class="form-group{{ $errors->first('monthly_income') ? ' has-error':'' }}">
                                         <label class="control-label">Ingresos Mensuales</label>
-                                        <input type="text" class="form-control input-sm" name="monthly_income" value="{{ old('monthly_income') }}">
+                                        <input type="text" class="form-control input-sm text-right" name="monthly_income" value="{{ old('monthly_income') }}">
                                         <span class="help-block">{{ $errors->first('monthly_income') }}</span>
                                     </div>
                                 </div>
-                                <div class="col-xs-6">
+                                <div class="col-xs-2">
                                     <div class="form-group{{ $errors->first('others_income') ? ' has-error':'' }}">
                                         <label class="control-label">Otros Ingresos</label>
-                                        <input type="text" class="form-control input-sm" name="others_income" value="{{ old('others_income') }}">
+                                        <input type="text" class="form-control input-sm text-right" name="others_income" value="{{ old('others_income') }}">
                                         <span class="help-block">{{ $errors->first('others_income') }}</span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
+
                             </div>
                         </div>
                     </div>
