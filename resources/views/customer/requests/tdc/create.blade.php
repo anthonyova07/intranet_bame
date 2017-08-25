@@ -105,7 +105,7 @@
                                 <div class="col-xs-8">
                                     <div class="form-group{{ $errors->first('names') ? ' has-error':'' }}">
                                         <label class="control-label">Nombres y Apellidos</label>
-                                        <input type="text" disabled class="form-control input-sm" name="names" value="{{ cap_str($customer->names) }}">
+                                        <input type="text" disabled class="form-control input-sm" name="names" value="{{ utf8_encode($customer->names) }}">
                                         <span class="help-block">{{ $errors->first('names') }}</span>
                                     </div>
                                 </div>
@@ -119,21 +119,23 @@
                                 <div class="col-xs-4">
                                     <div class="form-group{{ $errors->first('identification') ? ' has-error':'' }}">
                                         <label class="control-label">Identificación</label>
-                                        <input type="text" disabled class="form-control input-sm" name="identification" value="{{ clear_str($customer->identification) }}">
+                                        <input type="text" disabled class="form-control input-sm" name="identification" value="{{ $customer->identification }}">
                                         <span class="help-block">{{ $errors->first('identification') }}</span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-xs-3">
                                     <div class="form-group{{ $errors->first('birthdate') ? ' has-error':'' }}">
                                         <label class="control-label">Fecha Nacimiento</label>
-                                        <input type="date" disabled class="form-control input-sm" name="birthdate" value="{{ clear_str($customer->birthdate) }}">
+                                        <input type="date" disabled class="form-control input-sm" name="birthdate" value="{{ $customer->birthdate }}">
                                         <span class="help-block">{{ $errors->first('birthdate') }}</span>
                                     </div>
                                 </div>
                                 <div class="col-xs-3">
                                     <div class="form-group{{ $errors->first('nationality') ? ' has-error':'' }}">
                                         <label class="control-label">Nacionalidad</label>
-                                        <input type="text" disabled class="form-control input-sm" name="nationality" value="{{ cap_str($customer->nationality) }}">
+                                        <input type="text" disabled class="form-control input-sm" name="nationality" value="{{ $customer->nationality }}">
                                         <span class="help-block">{{ $errors->first('nationality') }}</span>
                                     </div>
                                 </div>
@@ -151,6 +153,7 @@
                                     <div class="form-group{{ $errors->first('marital_status') ? ' has-error':'' }}">
                                         <label class="control-label">Estado Civil</label>
                                         <select name="marital_status" class="form-control input-sm">
+                                            <option value="">Seleccione uno</option>
                                             @foreach (get_marital() as $key => $marital)
                                                 <option value="{{ $key }}"{{ old('marital_status') == $key ? ' selected':'' }}>{{ $marital }}</option>
                                             @endforeach
@@ -171,7 +174,7 @@
                             <h3 class="panel-title">Dirección Personal</h3>
                             <span class="pull-right" style="margin-top: -20px;">
                                 Recibir plástico aquí
-                                <input type="radio" name="send_dir_plastic" checked value="Dirección Personal">
+                                <input type="radio" name="send_dir_plastic" checked value="personal">
                             </span>
                         </div>
 
@@ -219,6 +222,8 @@
                                         <span class="help-block">{{ $errors->first('pcountry') }}</span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-xs-3">
                                     <div class="form-group{{ $errors->first('pmail') ? ' has-error':'' }}">
                                         <label class="control-label">Correo</label>
@@ -228,7 +233,7 @@
                                 </div>
                                 <div class="col-xs-3">
                                     <div class="form-group{{ $errors->first('pnear') ? ' has-error':'' }}">
-                                        <label class="control-label">Cerda de</label>
+                                        <label class="control-label">Cerca de</label>
                                         <input type="text" class="form-control input-sm" name="pnear" value="{{ old('pnear') }}">
                                         <span class="help-block">{{ $errors->first('pnear') }}</span>
                                     </div>
@@ -290,6 +295,8 @@
                                         <span class="help-block">{{ $errors->first('working_time') }}</span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-xs-6">
                                     <div class="form-group{{ $errors->first('monthly_income') ? ' has-error':'' }}">
                                         <label class="control-label">Ingresos Mensuales</label>
@@ -317,7 +324,7 @@
                             <h3 class="panel-title">Dirección Laboral</h3>
                             <span class="pull-right" style="margin-top: -20px;">
                                 Recibir plástico aquí
-                                <input type="radio" name="send_dir_plastic" value="Dirección Laboral">
+                                <input type="radio" name="send_dir_plastic" value="laboral">
                             </span>
                         </div>
 
@@ -365,6 +372,8 @@
                                         <span class="help-block">{{ $errors->first('lcountry') }}</span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-xs-2">
                                     <div class="form-group{{ $errors->first('lmail') ? ' has-error':'' }}">
                                         <label class="control-label">Correo</label>
@@ -374,7 +383,7 @@
                                 </div>
                                 <div class="col-xs-2">
                                     <div class="form-group{{ $errors->first('lnear') ? ' has-error':'' }}">
-                                        <label class="control-label">Cerda de</label>
+                                        <label class="control-label">Cerca de</label>
                                         <input type="text" class="form-control input-sm" name="lnear" value="{{ old('lnear') }}">
                                         <span class="help-block">{{ $errors->first('lnear') }}</span>
                                     </div>
@@ -443,6 +452,8 @@
                                         <span class="help-block">{{ $errors->first('ref_1_phone_cel') }}</span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-xs-4">
                                     <div class="form-group{{ $errors->first('ref_2_name') ? ' has-error':'' }}">
                                         <label class="control-label">Nombre y Apellido</label>

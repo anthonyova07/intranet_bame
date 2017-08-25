@@ -91,6 +91,8 @@
                                 <p class="form-control-static">{{ $request_tdc->identifica }}</p>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-xs-3">
                             <div class="form-group">
                                 <label class="control-label">Fecha Nacimiento</label>
@@ -126,7 +128,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Dirección Personal</h3>
-                    @if ($request_tdc->senddirpla == 'Dirección Personal')
+                    @if ($request_tdc->senddirpla == 'personal')
                         <span class="pull-right" style="margin-top: -19px;">
                             <span class="label label-success">Dirección de Entrega</span>
                         </span>
@@ -171,6 +173,8 @@
                                 <p class="form-control-static">{{ $request_tdc->pcountry }}</p>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-xs-3">
                             <div class="form-group">
                                 <label class="control-label">Correo</label>
@@ -179,7 +183,7 @@
                         </div>
                         <div class="col-xs-3">
                             <div class="form-group">
-                                <label class="control-label">Cerda de</label>
+                                <label class="control-label">Cerca de</label>
                                 <p class="form-control-static">{{ $request_tdc->pnear }}</p>
                             </div>
                         </div>
@@ -234,6 +238,8 @@
                                 <p class="form-control-static">{{ $request_tdc->workintime }}</p>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-xs-6">
                             <div class="form-group">
                                 <label class="control-label">Ingresos Mensuales</label>
@@ -257,7 +263,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Dirección Laboral</h3>
-                    @if ($request_tdc->senddirpla == 'Dirección Laboral')
+                    @if ($request_tdc->senddirpla == 'laboral')
                         <span class="pull-right" style="margin-top: -19px;">
                             <span class="label label-success">Dirección de Entrega</span>
                         </span>
@@ -302,7 +308,9 @@
                                 <p class="form-control-static">{{ $request_tdc->lcountry }}</p>
                             </div>
                         </div>
-                        <div class="col-xs-2">
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-3">
                             <div class="form-group">
                                 <label class="control-label">Correo</label>
                                 <p class="form-control-static">{{ $request_tdc->lmail }}</p>
@@ -310,7 +318,7 @@
                         </div>
                         <div class="col-xs-2">
                             <div class="form-group">
-                                <label class="control-label">Cerda de</label>
+                                <label class="control-label">Cerca de</label>
                                 <p class="form-control-static">{{ $request_tdc->lnear }}</p>
                             </div>
                         </div>
@@ -326,7 +334,7 @@
                                 <p class="form-control-static">{{ $request_tdc->lphone_off }}</p>
                             </div>
                         </div>
-                        <div class="col-xs-2">
+                        <div class="col-xs-1">
                             <div class="form-group">
                                 <label class="control-label">Extensión</label>
                                 <p class="form-control-static">{{ $request_tdc->lphone_ext }}</p>
@@ -371,6 +379,8 @@
                                 <p class="form-control-static">{{ $request_tdc->ref1phocel }}</p>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-xs-4">
                             <div class="form-group">
                                 <label class="control-label">Nombre y Apellido</label>

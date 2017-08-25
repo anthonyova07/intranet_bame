@@ -799,3 +799,15 @@ function get_next_request_tdc_number()
 
     return $number;
 }
+
+function get_desc_dir($dir)
+{
+    switch ($dir) {
+        case 'personal':
+            return 'Dirección Personal';
+            break;
+        case 'laboral':
+            return 'Dirección Laboral';
+            break;
+    }
+}

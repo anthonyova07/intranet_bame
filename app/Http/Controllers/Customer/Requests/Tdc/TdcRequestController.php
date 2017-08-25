@@ -18,7 +18,7 @@ class TdcRequestController extends Controller
 
         if ($request->term) {
             $term = $request->term;
-            
+
             $requests_tdc->orWhere('reqnumber', 'like', '%' . $term . '%')
                         ->orWhere('names', 'like', '%' . $term . '%')
                         ->orWhere('identifica', 'like', '%' . $term . '%')
@@ -78,7 +78,7 @@ class TdcRequestController extends Controller
         $request_tdc->senddirpla = $request->send_dir_plastic;
         $request_tdc->plastiname = $request->plastic_name;
 
-        $request_tdc->names = $customer->names;
+        $request_tdc->names = utf8_encode($customer->names);
         $request_tdc->identifica = $customer->identification;
         $request_tdc->birthdate = $customer->birthdate;
         $request_tdc->nationalit = $customer->nationality;
