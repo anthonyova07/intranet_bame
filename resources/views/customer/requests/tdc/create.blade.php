@@ -218,7 +218,7 @@
                                 <div class="col-xs-2">
                                     <div class="form-group{{ $errors->first('pcountry') ? ' has-error':'' }}">
                                         <label class="control-label">País</label>
-                                        <input type="text" class="form-control input-sm" name="pcountry" value="{{ old('pcountry') }}">
+                                        <input type="text" disabled class="form-control input-sm" name="pcountry" value="República Dominicana">
                                         <span class="help-block">{{ $errors->first('pcountry') }}</span>
                                     </div>
                                 </div>
@@ -369,7 +369,7 @@
                                 <div class="col-xs-2">
                                     <div class="form-group{{ $errors->first('lcountry') ? ' has-error':'' }}">
                                         <label class="control-label">País</label>
-                                        <input type="text" class="form-control input-sm" name="lcountry" value="{{ old('lcountry') }}">
+                                        <input type="text" disabled class="form-control input-sm" name="lcountry" value="República Dominicana">
                                         <span class="help-block">{{ $errors->first('lcountry') }}</span>
                                     </div>
                                 </div>

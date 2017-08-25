@@ -91,7 +91,7 @@ class TdcRequestController extends Controller
         $request_tdc->pbuilding = $request->pbuilding;
         $request_tdc->papartment = $request->papartment;
         $request_tdc->psector = $request->psector;
-        $request_tdc->pcountry = $request->pcountry;
+        $request_tdc->pcountry = 'República Dominicana';
         $request_tdc->pmail = $request->pmail;
         $request_tdc->pnear = $request->pnear;
         $request_tdc->pschedule = $request->pschedule;
@@ -109,7 +109,7 @@ class TdcRequestController extends Controller
         $request_tdc->lbuilding = $request->lbuilding;
         $request_tdc->lapartment = $request->lapartment;
         $request_tdc->lsector = $request->lsector;
-        $request_tdc->lcountry = $request->lcountry;
+        $request_tdc->lcountry = 'República Dominicana';
         $request_tdc->lmail = $request->lmail;
         $request_tdc->lnear = $request->lnear;
         $request_tdc->lschedule = $request->lschedule;

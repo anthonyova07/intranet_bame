@@ -743,7 +743,6 @@ function get_marital($marital = null)
         2 => 'Casado(a)',
         3 => 'Divorciado(a)',
         4 => 'Viudo(a)',
-        5 => 'Otro',
     ]);
 
     if (!$marital) {
