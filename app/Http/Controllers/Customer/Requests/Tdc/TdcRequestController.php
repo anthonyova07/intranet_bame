@@ -77,7 +77,7 @@ class TdcRequestController extends Controller
         $request_tdc->limitrd = $customer->limit_rd;
         $request_tdc->limitus = $customer->limit_us;
         $request_tdc->senddirpla = $request->send_dir_plastic;
-        $request_tdc->plastiname = $request->plastic_name;
+        $request_tdc->plastiname = strtoupper(trim($request->plastic_name));
 
         $request_tdc->names = utf8_encode($customer->names);
         $request_tdc->identifica = $customer->identification;

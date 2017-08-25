@@ -52,7 +52,7 @@
                                 <div class="col-xs-3">
                                     <div class="form-group{{ $errors->first('plastic_name') ? ' has-error':'' }}">
                                         <label class="control-label">Nombre Plástico</label>
-                                        <input type="text" class="form-control input-sm" name="plastic_name" value="{{ old('plastic_name') }}">
+                                        <input type="text" style="text-transform: uppercase;" class="form-control input-sm" name="plastic_name" value="{{ old('plastic_name') }}">
                                         <span class="help-block">{{ $errors->first('plastic_name') }}</span>
                                     </div>
                                 </div>
