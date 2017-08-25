@@ -811,3 +811,25 @@ function get_desc_dir($dir)
             break;
     }
 }
+
+function get_channel_officer($code)
+{
+    return 'SUC' . str_pad($code, 3, '0', STR_PAD_LEFT);
+}
+
+function get_office_code($office)
+{
+    $office = strtolower(trim($office));
+
+    if (str_contains($office, 'oficina principal')) { return 1; }
+    if (str_contains($office, 'banca comercial')) { return 2; }
+    if (str_contains($office, 'bella vista')) { return 3; }
+    if (str_contains($office, 'blue mall')) { return 4; }
+    if (str_contains($office, 'de vega')) { return 5; }
+    if (str_contains($office, 'san vicente')) { return 6; }
+    if (str_contains($office, 'barahona')) { return 7; }
+    if (str_contains($office, 'neyba')) { return 8; }
+    if (str_contains($office, 'vicente noble')) { return 9; }
+
+    return null;
+}

@@ -41,4 +41,47 @@ class Employee extends Model
 
         return $query->where('useremp', session('user'));
     }
+
+    public function getOffice()
+    {
+        return session('user_info')->physicaldeliveryofficename[0];
+    }
+
+    public function getTitle($clean = true)
+    {
+        return $clean ? strtolower(trim(session('user_info')->getTitle())) : session('user_info')->getTitle();
+    }
+
+    public function isCallCenter()
+    {
+        return str_contains($this->getTitle(), 'call center');
+    }
+
+    public function isBusinessOfficer()
+    {
+        return str_contains($this->getTitle(), 'oficial') ||
+            str_contains($this->getTitle(), 'ejecutivo') ||
+            str_contains($this->getTitle(), 'negocio');
+    }
+
+    public static function getChannel()
+    {
+        if (session()->has('employee')) {
+            $employee = session('employee');
+
+            $office = $employee->getOffice();
+
+            if ($employee->isBusinessOfficer()) {
+                return get_channel_officer(get_office_code($office));
+            }
+
+            if ($employee->isCallCenter()) {
+                return 'CCI';
+            }
+
+            return 'EMP';
+        }
+
+        return 'CCE';
+    }
 }

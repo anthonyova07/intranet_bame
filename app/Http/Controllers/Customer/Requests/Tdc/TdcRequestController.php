@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
+use Bame\Models\HumanResource\Employee\Employee;
 use Bame\Models\Customer\Requests\Tdc\TdcRequest;
 use Bame\Http\Requests\Customer\Requests\Tdc\RequestTdcRequest;
 use Bame\Models\Notification\Notification;
@@ -69,7 +70,7 @@ class TdcRequestController extends Controller
         $customer = session('customer_request_tdc');
 
         $request_tdc->id = uniqid(true);
-        $request_tdc->channel = '';
+        $request_tdc->channel = Employee::getChannel();
         $request_tdc->reqstatus = 'Pendiente de Aprobación';
 
         $request_tdc->producttyp = $customer->product;
