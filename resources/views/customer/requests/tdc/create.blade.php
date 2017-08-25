@@ -35,21 +35,21 @@
                                         <span class="help-block">{{ $errors->first('product_type') }}</span>
                                     </div>
                                 </div>
-                                <div class="col-xs-3">
+                                <div class="col-xs-2">
                                     <div class="form-group{{ $errors->first('limit_rd') ? ' has-error':'' }}">
                                         <label class="control-label">Limite RD$</label>
                                         <input type="text" disabled class="form-control input-sm" name="limit_rd" value="{{ number_format($customer->limit_rd, 2)  }}">
                                         <span class="help-block">{{ $errors->first('limit_rd') }}</span>
                                     </div>
                                 </div>
-                                <div class="col-xs-3">
+                                <div class="col-xs-2">
                                     <div class="form-group{{ $errors->first('limit_us') ? ' has-error':'' }}">
                                         <label class="control-label">Limite US$</label>
                                         <input type="text" disabled class="form-control input-sm" name="limit_us" value="{{ number_format($customer->limit_us, 2)  }}">
                                         <span class="help-block">{{ $errors->first('limit_us') }}</span>
                                     </div>
                                 </div>
-                                <div class="col-xs-3">
+                                <div class="col-xs-5">
                                     <div class="form-group{{ $errors->first('plastic_name') ? ' has-error':'' }}">
                                         <label class="control-label">Nombre Plástico</label>
                                         <input type="text" style="text-transform: uppercase;" class="form-control input-sm" name="plastic_name" value="{{ old('plastic_name') }}">
