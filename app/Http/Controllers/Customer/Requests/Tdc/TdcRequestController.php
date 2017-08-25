@@ -125,6 +125,10 @@ class TdcRequestController extends Controller
         $request_tdc->ref2phores = $request->ref_2_phone_res;
         $request_tdc->ref2phocel = $request->ref_2_phone_cel;
 
+        $request_tdc->campaign = $customer->campaign;
+        $request_tdc->committee = $customer->committee;
+        $request_tdc->commitdate = $customer->committee_date;
+
         $request_tdc->created_by = session()->get('user');
         $request_tdc->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
 
@@ -150,5 +154,13 @@ class TdcRequestController extends Controller
         return view('customer.requests.tdc.show', [
             'request_tdc' => $request_tdc,
         ]);
+    }
+
+    public function print($id)
+    {
+        $request_tdc = TdcRequest::find($id);
+
+        return view('customer.requests.tdc.print')
+            ->with('request_tdc', $request_tdc);
     }
 }

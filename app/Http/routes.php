@@ -342,8 +342,12 @@ Route::group(['middleware' => 'auth'], function () {
             'index', 'create', 'store', 'show'
         ]]);
 
-        Route::group(['prefix' => 'request'], function () {
-            Route::resource('tdc', 'Customer\Requests\Tdc\TdcRequestController', ['only' => [
+        Route::group(['prefix' => 'request', 'namespace' => 'Customer\Requests\Tdc'], function () {
+            Route::group(['prefix' => 'tdc'], function () {
+                Route::get('print/{id}', 'TdcRequestController@print')->name('customer.request.tdc.print');
+            });
+
+            Route::resource('tdc', 'TdcRequestController', ['only' => [
                 'index', 'create', 'store', 'show'
             ]]);
         });

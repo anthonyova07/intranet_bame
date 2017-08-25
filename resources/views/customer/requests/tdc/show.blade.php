@@ -19,6 +19,9 @@
                     <div class="col-xs-2" style="padding: 0 2px;">
                         <a class="btn btn-info btn-xs" href="{{ route('customer.request.tdc.index', Request::all()) }}"><i class="fa fa-arrow-left"></i> Atrás</a>
                     </div>
+                    <div class="col-xs-2 pull-right">
+                        <a style="font-size: 13px;padding: 8px 8px;" class="label btn-warning pull-right" target="__blank" href="{{ route('customer.request.tdc.print', $request_tdc->id) }}">Imprimir</a>
+                    </div>
                 </div>
             </div>
         </div>
