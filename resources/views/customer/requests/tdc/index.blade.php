@@ -73,7 +73,7 @@
                                 <th>Estatus</th>
                                 <th style="width: 112px;">Fecha Creación</th>
                                 <th style="width: 112px;">Creado por</th>
-                                <th style="width: 52px"></th>
+                                <th style="width: 75px"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -93,6 +93,14 @@
                                             title="Ver Solicitud">
                                             <i class="fa fa-share fa-fw"></i>
                                         </a>
+                                        <a
+                                            style="font-size: 13px;margin: 3px;"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            class="label btn-warning"
+                                            title="Ver Solicitud"
+                                            target="__blank"
+                                            href="{{ route('customer.request.tdc.print', $request_tdc->id) }}"><i class="fa fa-print fa-fw"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
