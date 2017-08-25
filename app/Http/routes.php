@@ -343,8 +343,15 @@ Route::group(['middleware' => 'auth'], function () {
         ]]);
 
         Route::group(['prefix' => 'request', 'namespace' => 'Customer\Requests\Tdc'], function () {
+
             Route::group(['prefix' => 'tdc'], function () {
+
+                Route::resource('{type}/param', 'ParamController', ['only' => [
+                    'create', 'store', 'edit', 'update'
+                ]]);
+
                 Route::get('print/{id}', 'TdcRequestController@print')->name('customer.request.tdc.print');
+                Route::post('denail/{identification}', 'TdcRequestController@denail')->name('customer.request.tdc.denail');
             });
 
             Route::resource('tdc', 'TdcRequestController', ['only' => [

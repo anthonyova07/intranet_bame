@@ -845,3 +845,12 @@ function get_office_code($office)
 
     return null;
 }
+
+function get_request_tdc_param($type, $plural = true)
+{
+    switch ($type) {
+        case 'DEN': //denails "negaciones"
+            return ($plural ? 'Razones ' : 'Razón ') . 'de Negación';
+            break;
+    }
+}

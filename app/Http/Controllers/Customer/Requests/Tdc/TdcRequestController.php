@@ -8,6 +8,7 @@ use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 use Bame\Models\HumanResource\Employee\Employee;
 use Bame\Models\Customer\Requests\Tdc\TdcRequest;
+use Bame\Models\Customer\Requests\Tdc\Param;
 use Bame\Http\Requests\Customer\Requests\Tdc\RequestTdcRequest;
 use Bame\Models\Notification\Notification;
 
@@ -36,6 +37,7 @@ class TdcRequestController extends Controller
         }
 
         return view('customer.requests.tdc.index', [
+            'params' => Param::get(),
             'requests_tdc' => $requests_tdc->paginate(),
         ]);
     }
@@ -52,10 +54,18 @@ class TdcRequestController extends Controller
             }
         }
 
+        $denails = collect();
+
+        if ($request->accept == 'no') {
+            $denails = Param::denails()->get();
+        }
+
         session()->put('customer_request_tdc', $customer);
 
         return view('customer.requests.tdc.create', [
             'customer' => $customer,
+            'denails' => $denails,
+            'accept' => $request->accept
         ]);
     }
 
@@ -162,5 +172,10 @@ class TdcRequestController extends Controller
 
         return view('customer.requests.tdc.print')
             ->with('request_tdc', $request_tdc);
+    }
+
+    public function denail($identification)
+    {
+        dd($identification);
     }
 }
