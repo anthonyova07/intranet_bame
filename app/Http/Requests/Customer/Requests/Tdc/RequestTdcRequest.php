@@ -24,7 +24,7 @@ class RequestTdcRequest extends Request
     public function rules()
     {
         return [
-            'plastic_name' => 'required|max:27',
+            'plastic_name' => 'required|max:30',
             'marital_status' => 'required|in:' . get_marital()->keys()->implode(','),
             'pstreet' => 'required|max:150',
             'pnum' => 'required|max:10',
