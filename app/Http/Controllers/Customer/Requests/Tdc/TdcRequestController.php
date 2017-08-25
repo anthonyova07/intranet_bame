@@ -95,8 +95,8 @@ class TdcRequestController extends Controller
         $request_tdc->pmail = $request->pmail;
         $request_tdc->pnear = $request->pnear;
         $request_tdc->pschedule = $request->pschedule;
-        $request_tdc->pphone_res = $request->pphone_res;
-        $request_tdc->pphone_cel = $request->pphone_cel;
+        $request_tdc->pphone_res = $request->parea_code_res.$request->pphone_res;
+        $request_tdc->pphone_cel = $request->parea_code_cel.$request->pphone_cel;
 
         $request_tdc->businename = $request->business_name;
         $request_tdc->position = $request->position;
@@ -113,17 +113,17 @@ class TdcRequestController extends Controller
         $request_tdc->lmail = $request->lmail;
         $request_tdc->lnear = $request->lnear;
         $request_tdc->lschedule = $request->lschedule;
-        $request_tdc->lphone_off = $request->lphone_off;
+        $request_tdc->lphone_off = $request->larea_code_off.$request->lphone_off;
         $request_tdc->lphone_ext = $request->lphone_ext;
         $request_tdc->lphone_fax = $request->lphone_fax;
 
         $request_tdc->ref1names = $request->ref_1_name;
-        $request_tdc->ref1phores = $request->ref_1_phone_res;
-        $request_tdc->ref1phocel = $request->ref_1_phone_cel;
+        $request_tdc->ref1phores = $request->area_code_ref1_res.$request->ref_1_phone_res;
+        $request_tdc->ref1phocel = $request->area_code_ref1_cel.$request->ref_1_phone_cel;
 
         $request_tdc->ref2names = $request->ref_2_name;
-        $request_tdc->ref2phores = $request->ref_2_phone_res;
-        $request_tdc->ref2phocel = $request->ref_2_phone_cel;
+        $request_tdc->ref2phores = $request->area_code_ref2_res.$request->ref_2_phone_res;
+        $request_tdc->ref2phocel = $request->area_code_ref2_cel.$request->ref_2_phone_cel;
 
         $request_tdc->campaign = $customer->campaign;
         $request_tdc->committee = $customer->committee;

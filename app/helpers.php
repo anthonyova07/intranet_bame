@@ -752,6 +752,19 @@ function get_marital($marital = null)
     return $maritals->get($marital);
 }
 
+function get_area_codes($code = null)
+{
+    $codes = collect([
+        '809', '829', '849'
+    ]);
+
+    if (!$code) {
+        return $codes;
+    }
+
+    return $codes->get($code);
+}
+
 function get_tdc_products($product = null)
 {
     $products = collect([

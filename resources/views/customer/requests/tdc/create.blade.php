@@ -247,7 +247,12 @@
                                 </div>
                                 <div class="col-xs-2">
                                     <div class="form-group{{ $errors->first('pphone_res') ? ' has-error':'' }}">
-                                        <label class="control-label">Teléfono Residencial</label>
+                                        <label class="control-label">Teléfono <abbr title="Residencial">Res</abbr></label>
+                                        <select class="" name="parea_code_res">
+                                            @foreach (get_area_codes() as $code)
+                                                <option value="{{ $code }}"{{ old('parea_code_res') == $code ? ' selected':'' }}>{{ $code }}</option>
+                                            @endforeach
+                                        </select>
                                         <input type="text" class="form-control input-sm" name="pphone_res" value="{{ old('pphone_res') }}">
                                         <span class="help-block">{{ $errors->first('pphone_res') }}</span>
                                     </div>
@@ -255,6 +260,11 @@
                                 <div class="col-xs-2">
                                     <div class="form-group{{ $errors->first('pphone_cel') ? ' has-error':'' }}">
                                         <label class="control-label">Teléfono Celular</label>
+                                        <select class="" name="parea_code_cel">
+                                            @foreach (get_area_codes() as $code)
+                                                <option value="{{ $code }}"{{ old('parea_code_cel') == $code ? ' selected':'' }}>{{ $code }}</option>
+                                            @endforeach
+                                        </select>
                                         <input type="text" class="form-control input-sm" name="pphone_cel" value="{{ old('pphone_cel') }}">
                                         <span class="help-block">{{ $errors->first('pphone_cel') }}</span>
                                     </div>
@@ -399,6 +409,11 @@
                                 <div class="col-xs-2">
                                     <div class="form-group{{ $errors->first('lphone_off') ? ' has-error':'' }}">
                                         <label class="control-label">Teléfono Oficina</label>
+                                        <select class="" name="larea_code_off">
+                                            @foreach (get_area_codes() as $code)
+                                                <option value="{{ $code }}"{{ old('larea_code_off') == $code ? ' selected':'' }}>{{ $code }}</option>
+                                            @endforeach
+                                        </select>
                                         <input type="text" class="form-control input-sm" name="lphone_off" value="{{ old('lphone_off') }}">
                                         <span class="help-block">{{ $errors->first('lphone_off') }}</span>
                                     </div>
@@ -442,6 +457,11 @@
                                 <div class="col-xs-4">
                                     <div class="form-group{{ $errors->first('ref_1_phone_res') ? ' has-error':'' }}">
                                         <label class="control-label">Teléfono Residencial</label>
+                                        <select class="" name="area_code_ref1_res">
+                                            @foreach (get_area_codes() as $code)
+                                                <option value="{{ $code }}"{{ old('area_code_ref1_res') == $code ? ' selected':'' }}>{{ $code }}</option>
+                                            @endforeach
+                                        </select>
                                         <input type="text" class="form-control input-sm" name="ref_1_phone_res" value="{{ old('ref_1_phone_res') }}">
                                         <span class="help-block">{{ $errors->first('ref_1_phone_res') }}</span>
                                     </div>
@@ -449,6 +469,11 @@
                                 <div class="col-xs-4">
                                     <div class="form-group{{ $errors->first('ref_1_phone_cel') ? ' has-error':'' }}">
                                         <label class="control-label">Teléfono Celular</label>
+                                        <select class="" name="area_code_ref1_cel">
+                                            @foreach (get_area_codes() as $code)
+                                                <option value="{{ $code }}"{{ old('area_code_ref1_cel') == $code ? ' selected':'' }}>{{ $code }}</option>
+                                            @endforeach
+                                        </select>
                                         <input type="text" class="form-control input-sm" name="ref_1_phone_cel" value="{{ old('ref_1_phone_cel') }}">
                                         <span class="help-block">{{ $errors->first('ref_1_phone_cel') }}</span>
                                     </div>
@@ -465,6 +490,11 @@
                                 <div class="col-xs-4">
                                     <div class="form-group{{ $errors->first('ref_2_phone_res') ? ' has-error':'' }}">
                                         <label class="control-label">Teléfono Residencial</label>
+                                        <select class="" name="area_code_ref2_res">
+                                            @foreach (get_area_codes() as $code)
+                                                <option value="{{ $code }}"{{ old('area_code_ref2_res') == $code ? ' selected':'' }}>{{ $code }}</option>
+                                            @endforeach
+                                        </select>
                                         <input type="text" class="form-control input-sm" name="ref_2_phone_res" value="{{ old('ref_2_phone_res') }}">
                                         <span class="help-block">{{ $errors->first('ref_2_phone_res') }}</span>
                                     </div>
@@ -472,6 +502,11 @@
                                 <div class="col-xs-4">
                                     <div class="form-group{{ $errors->first('ref_2_phone_cel') ? ' has-error':'' }}">
                                         <label class="control-label">Teléfono Celular</label>
+                                        <select class="" name="area_code_ref2_cel">
+                                            @foreach (get_area_codes() as $code)
+                                                <option value="{{ $code }}"{{ old('area_code_ref2_cel') == $code ? ' selected':'' }}>{{ $code }}</option>
+                                            @endforeach
+                                        </select>
                                         <input type="text" class="form-control input-sm" name="ref_2_phone_cel" value="{{ old('ref_2_phone_cel') }}">
                                         <span class="help-block">{{ $errors->first('ref_2_phone_cel') }}</span>
                                     </div>
