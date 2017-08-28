@@ -77,7 +77,9 @@
                                 <th>Estatus</th>
                                 <th style="width: 112px;">Fecha Creación</th>
                                 <th style="width: 112px;">Creado por</th>
-                                <th style="width: 75px"></th>
+                                <th class="text-center" style="width: 75px">
+                                    <input type="checkbox" data-toggle="tooltip" title="Seleccionar Todo" name="check_all" value="" id="check_all">
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -187,9 +189,13 @@
             $(this).attr('href', $(this).attr('url') + ids);
         });
 
-        // $('.check_print').change(function () {
-        //     console.log($(this).is(':checked'));
-        // });
+        var check_all = $('#check_all');
+
+        check_all.change(function () {
+            $('.check_print').each(function (index, check) {
+                $(check).prop('checked', check_all.is(':checked'));
+            });
+        });
     </script>
 
 @endsection

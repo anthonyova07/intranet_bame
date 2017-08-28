@@ -188,7 +188,6 @@ class TdcRequestController extends Controller
     public function print(Request $request)
     {
         $ids = explode(',', $request->id);
-        array_pop($ids);
 
         $requests_tdc = TdcRequest::whereIn('id', $ids)->get();
 
