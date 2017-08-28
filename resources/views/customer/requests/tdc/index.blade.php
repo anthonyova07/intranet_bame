@@ -62,6 +62,8 @@
                 <div class="panel-body">
                     <a class="btn btn-danger btn-xs" href="{{ route('customer.request.tdc.create') }}">Nueva Solicitud</a>
 
+                    <a style="font-size: 13px;" download class="label btn-success pull-right" target="__blank" href="{{ route('customer.request.tdc.excel', Request::except(['term', 'page'])) }}">Exportar Excel</a>
+
                     <br>
                     <br>
                     <table class="table table-striped table-bordered table-hover table-condensed" order-by='2|desc'>

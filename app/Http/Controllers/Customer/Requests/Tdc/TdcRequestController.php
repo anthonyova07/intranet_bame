@@ -30,11 +30,11 @@ class TdcRequestController extends Controller
         }
 
         if ($request->date_from) {
-            $process_requests->where('created_at', '>=', $request->date_from . ' 00:00:00');
+            $requests_tdc->where('created_at', '>=', $request->date_from . ' 00:00:00');
         }
 
         if ($request->date_to) {
-            $process_requests->where('created_at', '<=', $request->date_to . ' 23:59:59');
+            $requests_tdc->where('created_at', '<=', $request->date_to . ' 23:59:59');
         }
 
         return view('customer.requests.tdc.index', [
@@ -62,7 +62,7 @@ class TdcRequestController extends Controller
                 }
 
                 if ($customer_processed->isBlack()) {
-                    return redirect()->route('customer.request.tdc.create')->with('error', 'Este cliente ya no puede ser contactado.');
+                    return redirect()->route('customer.request.tdc.create')->with('error', 'Este cliente ya no puede ser contactado por: ' . $customer_processed->denail->note);
                 }
 
                 if ($customer_processed->hasDenail()) {
@@ -250,5 +250,23 @@ class TdcRequestController extends Controller
         do_log('Procesó al Cliente para Sol. de TDC ( identificación:' . strip_tags($customer->identification) . ' )');
 
         return redirect(route('customer.request.tdc.create'))->with('success', 'El cliente ha sido procesado correctamente.');
+    }
+
+    public function excel(Request $request)
+    {
+        $customers = CustomerProcessed::lastestFirst();
+
+        if ($request->date_from) {
+            $customers->where('created_at', '>=', $request->date_from . ' 00:00:00');
+        }
+
+        if ($request->date_to) {
+            $customers->where('created_at', '<=', $request->date_to . ' 23:59:59');
+        }
+
+        do_log('Exportó a Excel los clientes gestionados en las solicitudes tdc ( desde:' . strip_tags($request->date_from) . ' hasta:' . strip_tags($request->date_to) . ' )');
+
+        return view('customer.requests.tdc.excel')
+            ->with('customers', $customers->get());
     }
 }

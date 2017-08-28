@@ -50,11 +50,13 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-5">
-                                    <div class="form-group{{ $errors->first('plastic_name') ? ' has-error':'' }}">
-                                        <label class="control-label">Nombre Plástico</label>
-                                        <input type="text" style="text-transform: uppercase;" maxlength="30" class="form-control input-sm" name="plastic_name" value="{{ old('plastic_name') }}">
-                                        <span class="help-block">{{ $errors->first('plastic_name') }}</span>
-                                    </div>
+                                    @if ($accept == 'yes')
+                                        <div class="form-group{{ $errors->first('plastic_name') ? ' has-error':'' }}">
+                                            <label class="control-label">Nombre Plástico</label>
+                                            <input type="text" style="text-transform: uppercase;" maxlength="30" class="form-control input-sm" name="plastic_name" value="{{ old('plastic_name') }}">
+                                            <span class="help-block">{{ $errors->first('plastic_name') }}</span>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -150,16 +152,18 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-3">
-                                    <div class="form-group{{ $errors->first('marital_status') ? ' has-error':'' }}">
-                                        <label class="control-label">Estado Civil</label>
-                                        <select name="marital_status" class="form-control input-sm">
-                                            <option value="">Seleccione uno</option>
-                                            @foreach (get_marital() as $key => $marital)
-                                                <option value="{{ $key }}"{{ old('marital_status') == $key ? ' selected':'' }}>{{ $marital }}</option>
-                                            @endforeach
-                                        </select>
-                                        <span class="help-block">{{ $errors->first('marital_status') }}</span>
-                                    </div>
+                                    @if ($accept == 'yes')
+                                        <div class="form-group{{ $errors->first('marital_status') ? ' has-error':'' }}">
+                                            <label class="control-label">Estado Civil</label>
+                                            <select name="marital_status" class="form-control input-sm">
+                                                <option value="">Seleccione uno</option>
+                                                @foreach (get_marital() as $key => $marital)
+                                                    <option value="{{ $key }}"{{ old('marital_status') == $key ? ' selected':'' }}>{{ $marital }}</option>
+                                                @endforeach
+                                            </select>
+                                            <span class="help-block">{{ $errors->first('marital_status') }}</span>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -265,7 +269,7 @@
                                                     <option value="{{ $code }}"{{ old('parea_code_res') == $code ? ' selected':'' }}>{{ $code }}</option>
                                                 @endforeach
                                             </select>
-                                            <input type="text" class="form-control input-sm" name="pphone_res" value="{{ old('pphone_res') }}">
+                                            <input type="text" class="form-control input-sm" name="pphone_res" maxlength="7" value="{{ old('pphone_res') }}">
                                             <span class="help-block">{{ $errors->first('pphone_res') }}</span>
                                         </div>
                                     </div>
@@ -277,7 +281,7 @@
                                                     <option value="{{ $code }}"{{ old('parea_code_cel') == $code ? ' selected':'' }}>{{ $code }}</option>
                                                 @endforeach
                                             </select>
-                                            <input type="text" class="form-control input-sm" name="pphone_cel" value="{{ old('pphone_cel') }}">
+                                            <input type="text" class="form-control input-sm" name="pphone_cel" maxlength="7" value="{{ old('pphone_cel') }}">
                                             <span class="help-block">{{ $errors->first('pphone_cel') }}</span>
                                         </div>
                                     </div>
@@ -426,14 +430,14 @@
                                                     <option value="{{ $code }}"{{ old('larea_code_off') == $code ? ' selected':'' }}>{{ $code }}</option>
                                                 @endforeach
                                             </select>
-                                            <input type="text" class="form-control input-sm" name="lphone_off" value="{{ old('lphone_off') }}">
+                                            <input type="text" class="form-control input-sm" name="lphone_off" maxlength="7" value="{{ old('lphone_off') }}">
                                             <span class="help-block">{{ $errors->first('lphone_off') }}</span>
                                         </div>
                                     </div>
                                     <div class="col-xs-2">
                                         <div class="form-group{{ $errors->first('lphone_ext') ? ' has-error':'' }}">
                                             <label class="control-label">Extensión</label>
-                                            <input type="text" class="form-control input-sm" name="lphone_ext" value="{{ old('lphone_ext') }}">
+                                            <input type="text" class="form-control input-sm" name="lphone_ext" maxlength="4" value="{{ old('lphone_ext') }}">
                                             <span class="help-block">{{ $errors->first('lphone_ext') }}</span>
                                         </div>
                                     </div>
@@ -474,7 +478,7 @@
                                                     <option value="{{ $code }}"{{ old('area_code_ref1_res') == $code ? ' selected':'' }}>{{ $code }}</option>
                                                 @endforeach
                                             </select>
-                                            <input type="text" class="form-control input-sm" name="ref_1_phone_res" value="{{ old('ref_1_phone_res') }}">
+                                            <input type="text" class="form-control input-sm" name="ref_1_phone_res" maxlength="7" value="{{ old('ref_1_phone_res') }}">
                                             <span class="help-block">{{ $errors->first('ref_1_phone_res') }}</span>
                                         </div>
                                     </div>
@@ -486,7 +490,7 @@
                                                     <option value="{{ $code }}"{{ old('area_code_ref1_cel') == $code ? ' selected':'' }}>{{ $code }}</option>
                                                 @endforeach
                                             </select>
-                                            <input type="text" class="form-control input-sm" name="ref_1_phone_cel" value="{{ old('ref_1_phone_cel') }}">
+                                            <input type="text" class="form-control input-sm" name="ref_1_phone_cel" maxlength="7" value="{{ old('ref_1_phone_cel') }}">
                                             <span class="help-block">{{ $errors->first('ref_1_phone_cel') }}</span>
                                         </div>
                                     </div>
@@ -507,7 +511,7 @@
                                                     <option value="{{ $code }}"{{ old('area_code_ref2_res') == $code ? ' selected':'' }}>{{ $code }}</option>
                                                 @endforeach
                                             </select>
-                                            <input type="text" class="form-control input-sm" name="ref_2_phone_res" value="{{ old('ref_2_phone_res') }}">
+                                            <input type="text" class="form-control input-sm" name="ref_2_phone_res" maxlength="7" value="{{ old('ref_2_phone_res') }}">
                                             <span class="help-block">{{ $errors->first('ref_2_phone_res') }}</span>
                                         </div>
                                     </div>
@@ -519,7 +523,7 @@
                                                     <option value="{{ $code }}"{{ old('area_code_ref2_cel') == $code ? ' selected':'' }}>{{ $code }}</option>
                                                 @endforeach
                                             </select>
-                                            <input type="text" class="form-control input-sm" name="ref_2_phone_cel" value="{{ old('ref_2_phone_cel') }}">
+                                            <input type="text" class="form-control input-sm" name="ref_2_phone_cel" maxlength="7" value="{{ old('ref_2_phone_cel') }}">
                                             <span class="help-block">{{ $errors->first('ref_2_phone_cel') }}</span>
                                         </div>
                                     </div>
