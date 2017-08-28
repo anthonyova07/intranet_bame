@@ -53,6 +53,24 @@ class TdcRequestController extends Controller
             if (!$customer) {
                 return back()->with('warning', 'El cliente no ha sido encontrado o no se ha cargado la base de datos.');
             }
+
+            $customer_processed = CustomerProcessed::byIdentification($customer->identification)->lastestFirst()->first();
+
+            if ($customer_processed) {
+                if ($customer_processed->hasRequestCreated()) {
+                    return redirect()->route('customer.request.tdc.create')->with('warning', 'Este cliente ya tiene una solicitud creada.');
+                }
+
+                if ($customer_processed->isBlack()) {
+                    return redirect()->route('customer.request.tdc.create')->with('error', 'Este cliente ya no puede ser contactado.');
+                }
+
+                if ($customer_processed->hasDenail()) {
+                    session()->flash('info', 'Este cliente ya fue contactado y rechazó por: ' . $customer_processed->denail->note);
+                }
+            }
+
+            session()->put('customer_request_tdc', $customer);
         }
 
         $denails = collect();
@@ -60,8 +78,6 @@ class TdcRequestController extends Controller
         if ($request->accept == 'no') {
             $denails = Param::denails()->get();
         }
-
-        session()->put('customer_request_tdc', $customer);
 
         return view('customer.requests.tdc.create', [
             'customer' => $customer,
