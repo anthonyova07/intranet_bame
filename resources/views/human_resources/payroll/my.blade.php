@@ -40,7 +40,11 @@
                                     <label class="control-label">Quincena</label>
                                     <select name="day" id="day" class="form-control">
                                         <option value="15"{{ 15 == request()->get('day') || datetime()->format('d') <= 15 ? ' selected':'' }}>1ra Quincena</option>
-                                        <option value="{{ 2 == request()->get('month') ? '28' : '30' }}"{{ in_array(request()->get('day'), [28, 30]) || datetime()->format('d') > 15 ? ' selected':'' }}>2da Quincena</option>
+                                        @if (request('month'))
+                                            <option value="{{ 2 == request()->get('month') ? '28' : (in_array(request('month'), [1,3,5,7,8,10,12]) ? '31' : '30') }}"{{ in_array(request()->get('day'), [28, 30]) || datetime()->format('d') > 15 ? ' selected':'' }}>2da Quincena</option>
+                                        @else
+                                            <option value="{{ 2 == datetime()->format('m') ? '28' : (in_array(datetime()->format('m'), [1,3,5,7,8,10,12]) ? '31' : '30') }}"{{ in_array(request()->get('day'), [28, 30]) || datetime()->format('d') > 15 ? ' selected':'' }}>2da Quincena</option>
+                                        @endif
                                     </select>
                                 </div>
                             </div>
@@ -158,7 +162,11 @@
             if (month.val() == 2) {
                 $(day.children()[1]).attr('value', 28);
             } else {
-                $(day.children()[1]).attr('value', 30);
+                if (month.val() == 1 || month.val() == 3 || month.val() == 5 || month.val() == 7 || month.val() == 8 || month.val() == 10 || month.val() == 12) {
+                    $(day.children()[1]).attr('value', 31);
+                } else {
+                    $(day.children()[1]).attr('value', 30);
+                }
             }
         });
 
