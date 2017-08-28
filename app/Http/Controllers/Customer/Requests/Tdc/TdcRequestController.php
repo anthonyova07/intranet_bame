@@ -195,7 +195,7 @@ class TdcRequestController extends Controller
             $customer_processed->is_black = 0;
         }
 
-        $customer_processed->reqnumber = session('customer_request_tdc_reqnumber');
+        $customer_processed->reqnumber = $reqnumber;
         $customer_processed->channel = Employee::getChannel();
         $customer_processed->producttyp = $customer->product;
         $customer_processed->limitrd = $customer->limit_rd;
