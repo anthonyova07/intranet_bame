@@ -351,7 +351,7 @@ Route::group(['middleware' => 'auth'], function () {
                 ]]);
 
                 Route::get('print/{id}', 'TdcRequestController@print')->name('customer.request.tdc.print');
-                Route::post('denail/{identification}', 'TdcRequestController@denail')->name('customer.request.tdc.denail');
+                Route::post('located/{identification}/{reqnumber?}', 'TdcRequestController@located')->name('customer.request.tdc.located');
             });
 
             Route::resource('tdc', 'TdcRequestController', ['only' => [

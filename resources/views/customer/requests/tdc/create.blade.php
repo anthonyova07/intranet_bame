@@ -551,7 +551,7 @@
         @if ($accept == 'no')
             <div class="row">
                 <div class="col-xs-6 col-xs-offset-3">
-                    <form method="post" action="{{ route('customer.request.tdc.denail', request('identification')) }}" id="form">
+                    <form method="post" action="{{ route('customer.request.tdc.located', request('identification')) }}" id="form">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Razón de Negación</h3>

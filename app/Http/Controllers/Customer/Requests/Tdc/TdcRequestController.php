@@ -8,6 +8,7 @@ use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 use Bame\Models\HumanResource\Employee\Employee;
 use Bame\Models\Customer\Requests\Tdc\TdcRequest;
+use Bame\Models\Customer\Requests\Tdc\CustomerProcessed;
 use Bame\Models\Customer\Requests\Tdc\Param;
 use Bame\Http\Requests\Customer\Requests\Tdc\RequestTdcRequest;
 use Bame\Models\Notification\Notification;
@@ -145,6 +146,8 @@ class TdcRequestController extends Controller
         $request_tdc->reqnumber = get_next_request_tdc_number();
         $request_tdc->save();
 
+        $this->located($request, $customer->identification, $request_tdc->reqnumber);
+
         do_log('Creó la Solicitud de Tarjeta ( número:' . strip_tags($request_tdc->reqnumber) . ' )');
 
         return redirect(route('customer.request.tdc.show', [$request_tdc->id]))->with('success', 'La solicitud ha sido creada correctamente.');
@@ -174,8 +177,62 @@ class TdcRequestController extends Controller
             ->with('request_tdc', $request_tdc);
     }
 
-    public function denail($identification)
+    public function located(Request $request, $identification, $reqnumber = null)
     {
-        dd($identification);
+        $customer = session('customer_request_tdc');
+
+        $denail = Param::denails()->find($request->denail);
+
+        $customer_processed = new CustomerProcessed;
+
+        $customer_processed->id = uniqid(true);
+
+        if ($denail) {
+            $customer_processed->denail_id = $denail->id;
+            $customer_processed->is_black = $denail->isblack;
+        } else {
+            $customer_processed->denail_id = null;
+            $customer_processed->is_black = 0;
+        }
+
+        $customer_processed->reqnumber = session('customer_request_tdc_reqnumber');
+        $customer_processed->channel = Employee::getChannel();
+        $customer_processed->producttyp = $customer->product;
+        $customer_processed->limitrd = $customer->limit_rd;
+        $customer_processed->limitus = $customer->limit_us;
+        $customer_processed->names = utf8_encode($customer->names);
+        $customer_processed->identifica = $customer->identification;
+        $customer_processed->birthdate = $customer->birthdate;
+        $customer_processed->nationalit = $customer->nationality;
+        $customer_processed->gender = $customer->gender;
+
+        $customer_processed->celular_1 = $customer->phones_cel[0];
+        $customer_processed->celular_2 = $customer->phones_cel[1];
+        $customer_processed->celular_3 = $customer->phones_cel[2];
+
+        $customer_processed->house_1 = $customer->phones_house[0];
+        $customer_processed->house_2 = $customer->phones_house[1];
+        $customer_processed->house_3 = $customer->phones_house[2];
+
+        $customer_processed->work_1 = $customer->phones_work[0];
+        $customer_processed->work_2 = $customer->phones_work[1];
+        $customer_processed->work_3 = $customer->phones_work[2];
+
+        $customer_processed->other_1 = $customer->phones_other[0];
+        $customer_processed->other_2 = $customer->phones_other[1];
+        $customer_processed->other_3 = $customer->phones_other[2];
+
+        $customer_processed->campaign = $customer->campaign;
+        $customer_processed->committee = $customer->committee;
+        $customer_processed->commitdate = $customer->committee_date;
+
+        $customer_processed->created_by = session()->get('user');
+        $customer_processed->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+
+        $customer_processed->save();
+
+        do_log('Procesó al Cliente para Sol. de TDC ( identificación:' . strip_tags($customer->identification) . ' )');
+
+        return redirect(route('customer.request.tdc.create'))->with('success', 'El cliente ha sido procesado correctamente.');
     }
 }
