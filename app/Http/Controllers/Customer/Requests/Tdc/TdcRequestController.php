@@ -185,12 +185,15 @@ class TdcRequestController extends Controller
         ]);
     }
 
-    public function print($id)
+    public function print(Request $request)
     {
-        $request_tdc = TdcRequest::find($id);
+        $ids = explode(',', $request->id);
+        array_pop($ids);
+
+        $requests_tdc = TdcRequest::whereIn('id', $ids)->get();
 
         return view('customer.requests.tdc.print')
-            ->with('request_tdc', $request_tdc);
+            ->with('requests_tdc', $requests_tdc);
     }
 
     public function located(Request $request, $identification, $reqnumber = null)

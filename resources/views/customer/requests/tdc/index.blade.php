@@ -62,6 +62,8 @@
                 <div class="panel-body">
                     <a class="btn btn-danger btn-xs" href="{{ route('customer.request.tdc.create') }}">Nueva Solicitud</a>
 
+                    <a style="font-size: 13px;margin-left: 10px;" class="label btn-primary pull-right" id="print_requests" target="__blank" href="" url="{{ route('customer.request.tdc.print') }}">Imprimir</a>
+
                     <a style="font-size: 13px;" download class="label btn-success pull-right" target="__blank" href="{{ route('customer.request.tdc.excel', Request::except(['term', 'page'])) }}">Exportar Excel</a>
 
                     <br>
@@ -95,14 +97,15 @@
                                             title="Ver Solicitud">
                                             <i class="fa fa-share fa-fw"></i>
                                         </a>
-                                        <a
+                                        <input type="checkbox" class="check_print" data-toggle="tooltip" title="Marcar para Imprimir" name="requests[]" value="{{ $request_tdc->id }}">
+                                        {{-- <a
                                             style="font-size: 13px;margin: 3px;"
                                             data-toggle="tooltip"
                                             data-placement="top"
                                             class="label btn-warning"
                                             title="Ver Solicitud"
                                             target="__blank"
-                                            href="{{ route('customer.request.tdc.print', $request_tdc->id) }}"><i class="fa fa-print fa-fw"></i></a>
+                                            href="{{ route('customer.request.tdc.print', $request_tdc->id) }}"><i class="fa fa-print fa-fw"></i></a> --}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -171,6 +174,22 @@
         $('#form').submit(function (vacant) {
             $('#btn_submit').button('loading');
         });
+
+        $('#print_requests').click(function () {
+            var ids = '?id=';
+
+            $('.check_print').each(function (index, check) {
+                if ($(check).is(':checked')) {
+                    ids += $(check).val() + ',';
+                }
+            });
+
+            $(this).attr('href', $(this).attr('url') + ids);
+        });
+
+        // $('.check_print').change(function () {
+        //     console.log($(this).is(':checked'));
+        // });
     </script>
 
 @endsection
