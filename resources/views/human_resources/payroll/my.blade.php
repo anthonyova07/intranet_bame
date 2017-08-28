@@ -41,7 +41,7 @@
                                     <select name="day" id="day" class="form-control">
                                         <option value="15"{{ 15 == request()->get('day') || datetime()->format('d') <= 15 ? ' selected':'' }}>1ra Quincena</option>
                                         @if (request('month'))
-                                            <option value="{{ 2 == request()->get('month') ? '28' : (in_array(request('month'), [1,3,5,7,8,10,12]) ? '31' : '30') }}"{{ in_array(request()->get('day'), [28, 30]) || datetime()->format('d') > 15 ? ' selected':'' }}>2da Quincena</option>
+                                            <option value="{{ 2 == request()->get('month') ? '28' : (in_array(request('month'), [1,3,5,7,8,10,12]) ? '31' : '30') }}"{{ in_array(request()->get('day'), [28, 30]) || request('day') > 15 ? ' selected':'' }}>2da Quincena</option>
                                         @else
                                             <option value="{{ 2 == datetime()->format('m') ? '28' : (in_array(datetime()->format('m'), [1,3,5,7,8,10,12]) ? '31' : '30') }}"{{ in_array(request()->get('day'), [28, 30]) || datetime()->format('d') > 15 ? ' selected':'' }}>2da Quincena</option>
                                         @endif
