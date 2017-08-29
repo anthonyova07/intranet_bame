@@ -170,7 +170,7 @@
                                 <div class="col-xs-3">
                                     <div class="form-group{{ $errors->first('send_dir_plastic') ? ' has-error':'' }}">
                                         <label class="control-label">Dirección de Entrega</label>
-                                        <select class="form-control input-sm" name="send_dir_plastic">
+                                        <select class="form-control input-sm" name="send_dir_plastic" id="send_dir_plastic">
                                             <option value="personal"{{ old('send_dir_plastic') == 'personal' ? ' selected':'' }}>Dirección Personal</option>
                                             <option value="laboral"{{ old('send_dir_plastic') == 'laboral' ? ' selected':'' }}>Dirección Laboral</option>
                                         </select>
@@ -417,7 +417,7 @@
                                     <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('lnear') ? ' has-error':'' }}">
                                             <label class="control-label">Cerca de</label>
-                                            <input type="text" class="form-control input-sm" name="lnear" value="{{ old('lnear') }}">
+                                            <input type="text" class="form-control input-sm" disabled name="lnear" value="{{ old('lnear') }}">
                                             <span class="help-block">{{ $errors->first('lnear') }}</span>
                                         </div>
                                     </div>
@@ -426,7 +426,7 @@
                                     <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('lschedule') ? ' has-error':'' }}">
                                             <label class="control-label">Horario de Entrega</label>
-                                            <input type="text" class="form-control input-sm" name="lschedule" value="{{ old('lschedule') }}">
+                                            <input type="text" class="form-control input-sm" disabled name="lschedule" value="{{ old('lschedule') }}">
                                             <span class="help-block">{{ $errors->first('lschedule') }}</span>
                                         </div>
                                     </div>
@@ -620,6 +620,25 @@
     <script type="text/javascript">
         $('#form').submit(function (event) {
             $('#btn_submit').button('loading');
+        });
+
+        var pnear = $('input[name=pnear]');
+        var pschedule = $('input[name=pschedule]');
+        var lnear = $('input[name=lnear]');
+        var lschedule = $('input[name=lschedule]');
+
+        $('#send_dir_plastic').change(function () {
+            if ($(this).val() == 'personal') {
+                pnear.removeAttr('disabled');
+                pschedule.removeAttr('disabled');
+                lnear.attr('disabled', true);
+                lschedule.attr('disabled', true);
+            } else {
+                pnear.attr('disabled', true);
+                pschedule.attr('disabled', true);
+                lnear.removeAttr('disabled');
+                lschedule.removeAttr('disabled');
+            }
         });
     </script>
 

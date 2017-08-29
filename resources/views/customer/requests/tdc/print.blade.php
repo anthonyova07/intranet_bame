@@ -89,9 +89,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="table_td" colspan="2" style="width: 50%"><b>Producto:</b> {{ $request_tdc->producttyp }}</td>
+                        <td class="table_td" colspan="1"><b>Producto:</b> {{ $request_tdc->producttyp }}</td>
                         <td class="table_td" colspan="1"><b>Limite RD$:</b> {{ number_format($request_tdc->limitrd, 2) }}</td>
                         <td class="table_td" colspan="1"><b>Limite US$:</b> {{ number_format($request_tdc->limitus, 2) }}</td>
+                        <td class="table_td" colspan="1"><b>Dirección Entrega:</b> {{ $request_tdc->senddirpla == 'personal' ? 'Personal' : 'Personal' }}</td>
                     </tr>
                 </tbody>
             </table>
