@@ -4,11 +4,11 @@
 
 @section('page_title', 'Solicitud de Tarjeta #' . $request_tdc->reqnumber)
 
-{{-- @if (can_not_do('process_request'))
+@if (can_not_do('customer_requests_tdc'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 

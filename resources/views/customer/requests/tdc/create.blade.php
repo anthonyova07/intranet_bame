@@ -4,11 +4,11 @@
 
 @section('page_title', 'Nueva Solicitud de Tarjetas')
 
-{{-- @if (can_not_do('process_request'))
+@if (can_not_do('customer_requests_tdc'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 
