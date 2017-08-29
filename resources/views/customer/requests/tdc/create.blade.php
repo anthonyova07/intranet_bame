@@ -166,6 +166,18 @@
                                     @endif
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <div class="form-group{{ $errors->first('send_dir_plastic') ? ' has-error':'' }}">
+                                        <label class="control-label">Dirección de Entrega</label>
+                                        <select class="form-control input-sm" name="send_dir_plastic">
+                                            <option value="personal"{{ old('send_dir_plastic') == 'personal' ? ' selected':'' }}>Dirección Personal</option>
+                                            <option value="laboral"{{ old('send_dir_plastic') == 'laboral' ? ' selected':'' }}>Dirección Laboral</option>
+                                        </select>
+                                        <span class="help-block">{{ $errors->first('send_dir_plastic') }}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -188,10 +200,6 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Dirección Personal</h3>
-                                <span class="pull-right" style="margin-top: -20px;">
-                                    Recibir plástico aquí
-                                    <input type="radio" name="send_dir_plastic" {{ old('send_dir_plastic') ? (old('send_dir_plastic') == 'personal' ? 'checked' : '') : 'checked' }} value="personal">
-                                </span>
                             </div>
 
                             <div class="panel-body">
@@ -351,10 +359,6 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Dirección Laboral</h3>
-                                <span class="pull-right" style="margin-top: -20px;">
-                                    Recibir plástico aquí
-                                    <input type="radio" name="send_dir_plastic" {{ old('send_dir_plastic') == 'laboral' ? 'checked' : '' }} value="laboral">
-                                </span>
                             </div>
 
                             <div class="panel-body">

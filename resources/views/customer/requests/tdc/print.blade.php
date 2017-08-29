@@ -85,6 +85,23 @@
                 <tbody>
                     <tr>
                         <td class="table_td" colspan="4" style="text-align: center;font-size: 13px;background-color: #CCC;">
+                            <b>Tarjeta PreAprobada</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table_td" colspan="2" style="width: 50%"><b>Producto:</b> {{ $request_tdc->producttyp }}</td>
+                        <td class="table_td" colspan="1"><b>Limite RD$:</b> {{ number_format($request_tdc->limitrd, 2) }}</td>
+                        <td class="table_td" colspan="1"><b>Limite US$:</b> {{ number_format($request_tdc->limitus, 2) }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br>
+
+            <table style="font-size: 100%;">
+                <tbody>
+                    <tr>
+                        <td class="table_td" colspan="4" style="text-align: center;font-size: 13px;background-color: #CCC;">
                             <b>Datos Personales</b>
                         </td>
                     </tr>

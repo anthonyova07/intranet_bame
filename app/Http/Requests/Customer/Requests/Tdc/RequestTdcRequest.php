@@ -62,4 +62,15 @@ class RequestTdcRequest extends Request
             'ref_2_phone_cel' => 'max:7',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'lmail.required_if' => 'El Correo es obligatorio.',
+            'pmail.required_if' => 'El Correo es obligatorio.',
+            'lnear.required_if' => 'El Campo Cerca De es obligatorio.',
+            'pnear.required_if' => 'El Campo Cerca De es obligatorio.',
+            'lschedule.required_if' => 'El Campo Horario de Entrega es obligatorio.',
+        ];
+    }
 }
