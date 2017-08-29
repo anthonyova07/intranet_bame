@@ -38,14 +38,14 @@
                                 <div class="col-xs-2">
                                     <div class="form-group{{ $errors->first('limit_rd') ? ' has-error':'' }}">
                                         <label class="control-label">Limite RD$</label>
-                                        <input type="text" disabled class="form-control input-sm" name="limit_rd" value="{{ number_format($customer->limit_rd, 2)  }}">
+                                        <input type="text" disabled class="form-control input-sm" style="width: 95px" name="limit_rd" value="{{ number_format($customer->limit_rd, 2)  }}">
                                         <span class="help-block">{{ $errors->first('limit_rd') }}</span>
                                     </div>
                                 </div>
                                 <div class="col-xs-2">
                                     <div class="form-group{{ $errors->first('limit_us') ? ' has-error':'' }}">
                                         <label class="control-label">Limite US$</label>
-                                        <input type="text" disabled class="form-control input-sm" name="limit_us" value="{{ number_format($customer->limit_us, 2)  }}">
+                                        <input type="text" disabled class="form-control input-sm" style="width: 95px" name="limit_us" value="{{ number_format($customer->limit_us, 2)  }}">
                                         <span class="help-block">{{ $errors->first('limit_us') }}</span>
                                     </div>
                                 </div>
@@ -167,16 +167,19 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-3">
-                                    <div class="form-group{{ $errors->first('send_dir_plastic') ? ' has-error':'' }}">
-                                        <label class="control-label">Dirección de Entrega</label>
-                                        <select class="form-control input-sm" name="send_dir_plastic" id="send_dir_plastic">
-                                            <option value="personal"{{ old('send_dir_plastic') == 'personal' ? ' selected':'' }}>Dirección Personal</option>
-                                            <option value="laboral"{{ old('send_dir_plastic') == 'laboral' ? ' selected':'' }}>Dirección Laboral</option>
-                                        </select>
-                                        <span class="help-block">{{ $errors->first('send_dir_plastic') }}</span>
+                                @if ($accept == 'yes')
+                                    <div class="col-xs-3">
+                                        <div class="form-group{{ $errors->first('send_dir_plastic') ? ' has-error':'' }}">
+                                            <label class="control-label">Dirección de Entrega</label>
+                                            <select class="form-control input-sm" name="send_dir_plastic" id="send_dir_plastic">
+                                                <option value="">Seleccione uno</option>
+                                                <option value="personal"{{ old('send_dir_plastic') == 'personal' ? ' selected':'' }}>Dirección Personal</option>
+                                                <option value="laboral"{{ old('send_dir_plastic') == 'laboral' ? ' selected':'' }}>Dirección Laboral</option>
+                                            </select>
+                                            <span class="help-block">{{ $errors->first('send_dir_plastic') }}</span>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -417,7 +420,7 @@
                                     <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('lnear') ? ' has-error':'' }}">
                                             <label class="control-label">Cerca de</label>
-                                            <input type="text" class="form-control input-sm" disabled name="lnear" value="{{ old('lnear') }}">
+                                            <input type="text" class="form-control input-sm" name="lnear" value="{{ old('lnear') }}">
                                             <span class="help-block">{{ $errors->first('lnear') }}</span>
                                         </div>
                                     </div>
@@ -426,7 +429,7 @@
                                     <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('lschedule') ? ' has-error':'' }}">
                                             <label class="control-label">Horario de Entrega</label>
-                                            <input type="text" class="form-control input-sm" disabled name="lschedule" value="{{ old('lschedule') }}">
+                                            <input type="text" class="form-control input-sm" name="lschedule" value="{{ old('lschedule') }}">
                                             <span class="help-block">{{ $errors->first('lschedule') }}</span>
                                         </div>
                                     </div>

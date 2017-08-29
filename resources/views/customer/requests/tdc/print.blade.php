@@ -144,6 +144,14 @@
                         </td>
                     </tr>
                     <tr>
+                        <td class="table_td" colspan="2">
+                            <b>Cerca De: </b> {{ $request_tdc->pnear }}
+                        </td>
+                        <td class="table_td" colspan="2">
+                            <b>Horario de Entrega: </b> {{ $request_tdc->pschedule }}
+                        </td>
+                    </tr>
+                    <tr>
                         <td class="table_td" colspan="2"><b>Teléfonos:</b></td>
                         <td class="table_td">
                             <b>Residencial: </b> {{ $request_tdc->pphone_res }}
@@ -205,6 +213,14 @@
                         </td>
                         <td class="table_td">
                             <b>Email.: </b> {{ $request_tdc->lmail }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table_td" colspan="2">
+                            <b>Cerca De: </b> {{ $request_tdc->lnear }}
+                        </td>
+                        <td class="table_td" colspan="2">
+                            <b>Horario de Entrega: </b> {{ $request_tdc->lschedule }}
                         </td>
                     </tr>
                     <tr>
