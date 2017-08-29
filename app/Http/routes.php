@@ -387,6 +387,13 @@ Route::group(['middleware' => 'auth'], function () {
         ]]);
     });
 
+    Route::group(['prefix' => 'extranet', 'namespace' => 'Extranet'], function () {
+
+        Route::resource('users', 'UsersController');
+        Route::resource('business', 'BusinessController');
+
+    });
+
 });
 
 // DB::listen(function ($query) {

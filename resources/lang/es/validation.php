@@ -236,5 +236,6 @@ return [
       'ref_2_name' => 'Nombre y Apellido',
       'ref_2_phone_res' => 'Teléfono Residencial',
       'ref_2_phone_cel' => 'Teléfono Celular',
+      'username' => 'Usuario',
     ],
 ];
