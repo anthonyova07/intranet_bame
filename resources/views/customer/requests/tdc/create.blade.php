@@ -196,50 +196,50 @@
 
                             <div class="panel-body">
                                 <div class="row">
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('pstreet') ? ' has-error':'' }}">
                                             <label class="control-label">Calle</label>
                                             <input type="text" class="form-control input-sm" name="pstreet" value="{{ old('pstreet') }}">
                                             <span class="help-block">{{ $errors->first('pstreet') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('pnum') ? ' has-error':'' }}">
                                             <label class="control-label">No.</label>
                                             <input type="text" class="form-control input-sm" name="pnum" value="{{ old('pnum') }}">
                                             <span class="help-block">{{ $errors->first('pnum') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('pbuilding') ? ' has-error':'' }}">
                                             <label class="control-label">Edificio</label>
                                             <input type="text" class="form-control input-sm" name="pbuilding" value="{{ old('pbuilding') }}">
                                             <span class="help-block">{{ $errors->first('pbuilding') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('papartment') ? ' has-error':'' }}">
                                             <label class="control-label">Apartamento</label>
                                             <input type="text" class="form-control input-sm" name="papartment" value="{{ old('papartment') }}">
                                             <span class="help-block">{{ $errors->first('papartment') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-2">
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('psector') ? ' has-error':'' }}">
                                             <label class="control-label">Sector</label>
                                             <input type="text" class="form-control input-sm" name="psector" value="{{ old('psector') }}">
                                             <span class="help-block">{{ $errors->first('psector') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('pcountry') ? ' has-error':'' }}">
                                             <label class="control-label">País</label>
                                             <input type="text" disabled class="form-control input-sm" name="pcountry" value="República Dominicana">
                                             <span class="help-block">{{ $errors->first('pcountry') }}</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('pmail') ? ' has-error':'' }}">
                                             <label class="control-label">Correo</label>
@@ -254,14 +254,16 @@
                                             <span class="help-block">{{ $errors->first('pnear') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-2">
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('pschedule') ? ' has-error':'' }}">
                                             <label class="control-label">Horario de Entrega</label>
                                             <input type="text" class="form-control input-sm" name="pschedule" value="{{ old('pschedule') }}">
                                             <span class="help-block">{{ $errors->first('pschedule') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('pphone_res') ? ' has-error':'' }}">
                                             <label class="control-label">Teléfono <abbr title="Residencial">Res</abbr></label>
                                             <select class="" name="parea_code_res">
@@ -273,7 +275,7 @@
                                             <span class="help-block">{{ $errors->first('pphone_res') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('pphone_cel') ? ' has-error':'' }}">
                                             <label class="control-label">Teléfono Celular</label>
                                             <select class="" name="parea_code_cel">
@@ -357,72 +359,74 @@
 
                             <div class="panel-body">
                                 <div class="row">
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('lstreet') ? ' has-error':'' }}">
                                             <label class="control-label">Calle</label>
                                             <input type="text" class="form-control input-sm" name="lstreet" value="{{ old('lstreet') }}">
                                             <span class="help-block">{{ $errors->first('lstreet') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('lnum') ? ' has-error':'' }}">
                                             <label class="control-label">No.</label>
                                             <input type="text" class="form-control input-sm" name="lnum" value="{{ old('lnum') }}">
                                             <span class="help-block">{{ $errors->first('lnum') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('lbuilding') ? ' has-error':'' }}">
                                             <label class="control-label">Edificio</label>
                                             <input type="text" class="form-control input-sm" name="lbuilding" value="{{ old('lbuilding') }}">
                                             <span class="help-block">{{ $errors->first('lbuilding') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('lapartment') ? ' has-error':'' }}">
                                             <label class="control-label">Apartamento</label>
                                             <input type="text" class="form-control input-sm" name="lapartment" value="{{ old('lapartment') }}">
                                             <span class="help-block">{{ $errors->first('lapartment') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-2">
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('lsector') ? ' has-error':'' }}">
                                             <label class="control-label">Sector</label>
                                             <input type="text" class="form-control input-sm" name="lsector" value="{{ old('lsector') }}">
                                             <span class="help-block">{{ $errors->first('lsector') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('lcountry') ? ' has-error':'' }}">
                                             <label class="control-label">País</label>
                                             <input type="text" disabled class="form-control input-sm" name="lcountry" value="República Dominicana">
                                             <span class="help-block">{{ $errors->first('lcountry') }}</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('lmail') ? ' has-error':'' }}">
                                             <label class="control-label">Correo</label>
                                             <input type="text" class="form-control input-sm" name="lmail" value="{{ old('lmail') }}">
                                             <span class="help-block">{{ $errors->first('lmail') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('lnear') ? ' has-error':'' }}">
                                             <label class="control-label">Cerca de</label>
                                             <input type="text" class="form-control input-sm" name="lnear" value="{{ old('lnear') }}">
                                             <span class="help-block">{{ $errors->first('lnear') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-2">
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('lschedule') ? ' has-error':'' }}">
                                             <label class="control-label">Horario de Entrega</label>
                                             <input type="text" class="form-control input-sm" name="lschedule" value="{{ old('lschedule') }}">
                                             <span class="help-block">{{ $errors->first('lschedule') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('lphone_off') ? ' has-error':'' }}">
                                             <label class="control-label">Teléfono Oficina</label>
                                             <select class="" name="larea_code_off">
@@ -434,14 +438,14 @@
                                             <span class="help-block">{{ $errors->first('lphone_off') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('lphone_ext') ? ' has-error':'' }}">
                                             <label class="control-label">Extensión</label>
                                             <input type="text" class="form-control input-sm" name="lphone_ext" maxlength="4" value="{{ old('lphone_ext') }}">
                                             <span class="help-block">{{ $errors->first('lphone_ext') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('lphone_fax') ? ' has-error':'' }}">
                                             <label class="control-label">Fax</label>
                                             <input type="text" class="form-control input-sm" name="lphone_fax" value="{{ old('lphone_fax') }}">
@@ -537,12 +541,10 @@
                     <div class="col-xs-4 col-xs-offset-4">
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-xs-6 col-xs-offset-3">
-                                        {{ csrf_field() }}
-                                        <a class="btn btn-info btn-xs" href="{{ route('customer.request.tdc.create') }}"><i class="fa fa-arrow-left"></i> Atrás</a>
-                                        <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Guardar</button>
-                                    </div>
+                                <div class="row text-center">
+                                    {{ csrf_field() }}
+                                    <a class="btn btn-info btn-xs" href="{{ route('customer.request.tdc.create') }}"><i class="fa fa-arrow-left"></i> Atrás</a>
+                                    <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Guardar</button>
                                 </div>
                             </div>
                         </div>
