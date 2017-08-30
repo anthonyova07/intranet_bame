@@ -50,7 +50,7 @@ class BusinessController extends Controller
         $busi->name = $request->name;
         $busi->address = $request->address;
         $busi->phone = $request->phone;
-        $busi->roles = implode(',', $request->roles);
+        $busi->roles = $request->roles ? implode(',', $request->roles) : null;
         $busi->created_by = session()->get('user');
         $busi->save();
 
@@ -88,7 +88,7 @@ class BusinessController extends Controller
         $busi->name = $request->name;
         $busi->address = $request->address;
         $busi->phone = $request->phone;
-        $busi->roles = implode(',', $request->roles);
+        $busi->roles = $request->roles ? implode(',', $request->roles) : null;
         $busi->updated_by = session()->get('user');
         $busi->save();
 
