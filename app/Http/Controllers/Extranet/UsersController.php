@@ -2,45 +2,59 @@
 
 namespace Bame\Http\Controllers\Extranet;
 
-use Illuminate\Http\Request;
-
-use Bame\Http\Requests;
-use Bame\Http\Controllers\Controller;
-
 use DateTime;
+use Bame\Http\Requests;
+use Illuminate\Http\Request;
 use Bame\Models\Extranet\Users;
+use Bame\Models\Extranet\Business;
+use Bame\Http\Controllers\Controller;
 use Bame\Http\Requests\Extranet\UsersRequest;
 
 class UsersController extends Controller
 {
+    private $business;
+
+    function __construct()
+    {
+        $this->business = Business::get();
+    }
+
     public function index(Request $request)
     {
         $users = Users::orderBy('created_at', 'desc');
 
-        // if ($request->term) {
-        //     $users->where(function ($query) use ($request) {
-        //         $query->where('title', 'like', '%' . $request->term . '%')
-        //             ->orWhere('detail', 'like', '%' . $request->term . '%');
-        //     });
-        // }
-        //
-        // if ($request->date_from) {
-        //     $users->where('created_at', '>=', $request->date_from . ' 00:00:00');
-        // }
-        //
-        // if ($request->date_to) {
-        //     $users->where('created_at', '<=', $request->date_to . ' 23:59:59');
-        // }
+        if ($request->term) {
+            $users->where(function ($query) use ($request) {
+                $query->where('full_name', 'like', '%' . $request->term . '%')
+                    ->orWhere('identifica', 'like', '%' . $request->term . '%')
+                    ->orWhere('position', 'like', '%' . $request->term . '%')
+                    ->orWhere('username', 'like', '%' . $request->term . '%');
+            });
+        }
+
+        if ($request->business) {
+            $users->where('busi_id', $request->business);
+        }
+
+        if ($request->date_from) {
+            $users->where('created_at', '>=', $request->date_from . ' 00:00:00');
+        }
+
+        if ($request->date_to) {
+            $users->where('created_at', '<=', $request->date_to . ' 23:59:59');
+        }
 
         $users = $users->paginate();
 
         return view('extranet.users.index')
+            ->with('business', $this->business)
             ->with('users', $users);
     }
 
     public function create()
     {
-        return view('extranet.users.create');
+        return view('extranet.users.create')
+            ->with('business', $this->business);
     }
 
     public function store(UsersRequest $request)

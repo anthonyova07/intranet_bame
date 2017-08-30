@@ -79,7 +79,7 @@
                                     <td>{{ $busi->created_at->format('d/m/Y h:i:s A') }}</td>
                                     <td align="center">
                                         <a
-                                            href="{{ route('extranet.business.edit', ['id' => $new->id]) }}"
+                                            href="{{ route('extranet.business.edit', ['id' => $busi->id]) }}"
                                             data-toggle="tooltip"
                                             data-placement="top"
                                             title="Editar"

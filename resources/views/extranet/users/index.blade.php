@@ -21,7 +21,7 @@
                 <div class="panel-body">
                     <form method="get" action="{{ route('extranet.users.index') }}" id="form">
                         <div class="row">
-                            <div class="col-xs-6">
+                            <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('term') ? ' has-error':'' }}">
                                     <label class="control-label">Término</label>
                                     <input type="text" class="form-control input-sm" name="term" placeholder="término de busqueda..." value="{{ request('term') }}">
@@ -30,15 +30,27 @@
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('date_from') ? ' has-error':'' }}">
+                                    <label class="control-label">Empresa</label>
+                                    <select name="business" class="form-control input-sm">
+                                        <option value=""></option>
+                                        @foreach ($business as $busi)
+                                            <option value="{{ $busi->id }}"{{ request('business') ? ' selected':'' }}>{{ $busi->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="help-block">{{ $errors->first('date_from') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group{{ $errors->first('date_from') ? ' has-error':'' }}">
                                     <label class="control-label">Desde</label>
-                                    <input type="date" class="form-control input-sm" name="date_from" value="{{ old('date_from') }}">
+                                    <input type="date" class="form-control input-sm" name="date_from" value="{{ request('date_from') }}">
                                     <span class="help-block">{{ $errors->first('date_from') }}</span>
                                 </div>
                             </div>
                             <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('date_to') ? ' has-error':'' }}">
                                     <label class="control-label">Hasta</label>
-                                    <input type="date" class="form-control input-sm" name="date_to" value="{{ old('date_to') }}">
+                                    <input type="date" class="form-control input-sm" name="date_to" value="{{ request('date_to') }}">
                                     <span class="help-block">{{ $errors->first('date_to') }}</span>
                                 </div>
                             </div>
@@ -83,7 +95,7 @@
                                     <td>{{ $user->created_at->format('d/m/Y h:i:s A') }}</td>
                                     <td align="center">
                                         <a
-                                            href="{{ route('extranet.users.edit', ['id' => $new->id]) }}"
+                                            href="{{ route('extranet.users.edit', ['id' => $user->id]) }}"
                                             data-toggle="tooltip"
                                             data-placement="top"
                                             title="Editar"

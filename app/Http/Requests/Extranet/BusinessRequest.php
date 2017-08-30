@@ -4,7 +4,7 @@ namespace Bame\Http\Requests\Extranet;
 
 use Bame\Http\Requests\Request;
 
-class UsersRequest extends Request
+class BusinessRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

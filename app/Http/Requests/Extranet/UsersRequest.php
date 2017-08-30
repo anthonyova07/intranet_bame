@@ -29,7 +29,7 @@ class UsersRequest extends Request
             'identification' => 'required|max:45',
             'position' => 'required|max:45',
             'username' => 'required|max:45|alpha',
-            'password' => 'required|confirmed',
+            'password' => 'confirmed' . ($this->users ? '':'|required'),
         ];
     }
 }
