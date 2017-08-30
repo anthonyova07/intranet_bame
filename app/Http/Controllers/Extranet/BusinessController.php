@@ -45,15 +45,16 @@ class BusinessController extends Controller
 
     public function store(BusinessRequest $request)
     {
-        $user = new Business;
-        $user->id = uniqid(true);
-        $user->name = $request->name;
-        $user->address = $request->address;
-        $user->phone = $request->phone;
-        $user->created_by = session()->get('user');
-        $user->save();
+        $busi = new Business;
+        $busi->id = uniqid(true);
+        $busi->name = $request->name;
+        $busi->address = $request->address;
+        $busi->phone = $request->phone;
+        $busi->roles = implode(',', $request->roles);
+        $busi->created_by = session()->get('user');
+        $busi->save();
 
-        do_log('Creó la Empresa Extranet ( name:' . $user->name . ' )');
+        do_log('Creó la Empresa Extranet ( nombre:' . $busi->name . ' )');
 
         return redirect()->route('extranet.business.create')->with('success', 'La Empresa fue creada correctamente.');
 
@@ -78,34 +79,35 @@ class BusinessController extends Controller
 
     public function update(BusinessRequest $request, $id)
     {
-        $user = Business::find($id);
+        $busi = Business::find($id);
 
-        if (!$user) {
+        if (!$busi) {
             return back()->with('warning', 'Esta empresa no existe!');
         }
 
-        $user->name = $request->name;
-        $user->address = $request->address;
-        $user->phone = $request->phone;
-        $user->updated_by = session()->get('user');
-        $user->save();
+        $busi->name = $request->name;
+        $busi->address = $request->address;
+        $busi->phone = $request->phone;
+        $busi->roles = implode(',', $request->roles);
+        $busi->updated_by = session()->get('user');
+        $busi->save();
 
-        do_log('Editó la Empresa Extranet ( name:' . $user->name . ' )');
+        do_log('Editó la Empresa Extranet ( nombre:' . $busi->name . ' )');
 
         return redirect()->route('extranet.business.index')->with('success', 'La Empresa ha sido modificado correctamente.');
     }
 
     public function destroy($id)
     {
-        $user = Business::find($id);
+        $busi = Business::find($id);
 
-        if (!$user) {
+        if (!$busi) {
             return back()->with('warning', 'Esta empresa no existe!');
         }
 
-        $user->delete();
+        $busi->delete();
 
-        do_log('Eliminó la Empresa Extranet ( name:' . $user->name . ' )');
+        do_log('Eliminó la Empresa Extranet ( nombre:' . $busi->name . ' )');
 
         return redirect(route('extranet.business.index'))->with('success', 'La Empresa ha sido eliminado correctamente.');
     }

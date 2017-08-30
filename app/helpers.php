@@ -854,3 +854,16 @@ function get_request_tdc_param($type, $plural = true)
             break;
     }
 }
+
+function extranet_roles($rol = null)
+{
+    $roles = collect([
+        'requests_tdc' => 'Solicitudes de Tarjeta',
+    ]);
+
+    if (!$rol) {
+        return $roles;
+    }
+
+    return $roles->get($rol);
+}
