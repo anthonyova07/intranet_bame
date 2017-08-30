@@ -20,4 +20,14 @@ class Business extends Model
     {
         return $this->hasMany(Users::class, 'id', 'busi_id');
     }
+
+    public function getRolesArray()
+    {
+        return explode(',', $this->roles);
+    }
+
+    public function hasRole($role)
+    {
+        return in_array($role, $this->getRolesArray());
+    }
 }

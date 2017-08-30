@@ -40,6 +40,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            @foreach (extranet_roles() as $key => $role)
+                                <div class="col-xs-4">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="roles[]" value="{{ $key }}"> {{ $role }}
+                                        </label>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                         {{ csrf_field() }}
                         <a class="btn btn-info btn-xs" href="{{ route('extranet.business.index') }}"><i class="fa fa-arrow-left"></i> Atrás</a>
                         <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Guardar</button>
