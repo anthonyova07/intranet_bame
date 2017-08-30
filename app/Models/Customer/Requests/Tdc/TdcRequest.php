@@ -3,6 +3,7 @@
 namespace Bame\Models\Customer\Requests\Tdc;
 
 use Illuminate\Database\Eloquent\Model;
+use Bame\Models\HumanResource\Employee\Employee;
 
 class TdcRequest extends Model
 {
@@ -23,7 +24,7 @@ class TdcRequest extends Model
 
     public static function searchFromDBFile($identification)
     {
-        $path = storage_path('app\\solicitudes_tdc_db.csv');
+        $path = storage_path('app\\solicitudes_tdc_db_'.strtolower(Employee::getChannel()).'.csv');
 
         if (!file_exists($path)) {
             return null;

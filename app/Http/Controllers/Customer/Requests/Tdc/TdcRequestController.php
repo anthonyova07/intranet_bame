@@ -51,7 +51,7 @@ class TdcRequestController extends Controller
             $customer = TdcRequest::searchFromDBFile($request->identification);
 
             if (!$customer) {
-                return back()->with('warning', 'El cliente no ha sido encontrado o no se ha cargado la base de datos.');
+                return back()->with('warning', 'El cliente no ha sido encontrado o no se ha cargado la base de datos para el canal ' . Employee::getChannel());
             }
 
             $customer_processed = CustomerProcessed::byIdentification($customer->identification)->lastestFirst()->first();
