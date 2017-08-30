@@ -49,7 +49,7 @@ class BusinessController extends Controller
         $user->id = uniqid(true);
         $user->name = $request->name;
         $user->address = $request->address;
-        $user->phoe = $request->phone;
+        $user->phone = $request->phone;
         $user->created_by = session()->get('user');
         $user->save();
 
@@ -66,14 +66,14 @@ class BusinessController extends Controller
 
     public function edit($id)
     {
-        $user = Business::find($id);
+        $busi = Business::find($id);
 
-        if (!$user) {
+        if (!$busi) {
             return back()->with('warning', 'Esta empresa no existe!');
         }
 
         return view('extranet.business.edit')
-            ->with('user', $user);
+            ->with('busi', $busi);
     }
 
     public function update(BusinessRequest $request, $id)
@@ -86,7 +86,7 @@ class BusinessController extends Controller
 
         $user->name = $request->name;
         $user->address = $request->address;
-        $user->phoe = $request->phone;
+        $user->phone = $request->phone;
         $user->updated_by = session()->get('user');
         $user->save();
 
