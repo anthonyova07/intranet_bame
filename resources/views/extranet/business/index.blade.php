@@ -82,7 +82,7 @@
                                             <option>Roles de {{ $busi->name }}</option>
                                             @foreach ($busi->getRolesArray() as $role)
                                                 <option>{{ extranet_roles($role) }}</option>
-                                             @endforeach
+                                            @endforeach
                                         </select>
                                     </td>
                                     <td>{{ $busi->created_at->format('d/m/Y h:i:s A') }}</td>

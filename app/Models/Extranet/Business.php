@@ -23,7 +23,7 @@ class Business extends Model
 
     public function getRolesArray()
     {
-        return explode(',', $this->roles);
+        return $this->roles ? explode(',', $this->roles) : [];
     }
 
     public function hasRole($role)
