@@ -455,6 +455,11 @@
                                     <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('lphone_fax') ? ' has-error':'' }}">
                                             <label class="control-label">Fax</label>
+                                            <select class="" name="larea_code_off">
+                                                @foreach (get_area_codes() as $code)
+                                                    <option value="{{ $code }}"{{ old('larea_code_fax') == $code ? ' selected':'' }}>{{ $code }}</option>
+                                                @endforeach
+                                            </select>
                                             <input type="text" class="form-control input-sm" name="lphone_fax" value="{{ old('lphone_fax') }}">
                                             <span class="help-block">{{ $errors->first('lphone_fax') }}</span>
                                         </div>

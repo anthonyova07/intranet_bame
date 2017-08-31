@@ -142,7 +142,7 @@ class TdcRequestController extends Controller
         $request_tdc->lschedule = $request->lschedule;
         $request_tdc->lphone_off = $request->larea_code_off.$request->lphone_off;
         $request_tdc->lphone_ext = $request->lphone_ext;
-        $request_tdc->lphone_fax = $request->lphone_fax;
+        $request_tdc->lphone_fax = $request->larea_code_fax.$request->lphone_fax;
 
         $request_tdc->ref1names = $request->ref_1_name;
         $request_tdc->ref1phores = $request->area_code_ref1_res.$request->ref_1_phone_res;
