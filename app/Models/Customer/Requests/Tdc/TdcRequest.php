@@ -24,7 +24,7 @@ class TdcRequest extends Model
 
     public static function searchFromDBFile($identification)
     {
-        $path = config('bame.requests.db.url') . strtolower(Employee::getChannel()).'.csv';
+        $path = config('bame.requests.db.url') . 'solicitudes_tdc_db_'.strtolower(Employee::getChannel()).'.csv';
 
         if (!file_exists($path)) {
             return null;

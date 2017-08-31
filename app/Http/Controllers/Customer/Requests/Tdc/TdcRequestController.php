@@ -292,4 +292,18 @@ class TdcRequestController extends Controller
         return view('customer.requests.tdc.excel')
             ->with('customers', $customers->get());
     }
+
+    public function load(Request $request)
+    {
+        if ($request->hasFile('file')) {
+
+            $path = config('bame.requests.db.url');
+
+            $request->file->move($path, 'solicitudes_tdc_db_' . strtolower($request->channel) .'.csv');
+
+            return back()->with('success', 'Los archivos han sido cargados correctamente.');
+        }
+
+        return back()->with('warning', 'Debe seleccionar un archivo a cargar.');
+    }
 }

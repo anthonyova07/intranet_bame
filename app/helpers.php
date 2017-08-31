@@ -867,3 +867,27 @@ function extranet_roles($rol = null)
 
     return $roles->get($rol);
 }
+
+function get_channels($channel = null)
+{
+    $channels = collect([
+        'EMP' => 'Empleados',
+        'CCI' => 'Call Center Interno',
+        'CCE' => 'Call Center Externo',
+        'SUC001' => 'Oficina Principal',
+        // 'SUC002' => 'Banca Comercial',
+        'SUC003' => 'Bella Vista',
+        'SUC004' => 'Blue Mall',
+        'SUC005' => 'Lopez de Vega',
+        'SUC006' => 'San Vicente',
+        'SUC007' => 'Barahona',
+        'SUC008' => 'Neyba',
+        'SUC009' => 'Vicente Noble',
+    ]);
+
+    if (!$channel) {
+        return $channels;
+    }
+
+    return $channels->get($channel);
+}

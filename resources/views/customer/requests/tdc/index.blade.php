@@ -188,6 +188,39 @@
                 </div>
             </div>
 
+            <div class="col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Carga de Archivos</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form method="post" action="{{ route('customer.request.tdc.load') }}" id="form" enctype="multipart/form-data" novalidate>
+                            <div class="col-xs-8" style="padding-left: 0px;padding-right: 0px;">
+                                <div class="form-group">
+                                    <label class="control-label">
+                                        Cargar Archivo de Canal
+                                        <small style="font-size: 11px;" class="label label-warning">MAX 10MB</small>
+                                    </label>
+                                    <input type="file" name="file">
+                                </div>
+                            </div>
+                            <div class="col-xs-4" style="padding-left: 0px;padding-right: 0px;">
+                                <div class="form-group">
+                                    <label class="control-label">Cargar al Canal</label>
+                                    <select class="form-control input-sm" name="channel">
+                                        @foreach (get_channels() as $key => $channel)
+                                            <option value="{{ $key }}">{{ $channel }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            {{ csrf_field() }}
+                            <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Cargando...">Cargar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     @endif

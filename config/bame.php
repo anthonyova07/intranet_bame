@@ -44,7 +44,7 @@ return [
 
     'requests' => [
         'db' => [
-            'url' => env('REQUEST_TDC_URL', 'C:\xampp\htdocs\intranet\storage\app\db_requests\solicitudes_tdc_db_'),
+            'url' => env('REQUEST_TDC_URL', 'C:\xampp\htdocs\intranet\storage\app\db_requests\\'),
         ],
     ],
 

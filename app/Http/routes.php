@@ -55,7 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('mantenimientos/menstchst','Mantenimientos\MensTCHst\MensajeHstcontroller');   
 
     Route::get('reportehistoricomsg/{codigo}','Mantenimientos\MensTChst\MensajeHstcontroller@reportehistoricomsg');
-    
+
 
 
     Route::group(['prefix' => 'security'], function () {
@@ -358,6 +358,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::get('print', 'TdcRequestController@print')->name('customer.request.tdc.print');
                 Route::post('located/{identification}/{reqnumber?}', 'TdcRequestController@located')->name('customer.request.tdc.located');
                 Route::get('excel', 'TdcRequestController@excel')->name('customer.request.tdc.excel');
+                Route::post('load', 'TdcRequestController@load')->name('customer.request.tdc.load');
             });
 
             Route::resource('tdc', 'TdcRequestController', ['only' => [
