@@ -209,7 +209,7 @@
                                 <div class="row">
                                     <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('pstreet') ? ' has-error':'' }}">
-                                            <label class="control-label">Calle</label>
+                                            <label class="control-label">Avenida/Calle</label>
                                             <input type="text" class="form-control input-sm" name="pstreet" value="{{ old('pstreet') }}">
                                             <span class="help-block">{{ $errors->first('pstreet') }}</span>
                                         </div>
@@ -368,7 +368,7 @@
                                 <div class="row">
                                     <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('lstreet') ? ' has-error':'' }}">
-                                            <label class="control-label">Calle</label>
+                                            <label class="control-label">Avenida/Calle</label>
                                             <input type="text" class="form-control input-sm" name="lstreet" value="{{ old('lstreet') }}">
                                             <span class="help-block">{{ $errors->first('lstreet') }}</span>
                                         </div>
