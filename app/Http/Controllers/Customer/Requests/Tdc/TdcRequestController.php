@@ -43,7 +43,7 @@ class TdcRequestController extends Controller
         ]);
     }
 
-    public function create(Request $request)
+    public function create(Request $request, $is_extranet = false)
     {
         $customer = null;
 
@@ -51,7 +51,7 @@ class TdcRequestController extends Controller
             $customer = TdcRequest::searchFromDBFile($request->identification);
 
             if (!$customer) {
-                return back()->with('warning', 'El cliente no ha sido encontrado o no se ha cargado la base de datos para el canal ' . Employee::getChannel());
+                return back()->with('warning', 'El cliente no ha sido encontrado o no se ha cargado la base de datos para el canal: ' . Employee::getChannel(true));
             }
 
             $customer_processed = CustomerProcessed::byIdentification($customer->identification)->lastestFirst()->first();
@@ -75,8 +75,10 @@ class TdcRequestController extends Controller
 
         $denails = collect();
 
-        if ($request->accept == 'no') {
-            $denails = Param::denails()->get();
+        if (!$is_extranet) {
+            if ($request->accept == 'no') {
+                $denails = Param::denails()->get();
+            }
         }
 
         return view('customer.requests.tdc.create', [

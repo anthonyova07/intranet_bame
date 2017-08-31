@@ -64,7 +64,7 @@ class Employee extends Model
             str_contains($this->getTitle(), 'negocio');
     }
 
-    public static function getChannel()
+    public static function getChannel($description = false)
     {
         if (session()->has('employee')) {
             $employee = session('employee');
@@ -72,16 +72,20 @@ class Employee extends Model
             $office = $employee->getOffice();
 
             if ($employee->isBusinessOfficer()) {
+                if ($description) {
+                    return get_office_code($office, $description);
+                }
+
                 return get_channel_officer(get_office_code($office));
             }
 
             if ($employee->isCallCenter()) {
-                return 'CCI';
+                return $description ? 'Call Center Interno':'CCI';
             }
 
-            return 'EMP';
+            return $description ? 'Empleado':'EMP';
         }
 
-        return 'CCE';
+        return $description ? 'Call Center Externo':'CCE';
     }
 }

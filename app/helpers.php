@@ -829,19 +829,19 @@ function get_channel_officer($code)
     return 'SUC' . str_pad($code, 3, '0', STR_PAD_LEFT);
 }
 
-function get_office_code($office)
+function get_office_code($office, $description = false)
 {
     $office = strtolower(trim($office));
 
-    if (str_contains($office, 'oficina principal')) { return 1; }
-    if (str_contains($office, 'banca comercial')) { return 2; }
-    if (str_contains($office, 'bella vista')) { return 3; }
-    if (str_contains($office, 'blue mall')) { return 4; }
-    if (str_contains($office, 'de vega')) { return 5; }
-    if (str_contains($office, 'san vicente')) { return 6; }
-    if (str_contains($office, 'barahona')) { return 7; }
-    if (str_contains($office, 'neyba')) { return 8; }
-    if (str_contains($office, 'vicente noble')) { return 9; }
+    if (str_contains($office, 'oficina principal')) { return $descripcion ? 'Oficina Principal':1; }
+    if (str_contains($office, 'banca comercial')) { return $descripcion ? 'Banca Comercial':2; }
+    if (str_contains($office, 'bella vista')) { return $descripcion ? 'Bella Vista':3; }
+    if (str_contains($office, 'blue mall')) { return $descripcion ? 'Blue Mall':4; }
+    if (str_contains($office, 'de vega')) { return $descripcion ? 'Lopez de Vega':5; }
+    if (str_contains($office, 'san vicente')) { return $descripcion ? 'San Vicente':6; }
+    if (str_contains($office, 'barahona')) { return $descripcion ? 'Barahona':7; }
+    if (str_contains($office, 'neyba')) { return $descripcion ? 'Neyba':8; }
+    if (str_contains($office, 'vicente noble')) { return $descripcion ? 'Vicente Noble':9; }
 
     return null;
 }
