@@ -389,7 +389,7 @@
                                     </div>
                                     <div class="col-xs-3">
                                         <div class="form-group{{ $errors->first('lapartment') ? ' has-error':'' }}">
-                                            <label class="control-label">Apartamento</label>
+                                            <label class="control-label">Apartamento / Oficina</label>
                                             <input type="text" class="form-control input-sm" name="lapartment" value="{{ old('lapartment') }}">
                                             <span class="help-block">{{ $errors->first('lapartment') }}</span>
                                         </div>
