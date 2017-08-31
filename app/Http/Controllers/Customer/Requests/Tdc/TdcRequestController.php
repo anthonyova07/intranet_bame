@@ -58,11 +58,11 @@ class TdcRequestController extends Controller
 
             if ($customer_processed) {
                 if ($customer_processed->hasRequestCreated()) {
-                    return redirect()->route('customer.request.tdc.create')->with('warning', 'Este cliente ya tiene una solicitud creada.');
+                    return back()->with('warning', 'Este cliente ya tiene una solicitud creada.');
                 }
 
                 if ($customer_processed->isBlack()) {
-                    return redirect()->route('customer.request.tdc.create')->with('error', 'Este cliente ya no puede ser contactado por: ' . $customer_processed->denail->note);
+                    return back()->with('error', 'Este cliente ya no puede ser contactado por: ' . $customer_processed->denail->note);
                 }
 
                 if ($customer_processed->hasDenail()) {

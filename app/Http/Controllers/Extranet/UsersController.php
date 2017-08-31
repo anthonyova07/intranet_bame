@@ -107,6 +107,9 @@ class UsersController extends Controller
         $user->identifica = $request->identification;
         $user->position = $request->position;
         $user->username = $request->username;
+        if ($request->password) {
+            $user->password = bcrypt($request->password);
+        }
         $user->updated_by = session()->get('user');
         $user->save();
 
