@@ -53,7 +53,7 @@ class RequestTdcRequest extends Request
             'lschedule' => 'required_if:send_dir_plastic,laboral|max:100',
             'lphone_off' => 'required|numeric|max:9999999',
             'lphone_ext' => 'numeric|max:9999',
-            'lphone_fax' => 'numeric|max:9999999',
+            'lphone_fax' => 'numeric|max:9999999999',
             'send_dir_plastic' => 'required',
             'ref_1_name' => 'max:100',
             'ref_1_phone_res' => 'numeric|max:9999999',

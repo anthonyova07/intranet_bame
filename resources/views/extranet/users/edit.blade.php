@@ -22,7 +22,9 @@
                                 <div class="form-group{{ $errors->first('business') ? ' has-error':'' }}">
                                     <label class="control-label">Empresa</label>
                                     <select class="form-control input-sm" name="business">
-                                        <option value="test">Test</option>
+                                        @foreach ($business as $busi)
+                                            <option value="{{ $busi->id }}"{{ $busi->id == $user->busi_id ? ' selected':'' }}>{{ $busi->name }}</option>
+                                        @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('business') }}</span>
                                 </div>

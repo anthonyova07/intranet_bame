@@ -90,6 +90,7 @@ class UsersController extends Controller
         }
 
         return view('extranet.users.edit')
+            ->with('business', $this->business)
             ->with('user', $user);
     }
 
