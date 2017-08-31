@@ -79,13 +79,15 @@ class TdcRequestController extends Controller
             if ($request->accept == 'no') {
                 $denails = Param::denails()->get();
             }
-        }
 
-        return view('customer.requests.tdc.create', [
-            'customer' => $customer,
-            'denails' => $denails,
-            'accept' => $request->accept
-        ]);
+            return view('customer.requests.tdc.create', [
+                'customer' => $customer,
+                'denails' => $denails,
+                'accept' => $request->accept
+            ]);
+        } else {
+            return $customer;
+        }
     }
 
     public function store(RequestTdcRequest $request, $is_extranet = false)
