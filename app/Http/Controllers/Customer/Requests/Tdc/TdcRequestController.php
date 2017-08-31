@@ -86,7 +86,7 @@ class TdcRequestController extends Controller
         ]);
     }
 
-    public function store(RequestTdcRequest $request)
+    public function store(RequestTdcRequest $request, $is_extranet = false)
     {
         $request_tdc = new TdcRequest;
 
@@ -96,7 +96,7 @@ class TdcRequestController extends Controller
 
         $customer = session('customer_request_tdc');
 
-        $request_tdc->id = uniqid(true);
+        $request_tdc->id = uniqid(strtolower(Employee::getChannel()).'_', true);
         $request_tdc->channel = Employee::getChannel();
         $request_tdc->reqstatus = 'Pendiente de Aprobación';
 
@@ -156,18 +156,26 @@ class TdcRequestController extends Controller
         $request_tdc->committee = $customer->committee;
         $request_tdc->commitdate = $customer->committee_date;
 
-        $request_tdc->created_by = session()->get('user');
-        $request_tdc->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+        if ($is_extranet) {
+            $request_tdc->created_by = auth()->user()->username;
+            $request_tdc->createname = auth()->user()->full_name;
+        } else {
+            $request_tdc->created_by = session()->get('user');
+            $request_tdc->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+        }
 
         $request_tdc->reqnumber = get_next_request_tdc_number();
         $request_tdc->save();
 
-        $this->located($request, $customer->identification, $request_tdc->reqnumber);
+        $this->located($request, $customer->identification, $request_tdc->reqnumber, $is_extranet);
 
-        do_log('Creó la Solicitud de Tarjeta ( número:' . strip_tags($request_tdc->reqnumber) . ' )');
+        if ($is_extranet) {
+            return $request_tdc;
+        } else {
+            do_log('Creó la Solicitud de Tarjeta ( número:' . strip_tags($request_tdc->reqnumber) . ' )');
 
-        return redirect(route('customer.request.tdc.show', [$request_tdc->id]))->with('success', 'La solicitud ha sido creada correctamente.');
-
+            return redirect(route('customer.request.tdc.show', [$request_tdc->id]))->with('success', 'La solicitud ha sido creada correctamente.');
+        }
     }
 
     public function show($tdc)
@@ -195,7 +203,7 @@ class TdcRequestController extends Controller
             ->with('requests_tdc', $requests_tdc);
     }
 
-    public function located(Request $request, $identification, $reqnumber = null)
+    public function located(Request $request, $identification, $reqnumber = null, $is_extranet = false)
     {
         $customer = session('customer_request_tdc');
 
@@ -244,14 +252,23 @@ class TdcRequestController extends Controller
         $customer_processed->committee = $customer->committee;
         $customer_processed->commitdate = $customer->committee_date;
 
-        $customer_processed->created_by = session()->get('user');
-        $customer_processed->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+        if ($is_extranet) {
+            $customer_processed->created_by = auth()->user()->username;
+            $customer_processed->createname = auth()->user()->full_name;
+        } else {
+            $customer_processed->created_by = session()->get('user');
+            $customer_processed->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+
+            do_log('Procesó al Cliente para Sol. de TDC ( identificación:' . strip_tags($customer->identification) . ' )');
+        }
 
         $customer_processed->save();
 
-        do_log('Procesó al Cliente para Sol. de TDC ( identificación:' . strip_tags($customer->identification) . ' )');
-
-        return redirect(route('customer.request.tdc.create'))->with('success', 'El cliente ha sido procesado correctamente.');
+        if ($is_extranet) {
+            return $customer_processed;
+        } else {
+            return redirect(route('customer.request.tdc.create'))->with('success', 'El cliente ha sido procesado correctamente.');
+        }
     }
 
     public function excel(Request $request)

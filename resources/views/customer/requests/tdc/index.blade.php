@@ -92,7 +92,7 @@
                                     <th># Solicitud</th>
                                     <th>Nombre</th>
                                     <th>Producto</th>
-                                    <th>Estatus</th>
+                                    <th>Canal</th>
                                     <th style="width: 112px;">Fecha Creación</th>
                                     <th style="width: 112px;">Creado por</th>
                                     <th class="text-center" style="width: 75px">
@@ -106,7 +106,7 @@
                                         <td>{{ $request_tdc->reqnumber }}</td>
                                         <td>{{ $request_tdc->names }}</td>
                                         <td>{{ $request_tdc->producttyp }}</td>
-                                        <td>{{ $request_tdc->reqstatus }}</td>
+                                        <td>{{ $request_tdc->channel }}</td>
                                         <td>{{ $request_tdc->created_at->format('d/m/Y H:i:s') }}</td>
                                         <td>{{ $request_tdc->createname }}</td>
                                         <td align="center">
