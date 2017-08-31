@@ -2,7 +2,7 @@
 
 @section('title', 'Procesos -> Solicitudes')
 
-@section('page_title', 'Solicitudes de Tarjetas')
+@section('page_title', 'Gestión de Campañas')
 
 @if (can_not_do('customer_requests_tdc'))
     @section('contents')
