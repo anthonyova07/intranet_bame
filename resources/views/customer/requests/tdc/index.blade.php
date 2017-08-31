@@ -195,7 +195,7 @@
                     </div>
                     <div class="panel-body">
                         <form method="post" action="{{ route('customer.request.tdc.load') }}" id="form" enctype="multipart/form-data" novalidate>
-                            <div class="col-xs-8" style="padding-left: 0px;padding-right: 0px;">
+                            <div class="col-xs-12" style="padding-left: 0px;padding-right: 0px;">
                                 <div class="form-group">
                                     <label class="control-label">
                                         Cargar Archivo de Canal
@@ -204,7 +204,7 @@
                                     <input type="file" name="file">
                                 </div>
                             </div>
-                            <div class="col-xs-4" style="padding-left: 0px;padding-right: 0px;">
+                            <div class="col-xs-12" style="padding-left: 0px;padding-right: 0px;">
                                 <div class="form-group">
                                     <label class="control-label">Cargar al Canal</label>
                                     <select class="form-control input-sm" name="channel">
