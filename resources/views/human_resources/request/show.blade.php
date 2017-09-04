@@ -58,10 +58,12 @@
                                 <a class="btn btn-danger btn-xs" href="{{ route('human_resources.request.approve', ['request_id' => $human_resource_request->id, 'to_approve' => 'r', 'type' => 'sup']) }}"><i class="fa fa-close"></i> Rechazar</a>
                             @endif
 
-                            @if ($human_resource_request->approvesup != 'p')
-                                <span style="font-size: 13px;margin: 0 5px;" class="label label-{{ $human_resource_request->approvesup == 'a' ? 'success' : 'danger' }}">
-                                    {{ $human_resource_request->approvesup == 'a' ? 'Aprobada por Supervisor' : 'Rechazada por Supervisor' }}
-                                </span>
+                            @if (!in_array($human_resource_request->reqtype, ['ANT']))
+                                @if ($human_resource_request->approvesup != 'p')
+                                    <span style="font-size: 13px;margin: 0 5px;" class="label label-{{ $human_resource_request->approvesup == 'a' ? 'success' : 'danger' }}">
+                                        {{ $human_resource_request->approvesup == 'a' ? 'Aprobada por Supervisor' : 'Rechazada por Supervisor' }}
+                                    </span>
+                                @endif
                             @endif
 
                             @if ($human_resource_request->rhuser)
