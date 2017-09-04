@@ -75,7 +75,7 @@
                     <div class="row">
                         <div class="col-xs-4">
                             {{ csrf_field() }}
-                            <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Guardar</button>
+                            <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Enviando...">Enviar</button>
                         </div>
                     </div>
                 </div>

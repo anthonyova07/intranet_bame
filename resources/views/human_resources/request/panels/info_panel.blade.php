@@ -40,7 +40,7 @@
                                     @endforeach
                                 </select>
                                 <span class="input-group-btn" style="padding-top: 23px;">
-                                    <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Guardar</button>
+                                    <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Enviando...">Enviar</button>
                                 </span>
                             </div>
                             {{ csrf_field() }}
