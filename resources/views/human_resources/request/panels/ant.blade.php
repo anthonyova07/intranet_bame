@@ -10,7 +10,7 @@
         <div class="col-xs-8 col-xs-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Detalle de la Solicitud ( {{ $type_desc }} )</h3>
+                    <h3 class="panel-title">Detalle de la Solicitud ({{ $type_desc }})</h3>
                 </div>
 
                 <div class="panel-body">

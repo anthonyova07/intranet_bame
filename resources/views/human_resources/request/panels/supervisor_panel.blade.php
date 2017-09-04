@@ -5,17 +5,15 @@
                 <h3 class="panel-title">
                     Datos del Supervisor
                     @if (isset($human_resource_request))
-                        (
                         @if ($human_resource_request->approvesup == 'p')
-                            Pendiente
+                            (Pendiente)
                         @else
                             @if ($human_resource_request->approvesup == 'a')
-                                Aprobada
+                                (Aprobada)
                             @else
-                                Rechazada
+                                (Rechazada)
                             @endif
                         @endif
-                        )
                     @endif
                 </h3>
             </div>

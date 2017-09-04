@@ -4,17 +4,15 @@
             <h3 class="panel-title">
                 Recursos Humanos
                 @if (isset($human_resource_request))
-                    (
                     @if (!$human_resource_request->rhuser)
-                        Pendiente
+                        (Pendiente)
                     @else
                         @if ($human_resource_request->approverh)
-                            Aprobada
+                            (Aprobada)
                         @else
-                            Rechazada
+                            (Rechazada)
                         @endif
                     @endif
-                    )
                 @endif
             </h3>
         </div>
