@@ -49,8 +49,8 @@
                                     <label class="control-label">Estatus</label>
                                     <select class="form-control input-sm" name="status">
                                         <option value="todos">Todos</option>
-                                        @foreach ($params->where('type', 'EST') as $est)
-                                            <option value="{{ $est->name }}" {{ request('status') == $est->name ? 'selected':'' }}>{{ $est->name }}</option>
+                                        @foreach ($statuses as $index => $status)
+                                            <option value="{{ $status }}" {{ request('status') == $status ? 'selected':'' }}>{{ $status }}</option>
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('status') }}</span>
@@ -186,7 +186,7 @@
                 </div>
             </div>
 
-            <div class="col-xs-6">
+            {{-- <div class="col-xs-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Estatus</h3>
@@ -226,7 +226,7 @@
                         </table>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
         </div>
 

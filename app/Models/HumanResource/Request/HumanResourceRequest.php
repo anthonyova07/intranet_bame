@@ -23,6 +23,11 @@ class HumanResourceRequest extends Model
         return $query->where('is_active', true);
     }
 
+    public function scopeStatuses($query)
+    {
+        return $query->select('reqstatus')->groupBy('reqstatus')->orderBy('reqstatus')->get()->pluck('reqstatus');
+    }
+
     public function scopeLastestFirst($query)
     {
         return $query->orderBy('created_at', 'desc');

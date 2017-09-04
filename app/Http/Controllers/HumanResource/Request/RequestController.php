@@ -20,8 +20,6 @@ class RequestController extends Controller
 {
     public function index(Request $request)
     {
-        $params = Param::orderBy('name')->get();
-
         $human_resource_requests = HumanResourceRequest::lastestFirst();
 
         if ($request->term) {
@@ -62,11 +60,16 @@ class RequestController extends Controller
             });
         }
 
+        $params = Param::orderBy('name')->get();
+
+        $statuses = HumanResourceRequest::statuses();
+
         $human_resource_requests =  $human_resource_requests->paginate();
 
         return view('human_resources.request.index', [
             'human_resource_requests' => $human_resource_requests,
             'params' => $params,
+            'statuses' => $statuses,
         ]);
     }
 
