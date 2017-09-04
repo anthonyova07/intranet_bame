@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Solicitudes de Proceso</title>
+    <title>Solicitudes de RRHH</title>
     <style>
         body {
             font-family: 'Juhl';

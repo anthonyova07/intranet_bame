@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Reporte de Solicutdes RRHH</title>
+    <title>Reporte de Solicitudes RRHH</title>
 </head>
     <body>
         <table border="1" style="font-size: 80%;">

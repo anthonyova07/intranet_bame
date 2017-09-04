@@ -769,7 +769,7 @@ function get_treasury_rate_contents($content = null)
 function get_employee_params($param = null)
 {
     $params = collect([
-        'DEP' => 'Departmento',
+        'DEP' => 'Departamento',
         'POS' => 'Posición',
     ]);
 
