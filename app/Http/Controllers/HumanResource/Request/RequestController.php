@@ -85,11 +85,17 @@ class RequestController extends Controller
             }
         }
 
+        if (in_array($request->type, ['ANT'])) {
+            if (session('employee')->noHasMonth(6)) {
+                return redirect()->route('human_resources.request.create')->with('error', 'Debe tener mas de 6 meses para realizar una solicitud de anticipo.');
+            }
+        }
+
         return view('human_resources.request.create', [
             'type' => $request->type,
             'request_type_exists' => $request_type_exists,
             'params' => $params,
-            'employee_date' => Birthdate::getOneEmployeeDate(),
+            'employee_date' => session('employee')->servicedat,
         ]);
     }
 

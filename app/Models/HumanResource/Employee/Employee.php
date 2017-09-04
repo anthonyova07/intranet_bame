@@ -91,4 +91,16 @@ class Employee extends Model
 
         return false;
     }
+
+    public function hasMonth($month)
+    {
+        $months = get_month_of_service($this->servicedat);
+
+        return $months > $month;
+    }
+
+    public function noHasMonth($month)
+    {
+        return !$this->hasMonth($month);
+    }
 }

@@ -703,6 +703,21 @@ function get_year_of_service($date)
     return $diff->y;
 }
 
+function get_month_of_service($date)
+{
+    $parts = explode('-', $date);
+
+    $current_date = new \DateTime;
+
+    $service_compare_date = new \Datetime($current_date->format('Y') . "-{$parts[1]}-{$parts[2]} 23:59:59");
+
+    $service_date = new \Datetime("{$date} 23:59:59");
+
+    $diff = $service_date->diff($current_date);
+
+    return $diff->y * 12 + $diff->m;
+}
+
 function datetime()
 {
     return new \DateTime;

@@ -18,7 +18,7 @@
                         <div class="col-xs-2">
                             <div class="form-group{{ $errors->first('vac_date_admission') ? ' has-error':'' }}">
                                 <label class="control-label">Fecha de Ingreso</label>
-                                <input type="date" disabled class="form-control input-sm" name="vac_date_admission" value="{{ $employee_date }}">
+                                <input type="date" style="width: 125px;" disabled class="form-control input-sm" name="vac_date_admission" value="{{ $employee_date }}">
                                 <span class="help-block">{{ $errors->first('vac_date_admission') }}</span>
                             </div>
                         </div>
