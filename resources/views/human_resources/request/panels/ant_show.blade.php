@@ -56,7 +56,7 @@
                     </div>
                     <div class="col-xs-12">
                         <div class="form-group">
-                            <label class="control-label">Monto de Cuotas</label>
+                            <label class="control-label">Observaciones</label>
                             <textarea class="form-control input-sm" disabled placeholder="Observaciones" name="ant_observa">{{ $human_resource_request->detail->observa }}</textarea>
                         </div>
                     </div>

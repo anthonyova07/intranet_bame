@@ -46,6 +46,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12{{ $errors->first('ant_observa') ? ' has-error':'' }}">
+                            <label class="control-label">Observaciones</label>
                             <textarea class="form-control input-sm" placeholder="Observaciones" name="ant_observa">{{ old('ant_observa') }}</textarea>
                             <span class="help-block">{{ $errors->first('ant_observa') }}</span>
                         </div>
