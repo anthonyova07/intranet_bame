@@ -52,7 +52,7 @@
                                 <div class="col-xs-4">
                                     <div class="form-group">
                                         <label class="control-label">Fecha</label>
-                                        <input type="date" readonly class="form-control input-sm" name="permission_date" value="{{ $human_resource_request->detail->pertype == 'one_day' ? $human_resource_request->detail->perdatfrom->format('Y-m-d') : '' }}">
+                                        <input type="date" style="width: 135px;" readonly class="form-control input-sm" name="permission_date" value="{{ $human_resource_request->detail->pertype == 'one_day' ? $human_resource_request->detail->perdatfrom->format('Y-m-d') : '' }}">
                                     </div>
                                 </div>
                                 <div class="col-xs-4">
