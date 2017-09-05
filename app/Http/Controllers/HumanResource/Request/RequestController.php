@@ -387,6 +387,7 @@ class RequestController extends Controller
 
         $human_resource_request->detail()->update([
             'paid' => (bool) $request->paid,
+            'paid_reason' => $request->paid_reason,
         ]);
 
         return back()->with('success', 'Los cambios han sido guardados correctamente.');

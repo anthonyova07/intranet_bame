@@ -49,26 +49,36 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-9">
+                <div class="col-xs-6">
                     <div class="form-group">
                         <label class="control-label">Motivo en Caso de Rechazo por RRHH</label>
                         <p class="form-control-static">{{ $human_resource_request->reasonreje }}</p>
                     </div>
                 </div>
                 @if (in_array($human_resource_request->reqtype, ['PER', 'AUS']))
-                    <div class="col-xs-3">
-                        <form name="paid_form" action="{{ route('human_resources.request.paid', ['request_id' => $human_resource_request->id]) }}" method="post">
-                            <div class="radio" style="margin-top: 0px;">
-                                <label style="font-weight: bold;">
-                                    @if (!can_not_do('human_resource_request_admin'))
-                                        <input type="checkbox" id="paid_button" name="paid"{{ $human_resource_request->detail->paid ? ' checked':'' }}> Remunerado
-                                    @else
-                                        <input type="checkbox" disabled name="paid"{{ $human_resource_request->detail->paid ? ' checked':'' }}> Remunerado
-                                    @endif
-                                </label>
+                    <div class="col-xs-6">
+                        @if (!can_not_do('human_resource_request_admin'))
+                            <form id="paid_form" action="{{ route('human_resources.request.paid', ['request_id' => $human_resource_request->id]) }}" method="post">
+                                <label class="control-label">Remunerado</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <input type="checkbox" id="paid_check" data-toggle="tooltip" title="Remunerado" name="paid"{{ $human_resource_request->detail->paid ? ' checked':'' }}>
+                                    </span>
+                                    <input type="text" id="paid_reason" name="paid_reason" maxlength="500" data-toggle="tooltip" title="Motivo sino es remunerado" placeholder="Motivo sino es remunerado" class="form-control input-sm" value="{{ $human_resource_request->detail->paid_reason }}">
+                                    <span class="input-group-btn">
+                                        <input type="submit" class="btn btn-danger btn-sm" id="btn_submit" data-loading-text="Enviando..." value="Enviar">
+                                    </span>
+                                </div>
+                                {{ csrf_field() }}
+                            </form>
+                        @else
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input type="checkbox" disabled id="paid_check" data-toggle="tooltip" title="Remunerado" name="paid"{{ $human_resource_request->detail->paid ? ' checked':'' }}>
+                                </span>
+                                <input type="text" disabled placeholder="Motivo sino es remunerado" class="form-control input-sm" value="{{ $human_resource_request->detail->paid_reason }}">
                             </div>
-                            {{ csrf_field() }}
-                        </form>
+                        @endif
                     </div>
                 @endif
             </div>
@@ -77,7 +87,17 @@
 </div>
 
 <script type="text/javascript">
-    $('#paid_button').change(function (e) {
-        $('form[name=paid_form]').submit();
+    $('#paid_form').submit(function (event) {
+        $('#btn_submit').button('loading');
+    });
+
+    var paid_reason = $('#paid_reason');
+
+    $('#paid_check').change(function () {
+        if ($(this).is(':checked')) {
+            paid_reason.prop('required', false);
+        } else {
+            paid_reason.prop('required', true);
+        }
     });
 </script>
