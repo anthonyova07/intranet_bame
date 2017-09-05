@@ -93,7 +93,7 @@
                     <div class="col-xs-12" style="height: 15px;">
                         <div class="form-group">
                             <label class="control-label" style="font-size: 16px;">
-                                Razón de la Ausencia
+                                Motivo del Permiso
                             </label>
                         </div>
                     </div>

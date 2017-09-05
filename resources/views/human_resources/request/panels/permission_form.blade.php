@@ -74,7 +74,7 @@
     <div class="col-xs-12" style="height: 15px;">
         <div class="form-group{{ $errors->first('per') ? ' has-error':'' }}">
             <label class="control-label" style="font-size: 16px;">
-                Razón de la Ausencia
+                Motivo del Permiso
                 @if ($errors->first('per'))
                     <small>({{ $errors->first('per') }})</small>
                 @endif

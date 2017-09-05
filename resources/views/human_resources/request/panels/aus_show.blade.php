@@ -99,7 +99,7 @@
                     <div class="col-xs-6">
                         <div class="form-group">
                             <label class="control-label" style="font-size: 16px;">
-                                Razón de la Ausencia
+                                Motivo del Permiso
                             </label>
                             <div class="radio" style="margin-top: 0px;">
                                 <label style="font-weight: bold;">
