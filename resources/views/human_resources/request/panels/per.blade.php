@@ -1,4 +1,4 @@
-<form method="post" action="{{ route('human_resources.request.store', ['type' => $type]) }}" id="form">
+<form method="post" action="{{ route('human_resources.request.store', ['type' => $type]) }}" id="form" enctype="multipart/form-data">
 
     <div class="row">
         @include('human_resources.request.panels.colaborator_panel', [
@@ -20,6 +20,16 @@
                 <div class="panel-body">
 
                     @include('human_resources.request.panels.permission_form')
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group{{ $errors->first('files') ? ' has-error':'' }}">
+                                <label class="control-label">Adjuntos</label>
+                                <input type="file" name="files[]" multiple>
+                                <span class="help-block">{{ $errors->first('files') }}</span>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="row">
                         <div class="col-xs-4">

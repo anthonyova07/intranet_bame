@@ -90,18 +90,32 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12" style="height: 15px;">
+                    <div class="col-xs-6" style="height: 15px;">
                         <div class="form-group">
                             <label class="control-label" style="font-size: 16px;">
                                 Motivo del Permiso
                             </label>
+                            <div class="radio" style="margin-top: 0px;">
+                                <label style="font-weight: bold;">
+                                    <input type="radio" disabled name="per" checked> {{ $human_resource_request->detail->reaforabse }}
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-xs-2" style="height: 35px;">
-                        <div class="radio">
-                            <label style="font-weight: bold;">
-                                <input type="radio" disabled name="per" checked> {{ $human_resource_request->detail->reaforabse }}
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label class="control-label" style="font-size: 16px;">
+                                Adjuntos
                             </label>
+                            <div style="margin-top: 0px;">
+                                <ul class="list-group">
+                                    @foreach ($human_resource_request->files() as $file)
+                                        <li class="list-group-item" style="font-size: 15px;padding: 5px;">
+                                            <a href="{{ route('human_resources.request.downloadattach', ['request_id' => $human_resource_request->id, 'file_name' => $file]) }}">{{ $file }}</a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
