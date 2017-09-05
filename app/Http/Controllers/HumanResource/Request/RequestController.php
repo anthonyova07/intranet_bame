@@ -214,7 +214,7 @@ class RequestController extends Controller
         $detail->id = uniqid(true);
         $detail->req_id = $requestId;
         $detail->pertype = $request->permission_type;
-        $detail->paid = false;
+        $detail->paid = true;
 
         if ($request->permission_type == 'one_day') {
             if (!HumanResourceRequest::isValidDateFrom($request->permission_date)) {
