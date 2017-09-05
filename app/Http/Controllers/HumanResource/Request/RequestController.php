@@ -250,6 +250,10 @@ class RequestController extends Controller
                 $time = new DateTime;
                 $birthdate = $time->format('Y-') . date_create(session('employee')->birthdate)->format('m-d');
 
+                if (date_create($request->permission_date) < date_create($birthdate)) {
+                    return back()->withInput()->with('error', 'El día libre de cumpleaños debe ser solicitado después de la fecha misma.');
+                }
+
                 if (HumanResourceRequest::isBetweenXDays($request->permission_date, 7, $birthdate)) {
                     return back()->withInput()->with('error', 'El día libre de cumpleaños debe ser solicitado entre los 7 días después del cumpleaños');
                 }
