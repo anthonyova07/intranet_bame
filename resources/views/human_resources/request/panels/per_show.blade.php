@@ -30,14 +30,14 @@
 
             <div class="panel-body">
                 <div class="row text-center">
-                    <div class="col-xs-6">
+                    <div class="col-xs-6{{ $human_resource_request->detail->pertype == 'one_day' ? ' col-xs-offset-3' : '' }}"{!! $human_resource_request->detail->pertype == 'one_day' ? '' : ' style="display: none;"' !!}>
                         <div class="radio">
                             <label style="font-size: 16px;font-weight: bold;">
                                 <input type="radio" disabled name="permission_type" {{ $human_resource_request->detail->pertype == 'one_day' ? 'checked' : '' }} value="one_day"> Por un día o menos
                             </label>
                         </div>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-xs-6{{ $human_resource_request->detail->pertype == 'multiple_days' ? ' col-xs-offset-3' : '' }}"{!! $human_resource_request->detail->pertype == 'multiple_days' ? '' : ' style="display: none;"' !!}>
                         <div class="radio">
                             <label style="font-size: 16px;font-weight: bold;">
                                 <input type="radio" disabled name="permission_type" {{ $human_resource_request->detail->pertype == 'multiple_days' ? 'checked' : '' }} value="multiple_days"> Por varios días
@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-6{{ $human_resource_request->detail->pertype == 'one_day' ? ' col-xs-offset-3' : '' }}"{!! $human_resource_request->detail->pertype == 'one_day' ? '' : ' style="display: none;"' !!}>
                         <div class="well well-sm">
                             <div class="row">
                                 <div class="col-xs-4">
@@ -70,7 +70,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-xs-6{{ $human_resource_request->detail->pertype == 'multiple_days' ? ' col-xs-offset-3' : '' }}"{!! $human_resource_request->detail->pertype == 'multiple_days' ? '' : ' style="display: none;"' !!}>
                         <div class="well well-sm">
                             <div class="row">
                                 <div class="col-xs-6">
@@ -89,6 +89,11 @@
                         </div>
                     </div>
                 </div>
+
+                @include('human_resources.request.panels.reintegrate_form', [
+                    'human_resource_request' => $human_resource_request,
+                ])
+
                 <div class="row">
                     <div class="col-xs-6" style="height: 15px;">
                         <div class="form-group">

@@ -19,6 +19,8 @@ class Detail extends Model
     protected $dates = [
         'perdatfrom',
         'perdatto',
+        'perdatfror',
+        'perdattor',
     ];
 
     public function scopeLastestFirst($query)
