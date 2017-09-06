@@ -735,3 +735,159 @@ function get_employee_params($param = null)
 
     return $params->get($param);
 }
+
+function get_marital($marital = null)
+{
+    $maritals = collect([
+        1 => 'Soltero(a)',
+        2 => 'Casado(a)',
+        3 => 'Divorciado(a)',
+        4 => 'Viudo(a)',
+    ]);
+
+    if (!$marital) {
+        return $maritals;
+    }
+
+    return $maritals->get($marital);
+}
+
+function get_area_codes($code = null)
+{
+    $codes = collect([
+        '809', '829', '849'
+    ]);
+
+    if (!$code) {
+        return $codes;
+    }
+
+    return $codes->get($code);
+}
+
+function get_tdc_products($product = null)
+{
+    $products = collect([
+        'VC' => 'Visa Clásica',
+        'VG' => 'Visa Gold',
+        'VP' => 'Visa Platinum',
+        'VS' => 'Visa Signature',
+        'VCO' => 'Visa Combustible',
+        'VE' => 'Visa Empresarial',
+    ]);
+
+    if (!$product) {
+        return $products;
+    }
+
+    return $products->get($product);
+}
+
+function get_next_request_tdc_number()
+{
+    $date = null;
+
+    $last_process_request = \Bame\Models\Customer\Requests\Tdc\TdcRequest::orderBy('created_at', 'desc')->first();
+    $last_request_number = $last_process_request ? $last_process_request->reqnumber : null;
+
+    if ($last_request_number) {
+        $parts = explode('-', $last_request_number);
+
+        $year = $parts[0];
+        $month = $parts[1];
+        $day = $parts[2];
+        $sequence = $parts[3];
+
+        $date = $year . '-' . $month . '-' . $day;
+    }
+
+    $date_current = (new \DateTime)->format('Y-m-d');
+
+    if ($date == $date_current) {
+        $number = $date_current . '-' . (str_pad((intval($sequence) + 1), 4, '0', STR_PAD_LEFT));
+    } else {
+        $number = $date_current . '-0001';
+    }
+
+    return $number;
+}
+
+function get_desc_dir($dir)
+{
+    switch ($dir) {
+        case 'personal':
+            return 'Dirección Personal';
+            break;
+        case 'laboral':
+            return 'Dirección Laboral';
+            break;
+    }
+}
+
+function get_channel_officer($code)
+{
+    return 'SUC' . str_pad($code, 3, '0', STR_PAD_LEFT);
+}
+
+function get_office_code($office, $description = false)
+{
+    $office = strtolower(trim($office));
+
+    if (str_contains($office, 'oficina principal')) { return $descripcion ? 'Oficina Principal':1; }
+    if (str_contains($office, 'banca comercial')) { return $descripcion ? 'Banca Comercial':2; }
+    if (str_contains($office, 'bella vista')) { return $descripcion ? 'Bella Vista':3; }
+    if (str_contains($office, 'blue mall')) { return $descripcion ? 'Blue Mall':4; }
+    if (str_contains($office, 'de vega')) { return $descripcion ? 'Lopez de Vega':5; }
+    if (str_contains($office, 'san vicente')) { return $descripcion ? 'San Vicente':6; }
+    if (str_contains($office, 'barahona')) { return $descripcion ? 'Barahona':7; }
+    if (str_contains($office, 'neyba')) { return $descripcion ? 'Neyba':8; }
+    if (str_contains($office, 'vicente noble')) { return $descripcion ? 'Vicente Noble':9; }
+
+    return null;
+}
+
+function get_request_tdc_param($type, $plural = true)
+{
+    switch ($type) {
+        case 'DEN': //denails "negaciones"
+            return ($plural ? 'Razones ' : 'Razón ') . 'de Negación';
+            break;
+    }
+}
+
+function extranet_roles($rol = null)
+{
+    $roles = collect([
+        'requests_tdc' => 'Solicitudes de Tarjeta',
+    ]);
+
+    if (!$rol) {
+        return $roles;
+    }
+
+    return $roles->get($rol);
+}
+
+function get_channels($channel = null)
+{
+    $channels = collect([
+        'EMP' => 'Empleados',
+        'CCI' => 'Call Center Interno',
+        'CCE' => 'Call Center Externo',
+        'SUC001' => 'Oficina Principal',
+        // 'SUC002' => 'Banca Comercial',
+        'SUC003' => 'Bella Vista',
+        'SUC004' => 'Blue Mall',
+        'SUC005' => 'Lopez de Vega',
+        'SUC006' => 'San Vicente',
+        'SUC007' => 'Barahona',
+        'SUC008' => 'Neyba',
+        'SUC009' => 'Vicente Noble',
+    ]);
+
+    if (!$channel) {
+        return $channels;
+    }
+
+    return $channels->get($channel);
+}

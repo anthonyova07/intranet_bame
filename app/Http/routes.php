@@ -39,7 +39,7 @@ Route::group(['prefix' => 'notification'], function () {
 Route::group(['middleware' => 'auth'], function () {
 
     //Consulta del Historico
-    Route::resource('consultas/historicoproducto','Consultas\HistoricoProducto\ProductoController');    
+    Route::resource('consultas/historicoproducto','Consultas\HistoricoProducto\ProductoController');
 
     Route::get('reporteproductopdf/{cliente}','Consultas\HistoricoProducto\ProductoController@reportepdf');
 
@@ -51,12 +51,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('cumplimiento/cliente','Cumplimiento\Cliente\CumstController');
 
     //Actulaiza mensajes de Estados de cuentas de TC
-    Route::resource('mantenimientos/menstc','Mantenimientos\MensTC\Mensajecontroller');                
-    Route::resource('mantenimientos/menstchst','Mantenimientos\MensTCHst\MensajeHstcontroller');   
+    Route::resource('mantenimientos/menstc','Mantenimientos\MensTC\Mensajecontroller');
+    Route::resource('mantenimientos/menstchst','Mantenimientos\MensTCHst\MensajeHstcontroller');
 
     Route::get('reportehistoricomsg/{codigo}','Mantenimientos\MensTChst\MensajeHstcontroller@reportehistoricomsg');
-    
-
 
     Route::group(['prefix' => 'security'], function () {
 
@@ -346,6 +344,25 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('claim', 'Customer\Claim\ClaimController', ['only' => [
             'index', 'create', 'store', 'show'
         ]]);
+
+        Route::group(['prefix' => 'request', 'namespace' => 'Customer\Requests\Tdc'], function () {
+
+            Route::group(['prefix' => 'tdc'], function () {
+
+                Route::resource('{type}/param', 'ParamController', ['only' => [
+                    'create', 'store', 'edit', 'update'
+                ]]);
+
+                Route::get('print', 'TdcRequestController@print')->name('customer.request.tdc.print');
+                Route::post('located/{identification}/{reqnumber?}', 'TdcRequestController@located')->name('customer.request.tdc.located');
+                Route::get('excel', 'TdcRequestController@excel')->name('customer.request.tdc.excel');
+                Route::post('load', 'TdcRequestController@load')->name('customer.request.tdc.load');
+            });
+
+            Route::resource('tdc', 'TdcRequestController', ['only' => [
+                'index', 'create', 'store', 'show'
+            ]]);
+        });
     });
 
     Route::group(['prefix' => 'operation'], function () {
@@ -372,6 +389,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('transactions', 'IB\Transaction\TransactionController', ['only' => [
             'index'
         ]]);
+    });
+
+    Route::group(['prefix' => 'extranet', 'namespace' => 'Extranet'], function () {
+
+        Route::resource('users', 'UsersController');
+        Route::resource('business', 'BusinessController');
+
     });
 
 });

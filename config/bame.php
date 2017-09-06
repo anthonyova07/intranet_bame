@@ -42,4 +42,10 @@ return [
         'bulk_load' => env('EMPLOYEE_BULK_LOAD', 'false'),
     ],
 
+    'requests' => [
+        'db' => [
+            'url' => env('REQUEST_TDC_URL', 'C:\xampp\htdocs\intranet\storage\app\db_requests\\'),
+        ],
+    ],
+
 ];
