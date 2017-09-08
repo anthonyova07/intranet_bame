@@ -30,26 +30,16 @@
 
             <div class="panel-body">
                 <div class="row text-center">
-                    <div class="col-xs-6">
+                    <div class="col-xs-6 col-xs-offset-3">
                         <div class="radio">
                             <label style="font-size: 16px;font-weight: bold;">
                                 <input type="radio" disabled name="permission_type" {{ $human_resource_request->detail->pertype == 'one_day' ? 'checked' : '' }} value="one_day"> Por un día o menos
                             </label>
                         </div>
                     </div>
-
-                    @if (!in_array($human_resource_request->reqtype, ['AUS']))
-                        <div class="col-xs-6">
-                            <div class="radio">
-                                <label style="font-size: 16px;font-weight: bold;">
-                                    <input type="radio" disabled name="permission_type" {{ $human_resource_request->detail->pertype == 'multiple_days' ? 'checked' : '' }} value="multiple_days"> Por varios días
-                                </label>
-                            </div>
-                        </div>
-                    @endif
                 </div>
                 <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-6 col-xs-offset-3">
                         <div class="well well-sm">
                             <div class="row">
                                 <div class="col-xs-4">
@@ -73,28 +63,18 @@
                             </div>
                         </div>
                     </div>
-
-                    @if (!in_array($human_resource_request->reqtype, ['AUS']))
-                        <div class="col-xs-6">
-                            <div class="well well-sm">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Fecha Desde</label>
-                                            <input type="date" readonly class="form-control input-sm" name="permission_date_from" value="{{ $human_resource_request->detail->pertype == 'multiple_days' ? $human_resource_request->detail->perdatfrom->format('Y-m-d') : '' }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Fecha Hasta</label>
-                                            <input type="date" readonly class="form-control input-sm" name="permission_date_to" value="{{ $human_resource_request->detail->perdatto->format('Y-m-d') }}">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
                 </div>
+
+                @if (session('user') == $human_resource_request->created_by)
+                    @include('human_resources.request.panels.reintegrate_form', [
+                        'human_resource_request' => $human_resource_request,
+                    ])
+                @else
+                    @include('human_resources.request.panels.reintegrate_form_show', [
+                        'human_resource_request' => $human_resource_request,
+                    ])
+                @endif
+
                 <div class="row">
                     <div class="col-xs-6">
                         <div class="form-group">
