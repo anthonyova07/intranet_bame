@@ -475,6 +475,13 @@ class RequestController extends Controller
 
     public function saveAntRHForm(Request $request, $requestId)
     {
+        $this->validate($request, [
+            'client_number' => 'required|numeric',
+            'ant_advance_number' => 'required|numeric',
+            'ant_deposit_date' => 'required|date_format:"Y-m-d',
+            'ant_first_due_date' => 'required|date_format:"Y-m-d',
+        ]);
+
         $human_resource_request = HumanResourceRequest::find($requestId);
 
         if ($human_resource_request->reqtype == 'ANT') {
@@ -487,7 +494,7 @@ class RequestController extends Controller
             'advnumber' => $request->ant_advance_number,
             'advdatdepo' => $request->ant_deposit_date,
             'firsduedat' => $request->ant_first_due_date,
-            'lastduedat' => $request->ant_last_due_date,
+            'lastduedat' => $human_resource_request->getLastDueDate($request->ant_first_due_date),
             'note' => $request->ant_note,
         ]);
 

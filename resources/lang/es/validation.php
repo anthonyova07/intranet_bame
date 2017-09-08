@@ -221,5 +221,9 @@ return [
       'permission_date_to_reintegrate' => 'Fecha Hasta',
       'per_reason_reintregrate' => 'Motivo de Reintegro',
       'vac_date_to_reintegrate' => 'Fecha de Reintegro',
+      'client_number' => 'Número de Cliente',
+      'ant_advance_number' => 'Número de Anticipo',
+      'ant_deposit_date' => 'Fecha de Deposito',
+      'ant_first_due_date' => 'Fecha de Primer Descuento',
     ],
 ];

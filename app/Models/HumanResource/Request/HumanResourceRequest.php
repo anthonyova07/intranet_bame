@@ -135,4 +135,25 @@ class HumanResourceRequest extends Model
 
         return false;
     }
+
+    public function getLastDueDate($first_due_date)
+    {
+        $datetime = new Datetime($first_due_date);
+
+        $payments_count = $this->detail->advdues;
+
+        $count = 1;
+
+        while ($count < $payments_count) {
+            $datetime->modify('+1 days');
+
+            $day = intval($datetime->format('d'));
+
+            if ($day == 13 || $day == 28) {
+                $count++;
+            }
+        }
+
+        return $datetime->format('Y-m-d');
+    }
 }

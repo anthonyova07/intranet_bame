@@ -36,9 +36,9 @@
                             </div>
                         </div>
                         <div class="col-xs-6">
-                            <div class="form-group{{ $errors->first('ant_last_due_date') ? ' has-error':'' }}">
+                            <div data-toggle="tooltip" title="Sera calculado automáticamente." class="form-group{{ $errors->first('ant_last_due_date') ? ' has-error':'' }}">
                                 <label class="control-label">Fecha último descuento</label>
-                                <input type="date" class="form-control input-sm" name="ant_last_due_date" value="{{ $human_resource_request->detail->lastduedat }}">
+                                <input type="date" disabled class="form-control input-sm" name="ant_last_due_date" value="{{ $human_resource_request->detail->lastduedat }}">
                                 <span class="help-block">{{ $errors->first('ant_last_due_date') }}</span>
                             </div>
                         </div>
