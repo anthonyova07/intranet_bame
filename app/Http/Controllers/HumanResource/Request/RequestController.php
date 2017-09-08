@@ -397,6 +397,62 @@ class RequestController extends Controller
         return back()->with('success', 'Los cambios han sido guardados correctamente.');
     }
 
+    public function reintegrate(Request $request, $requestId)
+    {
+        $human_resource_request = HumanResourceRequest::find($requestId);
+
+        $v = [
+            'per_reason_reintregrate' => 'required|max:500',
+        ];
+
+        $data = [
+            'observar' => $request->per_reason_reintregrate,
+        ];
+
+        if (in_array($human_resource_request->reqtype, ['PER', 'AUS'])) {
+            if ($human_resource_request->detail->pertype == 'one_day') {
+                $v = array_merge($v, [
+                    'permission_time_to_reintegrate' => 'required|date_format:"H:i',
+                ]);
+
+                $data = array_merge($data, [
+                    'pertimtor' => $request->permission_time_to_reintegrate,
+                ]);
+            }
+
+            if ($human_resource_request->detail->pertype == 'multiple_days') {
+                $v = array_merge($v, [
+                    'permission_date_to_reintegrate' => 'required|date_format:"Y-m-d',
+                ]);
+
+                $data = array_merge($data, [
+                    'perdattor' => $request->permission_date_to_reintegrate,
+                ]);
+            }
+        }
+
+        if (in_array($human_resource_request->reqtype, ['VAC'])) {
+            $v = array_merge($v, [
+                'vac_date_to_reintegrate' => 'required|date_format:"Y-m-d',
+            ]);
+
+            $data = array_merge($data, [
+                'vacdattor' => $request->vac_date_to_reintegrate,
+            ]);
+        }
+
+        $this->validate($request, $v);
+
+        $human_resource_request->detail()->update($data);
+
+        $human_resource_request->rhuser = null;
+        $human_resource_request->rhname = null;
+        $human_resource_request->approverh = false;
+        $human_resource_request->save();
+
+        return back()->with('success', 'Los cambios han sido guardados correctamente.');
+    }
+
     public function saveVacRHForm(Request $request, $requestId)
     {
         $human_resource_request = HumanResourceRequest::find($requestId);

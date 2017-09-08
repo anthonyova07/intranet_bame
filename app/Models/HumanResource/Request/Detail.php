@@ -21,6 +21,7 @@ class Detail extends Model
         'perdatto',
         'perdatfror',
         'perdattor',
+        'vacdattor',
     ];
 
     public function scopeLastestFirst($query)

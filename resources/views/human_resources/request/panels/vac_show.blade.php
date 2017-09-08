@@ -73,6 +73,19 @@
                             </label>
                         </div>
                     </div>
+                </div>
+                <div class="row">
+                    @if (session('user') == $human_resource_request->created_by)
+                        @include('human_resources.request.panels.reintegrate_form', [
+                            'human_resource_request' => $human_resource_request,
+                        ])
+                    @else
+                        @include('human_resources.request.panels.reintegrate_form_show', [
+                            'human_resource_request' => $human_resource_request,
+                        ])
+                    @endif
+                </div>
+                <div class="row">
                     <div class="col-xs-12">
                         @include('human_resources.request.panels.vac_show_rrhh', [
                             'human_resource_request' => $human_resource_request,

@@ -211,6 +211,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('changestatus/{request_id}', 'ApproveController@changestatus')->name('human_resources.request.changestatus');
             Route::get('attach/{request_id}/{file_name}', 'RequestController@downloadAttach')->name('human_resources.request.downloadattach');
             Route::post('paid/{request_id}', 'RequestController@paid')->name('human_resources.request.paid');
+            Route::post('reintegrate/{request_id}', 'RequestController@reintegrate')->name('human_resources.request.reintegrate');
             Route::post('savevacrhform/{request_id}', 'RequestController@saveVacRHForm')->name('human_resources.request.savevacrhform');
             Route::post('saveantrhform/{request_id}', 'RequestController@saveAntRHForm')->name('human_resources.request.saveantrhform');
             Route::get('cancel/{request_id}', 'RequestController@cancel')->name('human_resources.request.cancel');

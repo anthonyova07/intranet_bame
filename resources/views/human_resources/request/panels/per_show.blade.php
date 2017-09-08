@@ -90,9 +90,15 @@
                     </div>
                 </div>
 
-                @include('human_resources.request.panels.reintegrate_form', [
-                    'human_resource_request' => $human_resource_request,
-                ])
+                @if (session('user') == $human_resource_request->created_by)
+                    @include('human_resources.request.panels.reintegrate_form', [
+                        'human_resource_request' => $human_resource_request,
+                    ])
+                @else
+                    @include('human_resources.request.panels.reintegrate_form_show', [
+                        'human_resource_request' => $human_resource_request,
+                    ])
+                @endif
 
                 <div class="row">
                     <div class="col-xs-6" style="height: 15px;">

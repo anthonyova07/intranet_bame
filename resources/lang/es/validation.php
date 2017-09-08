@@ -217,5 +217,9 @@ return [
       'ant_dues' => 'Cuotas',
       'ant_observa' => 'Observación',
       'subordinate' => 'Empleado',
+      'permission_time_to_reintegrate' => 'Hora Hasta',
+      'permission_date_to_reintegrate' => 'Fecha Hasta',
+      'per_reason_reintregrate' => 'Motivo de Reintegro',
+      'vac_date_to_reintegrate' => 'Fecha de Reintegro',
     ],
 ];
