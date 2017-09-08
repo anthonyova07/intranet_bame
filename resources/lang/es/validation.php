@@ -227,5 +227,6 @@ return [
       'ant_first_due_date' => 'Fecha de Primer Descuento',
       'car_addressed_to' => 'Dirigido a',
       'car_comments' => 'Comentarios',
+      'vac_additional_days' => 'Días Adicionales',
     ],
 ];

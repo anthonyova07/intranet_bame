@@ -30,8 +30,8 @@ class RequestHumanResourceRequest extends Request
                 // 'vac_date_admission' => 'required|date_format:"Y-m-d',
                 'vac_date_from' => 'required|date_format:"Y-m-d',
                 // 'vac_date_to' => 'required|date_format:"Y-m-d',
-                'vac_total_days' => 'required|integer|min:1|max:' . session('employee')->getMaxDayTakeVac(),
-                'vac_additional_days' => 'required|integer|min:0|max:2',
+                'vac_total_days' => 'required|numeric|min:1|max:' . session('employee')->getMaxDayTakeVac(),
+                'vac_additional_days' => 'required|numeric|min:0|max:2',
                 // 'vac_total_pending_days' => 'required|integer|min:0|max:18',
                 'note' => 'max:1000',
             ]);
@@ -41,7 +41,7 @@ class RequestHumanResourceRequest extends Request
             $v = array_merge($v, [
                 'ant_account_number' => 'required',
                 'ant_amount' => 'required|integer|min:1',
-                'ant_dues' => 'required|integer|min:1|max:12',
+                'ant_dues' => 'required|numeric|min:1|max:12',
                 'ant_observa' => 'required',
             ]);
         }

@@ -127,6 +127,11 @@ class ApproveController extends Controller
             return redirect(route('human_resources.request.index'))->with('warning', 'La solicitud no existe!');
         }
 
+        $user_info = session()->get('user_info');
+
+        $human_resource_request->rhverified = true;
+        $human_resource_request->rhuser = session('user');
+        $human_resource_request->rhname = $user_info->getFirstName() . ' ' . $user_info->getLastName();;
         $human_resource_request->reqstatus = $request->status;
         $human_resource_request->save();
 

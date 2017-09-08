@@ -599,9 +599,9 @@ function get_next_request_rh_number()
     $date_current = (new \DateTime)->format('Y-m-d');
 
     if ($date == $date_current) {
-        $number = $date_current . '-' . (str_pad((intval($sequence) + 1), 2, '0', STR_PAD_LEFT));
+        $number = $date_current . '-' . (str_pad((intval($sequence) + 1), 4, '0', STR_PAD_LEFT));
     } else {
-        $number = $date_current . '-01';
+        $number = $date_current . '-0001';
     }
 
     return $number;

@@ -89,9 +89,12 @@ class RequestController extends Controller
             }
         }
 
+        $params = Param::where('is_active', '1')->get();
+
         return view('human_resources.request.create', [
             'type' => $request->type,
             'request_type_exists' => $request_type_exists,
+            'params' => $params,
             'employee_date' => session('employee')->servicedat,
         ]);
     }

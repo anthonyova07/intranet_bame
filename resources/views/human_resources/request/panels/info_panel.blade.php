@@ -29,10 +29,12 @@
             </div>
             <div class="row">
                 <div class="col-xs-6">
-                    <div class="form-group">
-                        <label class="control-label">Motivo en Caso de Rechazo por RRHH</label>
-                        <p class="form-control-static">{{ $human_resource_request->reasonreje }}</p>
-                    </div>
+                    @if (!in_array($human_resource_request->reqtype, ['CAR']))
+                        <div class="form-group">
+                            <label class="control-label">Motivo en Caso de Rechazo por RRHH</label>
+                            <p class="form-control-static">{{ $human_resource_request->reasonreje }}</p>
+                        </div>
+                    @endif
                 </div>
                 @if (in_array($human_resource_request->reqtype, ['PER', 'AUS']))
                     <div class="col-xs-6">
