@@ -4,11 +4,13 @@
 
 @section('page_title', 'Solicitudes de Recursos Humanos')
 
-{{-- @if (can_not_do('human_resource_request'))
-    @section('contents')
-        @include('layouts.partials.access_denied')
-    @endsection
-@endif --}}
+@if (request('access') == 'admin')
+    @if (can_not_do('human_resource_request'))
+        @section('contents')
+            @include('layouts.partials.access_denied')
+        @endsection
+    @endif
+@endif
 
 @section('contents')
 
@@ -89,7 +91,7 @@
                 <div class="panel-body">
                     <a class="btn btn-danger btn-xs" href="{{ route('human_resources.request.create') }}">Nueva Solicitud</a>
 
-                    @if (!can_not_do('human_resource_request_admin'))
+                    @if (!can_not_do('human_resource_request'))
                         <a style="font-size: 13px;" class="label btn-success pull-right" target="__blank" href="{{ route('human_resources.request.export.excel', Request::except(['term', 'page'])) }}">Exportar Excel</a>
                     @endif
                     <br>
@@ -137,7 +139,7 @@
     </div>
 
 
-    @if (!can_not_do('human_resource_request_admin'))
+    @if (!can_not_do('human_resource_request'))
         <div class="row" style="border-bottom: 1px solid #777;border-top: 1px solid #777;margin: 8px 0 25px 0;border-width: 5px;">
             <h1 style="margin: 0;text-align: center;">Mantenimientos de Parámetros</h1>
         </div>
@@ -150,7 +152,7 @@
                         <h3 class="panel-title">Permisos Predefinidos</h3>
                     </div>
                     <div class="panel-body">
-                        <a class="btn btn-danger btn-xs" href="{{ route('human_resources.request.{type}.param.create', ['type' => 'PER']) }}">Nuevo</a>
+                        <a class="btn btn-danger btn-xs" href="{{ route('human_resources.request.{type}.param.create', array_merge(['type' => 'PER'], request()->only('access'))) }}">Nuevo</a>
                         <br>
                         <br>
                         <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>

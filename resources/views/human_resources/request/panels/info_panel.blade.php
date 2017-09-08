@@ -25,7 +25,7 @@
                         <label class="control-label">Estado</label>
                         <p class="form-control-static">{{ $human_resource_request->reqstatus }}</p>
                     </div>
-                    {{-- @if (can_not_do('human_resource_request_admin'))
+                    {{-- @if (can_not_do('human_resource_request'))
                         <div class="form-group">
                             <label class="control-label">Estado</label>
                             <p class="form-control-static">{{ $human_resource_request->reqstatus }}</p>
@@ -57,7 +57,7 @@
                 </div>
                 @if (in_array($human_resource_request->reqtype, ['PER', 'AUS']))
                     <div class="col-xs-6">
-                        @if (!can_not_do('human_resource_request_admin'))
+                        @if (!can_not_do('human_resource_request'))
                             <form id="paid_form" action="{{ route('human_resources.request.paid', ['request_id' => $human_resource_request->id]) }}" method="post">
                                 <label class="control-label">Remunerado</label>
                                 <div class="input-group">

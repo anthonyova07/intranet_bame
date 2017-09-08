@@ -40,11 +40,11 @@ class ApproveController extends Controller
                 do_log(((bool) $to_approve ? 'Aprob' : 'Rechaz') . 'ó como Supervisor la Solicitud de Recursos Humanos ( número:' . strip_tags($human_resource_request->reqnumber) . ' )');
 
                 if ($human_resource_request->approvesup) {
-                    Notification::notifyUsersByPermission('human_resource_request_admin', 'Solicitud de RH', 'Nueva ' . rh_req_types($human_resource_request->reqtype) . ' creada (#' . $human_resource_request->reqnumber . ') pendiente.', route('human_resources.request.show', ['id' => $human_resource_request->id]));
+                    Notification::notifyUsersByPermission('human_resource_request', 'Solicitud de RH', 'Nueva ' . rh_req_types($human_resource_request->reqtype) . ' creada (#' . $human_resource_request->reqnumber . ') pendiente.', route('human_resources.request.show', ['id' => $human_resource_request->id]));
                 }
             }
         } else if ($type == 'rh') {
-            if (can_not_do('human_resource_request_admin')) {
+            if (can_not_do('human_resource_request')) {
                 return back()->with('warning', 'Usted no esta autorizado a aprobar esta solicitud!');
             }
 
@@ -77,6 +77,46 @@ class ApproveController extends Controller
         }
 
         return back()->with('success', 'La solicitud ha sido ' . ((bool) $to_approve ? 'aprobada' : 'rechazada') . ' correctamente.');
+    }
+
+    public function verified(Request $request, $request_id, $to_verified)
+    {
+        $human_resource_request = HumanResourceRequest::find($request_id);
+
+        $user_info = session()->get('user_info');
+
+        if (can_not_do('human_resource_request')) {
+            return back()->with('warning', 'Usted no esta autorizado a aprobar esta solicitud!');
+        }
+
+        if ($human_resource_request->approvesup == 'p') {
+            return back()->with('info', 'La solicitud no ha sido aprobada por el supervisor!');
+        } else {
+            if ($human_resource_request->rhuser) {
+                return back()->with('info', 'La solicitud ya ha sido trabajada por RRHH');
+            } else {
+                $human_resource_request->rhverified = (bool) $to_verified;
+
+                if ($human_resource_request->reqtype == 'ANT') {
+                    $human_resource_request->reqstatus = ($human_resource_request->rhverified ? 'Verificado' : 'Rechazado') . ' por RRHH';
+                } else {
+                    $human_resource_request->reqstatus = ($human_resource_request->rhverified ? 'Aprobado' : 'Rechazado') . ' por RRHH';
+                }
+
+                $human_resource_request->reasonreje = $human_resource_request->rhverified ? '' : $request->reason;
+                $human_resource_request->save();
+
+                Notification::notify('Solicitud de RH', 'Tu solicitud #' . $human_resource_request->reqnumber . ' de RH ha sido ' . ((bool) $to_verified ? 'verificada' : 'rechazada') . ' por RRHH.', route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->created_by);
+
+                if (in_array($human_resource_request->reqtype, ['PER', 'AUS', 'VAC'])) {
+                    Notification::notify('Solicitud de RH', 'La solicitud #' . $human_resource_request->reqnumber . ' de ' . $human_resource_request->colname . ' ha sido ' . ((bool) $to_verified ? 'verificada' : 'rechazada') . ' por RRHH.', route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->colsupuser);
+                }
+
+                do_log(((bool) $to_verified ? 'Verific' : 'Rechaz') . 'ó como RRHH la Solicitud de Recursos Humanos ( número:' . strip_tags($human_resource_request->reqnumber) . ' )');
+            }
+        }
+
+        return back()->with('success', 'La solicitud ha sido ' . ((bool) $to_verified ? 'verificada' : 'rechazada') . ' correctamente.');
     }
 
     public function changestatus(Request $request)

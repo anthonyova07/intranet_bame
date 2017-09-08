@@ -208,6 +208,7 @@ Route::group(['middleware' => 'auth'], function () {
 
             Route::get('calculate_vac_date_to', 'RequestController@calculate_vac_date_to')->name('human_resources.request.calculate_vac_date_to');
             Route::get('approve/{request_id}/{to_approve}/{type}', 'ApproveController@approve')->name('human_resources.request.approve');
+            Route::get('approve/{request_id}/{to_verified}', 'ApproveController@verified')->name('human_resources.request.verified');
             Route::post('changestatus/{request_id}', 'ApproveController@changestatus')->name('human_resources.request.changestatus');
             Route::get('attach/{request_id}/{file_name}', 'RequestController@downloadAttach')->name('human_resources.request.downloadattach');
             Route::post('paid/{request_id}', 'RequestController@paid')->name('human_resources.request.paid');

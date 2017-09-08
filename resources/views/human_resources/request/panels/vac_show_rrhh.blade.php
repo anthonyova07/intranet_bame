@@ -1,4 +1,4 @@
-@if (!can_not_do('human_resource_request_admin'))
+@if (!can_not_do('human_resource_request'))
     <form method="post" action="{{ route('human_resources.request.savevacrhform', ['request_id' => $human_resource_request->id]) }}" id="form">
         @foreach (request()->only(['access']) as $key => $value)
             <input type="hidden" name="{{ $key }}" value="{{ $value }}">

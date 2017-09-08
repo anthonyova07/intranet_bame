@@ -50,7 +50,7 @@ class RequestController extends Controller
             $human_resource_requests->where('created_at', '<=', $request->date_to . ' 23:59:59');
         }
 
-        if (!$request->has('access')) {
+        if ($request->access != 'admin') {
             $human_resource_requests->where(function ($query) {
                 $query->where('coluser', session()->get('user'));
 
@@ -178,7 +178,7 @@ class RequestController extends Controller
         $human_resource_request->save();
 
         if (in_array($request->type, ['AUS', 'ANT'])) {
-            Notification::notifyUsersByPermission('human_resource_request_admin', 'Solicitud de RH', 'Nueva ' . rh_req_types($human_resource_request->reqtype) . ' creada (#' . $human_resource_request->reqnumber . ') pendiente.', route('human_resources.request.show', ['id' => $human_resource_request->id]));
+            Notification::notifyUsersByPermission('human_resource_request', 'Solicitud de RH', 'Nueva ' . rh_req_types($human_resource_request->reqtype) . ' creada (#' . $human_resource_request->reqnumber . ') pendiente.', route('human_resources.request.show', ['id' => $human_resource_request->id]));
         } else {
             Notification::notify('Solicitud de RH', 'Tiene un solicitud RH pendiente de aprobación', route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->colsupuser);
         }

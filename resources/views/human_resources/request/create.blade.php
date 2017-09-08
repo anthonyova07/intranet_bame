@@ -8,11 +8,13 @@
     @section('page_title', 'Nueva ' . rh_req_types($type))
 @endif
 
-{{-- @if (can_not_do('human_resource_request'))
-    @section('contents')
-        @include('layouts.partials.access_denied')
-    @endsection
-@endif --}}
+@if (request('access') == 'admin')
+    @if (can_not_do('human_resource_request'))
+        @section('contents')
+            @include('layouts.partials.access_denied')
+        @endsection
+    @endif
+@endif
 
 @section('contents')
 

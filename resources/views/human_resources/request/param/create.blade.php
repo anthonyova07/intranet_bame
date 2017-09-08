@@ -4,7 +4,7 @@
 
 @section('page_title', 'Nuevo ' . rh_req_params($type))
 
-@if (can_not_do('human_resource_request_admin'))
+@if (can_not_do('human_resource_request'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
@@ -17,7 +17,7 @@
         <div class="col-xs-8 col-xs-offset-2">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form method="post" action="{{ route('human_resources.request.{type}.param.store', ['type' => $type]) }}" id="form" novalidate>
+                    <form method="post" action="{{ route('human_resources.request.{type}.param.store', array_merge(['type' => $type], request()->only('access'))) }}" id="form" novalidate>
                         <div class="row">
                             <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('code') ? ' has-error':'' }}">
@@ -44,7 +44,7 @@
                             </div>
                         </div>
                         {{ csrf_field() }}
-                        <a class="btn btn-info btn-xs" href="{{ route('human_resources.request.index') }}"><i class="fa fa-arrow-left"></i> Atrás</a>
+                        <a class="btn btn-info btn-xs" href="{{ route('human_resources.request.index', request()->only('access')) }}"><i class="fa fa-arrow-left"></i> Atrás</a>
                         <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Enviando...">Enviar</button>
                     </form>
                 </div>
