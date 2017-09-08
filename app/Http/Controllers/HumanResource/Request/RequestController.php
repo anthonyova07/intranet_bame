@@ -75,8 +75,6 @@ class RequestController extends Controller
 
     public function create(Request $request)
     {
-        $params = Param::where('is_active', '1')->get();
-
         $request_type_exists = array_key_exists($request->type, rh_req_types()->toArray());
 
         if ($request->type) {
@@ -94,7 +92,6 @@ class RequestController extends Controller
         return view('human_resources.request.create', [
             'type' => $request->type,
             'request_type_exists' => $request_type_exists,
-            'params' => $params,
             'employee_date' => session('employee')->servicedat,
         ]);
     }
@@ -114,7 +111,7 @@ class RequestController extends Controller
 
         $user_info = session()->get('user_info');
 
-        if (in_array($request->type, ['PER', 'VAC', 'ANT'])) {
+        if (in_array($request->type, ['PER', 'VAC', 'ANT', 'CAR'])) {
             $human_resource_request->reqstatus = 'Pendiente por Supervisor';
 
             $human_resource_request->coluser = session('employee')->useremp;
@@ -131,7 +128,7 @@ class RequestController extends Controller
                 $human_resource_request->approvesup = 'p';
             }
 
-            if (in_array($request->type, ['ANT'])) {
+            if (in_array($request->type, ['ANT', 'CAR'])) {
                 $human_resource_request->reqstatus = 'Pendiente por RRHH';
                 $human_resource_request->approvesup = 'a';
             }
@@ -154,7 +151,11 @@ class RequestController extends Controller
             $human_resource_request->approvesup = 'a';
         }
 
-        $human_resource_request->approverh = false;
+        if (in_array($human_resource_request->reqtype, ['CAR'])) {
+            $human_resource_request->approverh = true;
+        } else {
+            $human_resource_request->approverh = false;
+        }
 
         $human_resource_request->created_by = session()->get('user');
         $human_resource_request->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
@@ -165,6 +166,8 @@ class RequestController extends Controller
             $result = self::saveVacRequest($human_resource_request->id, $request);
         } else if ($request->type == 'ANT') {
             $result = self::saveAntRequest($human_resource_request->id, $request);
+        } else if ($request->type == 'CAR') {
+            $result = self::saveCarRequest($human_resource_request->id, $request);
         }
 
         self::attachFiles($human_resource_request->id, $request);
@@ -177,7 +180,7 @@ class RequestController extends Controller
         $human_resource_request->cancelled = false;
         $human_resource_request->save();
 
-        if (in_array($request->type, ['AUS', 'ANT'])) {
+        if (in_array($request->type, ['AUS', 'ANT', 'CAR'])) {
             Notification::notifyUsersByPermission('human_resource_request', 'Solicitud de RH', 'Nueva ' . rh_req_types($human_resource_request->reqtype) . ' creada (#' . $human_resource_request->reqnumber . ') pendiente.', route('human_resources.request.show', ['id' => $human_resource_request->id]));
         } else {
             Notification::notify('Solicitud de RH', 'Tiene un solicitud RH pendiente de aprobación', route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->colsupuser);
@@ -197,13 +200,10 @@ class RequestController extends Controller
             return redirect(route('human_resources.request.index'));
         }
 
-        $statuses = Param::where('type', 'EST')->activeOnly()->get();
-
         do_log('Consultó la Solicitud de Recursos Humanos ( número:' . strip_tags($human_resource_request->reqnumber) . ' )');
 
         return view('human_resources.request.show', [
             'human_resource_request' => $human_resource_request,
-            'statuses' => $statuses,
         ]);
     }
 
@@ -350,6 +350,25 @@ class RequestController extends Controller
         $detail->advdues = $request->ant_dues;
         $detail->advdueamou = round(intval($request->ant_amount) / intval($request->ant_dues), 2);
         $detail->observa = $request->ant_observa;
+
+        $detail->created_by = session()->get('user');
+        $detail->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
+
+        $detail->save();
+
+        return null;
+    }
+
+    private static function saveCarRequest($requestId, $request)
+    {
+        $user_info = session()->get('user_info');
+
+        $detail = new Detail;
+
+        $detail->id = uniqid(true);
+        $detail->req_id = $requestId;
+        $detail->caraddreto = $request->car_addressed_to;
+        $detail->carcomment = $request->car_comments;
 
         $detail->created_by = session()->get('user');
         $detail->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();

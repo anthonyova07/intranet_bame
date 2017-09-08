@@ -127,12 +127,10 @@ class ApproveController extends Controller
             return redirect(route('human_resources.request.index'))->with('warning', 'La solicitud no existe!');
         }
 
-        $status = Param::where('type', 'EST')->where('id', $request->status)->first();
-
-        $human_resource_request->reqstatus = $status->name;
+        $human_resource_request->reqstatus = $request->status;
         $human_resource_request->save();
 
-        Notification::notify('Solicitud de RH', 'Tu solicitud #' . $human_resource_request->reqnumber . ' de RH ha cambiado al estado (' . $status->name . ')', route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->created_by);
+        Notification::notify('Solicitud de RH', 'Tu solicitud #' . $human_resource_request->reqnumber . ' de RH ha cambiado al estado (' . $request->status . ')', route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->created_by);
 
         return back()->with('success', 'El estatus ha sido cambiado correctamente');
     }

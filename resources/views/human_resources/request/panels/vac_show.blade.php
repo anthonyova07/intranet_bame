@@ -13,7 +13,6 @@
 <div class="row">
     @include('human_resources.request.panels.info_panel', [
         'human_resource_request' => $human_resource_request,
-        'statuses' => $statuses,
     ])
 
     @include('human_resources.request.panels.rhuser_panel', [

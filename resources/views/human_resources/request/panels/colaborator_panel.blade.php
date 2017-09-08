@@ -1,5 +1,5 @@
-@if (in_array($type, ['PER', 'VAC', 'ANT']))
-    <div class="col-xs-8{{ in_array($type, ['ANT']) ? ' col-xs-offset-2' : '' }}">
+@if (in_array($type, ['PER', 'VAC', 'ANT', 'CAR']))
+    <div class="col-xs-8{{ in_array($type, ['ANT', 'CAR']) ? ' col-xs-offset-2' : '' }}">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Datos del Empleado</h3>

@@ -75,6 +75,13 @@ class RequestHumanResourceRequest extends Request
             }
         }
 
+        if ($this->type == 'CAR') {
+            $v = array_merge($v, [
+                'car_addressed_to' => 'required|max:200',
+                'car_comments' => 'required|max:300',
+            ]);
+        }
+
         return $v;
     }
 

@@ -802,6 +802,7 @@ function rh_req_types($rh_req_type = null)
         'VAC' => 'Solicitud de Vacaciones',
         'AUS' => 'Notificación de Ausencia',
         'ANT' => 'Solicitud de Anticipo',
+        'CAR' => 'Sol. de Carta de Trabajo',
     ]);
 
     if (!$rh_req_type) {

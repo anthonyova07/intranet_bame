@@ -26,7 +26,7 @@
 
                         @if (!$human_resource_request->cancelled)
 
-                            @if (!can_not_do('human_resource_request') && $human_resource_request->approvesup == 'a' && !$human_resource_request->rhuser && !$human_resource_request->rhverified)
+                            @if (!can_not_do('human_resource_request') && $human_resource_request->approvesup == 'a' && !$human_resource_request->approverh && !$human_resource_request->rhverified && in_array($human_resource_request->reqtype, ['ANT']))
                                 <a style="color: #5cb85c;" href="{{ route('human_resources.request.verified', ['request_id' => $human_resource_request->id, 'to_verified' => 1]) }}"><i class="fa fa-check"></i> Verificar</a>
 
                                 <a
@@ -52,7 +52,7 @@
                                 </a>
                             @endif
 
-                            @if (!can_not_do('human_resource_request') && $human_resource_request->approvesup == 'a' && !$human_resource_request->rhuser && $human_resource_request->rhverified)
+                            @if (!can_not_do('human_resource_request') && $human_resource_request->approvesup == 'a' && !$human_resource_request->approverh)
 
                                 @if (in_array($human_resource_request->reqtype, ['ANT']))
 
@@ -118,7 +118,7 @@
                                 <a class="btn btn-danger btn-xs" href="{{ route('human_resources.request.approve', ['request_id' => $human_resource_request->id, 'to_approve' => 'r', 'type' => 'sup']) }}"><i class="fa fa-close"></i> Rechazar</a>
                             @endif
 
-                            @if (!in_array($human_resource_request->reqtype, ['ANT']))
+                            @if (!in_array($human_resource_request->reqtype, ['ANT', 'CAR']))
                                 @if ($human_resource_request->approvesup != 'p')
                                     <span style="font-size: 13px;margin: 0 5px;" class="label label-{{ $human_resource_request->approvesup == 'a' ? 'success' : 'danger' }}">
                                         {{ $human_resource_request->approvesup == 'a' ? 'Aprobada por Supervisor' : 'Rechazada por Supervisor' }}
@@ -154,7 +154,6 @@
 
     @include('human_resources.request.panels.' . strtolower($human_resource_request->reqtype) . '_show', [
         'human_resource_request' => $human_resource_request,
-        'statuses' => $statuses,
     ])
 
 @endsection
