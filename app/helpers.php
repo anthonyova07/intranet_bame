@@ -981,3 +981,10 @@ function rh_req_params($rh_req_param = null)
 
     return $rh_req_params->get($rh_req_param);
 }
+
+function onlyHourMinutes($str)
+{
+    $parts = explode(':', $str);
+
+    return $parts[0] . ':' . $parts[1];
+}

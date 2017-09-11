@@ -31,7 +31,7 @@
                         <div class="col-xs-4">
                             <div class="form-group{{ $errors->first('permission_date_reintegrate') ? ' has-error':'' }}">
                                 <label class="control-label">Fecha</label>
-                                <input type="date" style="width: 135px;" class="form-control input-sm" name="permission_date_reintegrate" value="{{ old('permission_date_reintegrate') ? old('permission_date_reintegrate') : $human_resource_request->detail->perdatfror->format('Y-m-d') }}">
+                                <input type="date" style="width: 135px;" class="form-control input-sm" name="permission_date_reintegrate" value="{{ old('permission_date_reintegrate') ? old('permission_date_reintegrate') : ($human_resource_request->detail->perdatfror ? $human_resource_request->detail->perdatfror->format('Y-m-d') : '') }}">
                                 <span class="help-block">{{ $errors->first('permission_date_reintegrate') }}</span>
                             </div>
                         </div>
