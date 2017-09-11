@@ -97,7 +97,7 @@
                     <a href="{{ route('home') }}"><i class="fa fa-home fa-fw"></i> Inicio</a>
                 </li>
                 <li>
-                    <a href="https://bancaonline.bancamerica.com.do/onlinebanking" target="_blank">
+                    <a href="https://bancaonline.bancamerica.com.do/onlinebanking" style="width: 20px;" target="_blank">
                     <img src="{{ route('home') }}/images/iconobame.png" alt="">
                     Internet Banking
                     </a>
