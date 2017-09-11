@@ -32,6 +32,7 @@ return [
     'links' => [
         'codigo_etica' => env('LINK_CODIGO_ETICA', '#'),
         'normativa_legal' => env('LINK_NORMATIVA_LEGAL', '#'),
+        'signature_generator' => env('LINK_SIGNATURE_GENERATOR', '#'),
     ],
 
     'timeout' => [

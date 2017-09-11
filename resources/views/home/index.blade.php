@@ -430,7 +430,7 @@
                                     <h4 class="modal-title" style="font-size: 25px;">Generador de Firmas Bancamérica</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <iframe src="http://meritdhost.com/firmas-bancamerica/" scrolling="yes" frameborder="0" height="500px" width="100%"></iframe>
+                                    <iframe src="{{ config('bame.links.signature_generator') }}" scrolling="yes" frameborder="0" height="500px" width="100%"></iframe>
                                 </div>
                             </div>
                         </div>
