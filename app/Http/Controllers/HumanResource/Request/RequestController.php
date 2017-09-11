@@ -463,12 +463,11 @@ class RequestController extends Controller
         if (in_array($human_resource_request->reqtype, ['VAC'])) {
             $v = array_merge($v, [
                 'vac_date_from_reintegrate' => 'required|date_format:"Y-m-d',
-                'vac_date_to_reintegrate' => 'required|date_format:"Y-m-d',
             ]);
 
             $data = array_merge($data, [
                 'vacdatfror' => $request->vac_date_from_reintegrate,
-                'vacdattor' => $request->vac_date_to_reintegrate,
+                'vacdattor' => HumanResourceRequest::getVacDateTo($request->vac_date_from_reintegrate, ($human_resource_request->detail->vactotdays + $human_resource_request->detail->vacadddays)),
             ]);
         }
 

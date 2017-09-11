@@ -94,7 +94,7 @@
                         <div class="col-xs-6">
                             <div class="form-group{{ $errors->first('vac_date_to_reintegrate') ? ' has-error':'' }}">
                                 <label class="control-label">Fecha de Reintegro</label>
-                                <input type="date" class="form-control input-sm" name="vac_date_to_reintegrate" value="{{ old('vac_date_to_reintegrate') ? old('vac_date_to_reintegrate') : ($human_resource_request->detail->vacdattor ? $human_resource_request->detail->vacdattor->format('Y-m-d') : '') }}">
+                                <input type="date" disabled class="form-control input-sm" name="vac_date_to_reintegrate" value="{{ old('vac_date_to_reintegrate') ? old('vac_date_to_reintegrate') : ($human_resource_request->detail->vacdattor ? $human_resource_request->detail->vacdattor->format('Y-m-d') : '') }}">
                                 <span class="help-block">{{ $errors->first('vac_date_to_reintegrate') }}</span>
                             </div>
                         </div>
@@ -119,3 +119,24 @@
         </div>
     </div>
 </form>
+
+<script type="text/javascript">
+    var total_days = $('input[name=vac_total_days]');
+    var add_days = $('input[name=vac_additional_days]');
+    var date_from_r = $('input[name=vac_date_from_reintegrate]');
+    var date_to_r = $('input[name=vac_date_to_reintegrate]');
+
+    date_from_r.change(function (e) {
+        calculate_r(parseInt(total_days.val()) + parseInt(add_days.val()), date_from_r.val());
+    });
+
+    function calculate_r(total_days, date_from) {
+        $.getJSON('{{ route('human_resources.request.calculate_vac_date_to') }}', {
+            total_days: total_days,
+            date_from: date_from
+        }, function (response) {
+            date_to_r.val(response.date_to);
+        });
+    }
+</script>
+

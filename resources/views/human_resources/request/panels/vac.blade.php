@@ -90,6 +90,9 @@
     var date_from = $('input[name=vac_date_from]');
     var date_to = $('input[name=vac_date_to]');
 
+    var date_from_r = $('input[name=vac_date_from_reintegrate]');
+    var date_to_r = $('input[name=vac_date_to_reintegrate]');
+
     total_days.change(function (e) {
         calculate(parseInt(total_days.val()) + parseInt(add_days.val()), date_from.val());
     });
@@ -102,12 +105,25 @@
         calculate(parseInt(total_days.val()) + parseInt(add_days.val()), date_from.val());
     });
 
+    date_from_r.change(function (e) {
+        calculate_r(parseInt(total_days.val()) + parseInt(add_days.val()), date_from_r.val());
+    });
+
     function calculate(total_days, date_from) {
         $.getJSON('{{ route('human_resources.request.calculate_vac_date_to') }}', {
             total_days: total_days,
             date_from: date_from
         }, function (response) {
             date_to.val(response.date_to);
+        });
+    }
+
+    function calculate_r(total_days, $date_from) {
+        $.getJSON('{{ route('human_resources.request.calculate_vac_date_to') }}', {
+            total_days: total_days,
+            date_from: date_from
+        }, function (response) {
+            date_to_r.val(response.date_to);
         });
     }
 </script>
