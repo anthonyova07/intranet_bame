@@ -21,6 +21,7 @@ class Detail extends Model
         'perdatto',
         'perdatfror',
         'perdattor',
+        'vacdatfror',
         'vacdattor',
     ];
 

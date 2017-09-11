@@ -421,6 +421,7 @@ class RequestController extends Controller
 
     public function reintegrate(Request $request, $requestId)
     {
+        // dd($request->all());
         $human_resource_request = HumanResourceRequest::find($requestId);
 
         $v = [
@@ -434,20 +435,26 @@ class RequestController extends Controller
         if (in_array($human_resource_request->reqtype, ['PER', 'AUS'])) {
             if ($human_resource_request->detail->pertype == 'one_day') {
                 $v = array_merge($v, [
-                    'permission_time_to_reintegrate' => 'required|date_format:"H:i',
+                    'permission_date_reintegrate' => 'required|date_format:"Y-m-d',
+                    'permission_time_from_reintegrate' => 'required',
+                    'permission_time_to_reintegrate' => 'required',
                 ]);
 
                 $data = array_merge($data, [
+                    'perdatfror' => $request->permission_date_reintegrate,
+                    'pertimfror' => $request->permission_time_from_reintegrate,
                     'pertimtor' => $request->permission_time_to_reintegrate,
                 ]);
             }
 
             if ($human_resource_request->detail->pertype == 'multiple_days') {
                 $v = array_merge($v, [
+                    'permission_date_from_reintegrate' => 'required|date_format:"Y-m-d',
                     'permission_date_to_reintegrate' => 'required|date_format:"Y-m-d',
                 ]);
 
                 $data = array_merge($data, [
+                    'perdatfror' => $request->permission_date_from_reintegrate,
                     'perdattor' => $request->permission_date_to_reintegrate,
                 ]);
             }
@@ -455,10 +462,12 @@ class RequestController extends Controller
 
         if (in_array($human_resource_request->reqtype, ['VAC'])) {
             $v = array_merge($v, [
+                'vac_date_from_reintegrate' => 'required|date_format:"Y-m-d',
                 'vac_date_to_reintegrate' => 'required|date_format:"Y-m-d',
             ]);
 
             $data = array_merge($data, [
+                'vacdatfror' => $request->vac_date_from_reintegrate,
                 'vacdattor' => $request->vac_date_to_reintegrate,
             ]);
         }

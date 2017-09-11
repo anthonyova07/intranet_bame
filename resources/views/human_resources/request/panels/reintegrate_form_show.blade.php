@@ -27,13 +27,13 @@
                         <div class="col-xs-4">
                             <div class="form-group">
                                 <label class="control-label">Fecha</label>
-                                <input type="date" style="width: 135px;" disabled class="form-control input-sm" name="permission_date_reintegrate" value="{{ $human_resource_request->detail->pertype == 'one_day' ? $human_resource_request->detail->perdatfrom->format('Y-m-d') : '' }}">
+                                <input type="date" style="width: 135px;" disabled class="form-control input-sm" name="permission_date_reintegrate" value="{{ $human_resource_request->detail->pertype == 'one_day' ? $human_resource_request->detail->perdatfror->format('Y-m-d') : '' }}">
                             </div>
                         </div>
                         <div class="col-xs-4">
                             <div class="form-group">
                                 <label class="control-label">Hora Desde</label>
-                                <input type="time" disabled class="form-control input-sm" name="permission_time_from" value="{{ $human_resource_request->detail->pertimfrom }}">
+                                <input type="time" disabled class="form-control input-sm" name="permission_time_from" value="{{ $human_resource_request->detail->pertimfror }}">
                             </div>
                         </div>
                         <div class="col-xs-4">
@@ -54,7 +54,7 @@
                             <div class="col-xs-6">
                                 <div class="form-group">
                                     <label class="control-label">Fecha Desde</label>
-                                    <input type="date" disabled class="form-control input-sm" name="permission_date_from" value="{{ $human_resource_request->detail->pertype == 'multiple_days' && $human_resource_request->detail->perdatfrom ? $human_resource_request->detail->perdatfrom->format('Y-m-d') : '' }}">
+                                    <input type="date" disabled class="form-control input-sm" name="permission_date_from" value="{{ $human_resource_request->detail->pertype == 'multiple_days' && $human_resource_request->detail->perdatfror ? $human_resource_request->detail->perdatfror->format('Y-m-d') : '' }}">
                                 </div>
                             </div>
                             <div class="col-xs-6">
