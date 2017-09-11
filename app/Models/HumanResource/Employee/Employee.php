@@ -33,6 +33,16 @@ class Employee extends Model
         return $this->hasOne(Param::class, 'id', 'id_sup');
     }
 
+    public function supervisor_emp()
+    {
+        return $this->hasOne(Employee::class, 'id_pos', 'id_sup');
+    }
+
+    public function subordinates()
+    {
+        return $this->hasMany(Employee::class, 'id_sup', 'id_pos');
+    }
+
     public function scopeByUser($query, $user = null)
     {
         if ($user) {
@@ -87,5 +97,57 @@ class Employee extends Model
         }
 
         return $description ? 'Call Center Externo':'CCE';
+    }
+
+    public function isSupervisor()
+    {
+        return (bool) $this->subordinates->count();
+    }
+
+    public function getSubordinatesUsers()
+    {
+        return $this->subordinates->pluck('useremp')->toArray();
+    }
+
+    public function getMaxDayTakeVac()
+    {
+        $years = get_year_of_service($this->servicedat);
+
+        if ($years >= 1 && $years < 5) {
+            return 14;
+        }
+
+        if ($years >= 5) {
+            return 18;
+        }
+
+        return 0;
+    }
+
+    public function applyBonus($days)
+    {
+        $years = get_year_of_service($this->servicedat);
+
+        if ($years >= 1 && $years <= 5) {
+            return $days >= 8;
+        }
+
+        if ($years > 5) {
+            return $days >= 10;
+        }
+
+        return false;
+    }
+
+    public function hasMonth($month)
+    {
+        $months = get_month_of_service($this->servicedat);
+
+        return $months > $month;
+    }
+
+    public function noHasMonth($month)
+    {
+        return !$this->hasMonth($month);
     }
 }

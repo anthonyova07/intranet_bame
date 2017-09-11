@@ -61,7 +61,7 @@
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a href="{{ route('human_resources.payroll.my') }}"><i class="fa fa-money fa-fw"></i> Nóminas</a>
+                        <a href="{{ route('human_resources.payroll.my') }}"><i class="fa fa-money fa-fw"></i> Mis Nóminas</a>
                     </li>
                     <li class="divider"></li>
                     <li>
@@ -160,6 +160,28 @@
                     </a>
                 </li>
                 @if (session()->has('menus'))
+                    <li style="border-bottom: 5px solid #e7e7e7;">
+                        <a href="#">
+                            <i class="fa fa-universal-access fa-fw"></i>
+                            Empleado Bancamérica
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level animated zoomInLeft" style="animation-duration: 0.5s;">
+                            <li>
+                                <a href="{{ route('human_resources.payroll.my') }}">
+                                    <i class="fa fa-money fa-fw"></i>
+                                    Mis Nóminas
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('human_resources.request.index') }}">
+                                    <i class="fa fa-wpforms fa-fw"></i>
+                                    Solicitudes
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
                     @foreach (session()->get('menus') as $menu)
                         <li>
                             <a href="#">
@@ -172,10 +194,17 @@
                                     @foreach ($menu->submenus as $submenu)
                                         @if (Route::has($submenu->sub_link))
                                             <li>
-                                                <a href="{{ route($submenu->sub_link) }}">
-                                                    <i class="fa fa-unlock-alt fa-fw"></i>
-                                                    {{ $submenu->sub_descri }}
-                                                </a>
+                                                @if ($submenu->sub_coduni == 'human_resource_request')
+                                                    <a href="{{ route($submenu->sub_link, ['access' => 'admin']) }}">
+                                                        <i class="fa fa-unlock-alt fa-fw"></i>
+                                                        {{ $submenu->sub_descri }}
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route($submenu->sub_link) }}">
+                                                        <i class="fa fa-unlock-alt fa-fw"></i>
+                                                        {{ $submenu->sub_descri }}
+                                                    </a>
+                                                @endif
                                             </li>
                                         @endif
                                     @endforeach

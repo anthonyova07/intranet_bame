@@ -578,6 +578,35 @@ function get_next_request_number()
     return $number;
 }
 
+function get_next_request_rh_number()
+{
+    $date = null;
+
+    $last_request = \Bame\Models\HumanResource\Request\HumanResourceRequest::orderBy('created_at', 'desc')->first();
+    $last_request_number = $last_request ? $last_request->reqnumber : null;
+
+    if ($last_request_number) {
+        $parts = explode('-', $last_request_number);
+
+        $year = $parts[0];
+        $month = $parts[1];
+        $day = $parts[2];
+        $sequence = $parts[3];
+
+        $date = $year . '-' . $month . '-' . $day;
+    }
+
+    $date_current = (new \DateTime)->format('Y-m-d');
+
+    if ($date == $date_current) {
+        $number = $date_current . '-' . (str_pad((intval($sequence) + 1), 4, '0', STR_PAD_LEFT));
+    } else {
+        $number = $date_current . '-0001';
+    }
+
+    return $number;
+}
+
 function get_response_term()
 {
     return [
@@ -659,6 +688,36 @@ function calculate_year_of_service($date, $with_diff = false)
     }
 }
 
+function get_year_of_service($date)
+{
+    $parts = explode('-', $date);
+
+    $current_date = new \DateTime;
+
+    $service_compare_date = new \Datetime($current_date->format('Y') . "-{$parts[1]}-{$parts[2]} 23:59:59");
+
+    $service_date = new \Datetime("{$date} 23:59:59");
+
+    $diff = $service_date->diff($current_date);
+
+    return $diff->y;
+}
+
+function get_month_of_service($date)
+{
+    $parts = explode('-', $date);
+
+    $current_date = new \DateTime;
+
+    $service_compare_date = new \Datetime($current_date->format('Y') . "-{$parts[1]}-{$parts[2]} 23:59:59");
+
+    $service_date = new \Datetime("{$date} 23:59:59");
+
+    $diff = $service_date->diff($current_date);
+
+    return $diff->y * 12 + $diff->m;
+}
+
 function datetime()
 {
     return new \DateTime;
@@ -725,7 +784,7 @@ function get_treasury_rate_contents($content = null)
 function get_employee_params($param = null)
 {
     $params = collect([
-        'DEP' => 'Departmento',
+        'DEP' => 'Departamento',
         'POS' => 'Posición',
     ]);
 
@@ -890,4 +949,35 @@ function get_channels($channel = null)
     }
 
     return $channels->get($channel);
+}
+
+function rh_req_types($rh_req_type = null)
+{
+    $rh_req_types = collect([
+        'PER' => 'Solicitud de Permisos',
+        'VAC' => 'Solicitud de Vacaciones',
+        'AUS' => 'Notificación de Ausencia',
+        'ANT' => 'Solicitud de Anticipo',
+        'CAR' => 'Sol. de Carta de Trabajo',
+    ]);
+
+    if (!$rh_req_type) {
+        return $rh_req_types;
+    }
+
+    return $rh_req_types->get($rh_req_type);
+}
+
+function rh_req_params($rh_req_param = null)
+{
+    $rh_req_params = collect([
+        'PER' => 'Permisos',
+        'EST' => 'Estatus',
+    ]);
+
+    if (!$rh_req_param) {
+        return $rh_req_params;
+    }
+
+    return $rh_req_params->get($rh_req_param);
 }
