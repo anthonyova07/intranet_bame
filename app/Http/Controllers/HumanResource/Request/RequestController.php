@@ -200,7 +200,7 @@ class RequestController extends Controller
         $human_resource_request = HumanResourceRequest::find($request);
 
         if (!$human_resource_request) {
-            return redirect(route('human_resources.request.index'));
+            return redirect()->route('human_resources.request.index')->with('La solicitud no existe o ha sido cancelada.');
         }
 
         do_log('Consultó la Solicitud de Recursos Humanos ( número:' . strip_tags($human_resource_request->reqnumber) . ' )');
@@ -558,15 +558,17 @@ class RequestController extends Controller
     {
         $human_resource_request = HumanResourceRequest::find($request_id);
 
-        if (!$human_resource_request->canByCancelled()) {
-            return back()->with('warning', 'La solicitud no puede ser cancelada.');
+        // if (!$human_resource_request->canByCancelled()) {
+        //     return back()->with('warning', 'La solicitud no puede ser cancelada.');
+        // }
+
+        if (!$human_resource_request) {
+            return redirect()->route('human_resources.request.index')->with('warning', 'La solicitud no existe o ha sido cancelada.');
         }
 
-        $human_resource_request->reqstatus = 'Cancelado';
-        $human_resource_request->cancelled = true;
+        $human_resource_request->detail->delete();
+        $human_resource_request->delete();
 
-        $human_resource_request->save();
-
-        return back()->with('success', 'Los solicitud ha sido cancelada correctamente.');
+        return redirect()->route('human_resources.request.index')->with('success', 'Los solicitud ha sido cancelada correctamente.');
     }
 }

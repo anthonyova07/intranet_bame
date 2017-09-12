@@ -134,7 +134,7 @@
 
                             @if ($human_resource_request->canByCancelled())
                                 @if (!$human_resource_request->cancelled && $human_resource_request->created_by == session('user'))
-                                    <a style="font-size: 13px;margin: 3px;" class="label btn-danger" target="__blank" href="{{ route('human_resources.request.cancel', ['request_id' => $human_resource_request->id]) }}">Cancelar</a>
+                                    <a style="font-size: 13px;margin: 3px;" class="label btn-danger" href="{{ route('human_resources.request.cancel', ['request_id' => $human_resource_request->id]) }}">Cancelar</a>
                                 @endif
                             @endif
 
