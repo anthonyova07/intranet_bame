@@ -523,15 +523,25 @@ class RequestController extends Controller
             // 'ant_first_due_date' => 'required|date_format:"Y-m-d',
         ]);
 
-        $customer = Customer::byIdn(remove_dashes(session('employee')->identifica))->first();
+        $human_resource_request = HumanResourceRequest::find($requestId);
+
+        $employee = Employee::byUser($human_resource_request->created_by)->first();
+
+        if (!$employee) {
+            return back()->withWarning('El empleado no fue encontrado en la Intranet.');
+        }
+
+        $customer = Customer::byIdn(remove_dashes($employee->identifica))->first();
+
+        if (!$customer) {
+            return back()->withWarning('Este número de anticipo no existe o no esta asociado al empleado en IBS.');
+        }
 
         $loan = $customer->loans->where('deaacc', $request->ant_advance_number)->first();
 
         if (!$loan) {
-            return back()->withError('Este número de anticipo no existe o no esta asociado al empleado en IBS.');
+            return back()->withWarning('Este número de anticipo no existe o no esta asociado al empleado en IBS.');
         }
-
-        $human_resource_request = HumanResourceRequest::find($requestId);
 
         if ($human_resource_request->reqtype == 'ANT') {
             $human_resource_request->reqstatus = 'Desembolsado';
