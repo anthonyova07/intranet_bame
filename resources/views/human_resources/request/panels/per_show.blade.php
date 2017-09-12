@@ -89,7 +89,7 @@
                     </div>
                 </div>
 
-                @if (session('user') == $human_resource_request->created_by)
+                @if (session('user') == $human_resource_request->created_by || session('user') == session('employee')->supervisor_emp->useremp)
                     @include('human_resources.request.panels.reintegrate_form', [
                         'human_resource_request' => $human_resource_request,
                     ])
