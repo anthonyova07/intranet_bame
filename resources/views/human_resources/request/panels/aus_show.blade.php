@@ -64,7 +64,9 @@
                     </div>
                 </div>
 
-                @if (session('user') == $human_resource_request->created_by || session('user') == session('employee')->supervisor_emp->useremp)
+                @if ((session('user') == $human_resource_request->created_by
+                    || session('user') == session('employee')->supervisor_emp->useremp)
+                    && !$human_resource_request->detail->petdatfror)
                     @include('human_resources.request.panels.reintegrate_form', [
                         'human_resource_request' => $human_resource_request,
                     ])

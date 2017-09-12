@@ -475,6 +475,16 @@ class RequestController extends Controller
 
         $human_resource_request->detail()->update($data);
 
+        if (in_array($request->type, ['PER', 'VAC', 'AUS'])) {
+            $human_resource_request->reqstatus = 'Pendiente por Supervisor';
+            $human_resource_request->approvesup = 'p';
+        }
+
+        if (in_array($request->type, ['ANT', 'CAR'])) {
+            $human_resource_request->reqstatus = 'Pendiente por RRHH';
+            $human_resource_request->approvesup = 'a';
+        }
+
         $human_resource_request->rhuser = null;
         $human_resource_request->rhname = null;
         $human_resource_request->approverh = false;
