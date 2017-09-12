@@ -236,4 +236,9 @@ class Customer extends Model
         //     $query->where('stsrd_mtar', 1)->orWhere('stsrd_mtar', 6);
         // });
     }
+
+    public function scopeByIdn($query, $idn)
+    {
+        return $query->where('cusidn', $idn)->orWhere('cusln3', $idn);
+    }
 }

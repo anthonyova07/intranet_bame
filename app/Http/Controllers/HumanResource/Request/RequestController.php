@@ -5,6 +5,7 @@ namespace Bame\Http\Controllers\HumanResource\Request;
 use DateTime;
 use Bame\Http\Requests;
 use Illuminate\Http\Request;
+use Bame\Models\Customer\Customer;
 use Bame\Http\Controllers\Controller;
 use Bame\Models\Notification\Notification;
 use Bame\Models\HumanResource\Request\Param;
@@ -522,10 +523,12 @@ class RequestController extends Controller
             // 'ant_first_due_date' => 'required|date_format:"Y-m-d',
         ]);
 
-        $loan = LoanMoneyMarket::byNumber($request->ant_advance_number)->first();
+        $customer = Customer::byIdn(remove_dashes(session('employee')->identifica))->first();
+
+        $loan = $customer->loans->where('deaacc', $request->ant_advance_number)->first();
 
         if (!$loan) {
-            return back()->with('Este número de anticipo no existe en IBS.');
+            return back()->withError('Este número de anticipo no existe o no esta asociado al empleado en IBS.');
         }
 
         $human_resource_request = HumanResourceRequest::find($requestId);
