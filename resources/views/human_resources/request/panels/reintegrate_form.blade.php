@@ -1,6 +1,6 @@
 <form method="post" action="{{ route('human_resources.request.reintegrate', $human_resource_request->id) }}" novalidate>
     <div class="row text-center">
-        <h4 style="margin-bottom: 5px;">Fecha para el Reintegro</h4>
+        <h4 style="margin-bottom: 5px;">Modificar Fecha de Solicitud</h4>
     </div>
 
     @if (in_array($human_resource_request->reqtype, ['PER', 'AUS']))

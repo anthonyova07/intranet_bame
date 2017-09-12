@@ -1,7 +1,7 @@
 <div class="row">
     <form method="get" action="#" novalidate>
         <div class="row text-center">
-            <h4 style="margin-bottom: -5px;">Fecha para el Reintegro</h4>
+            <h4 style="margin-bottom: 5px;">Modificar Fecha de Solicitud</h4>
             <div class="col-xs-6{{ $human_resource_request->detail->pertype == 'one_day' ? ' col-xs-offset-3' : '' }}"{!! $human_resource_request->detail->pertype == 'one_day' ? '' : ' style="display: none;"' !!}>
                 <div class="radio">
                     <label style="font-size: 16px;font-weight: bold;">
@@ -62,6 +62,31 @@
                                     <label class="control-label">Fecha Hasta</label>
                                     <input type="date" disabled class="form-control input-sm" name="permission_date_to_reintegrate" value="{{ old('permission_date_to_reintegrate') ? old('permission_date_to_reintegrate') : ($human_resource_request->detail->perdattor ? $human_resource_request->detail->perdattor->format('Y-m-d') : '') }}">
                                     <span class="help-block">{{ $errors->first('permission_date_to_reintegrate') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        </div>
+        <div class="row">
+            @if (in_array($human_resource_request->reqtype, ['VAC']))
+                <div class="col-xs-6 col-xs-offset-3">
+                    <div class="well well-sm">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="form-group{{ $errors->first('vac_date_from_reintegrate') ? ' has-error':'' }}">
+                                    <label class="control-label">Fecha de Inicio</label>
+                                    <input type="date" disabled class="form-control input-sm" name="vac_date_from_reintegrate" value="{{ $human_resource_request->detail->vacdatfror ? $human_resource_request->detail->vacdatfror->format('Y-m-d') : '' }}">
+                                    <span class="help-block">{{ $errors->first('vac_date_from_reintegrate') }}</span>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-6">
+                                <div class="form-group{{ $errors->first('vac_date_to_reintegrate') ? ' has-error':'' }}">
+                                    <label class="control-label">Fecha de Reintegro</label>
+                                    <input type="date" disabled class="form-control input-sm" name="vac_date_to_reintegrate" value="{{ $human_resource_request->detail->vacdattor ? $human_resource_request->detail->vacdattor->format('Y-m-d') : '' }}">
+                                    <span class="help-block">{{ $errors->first('vac_date_to_reintegrate') }}</span>
                                 </div>
                             </div>
                         </div>

@@ -245,7 +245,7 @@ class RequestController extends Controller
 
             if ($param->code == 'DIALIBRE') {
                 if (!HumanResourceRequest::isBetweenXDays($request->permission_date)) {
-                    return back()->withInput()->with('error', 'El día libre debe ser solicitado al menos con 5 laborables de anticipación');
+                    return back()->withInput()->with('error', 'El día libre debe ser solicitado al menos con 5 días laborables de anticipación');
                 }
             }
 
@@ -442,8 +442,8 @@ class RequestController extends Controller
 
                 $data = array_merge($data, [
                     'perdatfror' => $request->permission_date_reintegrate,
-                    'pertimfror' => $request->permission_time_from_reintegrate,
-                    'pertimtor' => $request->permission_time_to_reintegrate,
+                    'pertimfror' => $request->permission_time_from_reintegrate . ':00',
+                    'pertimtor' => $request->permission_time_to_reintegrate . ':00',
                 ]);
             }
 
