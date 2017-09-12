@@ -56,7 +56,7 @@
 
                                 @if (in_array($human_resource_request->reqtype, ['ANT']))
 
-                                    @if (!can_not_do('human_resource_request_admin'))
+                                    @if (!can_not_do('human_resource_request_admin') && $human_resource_request->rhverified)
 
                                         <a style="color: #5cb85c;" href="{{ route('human_resources.request.approve', ['request_id' => $human_resource_request->id, 'to_approve' => 1, 'type' => 'rh']) }}"><i class="fa fa-check"></i> Aprobar</a>
 
