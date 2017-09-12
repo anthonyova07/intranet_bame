@@ -2,19 +2,19 @@
 
 namespace Bame\Http\Controllers\HumanResource\Request;
 
-use Illuminate\Http\Request;
-
 use DateTime;
 use Bame\Http\Requests;
+use Illuminate\Http\Request;
 use Bame\Http\Controllers\Controller;
-use Bame\Models\HumanResource\Employee\Employee;
-use Bame\Models\HumanResource\Request\Param;
-use Bame\Models\HumanResource\Request\HumanResourceRequest;
-use Bame\Models\HumanResource\Request\Approval;
-use Bame\Models\HumanResource\Request\Detail;
-use Bame\Http\Requests\HumanResource\Request\RequestHumanResourceRequest;
 use Bame\Models\Notification\Notification;
+use Bame\Models\HumanResource\Request\Param;
+use Bame\Models\HumanResource\Request\Detail;
+use Bame\Models\HumanResource\Request\Approval;
+use Bame\Models\HumanResource\Employee\Employee;
+use Bame\Models\Customer\Product\LoanMoneyMarket;
 use Bame\Models\HumanResource\Calendar\Birthdate;
+use Bame\Models\HumanResource\Request\HumanResourceRequest;
+use Bame\Http\Requests\HumanResource\Request\RequestHumanResourceRequest;
 
 class RequestController extends Controller
 {
@@ -516,11 +516,17 @@ class RequestController extends Controller
     public function saveAntRHForm(Request $request, $requestId)
     {
         $this->validate($request, [
-            'client_number' => 'required|numeric',
+            // 'client_number' => 'required|numeric',
             'ant_advance_number' => 'required|numeric',
-            'ant_deposit_date' => 'required|date_format:"Y-m-d',
-            'ant_first_due_date' => 'required|date_format:"Y-m-d',
+            // 'ant_deposit_date' => 'required|date_format:"Y-m-d',
+            // 'ant_first_due_date' => 'required|date_format:"Y-m-d',
         ]);
+
+        $loan = LoanMoneyMarket::byNumber($request->ant_advance_number)->first();
+
+        if (!$loan) {
+            return back()->with('Este número de anticipo no existe en IBS.');
+        }
 
         $human_resource_request = HumanResourceRequest::find($requestId);
 
@@ -530,11 +536,11 @@ class RequestController extends Controller
         }
 
         $human_resource_request->detail()->update([
-            'clientnum' => $request->client_number,
+            'clientnum' => $loan->getCustomerNumber(),
             'advnumber' => $request->ant_advance_number,
-            'advdatdepo' => $request->ant_deposit_date,
-            'firsduedat' => $request->ant_first_due_date,
-            'lastduedat' => $human_resource_request->getLastDueDate($request->ant_first_due_date),
+            'advdatdepo' => $loan->getDepositDate(),
+            'firsduedat' => $loan->payments_plan->first()->getDate(),
+            'lastduedat' => $loan->payments_plan->last()->getDate(),
             'note' => $request->ant_note,
         ]);
 
