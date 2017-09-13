@@ -56,7 +56,7 @@
                         <td class="table_td" align="right" width="408" style="border: 0;">
                             <b style="font-size: 14px;font-style: italic;">Solicitud de tarjeta No. {{ $request_tdc->reqnumber }}</b>
                             <br>
-                            <div style="color: #777777;font-size: 12px;">Emitido por Bancamérica 101-11784-2</div>
+                            <div style="color: #777777;font-size: 12px;">Realizado por {{ $request_tdc->createname }}</div>
                         </td>
                     </tr>
                     <tr align="right">
