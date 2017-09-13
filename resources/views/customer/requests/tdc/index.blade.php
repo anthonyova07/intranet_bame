@@ -242,14 +242,21 @@
             $('#btn_submit').button('loading');
         });
 
-        $('#print_requests').click(function () {
+        $('#print_requests').click(function (e) {
             var ids = '?id=';
+            var count = 0;
 
             $('.check_print').each(function (index, check) {
                 if ($(check).is(':checked')) {
                     ids += $(check).val() + ',';
+                    count++;
                 }
             });
+
+            if (!count) {
+                alert('No ha seleccionado ninguna solicitud para imprimir.');
+                return false;
+            }
 
             $(this).attr('href', $(this).attr('url') + ids);
         });
