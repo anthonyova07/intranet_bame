@@ -2,16 +2,16 @@
 
 namespace Bame\Http\Controllers\Customer\Requests\Tdc;
 
-use Illuminate\Http\Request;
-
 use Bame\Http\Requests;
+use Illuminate\Http\Request;
+use Bame\Models\Extranet\Business;
 use Bame\Http\Controllers\Controller;
+use Bame\Models\Notification\Notification;
+use Bame\Models\Customer\Requests\Tdc\Param;
 use Bame\Models\HumanResource\Employee\Employee;
 use Bame\Models\Customer\Requests\Tdc\TdcRequest;
 use Bame\Models\Customer\Requests\Tdc\CustomerProcessed;
-use Bame\Models\Customer\Requests\Tdc\Param;
 use Bame\Http\Requests\Customer\Requests\Tdc\RequestTdcRequest;
-use Bame\Models\Notification\Notification;
 
 class TdcRequestController extends Controller
 {
@@ -40,6 +40,7 @@ class TdcRequestController extends Controller
         return view('customer.requests.tdc.index', [
             'params' => Param::get(),
             'requests_tdc' => $requests_tdc->paginate(),
+            'businesses' => Business::get(),
         ]);
     }
 
@@ -51,7 +52,7 @@ class TdcRequestController extends Controller
             $customer = TdcRequest::searchFromDBFile($request->identification);
 
             if (!$customer) {
-                return back()->with('warning', 'El cliente no ha sido encontrado o no se ha cargado la base de datos para el canal: ' . Employee::getChannel(true));
+                return back()->with('warning', 'El cliente no ha sido encontrado o no se ha cargado la base de datos para su empresa en el canal: ' . Employee::getChannel(true));
             }
 
             $customer_processed = CustomerProcessed::byIdentification($customer->identification)->lastestFirst()->first();
@@ -299,7 +300,13 @@ class TdcRequestController extends Controller
 
             $path = config('bame.requests.db.url');
 
-            $request->file->move($path, 'solicitudes_tdc_db_' . strtolower($request->channel) .'.csv');
+            if ($request->business) {
+                $file_name = 'solicitudes_tdc_db_' . strtolower($request->channel) .'_' . $request->business . '.csv';
+            } else {
+                $file_name = 'solicitudes_tdc_db_' . strtolower($request->channel) .'.csv';
+            }
+
+            $request->file->move($path, $file_name);
 
             return back()->with('success', 'Los archivos han sido cargados correctamente.');
         }

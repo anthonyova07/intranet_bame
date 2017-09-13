@@ -204,12 +204,22 @@
                                     <input type="file" name="file">
                                 </div>
                             </div>
-                            <div class="col-xs-12" style="padding-left: 0px;padding-right: 0px;">
+                            <div class="col-xs-6">
                                 <div class="form-group">
                                     <label class="control-label">Cargar al Canal</label>
                                     <select class="form-control input-sm" name="channel">
                                         @foreach (get_channels() as $key => $channel)
                                             <option value="{{ $key }}">{{ $channel }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group" id="business_selector">
+                                    <label class="control-label">Call Centers Externos</label>
+                                    <select class="form-control input-sm" disabled name="business">
+                                        @foreach ($businesses as $business)
+                                            <option value="{{ $business->id }}">{{ $business->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -248,6 +258,17 @@
             $('.check_print').each(function (index, check) {
                 $(check).prop('checked', check_all.is(':checked'));
             });
+        });
+
+        var channel = $('select[name=channel]');
+        var business = $('select[name=business]');
+
+        channel.change(function () {
+            if ($(this).val() == 'CCE') {
+                business.prop('disabled', false);
+            } else {
+                business.prop('disabled', true);
+            }
         });
     </script>
 

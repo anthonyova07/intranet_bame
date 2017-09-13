@@ -34,7 +34,13 @@ class TdcRequest extends Model
 
     public static function searchFromDBFile($identification)
     {
-        $path = config('bame.requests.db.url') . 'solicitudes_tdc_db_'.strtolower(Employee::getChannel()).'.csv';
+        $channel = strtolower(Employee::getChannel());
+
+        if ($channel == 'cce') {
+            $path = config('bame.requests.db.url') . 'solicitudes_tdc_db_' . strtolower(Employee::getChannel()) . '_' . auth()->user()->busi_id . '.csv';
+        } else {
+            $path = config('bame.requests.db.url') . 'solicitudes_tdc_db_'.strtolower(Employee::getChannel()).'.csv';
+        }
 
         if (!file_exists($path)) {
             return null;
