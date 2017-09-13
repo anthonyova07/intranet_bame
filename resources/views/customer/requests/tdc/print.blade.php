@@ -72,8 +72,8 @@
                                 {{ $request_tdc->created_at->format('h') }}
                                 <b>:</b>
                                 {{ $request_tdc->created_at->format('i') }}
-                                <b>:</b>
-                                {{ $request_tdc->created_at->format('s') }}
+                                {{-- <b>:</b> --}}
+                                {{-- {{ $request_tdc->created_at->format('s') }} --}}
                                 {{ $request_tdc->created_at->format('a') }}
                             </div>
                         </td>
