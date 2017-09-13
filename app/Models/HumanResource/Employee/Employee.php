@@ -61,6 +61,9 @@ class Employee extends Model
     {
         return str_contains($this->getTitle(), 'oficial') ||
             str_contains($this->getTitle(), 'ejecutivo') ||
+            str_contains($this->getTitle(), 'supervisor') ||
+            str_contains($this->getTitle(), 'gerente') ||
+            str_contains($this->getTitle(), 'cajero') ||
             str_contains($this->getTitle(), 'negocio');
     }
 
