@@ -208,6 +208,7 @@
                                 <div class="form-group">
                                     <label class="control-label">Cargar al Canal</label>
                                     <select class="form-control input-sm" name="channel">
+                                        <option value="">Seleccionar un canal</option>
                                         @foreach (get_channels() as $key => $channel)
                                             <option value="{{ $key }}">{{ $channel }}</option>
                                         @endforeach
@@ -218,6 +219,7 @@
                                 <div class="form-group" id="business_selector">
                                     <label class="control-label">Call Centers Externos</label>
                                     <select class="form-control input-sm" disabled name="business">
+                                        <option value="">Seleccionar un Call Center</option>
                                         @foreach ($businesses as $business)
                                             <option value="{{ $business->id }}">{{ $business->name }}</option>
                                         @endforeach

@@ -296,7 +296,7 @@ class TdcRequestController extends Controller
 
     public function load(Request $request)
     {
-        if ($request->hasFile('file')) {
+        if ($request->hasFile('file') && $request->channel != '') {
 
             $path = config('bame.requests.db.url');
 
@@ -311,7 +311,7 @@ class TdcRequestController extends Controller
             return back()->with('success', 'Los archivos han sido cargados correctamente.');
         }
 
-        return back()->with('warning', 'Debe seleccionar un archivo a cargar.');
+        return back()->with('warning', 'Debe seleccionar un archivo a cargar o Seleccionar un canal.');
     }
 
     public function delete(Request $request, $id)
