@@ -357,6 +357,7 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::post('located/{identification}/{reqnumber?}', 'TdcRequestController@located')->name('customer.request.tdc.located');
                 Route::get('excel', 'TdcRequestController@excel')->name('customer.request.tdc.excel');
                 Route::post('load', 'TdcRequestController@load')->name('customer.request.tdc.load');
+                Route::post('delete/{id}', 'TdcRequestController@delete')->name('customer.request.tdc.delete');
             });
 
             Route::resource('tdc', 'TdcRequestController', ['only' => [

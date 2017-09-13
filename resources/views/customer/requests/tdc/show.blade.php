@@ -4,7 +4,7 @@
 
 @section('page_title', 'Solicitud de Tarjeta #' . $request_tdc->reqnumber)
 
-@if (can_not_do('customer_requests_tdc'))
+@if (can_not_do('customer_requests_tdc_admin'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
@@ -19,8 +19,39 @@
                     <div class="col-xs-2" style="padding: 0 2px;">
                         <a class="btn btn-info btn-xs" href="{{ route('customer.request.tdc.index', Request::all()) }}"><i class="fa fa-arrow-left"></i> Atrás</a>
                     </div>
-                    <div class="col-xs-2 pull-right">
-                        <a style="font-size: 13px;padding: 8px 8px;" class="label btn-warning pull-right" target="__blank" href="{{ route('customer.request.tdc.print', ['id' => $request_tdc->id]) }}">Imprimir</a>
+                    <div class="col-xs-4 pull-right">
+                        @if ($request_tdc->isNotDeleted())
+
+                            <a style="font-size: 13px;padding: 8px 8px;" class="label btn-warning pull-right" target="__blank" href="{{ route('customer.request.tdc.print', ['id' => $request_tdc->id]) }}">Imprimir</a>
+
+                            <a
+                                href="javascript:void(0)"
+                                data-toggle="popover"
+                                data-placement="left"
+                                data-content="
+                                <form action='{{ route('customer.request.tdc.delete', $request_tdc->id) }}' method='post'>
+                                    <div class='row'>
+                                        <div class='col-xs-12'>
+                                            <div class='form-group'>
+                                                <label class='control-label'>Motivo de la Eliminación</label>
+                                                <textarea rows='10' class='form-control input-sm' maxlength='500' name='reason'></textarea>
+                                            </div>
+                                            {{ str_replace('"', '\'', csrf_field()) }}
+                                            {{-- {{ str_replace('"', '\'', method_field("post")) }} --}}
+                                            <input type='submit' class='btn btn-danger btn-xs' value='Eliminar' style='margin-top: 10px;'>
+                                        </div>
+                                    </div>
+                                </form>"
+                                style="font-size: 13px;padding: 8px 8px;margin-right: 5px;"
+                                class="label btn-danger pull-right">
+                                <i class="fa fa-close"></i> Eliminar</i>
+                            </a>
+
+                        @else
+
+                            <a style="font-size: 13px;padding: 8px 8px;" class="label btn-danger pull-right" href="#panel_deleted">Eliminada</a>
+
+                        @endif
                     </div>
                 </div>
             </div>
@@ -407,6 +438,51 @@
             </div>
         </div>
     </div>
+
+    @if ($request_tdc->isDeleted())
+        <div class="row">
+            <div class="col-xs-8 col-xs-offset-2">
+                <div class="panel panel-warning" id="panel_deleted">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Datos de Eliminación</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label class="control-label">Usuario</label>
+                                    <p class="form-control-static">{{ $request_tdc->deleted_by }}</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label class="control-label">Nombre</label>
+                                    <p class="form-control-static">{{ $request_tdc->deletename }}</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="form-group">
+                                    <label class="control-label">Fecha</label>
+                                    <p class="form-control-static">{{ date_create($request_tdc->deleted_at)->format('d/m/Y h:i:s a') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label">Motivo</label>
+                                    <p class="form-control-static">
+                                        {{ $request_tdc->deletereas }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 
     <script type="text/javascript">
         $('#form').submit(function (event) {

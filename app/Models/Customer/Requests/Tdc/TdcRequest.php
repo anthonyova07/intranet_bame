@@ -22,6 +22,16 @@ class TdcRequest extends Model
         return $query->orderBy('created_at', 'desc');
     }
 
+    public function isDeleted()
+    {
+        return $this->deleted_at != null;
+    }
+
+    public function isNotDeleted()
+    {
+        return !$this->isDeleted();
+    }
+
     public static function searchFromDBFile($identification)
     {
         $path = config('bame.requests.db.url') . 'solicitudes_tdc_db_'.strtolower(Employee::getChannel()).'.csv';

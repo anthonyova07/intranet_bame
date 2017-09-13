@@ -306,4 +306,18 @@ class TdcRequestController extends Controller
 
         return back()->with('warning', 'Debe seleccionar un archivo a cargar.');
     }
+
+    public function delete(Request $request, $id)
+    {
+        $request_tdc = TdcRequest::find($id);
+
+        $request_tdc->deletereas = $request->reason;
+        $request_tdc->deleted_by = session('user');
+        $request_tdc->deletename = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+        $request_tdc->deleted_at = datetime();
+
+        $request_tdc->save();
+
+        return back()->with('success', 'La solicitud ha sido marcada como eliminada correctamente.');
+    }
 }
