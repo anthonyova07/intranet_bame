@@ -24,21 +24,33 @@
                     <div class="panel-body">
                         <form method="get" action="{{ route('customer.request.tdc.index') }}" id="form">
                             <div class="row">
-                                <div class="col-xs-4">
+                                <div class="col-xs-3">
                                     <div class="form-group{{ $errors->first('term') ? ' has-error':'' }}">
                                         <label class="control-label">Término</label>
                                         <input type="text" class="form-control input-sm" name="term" placeholder="término de busqueda..." value="{{ old('term') }}">
                                         <span class="help-block">{{ $errors->first('term') }}</span>
                                     </div>
                                 </div>
-                                <div class="col-xs-4">
+                                <div class="col-xs-3">
+                                    <div class="form-group{{ $errors->first('channel') ? ' has-error':'' }}">
+                                        <label class="control-label">Canal</label>
+                                        <select name="channel" class="form-control input-sm">
+                                            <option value="">Seleccione un canal</option>
+                                            @foreach (get_channels() as $key => $channel)
+                                                <option value="{{ $key }}">{{ $channel }}</option>
+                                            @endforeach
+                                        </select>
+                                        <span class="help-block">{{ $errors->first('channel') }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-3">
                                     <div class="form-group{{ $errors->first('date_from') ? ' has-error':'' }}">
                                         <label class="control-label">Desde</label>
                                         <input type="date" class="form-control input-sm" name="date_from" value="{{ old('date_from') }}">
                                         <span class="help-block">{{ $errors->first('date_from') }}</span>
                                     </div>
                                 </div>
-                                <div class="col-xs-4">
+                                <div class="col-xs-3">
                                     <div class="form-group{{ $errors->first('date_to') ? ' has-error':'' }}">
                                         <label class="control-label">Hasta</label>
                                         <input type="date" class="form-control input-sm" name="date_to" value="{{ old('date_to') }}">
@@ -106,7 +118,7 @@
                                         <td>{{ $request_tdc->reqnumber }}</td>
                                         <td>{{ $request_tdc->names }}</td>
                                         <td>{{ $request_tdc->producttyp }}</td>
-                                        <td>{{ $request_tdc->channel }}</td>
+                                        <td>{{ get_channels($request_tdc->channel) }}</td>
                                         <td>{{ $request_tdc->created_at->format('d/m/Y H:i:s') }}</td>
                                         <td>{{ $request_tdc->createname }}</td>
                                         <td align="center">

@@ -190,8 +190,8 @@
                 <div class="col-xs-6 col-xs-offset-3">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <a href="{{ route('customer.request.tdc.create', array_merge(Request::all(), ['accept' => 'yes'])) }}" class="btn btn-sm btn-success btn-block">Aceptó</a>
-                            <a href="{{ route('customer.request.tdc.create', array_merge(Request::all(), ['accept' => 'no'])) }}" class="btn btn-sm btn-danger btn-block">Rechazó</a>
+                            <a href="{{ route('customer.request.tdc.create', array_merge(Request::all(), ['accept' => 'yes'])) }}" class="btn btn-sm btn-success btn-block">Exitoso</a>
+                            <a href="{{ route('customer.request.tdc.create', array_merge(Request::all(), ['accept' => 'no'])) }}" class="btn btn-sm btn-danger btn-block">No Exitoso</a>
                         </div>
                     </div>
                 </div>

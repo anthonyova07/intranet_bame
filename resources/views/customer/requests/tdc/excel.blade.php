@@ -9,7 +9,7 @@
             <thead>
                 <tr>
                     <th>Cédula</th>
-                    <th>Motivo Negación</th>
+                    <th>Estatus de Cliente</th>
                     <th>Lista Negra</th>
                     <th>Solicitud</th>
                     <th>Canal</th>
@@ -47,11 +47,11 @@
                         @if ($customer->denail)
                             <td>{{ $customer->denail->note }}</td>
                         @else
-                            <td>Ninguno</td>
+                            <td>Exitoso</td>
                         @endif
                         <td>{{ $customer->is_black ? 'Si':'No' }}</td>
                         <td>{{ $customer->reqnumber }}</td>
-                        <td>{{ $customer->channel }}</td>
+                        <td>{{ get_channels($customer->channel) }}</td>
                         <td>{{ $customer->names }}</td>
                         <td>{{ $customer->nationalit }}</td>
                         <td>{{ $customer->birthdate }}</td>

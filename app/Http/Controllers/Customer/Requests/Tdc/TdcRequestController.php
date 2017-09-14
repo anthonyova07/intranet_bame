@@ -29,6 +29,10 @@ class TdcRequestController extends Controller
                         ->orWhere('pphone_cel', 'like', '%' . $term . '%');
         }
 
+        if ($request->channel) {
+            $requests_tdc->where('channel', $request->channel);
+        }
+
         if ($request->date_from) {
             $requests_tdc->where('created_at', '>=', $request->date_from . ' 00:00:00');
         }
@@ -280,17 +284,33 @@ class TdcRequestController extends Controller
     {
         $customers = CustomerProcessed::lastestFirst();
 
+        $datetime = datetime();
+        $filename = 'Clientes_';
+
+        if ($request->channel) {
+            $filename .= $request->channel . '_';
+            $customers->where('channel', $request->channel);
+        }
+
         if ($request->date_from) {
+            $filename .= $request->date_from . '_';
             $customers->where('created_at', '>=', $request->date_from . ' 00:00:00');
+        } else {
+            $filename .= $datetime->format('Y-m-d') . '_';
         }
 
         if ($request->date_to) {
+            $filename .= $request->date_to;
             $customers->where('created_at', '<=', $request->date_to . ' 23:59:59');
+        } else {
+            $filename .= $datetime->format('Y-m-d');
         }
 
         do_log('Exportó a Excel los clientes gestionados en las solicitudes tdc ( desde:' . strip_tags($request->date_from) . ' hasta:' . strip_tags($request->date_to) . ' )');
 
+
         return view('customer.requests.tdc.excel')
+            ->with('filename', $filename)
             ->with('customers', $customers->get());
     }
 
