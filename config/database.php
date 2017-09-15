@@ -98,6 +98,17 @@ return [
             'prefix' => '',
         ],
 
+        //inteligencia artificial
+        'sqlsrv_bi' => [
+            'driver' => 'sqlsrv',
+            'host' => env('BI_IP'),
+            'database' => env('BI_DB'),
+            'username' => env('BI_USR'),
+            'password' => env('BI_PASS'),
+            'charset' => 'utf8',
+            'prefix' => '',
+        ],
+
         /*
        |--------------------------------------------------------------------------
        | DB2 Databases

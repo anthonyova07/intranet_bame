@@ -399,6 +399,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     });
 
+    Route::resource('lottery', 'Lottery\LotteryController', ['only' => [
+        'index'
+    ]]);
+
 });
 
 // DB::listen(function ($query) {
