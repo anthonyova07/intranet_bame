@@ -18,6 +18,11 @@ class Employee extends Model
 
     protected $dates = [];
 
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
     public function department()
     {
         return $this->hasOne(Param::class, 'id', 'id_dep');

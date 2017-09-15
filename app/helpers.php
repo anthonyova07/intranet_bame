@@ -615,12 +615,12 @@ function str_to_field($str, $id)
 function calculate_year_of_service($date, $with_diff = false)
 {
     if (!is_null($date)) {
-        $parts = explode('/', $date);
+        $date = date_create($date);
         $current_date = new \DateTime;
 
-        $service_compare_date = new \Datetime($current_date->format('Y') . "-{$parts[1]}-{$parts[0]} 23:59:59");
+        $service_compare_date = new \Datetime($current_date->format('Y') . "-{$date->format('m-d')} 23:59:59");
 
-        $service_date = new \Datetime(trim($parts[2]) . "-{$parts[1]}-{$parts[0]} 23:59:59");
+        $service_date = new \Datetime("{$date->format('Y-m-d')} 23:59:59");
 
         $diff = $service_date->diff($current_date);
 
@@ -634,12 +634,9 @@ function calculate_year_of_service($date, $with_diff = false)
             }
         }
 
-        // dd($service_compare_date > $current_date, $service_compare_date, $current_date);
-
         if ($service_compare_date > $current_date) {
             return ($diff->y + 1) == 1 ? (($diff->y + 1) . ' año'):(($diff->y + 1) . ' años');
         } else {
-            // return $diff->y == 1 ? ($diff->y . ' año'):($diff->y . ' años');
             $str = '';
 
             if ($diff->y > 0) {
@@ -690,7 +687,7 @@ function get_employee_name_photo($code, $gender, $just_name = false)
         return $code . '.png?' . $id;
     }
 
-    return $gender . '.jpg';
+    return get_gender($gender) . '.jpg';
 }
 
 function get_treasury_rate_types($type = null)

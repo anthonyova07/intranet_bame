@@ -95,26 +95,36 @@
                     <table class="table table-striped table-bordered table-hover table-condensed" order-by='2|desc'>
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>COD</th>
                                 <th style="width: 170px;">Nombre</th>
                                 <th style="width: 90px;">Identificación</th>
-                                <th>Correo</th>
+                                <th>Correo/Usuario</th>
                                 <th>Posición</th>
                                 <th>Supervisor</th>
                                 <th>Fecha Nacimiento</th>
                                 <th>Fecha Ingreso</th>
                                 <th>Género</th>
                                 {{-- <th>Activo</th> --}}
-                                <th></th>
+                                <th style="width: 50px;"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($employees as $employee)
                                 <tr>
+                                    <td>
+                                        @if (file_exists(public_path('\files\employee_images\\') . get_employee_name_photo($employee->recordcard, $employee->gender, true)))
+                                            <i class="fa fa-image fa-fw" data-toggle="tooltip" data-container="body" title="Tiene Imagen"></i>
+                                        @endif
+                                    </td>
                                     <td>{{ $employee->recordcard }}</td>
                                     <td>{{ $employee->name }}</td>
                                     <td>{{ $employee->identifica }}</td>
-                                    <td>{{ $employee->mail }}</td>
+                                    <td data-toggle="tooltip" data-container="body" title="{{ $employee->mail }}">
+                                        @if (trim($employee->mail))
+                                            {{ explode('@', $employee->mail)[0] }}
+                                        @endif
+                                    </td>
                                     <td>{{ $employee->position ? $employee->position->name : '' }}</td>
                                     <td>{{ $employee->supervisor ? $employee->supervisor->name : '' }}</td>
                                     <td>{{ date_create($employee->birthdate)->format('d/m/Y') }}</td>
