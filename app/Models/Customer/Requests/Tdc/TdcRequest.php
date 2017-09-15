@@ -62,11 +62,17 @@ class TdcRequest extends Model
                 $object->names = $parts[1];
                 $object->nationality = $parts[2];
 
-                $day = substr($parts[3], 0, 2);
-                $month = substr($parts[3], 2, 2);
-                $year = substr($parts[3], 4, 4);
+                if (strlen(trim($parts[3])) == 7) {
+                    $day = substr($parts[3], 0, 1);
+                    $month = substr($parts[3], 1, 2);
+                    $year = substr($parts[3], 3, 4);
+                } else {
+                    $day = substr($parts[3], 0, 2);
+                    $month = substr($parts[3], 2, 2);
+                    $year = substr($parts[3], 4, 4);
+                }
 
-                $object->birthdate = "$year-$month-$day";
+                $object->birthdate = "$year-$month-" . str_pad($day, 2, 0, STR_PAD_LEFT);
                 $object->gender = strtolower($parts[4]);
                 $object->product = $parts[5];
                 $object->limit_rd = $parts[6];
@@ -78,11 +84,17 @@ class TdcRequest extends Model
                 $object->campaign = trim($parts[20]);
                 $object->committee = $parts[21];
 
-                $day = substr($parts[22], 0, 2);
-                $month = substr($parts[22], 2, 2);
-                $year = substr($parts[22], 4, 4);
+                if (strlen(trim($parts[22])) == 7) {
+                    $day = substr($parts[22], 0, 1);
+                    $month = substr($parts[22], 1, 2);
+                    $year = substr($parts[22], 3, 4);
+                } else {
+                    $day = substr($parts[22], 0, 2);
+                    $month = substr($parts[22], 2, 2);
+                    $year = substr($parts[22], 4, 4);
+                }
 
-                $object->committee_date = "$year-$month-$day";
+                $object->committee_date = "$year-$month-" . str_pad($day, 2, 0, STR_PAD_LEFT);
 
                 return $object;
             }

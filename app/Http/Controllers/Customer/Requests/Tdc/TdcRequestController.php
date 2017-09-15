@@ -262,9 +262,13 @@ class TdcRequestController extends Controller
         $customer_processed->commitdate = $customer->committee_date;
 
         if ($is_extranet) {
+            $customer_processed->business = auth()->user()->business->name;
+
             $customer_processed->created_by = auth()->user()->username;
             $customer_processed->createname = auth()->user()->full_name;
         } else {
+            $customer_processed->business = '';
+
             $customer_processed->created_by = session()->get('user');
             $customer_processed->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
 

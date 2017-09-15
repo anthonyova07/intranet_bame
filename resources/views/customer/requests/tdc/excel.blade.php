@@ -13,6 +13,7 @@
                     <th>Lista Negra</th>
                     <th>Solicitud</th>
                     <th>Canal</th>
+                    <th>Empresa</th>
                     <th>Nombres</th>
                     <th>Nacionalidad</th>
                     <th>Fecha de Nacimiento</th>
@@ -52,6 +53,7 @@
                         <td>{{ $customer->is_black ? 'Si':'No' }}</td>
                         <td>{{ $customer->reqnumber }}</td>
                         <td>{{ get_channels($customer->channel) }}</td>
+                        <td>{{ $customer->business }}</td>
                         <td>{{ $customer->names }}</td>
                         <td>{{ $customer->nationalit }}</td>
                         <td>{{ $customer->birthdate }}</td>
