@@ -29,37 +29,39 @@
 
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-xs-2">
+                    <div class="col-xs-4">
                         <div class="form-group">
                             <label class="control-label">Fecha de Ingreso</label>
                             <input type="date" disabled class="form-control input-sm" name="vac_date_admission" value="{{ $human_resource_request->detail->vacdatadmi }}">
                         </div>
                     </div>
-                    <div class="col-xs-2">
+                    <div class="col-xs-4">
                         <div class="form-group">
                             <label class="control-label">Días a Tomar</label>
                             <input type="number" disabled class="form-control input-sm" name="vac_total_days" value="{{ $human_resource_request->detail->vactotdays }}">
                         </div>
                     </div>
-                    <div class="col-xs-2">
+                    <div class="col-xs-4">
                         <div class="form-group">
                             <label class="control-label">Días Adicionales</label>
                             <input type="number" disabled class="form-control input-sm" name="vac_additional_days" value="{{ $human_resource_request->detail->vacadddays }}">
                         </div>
                     </div>
-                    <div class="col-xs-2">
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
                         <div class="form-group">
                             <label class="control-label">Días Pendientes por Tomar</label>
                             <input type="number" disabled class="form-control input-sm" name="vac_total_pending_days" value="{{ $human_resource_request->detail->vacoutdays }}">
                         </div>
                     </div>
-                    <div class="col-xs-2">
+                    <div class="col-xs-3">
                         <div class="form-group">
                             <label class="control-label">Fecha de Inicio</label>
                             <input type="date" disabled class="form-control input-sm" name="vac_date_from" value="{{ $human_resource_request->detail->vacdatfrom }}">
                         </div>
                     </div>
-                    <div class="col-xs-2">
+                    <div class="col-xs-3">
                         <div class="form-group">
                             <label class="control-label">Fecha de Reintegro</label>
                             <input type="date" disabled class="form-control input-sm" readonly name="vac_date_to" value="{{ $human_resource_request->detail->vacdatto }}">
