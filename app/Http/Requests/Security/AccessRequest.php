@@ -24,7 +24,7 @@ class AccessRequest extends Request
     public function rules()
     {
         return [
-            'user' => 'required',
+            'user' => 'required|exists:ibs.intrhemplo,useremp',
             'menu' => 'required|integer',
         ];
     }

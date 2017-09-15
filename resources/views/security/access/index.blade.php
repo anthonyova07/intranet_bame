@@ -23,7 +23,7 @@
                             <div class="form-group{{ $errors->first('user') ? ' has-error':'' }}">
                                 <label class="control-label">Usuario</label>
                                 <input type="text" class="form-control input-sm" name="user" placeholder="usuario" value="{{ old('user') }}">
-                                <span class="help-block">{{ $errors->first('user') }}</span>
+                                <span class="help-block">{{ $errors->first('user') }}{{ session('name') }}</span>
                             </div>
                             <div class="form-group{{ $errors->first('menu') ? ' has-error':'' }}">
                                 <label class="control-label">Menú</label>

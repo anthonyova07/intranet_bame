@@ -2,15 +2,14 @@
 
 namespace Bame\Http\Controllers\Security;
 
-use Illuminate\Http\Request;
-
 use Bame\Http\Requests;
-use Bame\Http\Controllers\Controller;
-
-use Bame\Models\Security\Access;
+use Illuminate\Http\Request;
 use Bame\Models\Security\Menu;
+use Bame\Models\Security\Access;
 use Bame\Models\Security\SubMenu;
+use Bame\Http\Controllers\Controller;
 use Bame\Http\Requests\Security\AccessRequest;
+use Bame\Models\HumanResource\Employee\Employee;
 
 class AccessController extends Controller
 {
@@ -29,8 +28,11 @@ class AccessController extends Controller
             $submenus = SubMenu::where('sub_codmen', $request->menu)->orderBy('sub_descri')->get();
             $user_access = Access::where('acc_user', $request->user)->where('acc_codmen', $request->menu)->get();
 
+            $name = Employee::byUser($request->user)->first()->name;
+
             return back()
                 ->with('submenus', $submenus)
+                ->with('name', $name)
                 ->with('user_access', $user_access)
                 ->with('info', 'Ahora seleccione los submenús.')
                 ->withInput();
