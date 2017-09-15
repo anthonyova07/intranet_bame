@@ -66,7 +66,7 @@
                                 <th>Nombre</th>
                                 <th>Dirección</th>
                                 <th>Teléfono</th>
-                                <th>Roles</th>
+                                <th style="width: 170px;">Roles</th>
                                 <th style="width: 132px;">Fecha Creada</th>
                                 <th style="width: 52px"></th>
                             </tr>
@@ -79,10 +79,11 @@
                                     <td>{{ $busi->phone }}</td>
                                     <td>
                                         <select class="form-control input-sm">
-                                            <option>Roles de {{ $busi->name }}</option>
-                                            @foreach ($busi->getRolesArray() as $role)
-                                                <option>{{ extranet_roles($role) }}</option>
-                                            @endforeach
+                                            <optgroup label="Roles de {{ $busi->name }}">
+                                                @foreach ($busi->getRolesArray() as $role)
+                                                    <option>{{ extranet_roles($role) }}</option>
+                                                @endforeach
+                                            </optgroup>
                                         </select>
                                     </td>
                                     <td>{{ $busi->created_at->format('d/m/Y h:i:s A') }}</td>

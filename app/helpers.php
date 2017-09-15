@@ -833,15 +833,15 @@ function get_office_code($office, $description = false)
 {
     $office = strtolower(trim($office));
 
-    if (str_contains($office, 'oficina principal')) { return $descripcion ? 'Oficina Principal':1; }
-    if (str_contains($office, 'banca comercial')) { return $descripcion ? 'Banca Comercial':2; }
-    if (str_contains($office, 'bella vista')) { return $descripcion ? 'Bella Vista':3; }
-    if (str_contains($office, 'blue mall')) { return $descripcion ? 'Blue Mall':4; }
-    if (str_contains($office, 'de vega')) { return $descripcion ? 'Lopez de Vega':5; }
-    if (str_contains($office, 'san vicente')) { return $descripcion ? 'San Vicente':6; }
-    if (str_contains($office, 'barahona')) { return $descripcion ? 'Barahona':7; }
-    if (str_contains($office, 'neyba')) { return $descripcion ? 'Neyba':8; }
-    if (str_contains($office, 'vicente noble')) { return $descripcion ? 'Vicente Noble':9; }
+    if (str_contains($office, 'oficina principal')) { return $description ? 'Oficina Principal':1; }
+    if (str_contains($office, 'banca comercial')) { return $description ? 'Banca Comercial':2; }
+    if (str_contains($office, 'bella vista')) { return $description ? 'Bella Vista':3; }
+    if (str_contains($office, 'blue mall')) { return $description ? 'Blue Mall':4; }
+    if (str_contains($office, 'de vega')) { return $description ? 'Lopez de Vega':5; }
+    if (str_contains($office, 'san vicente')) { return $description ? 'San Vicente':6; }
+    if (str_contains($office, 'barahona')) { return $description ? 'Barahona':7; }
+    if (str_contains($office, 'neyba')) { return $description ? 'Neyba':8; }
+    if (str_contains($office, 'vicente noble')) { return $description ? 'Vicente Noble':9; }
 
     return null;
 }

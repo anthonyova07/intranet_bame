@@ -32,7 +32,7 @@
                                 <div class="form-group{{ $errors->first('date_from') ? ' has-error':'' }}">
                                     <label class="control-label">Empresa</label>
                                     <select name="business" class="form-control input-sm">
-                                        <option value=""></option>
+                                        <option value="">Seleccione una</option>
                                         @foreach ($business as $busi)
                                             <option value="{{ $busi->id }}"{{ request('business') ? ' selected':'' }}>{{ $busi->name }}</option>
                                         @endforeach
