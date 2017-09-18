@@ -42,7 +42,7 @@ class LotteryController extends Controller
                 }
             }
 
-            return back()->withSuccess('Los boletos fueron generados correctamente.');
+            return back()->withSuccess('Los boletos fueron generados correctamente. Boletos Generados: ' . number_format($customers->sum('BoletosGeneradosTotal'), 2));
         }
 
         return back()->withWarning('Ya fueron generados los boletos.');
