@@ -28,4 +28,11 @@ class AccessRequest extends Request
             'menu' => 'required|integer',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'user.exists' => 'Nombre de Usuario no existe.',
+        ];
+    }
 }
