@@ -183,7 +183,7 @@ class TdcRequestController extends Controller
         } else {
             do_log('Creó la Solicitud de Tarjeta ( número:' . strip_tags($request_tdc->reqnumber) . ' )');
 
-            return redirect(route('customer.request.tdc.show', [$request_tdc->id]))->with('success', 'La solicitud ha sido creada correctamente.');
+            return redirect(route('customer.request.tdc.index', [$request_tdc->id]))->with('success', 'La solicitud #' . $request_tdc->reqnumber . ' ha sido creada correctamente.');
         }
     }
 
