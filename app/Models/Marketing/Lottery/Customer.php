@@ -1,6 +1,6 @@
 <?php
 
-namespace Bame\Models\BI\Lottery;
+namespace Bame\Models\Marketing\Lottery;
 
 use Illuminate\Database\Eloquent\Model;
 

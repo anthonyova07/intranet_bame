@@ -118,6 +118,10 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::post('gallery/upload/{gallery}', 'Marketing\Gallery\GalleryController@upload')->name('marketing.gallery.upload');
         Route::delete('gallery/delete_image/{gallery}/{image}', 'Marketing\Gallery\GalleryController@delete_image')->name('marketing.gallery.delete_image');
+
+        Route::resource('lottery', 'Marketing\Lottery\LotteryController', ['only' => [
+            'index', 'create'
+        ]]);
     });
 
     Route::group(['prefix' => 'administration'], function () {
@@ -398,10 +402,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('business', 'BusinessController');
 
     });
-
-    Route::resource('lottery', 'Lottery\LotteryController', ['only' => [
-        'index'
-    ]]);
 
 });
 
