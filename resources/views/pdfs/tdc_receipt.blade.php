@@ -26,7 +26,7 @@
                     <td colspan="2" rowspan="9" align="right">
                         <img src="{{ $credit_card->getPhoto() }}" style="width: 150px; height: 140px;">
                         <br>
-                        Autorizo al Banco Múltiple de las Américas S.A. a activar esta tarjeta de crédito al recibirla.
+                        Autorizo al Banco Múltiple de las Américas S.A. a activar esta tarjeta de crédito en 24 horas.
                         <br><br><br><br>
                         ______________________________________
                     </td>
