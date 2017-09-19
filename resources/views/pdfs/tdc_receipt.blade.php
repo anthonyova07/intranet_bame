@@ -24,9 +24,11 @@
                     <td colspan="2">Nombres</td>
                     <td colspan="2"><b>: {{ $credit_card->getNames() }}</b></td>
                     <td colspan="2" rowspan="9" align="left">
-                        <img src="{{ $credit_card->getPhoto() }}" style="width: 150px; height: 140px; float: right;">
+                        <img src="{{ $credit_card->getPhoto() }}" style="width: 150px; height: 140px;">
                         <br>
-                        Autorizo al Banco Múltiple de las Américas S.A. a activar esta tarjeta de crédito en 24 horas después de recibirla.
+                        <div style="text-align: right;">
+                            Autorizo al Banco Múltiple de las Américas S.A. a activar esta tarjeta de crédito en 24 horas después de recibirla.
+                        </div>
                         <br><br><br><br>
                         ______________________________________
                     </td>
