@@ -891,3 +891,16 @@ function get_channels($channel = null)
 
     return $channels->get($channel);
 }
+
+function url_closing_cost()
+{
+    $closing_cost = \Bame\Models\Process\ClosingCost\ClosingCost::first();
+
+    if ($closing_cost) {
+        if (trim($closing_cost->closincost) != '') {
+            return $closing_cost->closincost . '?token=' . $closing_cost->updated_at->format('YmdHis');
+        }
+    }
+
+    return null;
+}

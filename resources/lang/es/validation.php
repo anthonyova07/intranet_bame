@@ -238,5 +238,6 @@ return [
       'ref_2_phone_cel' => 'Teléfono Celular',
       'username' => 'Usuario',
       'business' => 'Empresa',
+      'closing_cost' => 'Gasto de Cierre',
     ],
 ];
