@@ -891,3 +891,17 @@ function get_channels($channel = null)
 
     return $channels->get($channel);
 }
+
+function get_closing_cost_params($param = null)
+{
+    $params = collect([
+        'TIPCRE' => 'Tipo de Crédito',
+        'TIPGAR' => 'Tipo de Garantía',
+    ]);
+
+    if (!$param) {
+        return $params;
+    }
+
+    return $params->get($param);
+}

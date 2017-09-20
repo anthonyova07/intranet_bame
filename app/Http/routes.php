@@ -271,6 +271,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('request', 'Process\Request\RequestController', ['only' => [
             'index', 'create', 'store', 'show'
         ]]);
+
+        Route::group(['prefix' => 'closing_cost'], function () {
+            Route::resource('{type}/param', 'Process\ClosingCost\ParamController', ['only' => [
+                'create', 'store', 'edit', 'update'
+            ]]);
+        });
+
+        Route::resource('closing_cost', 'Process\ClosingCost\ClosingCostController', ['only' => [
+            'index', 'create', 'store', 'show'
+        ]]);
     });
 
     Route::resource('customer', 'Customer\CustomerController', ['only' => [
