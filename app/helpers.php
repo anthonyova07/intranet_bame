@@ -659,9 +659,13 @@ function calculate_year_of_service($date, $with_diff = false)
     }
 }
 
-function datetime()
+function datetime($date = null)
 {
-    return new \DateTime;
+    if ($date) {
+        return new \Datetime($date);
+    }
+
+    return new \DateTime();
 }
 
 function get_employee_name_photo($code, $gender, $just_name = false)

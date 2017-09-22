@@ -403,6 +403,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     });
 
+    Route::group(['prefix' => 'financial_calculations', 'namespace' => 'FinancialCalculations'], function () {
+        Route::resource('loan', 'LoanController', ['only' => [
+            'index'
+        ]]);
+    });
+
 });
 
 // DB::listen(function ($query) {
