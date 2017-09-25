@@ -895,3 +895,17 @@ function get_channels($channel = null)
 
     return $channels->get($channel);
 }
+
+function get_financial_calculation_params($param = null)
+{
+    $params = collect([
+        'PRE' => 'Préstamos',
+        'INV' => 'Inversiones',
+    ]);
+
+    if (!$param) {
+        return $params;
+    }
+
+    return $params->get($param);
+}
