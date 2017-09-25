@@ -53,7 +53,7 @@
                         <div class="row">
                             <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('extraordinary') ? ' has-error':'' }}">
-                                    <label class="control-label">Pagos Extraordinarios</label>
+                                    <label class="control-label">Monto del Pago Extraordinarios</label>
                                     <input type="text" class="form-control input-sm" name="extraordinary" placeholder="0.00" value="{{ request('extraordinary') }}">
                                     <span class="help-block">{{ $errors->first('extraordinary') }}</span>
                                 </div>
@@ -74,14 +74,14 @@
 
                             <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('start_date') ? ' has-error':'' }}">
-                                    <label class="control-label">Fecha de Inicio</label>
+                                    <label class="control-label">Fecha de Inicio de Cuota</label>
                                     <input type="date" class="form-control input-sm" name="start_date" value="{{ request('start_date') }}">
                                     <span class="help-block">{{ $errors->first('start_date') }}</span>
                                 </div>
                             </div>
                         </div>
                         {{ csrf_field() }}
-                        <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Consultando cliente...">Consultar Cliente</button>
+                        <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Consultando cliente...">Calcular Cuotas</button>
                     </form>
                 </div>
             </div>
@@ -135,7 +135,7 @@
                                 <th class="text-center">Capital</th>
                                 <th class="text-center">Extraordinario</th>
                                 <th class="text-center">Cuota</th>
-                                <th class="text-center">Capital Pendiente</th>
+                                <th class="text-center">Saldo Final</th>
                             </tr>
                         </thead>
                         <tbody class="text-center">

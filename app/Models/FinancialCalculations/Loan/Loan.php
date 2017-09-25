@@ -57,17 +57,20 @@ class Loan
             $amortization->month = $i;
             $amortization->interests = $capital_pending * $interests;
             $amortization->date = $date->format('d/m/Y');
+            $amortization->capital = $quota - ($capital_pending * $interests);
+
+            if ($capital_pending < $amortization->capital) {
+                $amortization->capital = $capital_pending;
+            }
 
             if ($date->format('m') == $this->month_extraordinary) {
                 $amortization->extraordinary = $this->extraordinary;
-                $amortization->capital = $quota - ($capital_pending * $interests);
                 $amortization->quota = $amortization->interests + $amortization->capital + $this->extraordinary;
-                $capital_pending = $capital_pending - ($quota - ($capital_pending * $interests)) - $this->extraordinary;
+                $capital_pending = $capital_pending - $amortization->capital - $this->extraordinary;
             } else {
                 $amortization->extraordinary = 0;
-                $amortization->capital = $quota - ($capital_pending * $interests);
                 $amortization->quota = $amortization->interests + $amortization->capital;
-                $capital_pending = $capital_pending - ($quota - ($capital_pending * $interests));
+                $capital_pending = $capital_pending - $amortization->capital;
             }
 
             $amortization->capital_pending = $capital_pending < 0 ? 0 : $capital_pending;
@@ -80,7 +83,7 @@ class Loan
                 break;
             }
         }
-
+// dd($amortizations);
         return $amortizations;
     }
 
