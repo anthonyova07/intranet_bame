@@ -4,11 +4,11 @@
 
 @section('page_title', 'Cálculos Financieros - Préstamos')
 
-{{-- @if (can_not_do('customer_consult'))
+@if (can_not_do('financial_calculations_index'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 
@@ -81,6 +81,7 @@
                             </div>
                         </div>
                         {{ csrf_field() }}
+                        <a class="btn btn-info btn-xs" href="{{ route('financial_calculations.index') }}"><i class="fa fa-arrow-left"></i> Atrás</a>
                         <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Consultando cliente...">Calcular Cuotas</button>
                     </form>
                 </div>

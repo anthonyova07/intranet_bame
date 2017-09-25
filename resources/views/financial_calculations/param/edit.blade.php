@@ -4,11 +4,11 @@
 
 @section('page_title', 'Edición ' . get_financial_calculation_params($param->type))
 
-{{-- @if (can_not_do('process_request_admin'))
+@if (can_not_do('financial_calculations_admin'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 

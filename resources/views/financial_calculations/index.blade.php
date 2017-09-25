@@ -4,11 +4,11 @@
 
 @section('page_title', 'Cálculos Financieros')
 
-{{-- @if (can_not_do('process_request'))
+@if (can_not_do('financial_calculations_index'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif --}}
+@endif
 
 @section('contents')
 
@@ -32,7 +32,7 @@
     </div>
 
 
-    {{-- @if (!can_not_do('process_request_admin')) --}}
+    @if (!can_not_do('financial_calculations_admin'))
         <div class="row" style="border-bottom: 1px solid #777;border-top: 1px solid #777;margin: 8px 0 25px 0;border-width: 5px;">
             <h1 style="margin: 0;text-align: center;">Mantenimientos de Parametros</h1>
         </div>
@@ -121,7 +121,7 @@
 
         </div>
 
-    {{-- @endif --}}
+    @endif
 
     <script type="text/javascript">
         $('#form').submit(function (vacant) {
