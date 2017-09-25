@@ -63,14 +63,14 @@ class Loan
                 $amortization->capital = $capital_pending;
             }
 
+            $amortization->extraordinary = 0;
+            $amortization->quota = $amortization->interests + $amortization->capital;
+            $capital_pending = $capital_pending - $amortization->capital;
+
             if ($date->format('m') == $this->month_extraordinary) {
-                $amortization->extraordinary = $this->extraordinary;
-                $amortization->quota = $amortization->interests + $amortization->capital + $this->extraordinary;
-                $capital_pending = $capital_pending - $amortization->capital - $this->extraordinary;
-            } else {
-                $amortization->extraordinary = 0;
-                $amortization->quota = $amortization->interests + $amortization->capital;
-                $capital_pending = $capital_pending - $amortization->capital;
+                $amortization->extraordinary = $capital_pending < ($amortization->quota + $this->extraordinary) ? ($this->extraordinary - $capital_pending) : $this->extraordinary;
+                $amortization->quota = $amortization->quota + $amortization->extraordinary;
+                $capital_pending = $capital_pending - $amortization->extraordinary;
             }
 
             $amortization->capital_pending = $capital_pending < 0 ? 0 : $capital_pending;
