@@ -4,16 +4,16 @@
 
 @section('page_title', 'Cálculos Financieros - Inversiones')
 
-@if (can_not_do('financial_calculations_index'))
+{{-- @if (can_not_do('financial_calculations_index'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif
+@endif --}}
 
 @section('contents')
 
     <div class="row">
-        <div class="col-xs-8 col-xs-offset-2">
+        <div class="col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-body text-center">
                     <form method="get" action="{{ route('financial_calculations.investment.index') }}" id="form">
@@ -67,7 +67,7 @@
                         </div>
 
                         {{ csrf_field() }}
-                        <a class="btn btn-info btn-xs" href="{{ route('financial_calculations.index') }}"><i class="fa fa-arrow-left"></i> Atrás</a>
+                        {{-- <a class="btn btn-info btn-xs" href="{{ route('financial_calculations.index') }}"><i class="fa fa-arrow-left"></i> Atrás</a> --}}
                         <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Calculando inversión...">Calcular Inversión</button>
                     </form>
                 </div>

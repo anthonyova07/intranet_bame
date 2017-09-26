@@ -4,16 +4,16 @@
 
 @section('page_title', 'Cálculos Financieros - Préstamos')
 
-@if (can_not_do('financial_calculations_index'))
+{{-- @if (can_not_do('financial_calculations_index'))
     @section('contents')
         @include('layouts.partials.access_denied')
     @endsection
-@endif
+@endif --}}
 
 @section('contents')
 
     <div class="row">
-        <div class="col-xs-8 col-xs-offset-2">
+        <div class="col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form method="get" action="{{ route('financial_calculations.loan.index') }}" id="form">
@@ -24,7 +24,7 @@
                                     <select name="loan" class="form-control input-sm">
                                         <option value="">Seleccione uno</option>
                                         @foreach ($param_loans as $param_loan)
-                                            <optgroup label="{{ $param_loan->name }}">
+                                            <optgroup label="{{ str_replace('Tasas', '', $param_loan->name) }}">
                                                 @if ($param_loan->content == 'U')
                                                     @foreach ($param_loan->details as $detail)
                                                         <option value="{{ $detail->value }}">{{ $detail->value }}</option>
@@ -44,7 +44,7 @@
                             <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('amount') ? ' has-error':'' }}">
                                     <label class="control-label">Monto</label>
-                                    <input type="text" class="form-control input-sm" name="amount" placeholder="0.00" value="{{ request('amount') }}">
+                                    <input type="text" class="form-control input-sm text-right" name="amount" placeholder="0.00" value="{{ request('amount') }}">
                                     <span class="help-block">{{ $errors->first('amount') }}</span>
                                 </div>
                             </div>
@@ -69,15 +69,15 @@
                             <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('interests') ? ' has-error':'' }}">
                                     <label class="control-label">Intereses</label>
-                                    <input type="text" class="form-control input-sm" name="interests" placeholder="0.00" value="{{ request('interests') }}">
+                                    <input type="text" class="form-control input-sm text-right" name="interests" placeholder="0.00" value="{{ request('interests') }}">
                                     <span class="help-block">{{ $errors->first('interests') }}</span>
                                 </div>
                             </div>
 
                             <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('extraordinary') ? ' has-error':'' }}">
-                                    <label class="control-label"><abbr title="Monto del Pago Extraordinarios">Mto. Extraordinarios</abbr></label>
-                                    <input type="text" class="form-control input-sm" name="extraordinary" placeholder="0.00" value="{{ request('extraordinary') }}">
+                                    <label class="control-label">Monto del Pago Extraordinarios</label>
+                                    <input type="text" class="form-control input-sm text-right" name="extraordinary" placeholder="0.00" value="{{ request('extraordinary') }}">
                                     <span class="help-block">{{ $errors->first('extraordinary') }}</span>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
                             </div>
                         </div>
                         {{ csrf_field() }}
-                        <a class="btn btn-info btn-xs" href="{{ route('financial_calculations.index') }}"><i class="fa fa-arrow-left"></i> Atrás</a>
+                        {{-- <a class="btn btn-info btn-xs" href="{{ route('financial_calculations.index') }}"><i class="fa fa-arrow-left"></i> Atrás</a> --}}
                         <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Calculando cuotas...">Calcular Cuotas</button>
                     </form>
                 </div>
@@ -114,13 +114,13 @@
 
     @if ($loan)
         <div class="row">
-            <div class="col-xs-6 col-xs-offset-3">
+            <div class="col-xs-10 col-xs-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <span class="panel-title">Plan de Pagos</span>
                     </div>
                     <div class="panel-body">
-                        <table class="table table-condensed table-bordered">
+                        {{-- <table class="table table-condensed table-bordered">
                             <tbody>
                                 <tr>
                                     <td><b>Monto:</b></td>
@@ -154,6 +154,14 @@
                                     <td>{{ datetime($loan->start_date)->format('d/m/Y') }}</td>
                                 </tr>
                             </tbody>
+                        </table> --}}
+                        <table class="table table-condensed table-bordered">
+                            <tbody>
+                                <tr style="font-size: 30px;" class="text-center">
+                                    <td><b>Valor Cuota:</b></td>
+                                    <td><b>{{ number_format($loan->quota(), 2) }}</b></td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                     <table class="table table-bordered table-condensed table-hover table-striped">
@@ -168,7 +176,7 @@
                                 <th class="text-center">Saldo Final</th>
                             </tr>
                         </thead>
-                        <tbody class="text-center">
+                        <tbody class="text-right">
                             @foreach ($loan->amortizations() as $amort)
                                 <tr>
                                     <td>{{ $amort->month }}</td>
