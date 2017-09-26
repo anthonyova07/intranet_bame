@@ -32,7 +32,7 @@
     </div>
 
 
-    @if (!can_not_do('financial_calculations_admin'))
+    @if (!can_not_do('financial_calculations_admin_not'))
         <div class="row" style="border-bottom: 1px solid #777;border-top: 1px solid #777;margin: 8px 0 25px 0;border-width: 5px;">
             <h1 style="margin: 0;text-align: center;">Mantenimientos de Parametros</h1>
         </div>

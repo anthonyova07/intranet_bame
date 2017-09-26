@@ -58,7 +58,7 @@
 
                                                         @if ($product->content == 'V')
                                                             <tbody>
-                                                                @foreach ($product->details->sortBy('sequence') as $detail)
+                                                                @foreach ($product->details as $detail)
                                                                     <tr>
                                                                         <td>{{ $detail->descrip }}</td>
                                                                         <td>{{ $detail->value }}</td>

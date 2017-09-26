@@ -18,7 +18,20 @@
                 <div class="panel-body">
                     <form method="get" action="{{ route('financial_calculations.loan.index') }}" id="form">
                         <div class="row">
-                            <div class="col-xs-3">
+                            <div class="col-xs-6">
+                                <div class="form-group{{ $errors->first('loan') ? ' has-error':'' }}">
+                                    <label class="control-label">Préstamo</label>
+                                    <select name="loan" class="form-control input-sm">
+                                        <option value="">Seleccione uno</option>
+                                        @foreach ($param_loans as $param_loan)
+                                            <option value="{{ str_replace('%', '', $param_loan->value) }}">{{ $param_loan->descrip }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="help-block">{{ $errors->first('loan') }}</span>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('amount') ? ' has-error':'' }}">
                                     <label class="control-label">Monto</label>
                                     <input type="text" class="form-control input-sm" name="amount" placeholder="0.00" value="{{ request('amount') }}">
@@ -26,7 +39,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-xs-3">
+                            <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('year') ? ' has-error':'' }}">
                                     <label class="control-label">Año/s</label>
                                     <input type="text" class="form-control input-sm" name="year" placeholder="0" value="{{ request('year') }}">
@@ -34,14 +47,15 @@
                                 </div>
                             </div>
 
-                            <div class="col-xs-3">
+                            <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('month') ? ' has-error':'' }}">
                                     <label class="control-label">Mes/es</label>
                                     <input type="text" class="form-control input-sm" name="month" placeholder="0" value="{{ request('month') }}">
                                     <span class="help-block">{{ $errors->first('month') }}</span>
                                 </div>
                             </div>
-
+                        </div>
+                        <div class="row">
                             <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('interests') ? ' has-error':'' }}">
                                     <label class="control-label">Intereses</label>
@@ -49,8 +63,7 @@
                                     <span class="help-block">{{ $errors->first('interests') }}</span>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
+
                             <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('extraordinary') ? ' has-error':'' }}">
                                     <label class="control-label">Monto del Pago Extraordinarios</label>
@@ -163,15 +176,11 @@
             $('#btn_submit').button('loading');
         });
 
-        var year = $('input[name="year"]');
-        var month = $('input[name="month"]');
+        var loan = $('select[name="loan"]');
+        var interests = $('input[name="interests"]');
 
-        year.blur(function () {
-            month.val(parseInt(year.val()) * 12);
-        });
-
-        month.blur(function () {
-            year.val(parseInt(month.val()) / 12);
+        loan.change(function () {
+            interests.val($(this).val());
         });
     </script>
 

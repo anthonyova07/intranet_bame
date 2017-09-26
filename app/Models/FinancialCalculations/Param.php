@@ -15,4 +15,14 @@ class Param extends Model
     public $incrementing = false;
 
     public $timestamps = true;
+
+    public function scopeLoans($query)
+    {
+        return $query->where('type', 'PRE');
+    }
+
+    public function scopeInvestments($query)
+    {
+        return $query->where('type', 'INV');
+    }
 }

@@ -4,6 +4,8 @@ namespace Bame\Http\Controllers\FinancialCalculations;
 
 use Illuminate\Http\Request;
 use Bame\Http\Controllers\Controller;
+use Bame\Models\Treasury\Rates\DateHistory;
+use Bame\Models\FinancialCalculations\Param;
 use Bame\Models\FinancialCalculations\Loan\Loan;
 
 class LoanController extends Controller {
@@ -21,7 +23,19 @@ class LoanController extends Controller {
             $loan = new Loan($request->amount, $request->month, $request->interests, $request->extraordinary, $request->month_extraordinary, $request->start_date);
         }
 
-        return view('financial_calculations.loan.index', compact('loan'));
+        // $param_loans = Param::loans()->get();
+        $param_loans = DateHistory::last()
+            ->first()
+            ->products()
+            ->activeRates()
+            ->where('name', 'Tasas Préstamos RD$')
+            ->first()
+            ->details()
+            ->get();
+// dd($param_loans);
+        return view('financial_calculations.loan.index')
+            ->with('param_loans', $param_loans)
+            ->with('loan', $loan);
     }
 
     public function validateRequest(Request $request)
