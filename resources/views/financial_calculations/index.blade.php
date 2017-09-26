@@ -29,6 +29,23 @@
                 </div>
             </a>
         </div>
+
+        <div class="col-xs-2">
+            <a href="{{ route('financial_calculations.investment.index') }}">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row text-center">
+                            <div class="col-xs-12">
+                                <i class="fa fa-calculator fa-4x"></i>
+                            </div>
+                            <div class="col-xs-12" style="font-size: 20px;">
+                                Inversiones
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
     </div>
 
 

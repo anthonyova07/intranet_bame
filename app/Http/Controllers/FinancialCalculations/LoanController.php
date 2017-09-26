@@ -28,9 +28,8 @@ class LoanController extends Controller {
             ->first()
             ->products()
             ->activeRates()
-            ->where('name', 'Tasas Préstamos RD$')
-            ->first()
-            ->details()
+            ->whereIn('name', ['Tasas Préstamos RD$', 'Tasas Préstamos US$'])
+            ->with(['details'])
             ->get();
 // dd($param_loans);
         return view('financial_calculations.loan.index')

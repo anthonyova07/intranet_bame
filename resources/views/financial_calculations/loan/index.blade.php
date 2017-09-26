@@ -20,11 +20,21 @@
                         <div class="row">
                             <div class="col-xs-6">
                                 <div class="form-group{{ $errors->first('loan') ? ' has-error':'' }}">
-                                    <label class="control-label">Préstamo</label>
+                                    <label class="control-label">Tipo de Préstamo</label>
                                     <select name="loan" class="form-control input-sm">
                                         <option value="">Seleccione uno</option>
                                         @foreach ($param_loans as $param_loan)
-                                            <option value="{{ str_replace('%', '', $param_loan->value) }}">{{ $param_loan->descrip }}</option>
+                                            <optgroup label="{{ $param_loan->name }}">
+                                                @if ($param_loan->content == 'U')
+                                                    @foreach ($param_loan->details as $detail)
+                                                        <option value="{{ $detail->value }}">{{ $detail->value }}</option>
+                                                    @endforeach
+                                                @elseif ($param_loan->content == 'V')
+                                                    @foreach ($param_loan->details as $detail)
+                                                        <option value="{{ str_replace('%', '', $detail->value) }}">{{ $detail->descrip }}</option>
+                                                    @endforeach
+                                                @endif
+                                            </optgroup>
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('loan') }}</span>
@@ -66,7 +76,7 @@
 
                             <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('extraordinary') ? ' has-error':'' }}">
-                                    <label class="control-label">Monto del Pago Extraordinarios</label>
+                                    <label class="control-label"><abbr title="Monto del Pago Extraordinarios">Mto. Extraordinarios</abbr></label>
                                     <input type="text" class="form-control input-sm" name="extraordinary" placeholder="0.00" value="{{ request('extraordinary') }}">
                                     <span class="help-block">{{ $errors->first('extraordinary') }}</span>
                                 </div>
@@ -95,7 +105,7 @@
                         </div>
                         {{ csrf_field() }}
                         <a class="btn btn-info btn-xs" href="{{ route('financial_calculations.index') }}"><i class="fa fa-arrow-left"></i> Atrás</a>
-                        <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Consultando cliente...">Calcular Cuotas</button>
+                        <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Calculando cuotas...">Calcular Cuotas</button>
                     </form>
                 </div>
             </div>

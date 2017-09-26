@@ -417,6 +417,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('loan', 'LoanController', ['only' => [
             'index'
         ]]);
+
+        Route::resource('investment', 'InvestmentController', ['only' => [
+            'index'
+        ]]);
     });
 
 });
