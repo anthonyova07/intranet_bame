@@ -909,3 +909,25 @@ function get_financial_calculation_params($param = null)
 
     return $params->get($param);
 }
+
+function get_days_from_text($text)
+{
+    $days = 0;
+    $text = trim($text);
+
+    foreach (explode(' ', $text) as $value) {
+        $float = floatval($value);
+
+        if ($float != 0) {
+            if (str_contains($text, 'año')) {
+                $days = $float * 360;
+            }
+
+            if (str_contains($text, 'día')) {
+                $days = $float;
+            }
+        }
+    }
+
+    return $days;
+}

@@ -28,7 +28,7 @@ class InvestmentController extends Controller {
             ->first()
             ->products()
             ->passiveRates()
-            ->whereIn('content', ['U', 'V'])
+            // ->whereIn('content', ['U', 'V'])
             ->with(['details'])
             ->get();
 // dd($param_investments);

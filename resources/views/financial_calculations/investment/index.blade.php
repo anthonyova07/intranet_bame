@@ -33,6 +33,14 @@
                                                     @foreach ($param_investment->details as $detail)
                                                         <option value="{{ str_replace('%', '', $detail->value) }}">{{ $detail->descrip }}</option>
                                                     @endforeach
+                                                @elseif ($param_investment->content == 'R')
+                                                    @foreach ($param_investment->details as $detail)
+                                                        @foreach ($param_investment->ranges() as $index => $range)
+                                                            <optgroup label="{{ $range }}">
+                                                                <option days="{{ get_days_from_text($range) }}" value="{{ str_replace('%', '', $detail->ranges[$index]->value) }}">{{ $detail->ranges[$index]->value }}</option>
+                                                            </optgroup>
+                                                        @endforeach
+                                                    @endforeach
                                                 @endif
                                             </optgroup>
                                         @endforeach
@@ -131,9 +139,18 @@
 
         var investment = $('select[name="investment"]');
         var interests = $('input[name="interests"]');
+        var days = $('input[name="days"]');
 
         investment.change(function () {
+            var select = $(this);
+            var option = select.find("option:selected");
+
             interests.val($(this).val());
+            if (option.attr('days') != undefined) {
+                days.val(option.attr('days'));
+            } else {
+                days.val(0);
+            }
         });
     </script>
 
