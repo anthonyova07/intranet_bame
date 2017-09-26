@@ -126,7 +126,13 @@
                                 </tr>
                                 <tr>
                                     <td><b>Pagos Extraordinarios:</b></td>
-                                    <td>{{ number_format($loan->extraordinary, 2) }}</td>
+                                    <td>
+                                        @if ($loan->extraordinary)
+                                            {{ number_format($loan->extraordinary, 2) }}
+                                        @else
+                                            0.00
+                                        @endif
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><b>Mes Pagos Extraordinarios:</b></td>
@@ -159,7 +165,7 @@
                                     <td>{{ $amort->date }}</td>
                                     <td>{{ number_format($amort->interests, 2) }}</td>
                                     <td>{{ number_format($amort->capital, 2) }}</td>
-                                    <td>{{ number_format($amort->extraordinary, 2) }}</td>
+                                    <td>{{ $amort->extraordinary ? number_format($amort->extraordinary, 2) : 0.00 }}</td>
                                     <td>{{ number_format($amort->quota, 2) }}</td>
                                     <td>{{ number_format($amort->capital_pending, 2) }}</td>
                                 </tr>

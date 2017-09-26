@@ -63,7 +63,7 @@ class Loan
                 $amortization->capital = $capital_pending;
             }
 
-            $amortization->extraordinary = 0;
+            $amortization->extraordinary = 0.00;
             $amortization->quota = $amortization->interests + $amortization->capital;
             $capital_pending = $capital_pending - $amortization->capital;
 
