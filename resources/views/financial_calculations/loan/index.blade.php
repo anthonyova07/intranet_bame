@@ -176,6 +176,17 @@
             $('#btn_submit').button('loading');
         });
 
+        var year = $('input[name="year"]');
+        var month = $('input[name="month"]');
+
+        year.blur(function () {
+            month.val(parseInt(year.val()) * 12);
+        });
+
+        month.blur(function () {
+            year.val(parseInt(month.val()) / 12);
+        });
+
         var loan = $('select[name="loan"]');
         var interests = $('input[name="interests"]');
 
