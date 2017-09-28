@@ -149,11 +149,11 @@
                                     <td>{{ $investment->days }}</td>
                                 </tr>
                                 <tr>
-                                    <td><b>Interes:</b></td>
+                                    <td><b>Interés:</b></td>
                                     <td>{{ number_format($investment->interests, 2) }}</td>
                                 </tr>
                                 <tr>
-                                    <td><b>Interes Ganados:</b></td>
+                                    <td><b>Intereses Ganados:</b></td>
                                     <td>{{ number_format($investment->interests_earned, 2) }}</td>
                                 </tr>
                                 <tr>
