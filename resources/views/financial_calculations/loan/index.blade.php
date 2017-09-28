@@ -167,7 +167,7 @@
                     <table class="table table-bordered table-condensed table-hover table-striped">
                         <thead>
                             <tr>
-                                <th class="text-center">Mes</th>
+                                <th class="text-center"># Cuota</th>
                                 <th class="text-center">Fecha</th>
                                 <th class="text-center">Intereses</th>
                                 <th class="text-center">Capital</th>
@@ -179,7 +179,7 @@
                         <tbody class="text-right">
                             @foreach ($loan->amortizations() as $amort)
                                 <tr>
-                                    <td>{{ $amort->month }}</td>
+                                    <td>{{ $amort->number }}</td>
                                     <td>{{ $amort->date }}</td>
                                     <td>{{ number_format($amort->interests, 2) }}</td>
                                     <td>{{ number_format($amort->capital, 2) }}</td>

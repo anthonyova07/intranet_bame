@@ -923,7 +923,7 @@ function get_days_from_text($text)
                 $days = $float * 360;
             }
 
-            if (str_contains($text, 'día')) {
+            if (str_contains($text, 'día') || str_contains($text, 'dia')) {
                 $days = $float;
             }
         }

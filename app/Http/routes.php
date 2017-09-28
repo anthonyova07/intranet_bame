@@ -34,6 +34,15 @@ Route::group(['prefix' => 'notification'], function () {
     Route::get('all/global', 'Notification\NotificationController@allGlobal')->name('all.global');
 });
 
+Route::group(['prefix' => 'financial_calculations', 'namespace' => 'FinancialCalculations'], function () {
+    Route::resource('loan', 'LoanController', ['only' => [
+        'index'
+    ]]);
+
+    Route::resource('investment', 'InvestmentController', ['only' => [
+        'index'
+    ]]);
+});
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -413,14 +422,6 @@ Route::group(['middleware' => 'auth'], function () {
                 'create', 'store', 'edit', 'update'
             ]]);
         });
-
-        Route::resource('loan', 'LoanController', ['only' => [
-            'index'
-        ]]);
-
-        Route::resource('investment', 'InvestmentController', ['only' => [
-            'index'
-        ]]);
     });
 
 });
