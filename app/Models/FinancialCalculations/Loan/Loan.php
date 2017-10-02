@@ -26,7 +26,7 @@ class Loan
 
         $this->interests = $interests;
 
-        $this->extraordinary = $extraordinary;
+        $this->extraordinary = is_numeric($extraordinary) ? $extraordinary : 0;
 
         $this->month_extraordinary = $month_extraordinary ? $month_extraordinary : 12;
 
