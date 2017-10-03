@@ -478,6 +478,13 @@ class RequestController extends Controller
 
         $human_resource_request->detail()->update($data);
 
+        $data = array_merge($data, [
+            'id' => uniqid(true),
+            'created_by' => session()->get('user'),
+        ]);
+
+        $human_resource_request->detail->history()->create($data);
+
         if (in_array($request->type, ['PER', 'VAC', 'AUS'])) {
             $human_resource_request->reqstatus = 'Pendiente por Supervisor';
             $human_resource_request->approvesup = 'p';

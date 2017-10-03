@@ -4,11 +4,11 @@ namespace Bame\Models\HumanResource\Request;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Detail extends Model
+class ReintegrateHistory extends Model
 {
     protected $connection = 'ibs';
 
-    protected $table = 'intreqrhde';
+    protected $table = 'intreqrhrh';
 
     protected $primaryKey = 'id';
 
@@ -16,22 +16,27 @@ class Detail extends Model
 
     public $timestamps = true;
 
+    protected $fillable = [
+        'perdatfror',
+        'perdattor',
+        'vacdatfror',
+        'vacdattor',
+        'pertimtor',
+        'pertimfror',
+        'observar',
+        'created_by',
+        'id',
+    ];
+
     protected $dates = [
-        'perdatfrom',
-        'perdatto',
         'perdatfror',
         'perdattor',
         'vacdatfror',
         'vacdattor',
     ];
 
-    public function scopeLastestFirst($query)
+    public function scopeLastest($query)
     {
         return $this->orderBy('created_at', 'desc');
-    }
-
-    public function history()
-    {
-        return $this->hasMany(ReintegrateHistory::class, 'detail_id')->orderBy('created_at', 'desc');
     }
 }
