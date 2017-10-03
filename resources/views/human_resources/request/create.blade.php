@@ -69,6 +69,20 @@
             $('#form').submit(function (event) {
                 $('#btn_submit').button('loading');
             });
+
+            var radio_dialibre = $('input[type=radio][code=DIALIBRE]');
+            var radio_cumple = $('input[type=radio][code=CUMPLE]');
+            var one_day = $('input[type=radio][value=one_day]');
+
+            radio_dialibre.change(function () {
+                one_day.prop('checked', true);
+                one_day.change();
+            });
+
+            radio_cumple.change(function () {
+                one_day.prop('checked', true);
+                one_day.change();
+            });
         </script>
     @endif
 

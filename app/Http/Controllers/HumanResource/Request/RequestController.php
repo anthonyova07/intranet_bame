@@ -246,6 +246,10 @@ class RequestController extends Controller
         } else {
             $param = Param::find($request->per);
 
+            if (in_array($param->code, ['DIALIBRE', 'CUMPLE']) && $request->permission_type != 'one_day') {
+                return back()->withInput()->with('error', 'El tipo de permiso debe ser Por un día o menos cuando el motivo es cumpleaños o dia anual.');
+            }
+
             if ($param->code == 'DIALIBRE') {
                 if (!HumanResourceRequest::isBetweenXDays($request->permission_date)) {
                     return back()->withInput()->with('error', 'El día libre debe ser solicitado al menos con 5 días laborables de anticipación');

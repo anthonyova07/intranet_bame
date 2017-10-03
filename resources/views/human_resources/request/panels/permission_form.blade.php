@@ -86,7 +86,7 @@
             <div class="col-xs-2" style="height: 35px;">
                 <div class="radio">
                     <label style="font-weight: bold;">
-                        <input type="radio" name="per" {{ old('per') == $param->id ? 'checked' : '' }} value="{{ $param->id }}"> {{ $param->name }}
+                        <input type="radio" name="per" {{ old('per') == $param->id ? 'checked' : '' }} value="{{ $param->id }}" code="{{ $param->code }}"> {{ $param->name }}
                     </label>
                 </div>
             </div>
