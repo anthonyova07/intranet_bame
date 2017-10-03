@@ -123,6 +123,8 @@ class RequestController extends Controller
             $human_resource_request->colname = session('employee')->name;
             $human_resource_request->colposi = session('employee')->position->name;
             $human_resource_request->coldepart = session('employee')->department->name;
+            $human_resource_request->coldateadm = session('employee')->servicedat;
+            $human_resource_request->colbirthda = session('employee')->birthdate;
 
             $human_resource_request->colsupuser = session('employee')->supervisor_emp->useremp;
             $human_resource_request->colsupname = session('employee')->supervisor_emp->name;

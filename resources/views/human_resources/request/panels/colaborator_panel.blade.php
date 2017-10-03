@@ -74,21 +74,47 @@
                             <span class="help-block">{{ $errors->first('coldepart') }}</span>
                         </div>
                     </div>
-                    @if (in_array($type, ['ANT']))
-                        <div class="col-xs-4">
-                            <div class="form-group{{ $errors->first('identification') ? ' has-error':'' }}">
-                                <label class="control-label">Identificación</label>
-                                <p class="form-control-static">
-                                    @if (isset($human_resource_request))
-                                        {{ $human_resource_request->detail->identifica }}
-                                    @else
-                                        {{ session('employee')->identifica }}
-                                    @endif
-                                </p>
-                                <span class="help-block">{{ $errors->first('identification') }}</span>
-                            </div>
+                    <div class="col-xs-4">
+                        <div class="form-group{{ $errors->first('identification') ? ' has-error':'' }}">
+                            <label class="control-label">Identificación</label>
+                            <p class="form-control-static">
+                                @if (isset($human_resource_request))
+                                    {{ $human_resource_request->detail->identifica }}
+                                @else
+                                    {{ session('employee')->identifica }}
+                                @endif
+                            </p>
+                            <span class="help-block">{{ $errors->first('identification') }}</span>
                         </div>
-                    @endif
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="form-group{{ $errors->first('coldateadm') ? ' has-error':'' }}">
+                            <label class="control-label">Fecha de Ingreso</label>
+                            <p class="form-control-static">
+                                @if (isset($human_resource_request))
+                                    {{ date_create($human_resource_request->coldateadm)->format('d/m/Y') }}
+                                @else
+                                    {{ date_create(session('employee')->servicedat)->format('d/m/Y') }}
+                                @endif
+                            </p>
+                            <span class="help-block">{{ $errors->first('coldateadm') }}</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group{{ $errors->first('colbirthda') ? ' has-error':'' }}">
+                            <label class="control-label">Fecha de Nacimiento</label>
+                            <p class="form-control-static">
+                                @if (isset($human_resource_request))
+                                    {{ date_create($human_resource_request->colbirthda)->format('d/m/Y') }}
+                                @else
+                                    {{ date_create(session('employee')->birthdate)->format('d/m/Y') }}
+                                @endif
+                            </p>
+                            <span class="help-block">{{ $errors->first('colbirthda') }}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -172,21 +198,49 @@
                                 <span class="help-block">{{ $errors->first('coldepart') }}</span>
                             </div>
                         </div>
-                        @if (in_array($type, ['ANT']))
+                        <div class="col-xs-4">
+                            <div class="form-group{{ $errors->first('identification') ? ' has-error':'' }}">
+                                <label class="control-label">Identificación</label>
+                                <p class="form-control-static">
+                                    @if (isset($human_resource_request))
+                                        {{ $human_resource_request->detail->identifica }}
+                                    @else
+                                        {{ session('employee')->identifica }}
+                                    @endif
+                                </p>
+                                <span class="help-block">{{ $errors->first('identification') }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="row">
                             <div class="col-xs-4">
-                                <div class="form-group{{ $errors->first('identification') ? ' has-error':'' }}">
-                                    <label class="control-label">Identificación</label>
+                                <div class="form-group{{ $errors->first('coldateadm') ? ' has-error':'' }}">
+                                    <label class="control-label">Fecha de Ingreso</label>
                                     <p class="form-control-static">
                                         @if (isset($human_resource_request))
-                                            {{ $human_resource_request->detail->identifica }}
+                                            {{ date_create($human_resource_request->coldateadm)->format('d/m/Y') }}
                                         @else
-                                            {{ session('employee')->identifica }}
+                                            {{ date_create(session('employee')->servicedat)->format('d/m/Y') }}
                                         @endif
                                     </p>
-                                    <span class="help-block">{{ $errors->first('identification') }}</span>
+                                    <span class="help-block">{{ $errors->first('coldateadm') }}</span>
                                 </div>
                             </div>
-                        @endif
+                            <div class="col-xs-4">
+                                <div class="form-group{{ $errors->first('colbirthda') ? ' has-error':'' }}">
+                                    <label class="control-label">Fecha de Nacimiento</label>
+                                    <p class="form-control-static">
+                                        @if (isset($human_resource_request))
+                                            {{ date_create($human_resource_request->colbirthda)->format('d/m/Y') }}
+                                        @else
+                                            {{ date_create(session('employee')->birthdate)->format('d/m/Y') }}
+                                        @endif
+                                    </p>
+                                    <span class="help-block">{{ $errors->first('colbirthda') }}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
