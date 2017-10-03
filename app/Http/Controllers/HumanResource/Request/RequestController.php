@@ -260,8 +260,10 @@ class RequestController extends Controller
                     return back()->withInput()->with('error', 'El día libre de cumpleaños debe ser solicitado después de la fecha misma.');
                 }
 
-                if (HumanResourceRequest::isBetweenXDays($request->permission_date, 7, $birthdate)) {
-                    return back()->withInput()->with('error', 'El día libre de cumpleaños debe ser solicitado entre los 7 días después del cumpleaños');
+                $days = 1;
+
+                if (HumanResourceRequest::isBetweenXDays($request->permission_date, $days, $birthdate)) {
+                    return back()->withInput()->with('error', 'El día libre de cumpleaños debe ser solicitado entre los '.$days.' días después del cumpleaños');
                 }
             }
 
