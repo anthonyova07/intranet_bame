@@ -7,7 +7,7 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-10 col-xs-offset-1">
+        <div class="col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Detalle de la Solicitud ({{ $type_desc }})</h3>
@@ -15,13 +15,13 @@
 
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-xs-2">
+                        {{-- <div class="col-xs-3">
                             <div class="form-group{{ $errors->first('vac_date_admission') ? ' has-error':'' }}">
                                 <label class="control-label">Fecha de Ingreso</label>
                                 <input type="date" style="width: 125px;" disabled class="form-control input-sm" name="vac_date_admission" value="{{ $employee_date }}">
                                 <span class="help-block">{{ $errors->first('vac_date_admission') }}</span>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-xs-2">
                             <div class="form-group{{ $errors->first('vac_total_days') ? ' has-error':'' }}">
                                 <label class="control-label">Días a Tomar</label>

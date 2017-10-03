@@ -323,7 +323,7 @@ class RequestController extends Controller
 
         $detail->id = uniqid(true);
         $detail->req_id = $requestId;
-        $detail->vacdatadmi = Birthdate::getOneEmployeeDate();
+        $detail->vacdatadmi = session('employee')->servicedat;
         $detail->vacdatfrom = $request->vac_date_from;
         $detail->vacdatto = HumanResourceRequest::getVacDateTo($request->vac_date_from, $request->vac_total_days);
         $detail->vactotdays = $request->vac_total_days;
