@@ -18,7 +18,12 @@
                         <div class="col-xs-3">
                             <div class="form-group{{ $errors->first('ant_account_number') ? ' has-error':'' }}">
                                 <label class="control-label"># Cuenta (Ahorro)</label>
-                                <input type="text" class="form-control input-sm" name="ant_account_number" value="{{ old('ant_account_number') }}">
+                                <select name="ant_account_number" class="form-control input-sm">
+                                    @foreach (session('employee')->accounts_sav() as $account)
+                                        <option value="{{ $account->getNumber() }}">{{ $account->getNumber() }}</option>
+                                    @endforeach
+                                </select>
+                                {{-- <input type="text" class="form-control input-sm" name="ant_account_number" value="{{ old('ant_account_number') }}"> --}}
                                 <span class="help-block">{{ $errors->first('ant_account_number') }}</span>
                             </div>
                         </div>

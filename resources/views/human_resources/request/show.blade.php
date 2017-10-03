@@ -156,8 +156,10 @@
         'human_resource_request' => $human_resource_request,
     ])
 
-    @include('human_resources.request.panels.reintegrate_history', [
-        'human_resource_request' => $human_resource_request,
-    ])
+    @if (in_array($human_resource_request->reqtype, ['PER', 'AUS', 'VAC']))
+        @include('human_resources.request.panels.reintegrate_history', [
+            'human_resource_request' => $human_resource_request,
+        ])
+    @endif
 
 @endsection

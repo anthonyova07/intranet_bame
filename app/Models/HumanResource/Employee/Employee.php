@@ -2,6 +2,7 @@
 
 namespace Bame\Models\HumanResource\Employee;
 
+use Bame\Models\Customer\Customer;
 use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
@@ -149,5 +150,10 @@ class Employee extends Model
     public function noHasMonth($month)
     {
         return !$this->hasMonth($month);
+    }
+
+    public function accounts_sav()
+    {
+        return Customer::byIdn(remove_dashes($this->identifica))->first()->accounts_sav;
     }
 }
