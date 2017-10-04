@@ -110,11 +110,11 @@ class Employee extends Model
         return $this->subordinates->pluck('useremp')->toArray();
     }
 
-    public function getMaxDayTakeVac()
+    public function getMaxDayTakeVac($min = 1)
     {
         $years = get_year_of_service($this->servicedat);
 
-        if ($years >= 1 && $years < 5) {
+        if ($years >= $min && $years < 5) {
             return 14;
         }
 
@@ -155,5 +155,10 @@ class Employee extends Model
     public function accounts_sav()
     {
         return Customer::byIdn(remove_dashes($this->identifica))->first()->accounts_sav;
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
     }
 }
