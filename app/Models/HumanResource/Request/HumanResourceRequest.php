@@ -168,8 +168,9 @@ class HumanResourceRequest extends Model
 
         return $query->where('created_at', '>=', $year . '-01-01 00:00:00')
             ->where('created_at', '<=', $year . '-12-31 23:59:59')
-            ->where('approvesup', 'a')
-            ->where('approverh', true)
+            ->where('approvesup', '<>', 'r')
+            // ->where('approvesup', 'a')
+            // ->where('approverh', true)
             ->where('reqtype', $type);
     }
 
