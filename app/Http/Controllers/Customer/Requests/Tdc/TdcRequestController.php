@@ -62,7 +62,7 @@ class TdcRequestController extends Controller
             $customer_processed = CustomerProcessed::byIdentification($customer->identification)->lastestFirst()->first();
 
             if ($customer_processed) {
-                if ($customer_processed->hasRequestCreated() && TdcRequest::hasRequestCreated($customer->identification)) {
+                if ($customer_processed->hasRequestCreated() && TdcRequest::requestsCreated($customer->identification)->count() > 0) {
                     return back()->with('warning', 'Este cliente ya tiene una solicitud creada.');
                 }
 
