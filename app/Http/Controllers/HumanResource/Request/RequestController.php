@@ -251,12 +251,24 @@ class RequestController extends Controller
             }
 
             if ($param->code == 'DIALIBRE') {
+                if (HumanResourceRequest::alreadyTook('DIALIBRE')) {
+                    return back()->withInput()->with('error', 'El día gratis anual ya ha sido tomado por usted.');
+                }
+
+                $detail->codeforabs = $param->code;
+
                 if (!HumanResourceRequest::isBetweenXDays($request->permission_date)) {
-                    return back()->withInput()->with('error', 'El día libre debe ser solicitado al menos con 5 días laborables de anticipación');
+                    return back()->withInput()->with('error', 'El día gratis anual debe ser solicitado al menos con 5 días laborables de anticipación');
                 }
             }
 
             if ($param->code == 'CUMPLE') {
+                if (HumanResourceRequest::alreadyTook('CUMPLE')) {
+                    return back()->withInput()->with('error', 'El día libre de cumpleaños ya ha sido tomado por usted.');
+                }
+
+                $detail->codeforabs = $param->code;
+
                 $time = new DateTime;
                 $birthdate = $time->format('Y-') . date_create(session('employee')->birthdate)->format('m-d');
 
@@ -264,7 +276,7 @@ class RequestController extends Controller
                     return back()->withInput()->with('error', 'El día libre de cumpleaños debe ser solicitado después de la fecha misma.');
                 }
 
-                $days = 1;
+                $days = 7;
 
                 if (HumanResourceRequest::isBetweenXDays($request->permission_date, $days, $birthdate)) {
                     return back()->withInput()->with('error', 'El día libre de cumpleaños debe ser solicitado entre los '.$days.' días después del cumpleaños');

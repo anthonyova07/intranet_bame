@@ -156,4 +156,29 @@ class HumanResourceRequest extends Model
 
         return $datetime->format('Y-m-d');
     }
+
+    public function scopeByCode($query, $code)
+    {
+        return $query->where('colcode', $code);
+    }
+
+    public function scopeCurrentYearByType($query, $type)
+    {
+        $year = datetime()->format('Y');
+
+        return $query->where('created_at', '>=', $year . '-01-01 00:00:00')
+            ->where('created_at', '<=', $year . '-12-31 23:59:59')
+            ->where('approvesup', 'a')
+            ->where('approverh', true)
+            ->where('reqtype', $type);
+    }
+
+    public static function alreadyTook($permission)
+    {
+        $employee = session('employee');
+        $requests = self::byCode($employee->recordcard)->currentYearByType('PER')->get();
+        $result = Detail::byReqIdsAndCodeReason($requests->pluck('id')->toArray(), $permission)->currentYear()->get();
+
+        return $result->count() > 0;
+    }
 }
