@@ -100,4 +100,9 @@ class TdcRequest extends Model
             }
         }
     }
+
+    public function scopeHasRequestCreated($query, $identification)
+    {
+        return $query->where('identifica', $identification)->where('deleted_at', '<>', null)->count() > 0;
+    }
 }
