@@ -23,16 +23,36 @@
                             </div>
                         </div> --}}
                         <div class="col-xs-2">
+                            <div class="form-group{{ $errors->first('vacation_year') ? ' has-error':'' }}">
+                                <label class="control-label">Año de las Vacaciones</label>
+                                <select name="vacation_year" class="form-control input-sm">
+                                    <option value=""></option>
+                                    @foreach ($vacations as $vacation)
+                                        <option value="{{ $vacation->year }}" remaining="{{ $vacation->remaining }}">{{ $vacation->year }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="help-block">{{ $errors->first('vacation_year') }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
                             <div class="form-group{{ $errors->first('vac_total_days') ? ' has-error':'' }}">
                                 <label class="control-label">Días a Tomar</label>
-                                <input type="number" class="form-control input-sm" min="1" name="vac_total_days" value="{{ old('vac_total_days') ?? 1 }}">
+                                {{-- <input type="number" class="form-control input-sm" min="1" name="vac_total_days" value="{{ old('vac_total_days') ?? 1 }}"> --}}
+                                <select name="vac_total_days" class="form-control input-sm">
+                                    <option value="0">0</option>
+                                </select>
                                 <span class="help-block">{{ $errors->first('vac_total_days') }}</span>
                             </div>
                         </div>
                         <div class="col-xs-2">
                             <div class="form-group{{ $errors->first('vac_additional_days') ? ' has-error':'' }}">
                                 <label class="control-label">Días Adicionales</label>
-                                <input type="number" class="form-control input-sm" min="0" name="vac_additional_days" value="{{ old('vac_additional_days') ?? 0 }}">
+                                {{-- <input type="number" class="form-control input-sm" min="0" name="vac_additional_days" value="{{ old('vac_additional_days') ?? 0 }}"> --}}
+                                <select name="vac_additional_days" class="form-control input-sm">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
                                 <span class="help-block">{{ $errors->first('vac_additional_days') }}</span>
                             </div>
                         </div>
@@ -85,13 +105,25 @@
         }
     });
 
-    var total_days = $('input[name=vac_total_days]');
-    var add_days = $('input[name=vac_additional_days]');
+    var total_days = $('select[name=vac_total_days]');
+    var add_days = $('select[name=vac_additional_days]');
     var date_from = $('input[name=vac_date_from]');
     var date_to = $('input[name=vac_date_to]');
 
     var date_from_r = $('input[name=vac_date_from_reintegrate]');
     var date_to_r = $('input[name=vac_date_to_reintegrate]');
+
+    var vacation_year = $('select[name=vacation_year]');
+
+    vacation_year.change(function () {
+        var remaining = $(vacation_year.find('option:selected')[0]);
+
+        total_days.html('<option value="0">0</option>');
+
+        for (var i = 1; i <= remaining.attr('remaining'); i++) {
+            total_days.append('<option value="'+i+'">'+i+'</option>');
+        }
+    });
 
     total_days.change(function (e) {
         calculate(parseInt(total_days.val()) + parseInt(add_days.val()), date_from.val());
@@ -118,7 +150,7 @@
         });
     }
 
-    function calculate_r(total_days, $date_from) {
+    function calculate_r(total_days, date_from) {
         $.getJSON('{{ route('human_resources.request.calculate_vac_date_to') }}', {
             total_days: total_days,
             date_from: date_from

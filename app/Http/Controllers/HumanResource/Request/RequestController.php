@@ -12,6 +12,7 @@ use Bame\Models\HumanResource\Request\Param;
 use Bame\Models\HumanResource\Request\Detail;
 use Bame\Models\HumanResource\Request\Approval;
 use Bame\Models\HumanResource\Employee\Employee;
+use Bame\Models\HumanResource\Employee\Vacation;
 use Bame\Models\Customer\Product\LoanMoneyMarket;
 use Bame\Models\HumanResource\Calendar\Birthdate;
 use Bame\Models\HumanResource\Request\HumanResourceRequest;
@@ -92,11 +93,14 @@ class RequestController extends Controller
 
         $params = Param::where('is_active', '1')->get();
 
+        $vacations = Vacation::byCode(session('employee')->recordcard)->get();
+
         return view('human_resources.request.create', [
             'type' => $request->type,
             'request_type_exists' => $request_type_exists,
             'params' => $params,
             'employee_date' => session('employee')->servicedat,
+            'vacations' => $vacations,
         ]);
     }
 
@@ -343,7 +347,7 @@ class RequestController extends Controller
         $detail->req_id = $requestId;
         $detail->vacdatadmi = session('employee')->servicedat;
         $detail->vacdatfrom = $request->vac_date_from;
-        $detail->vacdatto = HumanResourceRequest::getVacDateTo($request->vac_date_from, $request->vac_total_days);
+        $detail->vacdatto = HumanResourceRequest::getVacDateTo($request->vac_date_from, ($request->vac_total_days + $request->vac_additional_days ));
         $detail->vactotdays = $request->vac_total_days;
         $detail->vacadddays = $request->vac_additional_days;
         $detail->vacaccbonu = (bool) $request->vac_credited_bonds;
@@ -352,6 +356,8 @@ class RequestController extends Controller
         $detail->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();
 
         $detail->save();
+
+        Vacation::reduceVacationDaysForYear($request->vacation_year, $request->vac_total_days);
 
         return null;
     }
