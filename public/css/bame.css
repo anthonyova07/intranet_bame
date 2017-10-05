@@ -35,6 +35,10 @@ ul.nav.nav-second-level>li>a {
     color: #ffffff;
 }
 
+ul.nav.nav-third-level>li>a {
+    color: #ffffff;
+}
+
 .nav>li>a:focus, .nav>li>a:hover {
     text-decoration: none;
     background-color: #aa272f;
@@ -55,7 +59,13 @@ ul.nav.nav-second-level>li>a:focus, .nav>li>a:hover {
     color: #ffffff;
 }
 
-#side-menu>li>a>span {
+ul.nav.nav-third-level>li>a:focus, .nav>li>a:hover {
+    text-decoration: none;
+    background-color: #d82f27;
+    color: #ffffff;
+}
+
+#side-menu>li>a>span, #side-menu>li>ul>li>a>span {
     font-size: 30px;
     font-weight: bold;
     margin-top: -6px;

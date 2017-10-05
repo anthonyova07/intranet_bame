@@ -146,7 +146,7 @@ $(document).ready(function() {
     });
     headerPage.animateCSS('slideInLeft');
 
-    $('a.btn, .pagination>li>a, .nav-second-level>li>a, .naranja, button[type=submit], .fa-share, a.link_noticias, a.list-group-item').click(function () {
+    $('a.btn, .pagination>li>a, .nav-second-level>li>.effect, .naranja, button[type=submit], .fa-share, a.link_noticias, a.list-group-item').click(function () {
         headerBar.animateCSS('slideOutUp', function () {
             $(this).remove();
         });

@@ -168,16 +168,33 @@
                         </a>
                         <ul class="nav nav-second-level animated zoomInLeft" style="animation-duration: 0.5s;">
                             <li>
-                                <a href="{{ route('human_resources.payroll.my') }}">
+                                <a class="effect" href="{{ route('human_resources.payroll.my') }}">
                                     <i class="fa fa-money fa-fw"></i>
                                     Mis Nóminas
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('human_resources.request.index') }}">
+                                <a class="effect" href="{{ route('human_resources.request.index') }}">
                                     <i class="fa fa-wpforms fa-fw"></i>
-                                    Solicitudes
+                                    Consulta Solicitudes
                                 </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-plus fa-fw"></i>
+                                    Nuevas Solicitud
+                                    <span class="fa arrow"></span>
+                                </a>
+                                <ul class="nav nav-third-level animated zoomInLeft" style="animation-duration: 0.5s;">
+                                    @foreach (rh_req_types() as $key => $rh_req_type)
+                                        <li>
+                                            <a class="effect" href="{{ route('human_resources.request.create', ['type' => $key]) }}">
+                                                <i class="fa fa-plus-circle fa-fw"></i>
+                                                {{ str_replace(['Solicitud de ', 'Notificación de ', 'Sol. de '], '', $rh_req_type) }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
                             </li>
                         </ul>
                     </li>
@@ -195,12 +212,12 @@
                                         @if (Route::has($submenu->sub_link))
                                             <li>
                                                 @if ($submenu->sub_coduni == 'human_resource_request')
-                                                    <a href="{{ route($submenu->sub_link, ['access' => 'admin']) }}">
+                                                    <a class="effect" href="{{ route($submenu->sub_link, ['access' => 'admin']) }}">
                                                         <i class="fa fa-unlock-alt fa-fw"></i>
                                                         {{ $submenu->sub_descri }}
                                                     </a>
                                                 @else
-                                                    <a href="{{ route($submenu->sub_link) }}">
+                                                    <a class="effect" href="{{ route($submenu->sub_link) }}">
                                                         <i class="fa fa-unlock-alt fa-fw"></i>
                                                         {{ $submenu->sub_descri }}
                                                     </a>
