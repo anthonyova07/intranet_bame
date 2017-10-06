@@ -80,7 +80,8 @@ class MaintenanceController extends Controller
             $customer = Customer::SearchByIdentification(session('customer_maintenance'))->first();
             $core = session('customer_maintenance_core');
         } else {
-            $maintenances = MaintenanceIbs::lastest()->paginate();
+            // $maintenances = MaintenanceIbs::lastest()->paginate();
+            $maintenances = MaintenanceIbs::onlyPendingForApprove()->paginate();
         }
 
         if ($core == 'ibs') {
@@ -438,7 +439,7 @@ class MaintenanceController extends Controller
 
         do_log('Realizó Mantenimiento del cliente ( number:' . strip_tags($customer->getCode()) . ' )');
 
-        return redirect(route('customer.maintenance.create', ['page' => $request->page]))->with('success', 'Los cambios fueron guardados y aprobados correctamente.');
+        return redirect(route('customer.maintenance.create'))->with('success', 'Los cambios fueron guardados y aprobados correctamente.');
     }
 
     protected function getCode($value)

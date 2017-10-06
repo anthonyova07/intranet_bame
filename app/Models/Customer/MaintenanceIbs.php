@@ -32,8 +32,13 @@ class MaintenanceIbs extends Model
 
     public function scopeLastest($query)
     {
-        $this->dateFormat = 'Y-m-d H:i:s';
+        // $this->dateFormat = 'Y-m-d H:i:s';
 
-        return $query->orderBy('created_at', 'asc')->orderBy('isapprov', 'desc');
+        return $query->orderBy('created_at', 'desc')->orderBy('isapprov', 'asc');
+    }
+
+    public function scopeOnlyPendingForApprove($query)
+    {
+        return $query->where('isapprov', false)->orderBy('created_at', 'desc');
     }
 }

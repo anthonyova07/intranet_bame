@@ -145,7 +145,7 @@
                                         <th>Aprobado el</th>
                                         <th style="width: 112px;">Fecha Creación</th>
                                         <th style="width: 112px;">Creado por</th>
-                                        <th style="width: 52px"></th>
+                                        <th style="width: 52px">Aprobación</th>
                                     </tr>
                                 </thead>
                                 <tbody>

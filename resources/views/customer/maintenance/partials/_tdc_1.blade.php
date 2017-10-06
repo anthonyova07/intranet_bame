@@ -3,7 +3,7 @@
 
         <div class="panel-body text-center">
             <h1 class="text-center label label-warning" style="font-size: 30px;">ITC Dirección Residencia</h1>
-            <a href="javascript:void(0)" class="pull-right label label-primary copy_info" style="font-size: 16px;">Copiar <i class="fa fa-arrow-circle-right"></i></a>
+            {{-- <a href="javascript:void(0)" class="pull-right label label-primary copy_info" style="font-size: 16px;">Copiar <i class="fa fa-arrow-circle-right"></i></a> --}}
         </div>
 
         <div class="panel-body">
