@@ -94,8 +94,23 @@ class MaintenanceController extends Controller
         }
 
         if ($core == 'itc') {
-            $address_one = $customer->actives_creditcards->get($tdc)->address_one;
-            $address_two = $customer->actives_creditcards->get($tdc)->address_two;
+            $address_one = null;
+            $address_two = null;
+
+            if ($customer->actives_creditcards->count() > 0) {
+                $address_one = $customer->actives_creditcards->get($tdc)->address_one;
+            }
+
+            if ($customer->actives_creditcards->count() > 1) {
+                $address_two = $customer->actives_creditcards->get($tdc)->address_two;
+            }
+
+            if (!$address_one && !$address_two) {
+                session()->forget('customer_maintenance');
+                session()->forget('customer_maintenance_core');
+
+                return redirect()->route('customer.maintenance.create')->with('warning', 'Este Cliente no posee tarjeta de crédito en el sistema.');
+            }
 
             if ($address_one) {
                 $request->search = 'province';
