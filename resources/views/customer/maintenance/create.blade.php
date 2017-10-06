@@ -633,13 +633,21 @@
 
         $('.copy_info').click(function () {
             $('select[name=country_2_itc]').html($('select[name=country_itc]').html());
+            $('select[name=country_2_itc]').val($('select[name=country_itc]').val());
             $('select[name=region_2_itc]').html($('select[name=region_itc]').html());
+            $('select[name=region_2_itc]').val($('select[name=region_itc]').val());
             $('select[name=province_2_itc]').html($('select[name=province_itc]').html());
+            $('select[name=province_2_itc]').val($('select[name=province_itc]').val());
             $('select[name=city_2_itc]').html($('select[name=city_itc]').html());
+            $('select[name=city_2_itc]').val($('select[name=city_itc]').val());
             $('select[name=municipality_2_itc]').html($('select[name=municipality_itc]').html());
+            $('select[name=municipality_2_itc]').val($('select[name=municipality_itc]').val());
             $('select[name=sector_2_itc]').html($('select[name=sector_itc]').html());
+            $('select[name=sector_2_itc]').val($('select[name=sector_itc]').val());
             $('select[name=neighborhood_2_itc]').html($('select[name=neighborhood_itc]').html());
+            $('select[name=neighborhood_2_itc]').val($('select[name=neighborhood_itc]').val());
             $('select[name=street_2_itc]').html($('select[name=street_itc]').html());
+            $('select[name=street_2_itc]').val($('select[name=street_itc]').val());
             $('input[name=building_name_2_itc]').val($('input[name=building_name_itc]').val());
             $('input[name=block_2_itc]').val($('input[name=block_itc]').val());
             $('input[name=house_number_2_itc]').val($('input[name=house_number_itc]').val());
@@ -668,7 +676,6 @@
                 if ($('input[name=ways_sending_statement_itc]:checked').val() == radio.val()) {
                     radio.attr('checked', true);
                 }
-                console.log($('input[name=ways_sending_statement_itc]:checked').val(), radio);
             });
         });
     </script>
