@@ -167,7 +167,7 @@ class CreditCardAddress extends Model
 
     public function getStreet()
     {
-        return cap_str($this->barri_mdir);
+        return cap_str($this->calcl_mdir);
     }
 
     public function scopeByCreditcard($query, $creditcard)

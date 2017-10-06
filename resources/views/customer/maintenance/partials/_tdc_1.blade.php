@@ -106,7 +106,7 @@
                         <label class="control-label">Calle</label>
                         <select class="form-control input-sm" name="street_itc">
                             @foreach ($streets_itc as $street)
-                                <option value="{{ $street->code }}|{{ trim($street->description) }}"{{ $street->code == $address_one->getNeighborhood() ? ' selected':'' }}>{{ $street->description }}</option>
+                                <option value="{{ $street->code }}|{{ trim($street->description) }}"{{ $street->code == $address_one->getStreet() ? ' selected':'' }}>{{ $street->description }}</option>
                             @endforeach
                         </select>
                         <span class="help-block">{{ $errors->first('street_itc') }}</span>

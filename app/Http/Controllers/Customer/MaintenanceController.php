@@ -99,13 +99,8 @@ class MaintenanceController extends Controller
 
             if ($customer->actives_creditcards->count() > 0) {
                 $address_one = $customer->actives_creditcards->get($tdc)->address_one;
-            }
-
-            if ($customer->actives_creditcards->count() > 1) {
                 $address_two = $customer->actives_creditcards->get($tdc)->address_two;
-            }
-
-            if (!$address_one && !$address_two) {
+            } else {
                 session()->forget('customer_maintenance');
                 session()->forget('customer_maintenance_core');
 
