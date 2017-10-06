@@ -443,12 +443,18 @@ class MaintenanceController extends Controller
 
     protected function getCode($value)
     {
-        return explode('|', $value)[0];
+        $parts = explode('|', $value);
+
+        return count($parts) > 0 ? $parts[0] : '';
+        // return explode('|', $value)[0];
     }
 
     protected function getDesc($value)
     {
-        return explode('|', $value)[1];
+        $parts = explode('|', $value);
+
+        return count($parts) > 1 ? $parts[1] : '';
+        // return explode('|', $value)[1];
     }
 
     protected function load(Request $request)
@@ -558,6 +564,10 @@ class MaintenanceController extends Controller
     {
         $d = $maintenance->itc_dir_one;
 
+        if (!$d->itcregionc) {
+            return false;
+        }
+
         $address = [
             'CODBA_MDIR' => 1, //Codigo Banco
             'CODCI_MDIR' => 1, //Cod. Cia a Procesar
@@ -634,6 +644,10 @@ class MaintenanceController extends Controller
     private function save_address_two($maintenance, $customer, $datetime)
     {
         $d = $maintenance->itc_dir_two;
+
+        if (!$d->itcregionc) {
+            return false;
+        }
 
         $address = [
             'CODBA_MDIR' => 1, //Codigo Banco
