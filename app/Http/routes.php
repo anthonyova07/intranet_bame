@@ -41,6 +41,8 @@ Route::group(['middleware' => 'auth'], function () {
     //Consulta del Historico
     Route::resource('consultas/historicoproducto','Consultas\HistoricoProducto\ProductoController');
 
+    //Route::get('consultas/historicoproducto/show}','Consultas\HistoricoProducto\ProductoController@show');
+
     Route::get('reporteproductopdf/{cliente}','Consultas\HistoricoProducto\ProductoController@reportepdf');
 
     Route::get('reportetransaccionpdf/{producto}','Consultas\HistoricoProducto\TransaccionController@reportetranspdf');
@@ -368,6 +370,16 @@ Route::group(['middleware' => 'auth'], function () {
                 'index', 'create', 'store', 'show'
             ]]);
         });
+
+        Route::group(['prefix' => 'maintenance'], function () {
+            Route::get('load', 'Customer\MaintenanceController@load')->name('customer.maintenance.load');
+            Route::get('approve/{id}', 'Customer\MaintenanceController@approve')->name('customer.maintenance.approve');
+        });
+
+        Route::resource('maintenance', 'Customer\MaintenanceController', ['only' => [
+            'create', 'store'
+        ]]);
+
     });
 
     Route::group(['prefix' => 'operation'], function () {

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Bame\Models\Customer\Customer;
 use Bame\Models\Operation\Tdc\Itc\RequestDescription;
 use Bame\Models\Operation\Tdc\Itc\TdcBinDescription;
+use Bame\Models\Customer\Product\CreditCardAddress;
 
 class CreditCard extends Model
 {
@@ -56,5 +57,15 @@ class CreditCard extends Model
     public function getPlasticName()
     {
         return cap_str($this->nompl_mtar);
+    }
+
+    public function address_one()
+    {
+        return $this->hasOne(CreditCardAddress::class, 'tcact_mdir', 'tcact_mtar')->where('iddir_mdir', '1');
+    }
+
+    public function address_two()
+    {
+        return $this->hasOne(CreditCardAddress::class, 'tcact_mdir', 'tcact_mtar')->where('iddir_mdir', '2');
     }
 }
