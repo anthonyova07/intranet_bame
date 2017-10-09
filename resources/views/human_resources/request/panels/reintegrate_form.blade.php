@@ -38,14 +38,14 @@
                         <div class="col-xs-4">
                             <div class="form-group{{ $errors->first('permission_time_from_reintegrate') ? ' has-error':'' }}">
                                 <label class="control-label">Hora Desde</label>
-                                <input type="time" class="form-control input-sm" name="permission_time_from_reintegrate" value="{{ old('permission_time_from_reintegrate') ? old('permission_time_from_reintegrate') : $human_resource_request->detail->pertimfror }}">
+                                <input type="time" class="form-control input-sm" name="permission_time_from_reintegrate" value="{{ old('permission_time_from_reintegrate') ? old('permission_time_from_reintegrate') : ($human_resource_request->detail->pertimfror ? $human_resource_request->detail->pertimfror : '08:30') }}">
                                 <span class="help-block">{{ $errors->first('permission_time_from_reintegrate') }}</span>
                             </div>
                         </div>
                         <div class="col-xs-4">
                             <div class="form-group{{ $errors->first('permission_time_to_reintegrate') ? ' has-error':'' }}">
                                 <label class="control-label">Hora Hasta</label>
-                                <input type="time" class="form-control input-sm" name="permission_time_to_reintegrate" value="{{ old('permission_time_to_reintegrate') ? old('permission_time_to_reintegrate') : $human_resource_request->detail->pertimtor }}">
+                                <input type="time" class="form-control input-sm" name="permission_time_to_reintegrate" value="{{ old('permission_time_to_reintegrate') ? old('permission_time_to_reintegrate') : ($human_resource_request->detail->pertimtor ? $human_resource_request->detail->pertimtor : '17:30') }}">
                                 <span class="help-block">{{ $errors->first('permission_time_to_reintegrate') }}</span>
                             </div>
                         </div>

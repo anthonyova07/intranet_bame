@@ -130,6 +130,10 @@ class RequestController extends Controller
             $human_resource_request->coldateadm = session('employee')->servicedat;
             $human_resource_request->colbirthda = session('employee')->birthdate;
 
+            if (!session('employee')->supervisor_emp) {
+                return back()->withInput()->with('warning', 'Usted no tiene supervisor asignado en la intranet.');
+            }
+
             $human_resource_request->colsupuser = session('employee')->supervisor_emp->useremp;
             $human_resource_request->colsupname = session('employee')->supervisor_emp->name;
             $human_resource_request->colsupposi = session('employee')->supervisor_emp->position->name;
@@ -330,6 +334,10 @@ class RequestController extends Controller
     {
         if (!HumanResourceRequest::isValidDateFrom($request->vac_date_from)) {
             return back()->withInput()->with('error', 'Fecha de Inicio inválida. Favor valide que la misma no sea día feriado ni fin de semana.');
+        }
+
+        if (HumanResourceRequest::hasConflictWithVacationDate($request->vac_date_from)) {
+            return back()->withInput()->with('error', 'La fecha de inicio seleccionada tiene conflicto con otra solicitud de vacaciones realizada.');
         }
 
         // aplicar bono colocar dias correspondientes para aplicar el bono

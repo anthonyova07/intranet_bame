@@ -154,7 +154,13 @@ class Employee extends Model
 
     public function accounts_sav()
     {
-        return Customer::byIdn(remove_dashes($this->identifica))->first()->accounts_sav;
+        $customer = Customer::byIdn(remove_dashes($this->identifica))->first();
+
+        if ($customer) {
+            return $customer->accounts_sav;
+        }
+
+        return collect();
     }
 
     public function scopeActive($query)

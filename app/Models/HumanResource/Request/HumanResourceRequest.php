@@ -162,12 +162,19 @@ class HumanResourceRequest extends Model
         return $query->where('colcode', $code);
     }
 
-    public function scopeCurrentYearByType($query, $type)
+    public function scopeCurrentYear($query)
     {
         $year = datetime()->format('Y');
 
         return $query->where('created_at', '>=', $year . '-01-01 00:00:00')
-            ->where('created_at', '<=', $year . '-12-31 23:59:59')
+            ->where('created_at', '<=', $year . '-12-31 23:59:59');
+    }
+
+    public function scopeCurrentYearByType($query, $type)
+    {
+        $year = datetime()->format('Y');
+
+        return $query->currentYear()
             ->where('approvesup', '<>', 'r')
             // ->where('approvesup', 'a')
             // ->where('approverh', true)
@@ -178,8 +185,17 @@ class HumanResourceRequest extends Model
     {
         $employee = session('employee');
         $requests = self::byCode($employee->recordcard)->currentYearByType('PER')->get();
-        $result = Detail::byReqIdsAndCodeReason($requests->pluck('id')->toArray(), $permission)->currentYear()->get();
+        $result = Detail::byReqIdsAndCodeReason($requests->pluck('id')->toArray(), $permission)->currentYear()->count();
 
-        return $result->count() > 0;
+        return $result > 0;
+    }
+
+    public static function hasConflictWithVacationDate($date)
+    {
+        $employee = session('employee');
+        $requests = self::byCode($employee->recordcard)->currentYearByType('VAC')->get();
+        $result = Detail::byReqIds($requests->pluck('id')->toArray())->betweenDate($date)->count();
+
+        return $result > 0;
     }
 }

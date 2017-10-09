@@ -35,9 +35,14 @@ class Detail extends Model
         return $this->hasMany(ReintegrateHistory::class, 'detail_id')->orderBy('created_at', 'desc');
     }
 
+    public function scopeByReqIds($query, $request_ids)
+    {
+        $query->whereIn('req_id', $request_ids);
+    }
+
     public function scopeByReqIdsAndCodeReason($query, $request_ids, $code)
     {
-        return $query->whereIn('req_id', $request_ids)->where('codeforabs', $code);
+        return $query->byReqIds($request_ids)->where('codeforabs', $code);
     }
 
     public function scopeCurrentYear($query)
@@ -46,5 +51,10 @@ class Detail extends Model
 
         return $query->where('created_at', '>=', $year . '-01-01 00:00:00')
             ->where('created_at', '<=', $year . '-12-31 23:59:59');
+    }
+
+    public function scopeBetweenDate($query, $date)
+    {
+        return $query->where('vacdatfrom', '<=', $date)->where('vacdatto', '>', $date);
     }
 }

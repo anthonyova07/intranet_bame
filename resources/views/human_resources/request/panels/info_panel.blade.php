@@ -45,7 +45,7 @@
                                     <span class="input-group-addon">
                                         <input type="checkbox" id="paid_check" data-toggle="tooltip" title="Remunerado" name="paid"{{ $human_resource_request->detail->paid ? ' checked':'' }}>
                                     </span>
-                                    <input type="text" id="paid_reason" name="paid_reason" maxlength="500" data-toggle="tooltip" title="Motivo sino es remunerado" placeholder="Motivo sino es remunerado" class="form-control input-sm" value="{{ $human_resource_request->detail->paid_reason }}">
+                                    <input type="text" id="paid_reason"{{ $human_resource_request->detail->paid ? ' disabled':'' }} name="paid_reason" maxlength="500" data-toggle="tooltip" title="Motivo si no es remunerado" placeholder="Motivo si no es remunerado" class="form-control input-sm" value="{{ $human_resource_request->detail->paid_reason }}">
                                     <span class="input-group-btn">
                                         <input type="submit" class="btn btn-danger btn-sm" id="btn_submit" data-loading-text="Enviando..." value="Enviar">
                                     </span>
@@ -57,7 +57,7 @@
                                 <span class="input-group-addon">
                                     <input type="checkbox" disabled id="paid_check" data-toggle="tooltip" title="Remunerado" name="paid"{{ $human_resource_request->detail->paid ? ' checked':'' }}>
                                 </span>
-                                <input type="text" disabled placeholder="Motivo sino es remunerado" class="form-control input-sm" value="{{ $human_resource_request->detail->paid_reason }}">
+                                <input type="text" disabled placeholder="Motivo si no es remunerado" class="form-control input-sm" value="{{ $human_resource_request->detail->paid_reason }}">
                             </div>
                         @endif
                     </div>
@@ -77,8 +77,10 @@
     $('#paid_check').change(function () {
         if ($(this).is(':checked')) {
             paid_reason.prop('required', false);
+            paid_reason.prop('disabled', true);
         } else {
             paid_reason.prop('required', true);
+            paid_reason.prop('disabled', false);
         }
     });
 </script>

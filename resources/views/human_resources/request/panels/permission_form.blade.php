@@ -1,3 +1,46 @@
+<div class="row">
+    <div class="col-xs-12" style="height: 15px;">
+        <div class="form-group{{ $errors->first('per') ? ' has-error':'' }}">
+            <label class="control-label" style="font-size: 16px;">
+                @if (in_array($type, ['PER']))
+                    Motivo del Permiso
+                @endif
+
+                @if (in_array($type, ['AUS']))
+                    Razón de la Ausencia
+                @endif
+
+                @if ($errors->first('per'))
+                    <small>({{ $errors->first('per') }})</small>
+                @endif
+            </label>
+        </div>
+    </div>
+    @if (in_array($type, ['PER']))
+        @foreach ($params->where('type', 'PER') as $param)
+            <div class="col-xs-2" style="height: 35px;">
+                <div class="radio">
+                    <label style="font-weight: bold;">
+                        <input type="radio" name="per" {{ old('per') == $param->id ? 'checked' : '' }} value="{{ $param->id }}" code="{{ $param->code }}"> {{ $param->name }}
+                    </label>
+                </div>
+            </div>
+        @endforeach
+    @endif
+    <div class="col-xs-12">
+        <div class="form-group{{ $errors->first('per_reason') ? ' has-error':'' }}">
+            <label class="control-label">
+                @if (in_array($type, ['PER']))
+                    <input type="radio" name="per" {{ old('per') == 'otro' ? 'checked' : '' }} value="otro"> Otro
+                @else
+                    <input type="hidden" name="per" value="otro">
+                @endif
+            </label>
+            <textarea class="form-control input-sm" placeholder="Especifique la razón..." name="per_reason">{{ old('per_reason') }}</textarea>
+            <span class="help-block">{{ $errors->first('per_reason') }}</span>
+        </div>
+    </div>
+</div>
 <div class="row text-center">
     <div class="col-xs-6">
         <div class="radio{{ $errors->first('permission_type') ? ' has-error':'' }}">
@@ -69,40 +112,4 @@
             </div>
         </div>
     @endif
-</div>
-<div class="row">
-    <div class="col-xs-12" style="height: 15px;">
-        <div class="form-group{{ $errors->first('per') ? ' has-error':'' }}">
-            <label class="control-label" style="font-size: 16px;">
-                Motivo del Permiso
-                @if ($errors->first('per'))
-                    <small>({{ $errors->first('per') }})</small>
-                @endif
-            </label>
-        </div>
-    </div>
-    @if (in_array($type, ['PER']))
-        @foreach ($params->where('type', 'PER') as $param)
-            <div class="col-xs-2" style="height: 35px;">
-                <div class="radio">
-                    <label style="font-weight: bold;">
-                        <input type="radio" name="per" {{ old('per') == $param->id ? 'checked' : '' }} value="{{ $param->id }}" code="{{ $param->code }}"> {{ $param->name }}
-                    </label>
-                </div>
-            </div>
-        @endforeach
-    @endif
-    <div class="col-xs-12">
-        <div class="form-group{{ $errors->first('per_reason') ? ' has-error':'' }}">
-            <label class="control-label">
-                @if (in_array($type, ['PER']))
-                    <input type="radio" name="per" {{ old('per') == 'otro' ? 'checked' : '' }} value="otro"> Otro
-                @else
-                    <input type="radio" name="per" checked value="otro"> Otro
-                @endif
-            </label>
-            <textarea class="form-control input-sm" placeholder="Especifique la razón la ausencia..." name="per_reason">{{ old('per_reason') }}</textarea>
-            <span class="help-block">{{ $errors->first('per_reason') }}</span>
-        </div>
-    </div>
 </div>

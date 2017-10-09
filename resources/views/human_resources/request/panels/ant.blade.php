@@ -1,4 +1,4 @@
-<form method="post" action="{{ route('human_resources.request.store', ['type' => $type]) }}" id="form">
+<form method="post" action="{{ route('human_resources.request.store', ['type' => $type]) }}" id="form" novalidate>
 
     <div class="row">
         @include('human_resources.request.panels.colaborator_panel')
@@ -37,7 +37,7 @@
                         <div class="col-xs-3">
                             <div class="form-group{{ $errors->first('ant_dues') ? ' has-error':'' }}">
                                 <label class="control-label">Cuotas (MAX: 12)</label>
-                                <input type="number" class="form-control input-sm" name="ant_dues" value="{{ old('ant_dues') ? old('ant_dues') : '1' }}">
+                                <input type="number" min="1" max="12" class="form-control input-sm" name="ant_dues" value="{{ old('ant_dues') ? old('ant_dues') : '1' }}">
                                 <span class="help-block">{{ $errors->first('ant_dues') }}</span>
                             </div>
                         </div>
@@ -89,7 +89,11 @@
         calculate(field_amount.val(), field_dues.val());
     });
 
+    field_dues.change(function () {
+        calculate(field_amount.val(), field_dues.val());
+    });
+
     function calculate(amount, dues) {
-        $('input[name=ant_due_amount]').val(amount / dues);
+        $('input[name=ant_due_amount]').val((amount / dues).toFixed(2));
     }
 </script>

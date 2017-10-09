@@ -64,25 +64,21 @@
                     </div>
                 </div>
 
-                @if (session('user') == $human_resource_request->created_by && !$human_resource_request->detail->petdatfror)
-                    @include('human_resources.request.panels.reintegrate_form', [
-                        'human_resource_request' => $human_resource_request,
-                    ])
-                @else
-                    @include('human_resources.request.panels.reintegrate_form_show', [
-                        'human_resource_request' => $human_resource_request,
-                    ])
-                @endif
-
                 <div class="row">
                     <div class="col-xs-6">
                         <div class="form-group">
                             <label class="control-label" style="font-size: 16px;">
-                                Motivo del Permiso
+                                @if ($human_resource_request->reqtype == 'PER')
+                                    Motivo del Permiso
+                                @endif
+
+                                @if ($human_resource_request->reqtype == 'AUS')
+                                    Razón de Ausencia
+                                @endif
                             </label>
                             <div class="radio" style="margin-top: 0px;">
                                 <label style="font-weight: bold;">
-                                    <input type="radio" disabled name="per" checked> {{ $human_resource_request->detail->reaforabse }}
+                                    {{ $human_resource_request->detail->reaforabse }}
                                 </label>
                             </div>
                         </div>
@@ -104,6 +100,17 @@
                         </div>
                     </div>
                 </div>
+
+                @if (session('user') == $human_resource_request->created_by && !$human_resource_request->detail->petdatfror)
+                    @include('human_resources.request.panels.reintegrate_form', [
+                        'human_resource_request' => $human_resource_request,
+                    ])
+                @else
+                    @include('human_resources.request.panels.reintegrate_form_show', [
+                        'human_resource_request' => $human_resource_request,
+                    ])
+                @endif
+
             </div>
         </div>
     </div>

@@ -28,7 +28,7 @@
                                 <select name="vacation_year" class="form-control input-sm">
                                     <option value=""></option>
                                     @foreach ($vacations as $vacation)
-                                        <option value="{{ $vacation->year }}" remaining="{{ $vacation->remaining }}">{{ $vacation->year }}</option>
+                                        <option value="{{ $vacation->year }}" remaining="{{ $vacation->remaining }}"{{ old('vacation_year') == $vacation->year ? 'selected' : '' }}>{{ $vacation->year }}</option>
                                     @endforeach
                                 </select>
                                 <span class="help-block">{{ $errors->first('vacation_year') }}</span>
@@ -40,6 +40,9 @@
                                 {{-- <input type="number" class="form-control input-sm" min="1" name="vac_total_days" value="{{ old('vac_total_days') ?? 1 }}"> --}}
                                 <select name="vac_total_days" class="form-control input-sm">
                                     <option value="0">0</option>
+                                    @if (old('vac_total_days'))
+                                        <option value="{{ old('vac_total_days') }}" selected>{{ old('vac_total_days') }}</option>
+                                    @endif
                                 </select>
                                 <span class="help-block">{{ $errors->first('vac_total_days') }}</span>
                             </div>
@@ -50,8 +53,9 @@
                                 {{-- <input type="number" class="form-control input-sm" min="0" name="vac_additional_days" value="{{ old('vac_additional_days') ?? 0 }}"> --}}
                                 <select name="vac_additional_days" class="form-control input-sm">
                                     <option value="0">0</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                    @if (old('vac_additional_days'))
+                                        <option value="{{ old('vac_additional_days') }}" selected>{{ old('vac_additional_days') }}</option>
+                                    @endif
                                 </select>
                                 <span class="help-block">{{ $errors->first('vac_additional_days') }}</span>
                             </div>
@@ -122,6 +126,16 @@
 
         for (var i = 1; i <= remaining.attr('remaining'); i++) {
             total_days.append('<option value="'+i+'">'+i+'</option>');
+        }
+
+        if ((new Date).getFullYear() == vacation_year.val()) {
+            add_days.html('<option value="0">0</option>');
+
+            for (var i = 1; i <= 2; i++) {
+                add_days.append('<option value="'+i+'">'+i+'</option>');
+            }
+        } else {
+            add_days.html('<option value="0">0</option>');
         }
     });
 
