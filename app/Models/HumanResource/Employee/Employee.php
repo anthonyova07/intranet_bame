@@ -163,6 +163,17 @@ class Employee extends Model
         return collect();
     }
 
+    public function payroll_account()
+    {
+        $customer = Customer::byIdn(remove_dashes($this->identifica))->first();
+
+        if ($customer) {
+            return $customer->payroll_account;
+        }
+
+        return null;
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);

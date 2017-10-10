@@ -19,7 +19,7 @@
                             <div class="form-group{{ $errors->first('ant_account_number') ? ' has-error':'' }}">
                                 <label class="control-label"># Cuenta (Ahorro)</label>
                                 <select name="ant_account_number" class="form-control input-sm">
-                                    @foreach (session('employee')->accounts_sav() as $account)
+                                    @foreach (session('employee')->payroll_account() as $account)
                                         <option value="{{ $account->getNumber() }}">{{ $account->getNumber() }}</option>
                                     @endforeach
                                 </select>

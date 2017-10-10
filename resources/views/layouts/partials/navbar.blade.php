@@ -186,7 +186,7 @@
                                     <span class="fa arrow"></span>
                                 </a>
                                 <ul class="nav nav-third-level animated zoomInLeft" style="animation-duration: 0.5s;">
-                                    @foreach (rh_req_types() as $key => $rh_req_type)
+                                    @foreach (rh_req_types()->sort() as $key => $rh_req_type)
                                         <li>
                                             <a class="effect" href="{{ route('human_resources.request.create', ['type' => $key]) }}">
                                                 <i class="fa fa-plus-circle fa-fw"></i>
