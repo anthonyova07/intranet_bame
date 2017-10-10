@@ -48,7 +48,11 @@
                         @if ($customer->denail)
                             <td>{{ $customer->denail->note }}</td>
                         @else
-                            <td>Exitoso</td>
+                            @if ($customer->isRequestDeleted())
+                                <td>Eliminada</td>
+                            @else
+                                <td>Exitoso</td>
+                            @endif
                         @endif
                         <td>{{ $customer->is_black ? 'Si':'No' }}</td>
                         <td>{{ $customer->reqnumber }}</td>

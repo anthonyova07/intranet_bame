@@ -3,6 +3,7 @@
 namespace Bame\Models\Customer\Requests\Tdc;
 
 use Illuminate\Database\Eloquent\Model;
+use Bame\Models\Customer\Requests\Tdc\TdcRequest;
 
 class CustomerProcessed extends Model
 {
@@ -44,5 +45,18 @@ class CustomerProcessed extends Model
     public function hasDenail()
     {
         return $this->denail_id != null && strlen($this->denail_id) > 1;
+    }
+
+    public function isRequestDeleted()
+    {
+        if ($this->hasRequestCreated()) {
+            $tdc_req = TdcRequest::byNumber($this->reqnumber)->first();
+
+            if ($tdc_req) {
+                return $tdc_req->isDeleted();
+            }
+        }
+
+        return false;
     }
 }

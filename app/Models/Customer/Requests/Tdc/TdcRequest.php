@@ -22,6 +22,11 @@ class TdcRequest extends Model
         return $query->orderBy('created_at', 'desc');
     }
 
+    public function scopeByNumber($query, $reqnumber)
+    {
+        return $query->where('reqnumber', $reqnumber);
+    }
+
     public function isDeleted()
     {
         return $this->deleted_at != null;
