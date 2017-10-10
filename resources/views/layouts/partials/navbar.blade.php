@@ -108,6 +108,14 @@
                         Galería de Fotos
                     </a>
                 </li>
+                @if (url_closing_cost() != null)
+                    <li>
+                        <a href="{{ url_closing_cost() }}" target="_blank">
+                            <i class="fa fa-bar-chart fa-fw"></i>
+                            Gastos de Cierre
+                        </a>
+                    </li>
+                @endif
                 <li>
                     <a href="#">
                         <i class="fa fa-download fa-fw"></i>
