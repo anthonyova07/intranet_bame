@@ -56,7 +56,7 @@
                         <td class="table_td" align="right" width="408" style="border: 0;">
                             <b style="font-size: 14px;font-style: italic;">Solicitud de tarjeta No. {{ $request_tdc->reqnumber }}</b>
                             <br>
-                            <div style="color: #777777;font-size: 12px;">Realizado por {{ $request_tdc->createname }}</div>
+                            <div style="color: #777777;font-size: 12px;">Realizado en el Canal {{ get_channels($request_tdc->channel) }}</div>
                         </td>
                     </tr>
                     <tr align="right">
@@ -266,28 +266,32 @@
                             <b>Teléfono Celular:</b>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="table_td" colspan="2" style="width: 50%">
-                            {{ $request_tdc->ref1names }}
-                        </td>
-                        <td class="table_td" colspan="1">
-                            {{ $request_tdc->ref1phores }}
-                        </td>
-                        <td class="table_td" colspan="1">
-                            {{ $request_tdc->ref1phocel }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table_td" colspan="2" style="width: 50%">
-                            {{ $request_tdc->ref2names }}
-                        </td>
-                        <td class="table_td" colspan="1">
-                            {{ $request_tdc->ref2phores }}
-                        </td>
-                        <td class="table_td" colspan="1">
-                            {{ $request_tdc->ref2phocel }}
-                        </td>
-                    </tr>
+                    @if (trim($request_tdc->ref1names))
+                        <tr>
+                            <td class="table_td" colspan="2" style="width: 50%">
+                                {{ $request_tdc->ref1names }}
+                            </td>
+                            <td class="table_td" colspan="1">
+                                {{ $request_tdc->ref1phores }}
+                            </td>
+                            <td class="table_td" colspan="1">
+                                {{ $request_tdc->ref1phocel }}
+                            </td>
+                        </tr>
+                    @endif
+                    @if (trim($request_tdc->ref2names))
+                        <tr>
+                            <td class="table_td" colspan="2" style="width: 50%">
+                                {{ $request_tdc->ref2names }}
+                            </td>
+                            <td class="table_td" colspan="1">
+                                {{ $request_tdc->ref2phores }}
+                            </td>
+                            <td class="table_td" colspan="1">
+                                {{ $request_tdc->ref2phocel }}
+                            </td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
 
@@ -307,7 +311,7 @@
                         <td class="sign_field">
                             <b>_______________________________________</b>
                             <br>
-                            <span style="font-size: 15px;">Firma Oficial</span>
+                            <span style="font-size: 15px;">Firma Oficial ({{ $request_tdc->createname }})</span>
                         </td>
 
                         <td class="sign_field">

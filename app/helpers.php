@@ -471,17 +471,17 @@ function get_claim_results($claim_result = null)
 
 function get_currencies($currency = null)
 {
-    $channels = collect([
+    $currencies = collect([
         'RD$' => 'Pesos Dominicanos',
         'US$' => 'Dólares Estado Unidenses',
         // 'EU$' => 'Euros',
     ]);
 
     if (!$currency) {
-        return $channels;
+        return $currencies;
     }
 
-    return $channels->get($currency);
+    return $currencies->get($currency);
 }
 
 function get_param($type, $plural = true)
