@@ -34,6 +34,13 @@
                                 <span class="help-block">{{ $errors->first('vacation_year') }}</span>
                             </div>
                         </div>
+                        <div class="col-xs-3">
+                            <div class="form-group{{ $errors->first('vac_date_from') ? ' has-error':'' }}">
+                                <label class="control-label">Fecha de Inicio</label>
+                                <input type="date" class="form-control input-sm" name="vac_date_from" value="{{ old('vac_date_from') }}">
+                                <span class="help-block">{{ $errors->first('vac_date_from') }}</span>
+                            </div>
+                        </div>
                         <div class="col-xs-2">
                             <div class="form-group{{ $errors->first('vac_total_days') ? ' has-error':'' }}">
                                 <label class="control-label">Días a Tomar</label>
@@ -58,13 +65,6 @@
                                     @endif
                                 </select>
                                 <span class="help-block">{{ $errors->first('vac_additional_days') }}</span>
-                            </div>
-                        </div>
-                        <div class="col-xs-3">
-                            <div class="form-group{{ $errors->first('vac_date_from') ? ' has-error':'' }}">
-                                <label class="control-label">Fecha de Inicio</label>
-                                <input type="date" class="form-control input-sm" name="vac_date_from" value="{{ old('vac_date_from') }}">
-                                <span class="help-block">{{ $errors->first('vac_date_from') }}</span>
                             </div>
                         </div>
                         <div class="col-xs-3">
