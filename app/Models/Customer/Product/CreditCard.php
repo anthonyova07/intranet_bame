@@ -2,12 +2,12 @@
 
 namespace Bame\Models\Customer\Product;
 
-use Illuminate\Database\Eloquent\Model;
-
 use Bame\Models\Customer\Customer;
-use Bame\Models\Operation\Tdc\Itc\RequestDescription;
-use Bame\Models\Operation\Tdc\Itc\TdcBinDescription;
+use Illuminate\Database\Eloquent\Model;
+use Bame\Models\Operation\Tdc\Description;
 use Bame\Models\Customer\Product\CreditCardAddress;
+use Bame\Models\Operation\Tdc\Itc\TdcBinDescription;
+use Bame\Models\Operation\Tdc\Itc\RequestDescription;
 
 class CreditCard extends Model
 {
@@ -29,6 +29,12 @@ class CreditCard extends Model
     public function getProductCode()
     {
         return $this->codpr_mtar;
+    }
+
+    public function product()
+    {
+        $this->codpr_mtar =  str_pad($this->codpr_mtar, 4, '0', STR_PAD_LEFT);
+        return $this->hasOne(Description::class, 'codig_desc', 'codpr_mtar')->where('prefi_desc', 'SAT_PROD');
     }
 
     public function getMaskedNumber()

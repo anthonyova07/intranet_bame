@@ -21,7 +21,7 @@
         @if ($core == 'itc')
 
             <div class="row">
-                <div class="col-xs-4 col-xs-offset-4">
+                <div class="col-xs-6 col-xs-offset-3">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <form method="get" id="actives_creditcards_form" action="{{ route('customer.maintenance.create', Request::all()) }}">
@@ -34,7 +34,7 @@
                                             {{-- <label class="control-label">Tarjetas</label> --}}
                                             <select onchange="$('#actives_creditcards_form').submit();" class="form-control input-sm" name="tdc" data-toggle="tooltip" title="Tarjetas del Cliente" style="border-color: #ff0000;outline: 0;box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255,0,0,.6);">
                                                 @foreach ($customer->actives_creditcards as $key => $creditcard)
-                                                    <option type="tdc" value="{{ $key }}" {{ $tdc == $key ? 'selected':'' }}>Tarjeta ( {{ $creditcard->getMaskedNumber() }} )</option>
+                                                    <option type="tdc" value="{{ $key }}" {{ $tdc == $key ? 'selected':'' }}>Tarjeta ( {{ $creditcard->product->getDescription() }} ) ( {{ $creditcard->getMaskedNumber() }} )</option>
                                                 @endforeach
                                             </select>
                                             {{-- <span class="help-block">{{ $errors->first('tdc') }}</span> --}}
