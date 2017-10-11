@@ -324,8 +324,11 @@
                         <label class="control-label col-xs-12" style="padding-left: 0px;">Formas de Envio de Estados</label>
                         @foreach ($ways_sending_statements as $ways)
                             <div class="col-xs-4">
-                                <label class="radio-inline">
+                                {{-- <label class="radio-inline">
                                     <input type="radio" name="ways_sending_statement_2_itc"{{ $address_two ? ($address_two->getWaySendingStatement() == $ways->getCode() ? ' checked':'') : '' }} value="{{ $ways->getCode() }}"> {{ trim($ways->getDescription()) }}
+                                </label> --}}
+                                <label class="radio-inline">
+                                    <input type="radio" name="ways_sending_statement_2_itc"{{ 6 == $ways->getCode() ? ' checked':'' }} value="{{ $ways->getCode() }}"> {{ trim($ways->getDescription()) }}
                                 </label>
                             </div>
                         @endforeach
