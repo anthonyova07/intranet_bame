@@ -84,6 +84,8 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
 
+                        <a style="font-size: 13px;margin-left: 10px;" class="label btn-primary pull-right" id="approve_maintenances" href="" url="{{ route('customer.maintenance.approve') }}">Aprobar</a>
+
                         <a style="font-size: 13px;margin-bottom: 8px;" download class="label btn-success pull-right" target="__blank" href="{{ route('customer.maintenance.create', Request::except(['term', 'page'])) }}">Exportar Excel</a>
 
                         <table class="table table-striped table-bordered table-hover table-condensed" order-by='2|desc'>
@@ -98,6 +100,9 @@
                                     <th style="width: 112px;">Fecha Creación</th>
                                     <th style="width: 112px;">Creado por</th>
                                     <th style="width: 52px">Aprobación</th>
+                                    <th class="text-center" style="width: 75px">
+                                        <input type="checkbox" data-toggle="tooltip" title="Seleccionar Todo" name="check_all" value="" id="check_all">
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -114,7 +119,7 @@
                                         <td align="center">
                                             @if (!$m->isapprov)
                                                 <a
-                                                    href="{{ route('customer.maintenance.approve', array_merge(['id' => $m->id], Request::only('page'))) }}"
+                                                    href="{{ route('customer.maintenance.approve', array_merge(['ids' => $m->id], Request::only('page'))) }}"
                                                     class="verde link_approv"
                                                     onclick="approve(this)"
                                                     data-toggle="tooltip"
@@ -122,6 +127,11 @@
                                                     title="Aprobar">
                                                     <i class="fa fa-check fa-fw"></i>
                                                 </a>
+                                            @endif
+                                        </td>
+                                        <td align="center">
+                                            @if (!$m->isapprov)
+                                                <input type="checkbox" class="check_approve" data-toggle="tooltip" title="Marcar para aprobar" name="requests[]" value="{{ $m->id }}">
                                             @endif
                                         </td>
                                     </tr>
@@ -140,6 +150,33 @@
     <script type="text/javascript">
         $('#form').submit(function (event) {
             $('#btn_submit').button('loading');
+        });
+
+        $('#approve_maintenances').click(function (e) {
+            var ids = '?ids=';
+            var count = 0;
+
+            $('.check_approve').each(function (index, check) {
+                if ($(check).is(':checked')) {
+                    ids += $(check).val() + ',';
+                    count++;
+                }
+            });
+
+            if (!count) {
+                alert('No ha seleccionado ningún mantenimiento para aprobar.');
+                return false;
+            }
+
+            $(this).attr('href', $(this).attr('url') + ids);
+        });
+
+        var check_all = $('#check_all');
+
+        check_all.change(function () {
+            $('.check_approve').each(function (index, check) {
+                $(check).prop('checked', check_all.is(':checked'));
+            });
         });
     </script>
 

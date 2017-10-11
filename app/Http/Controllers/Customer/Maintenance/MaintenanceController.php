@@ -270,6 +270,7 @@ class MaintenanceController extends Controller
 
         $maintenance_ibs->isapprov = false;
 
+        $maintenance_ibs->created_at = datetime();
         $maintenance_ibs->created_by = session()->get('user');
         $maintenance_ibs->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
 
@@ -419,58 +420,62 @@ class MaintenanceController extends Controller
         }
     }
 
-    public function approve(Request $request, $id)
+    public function approve(Request $request)
     {
         if (can_not_do('customer_approvals_address')) {
             return redirect(route('customer.maintenance.create'))->with('error', 'Usted no tiene los permisos necesarios para aprobar los mantenimientos.');
         }
 
-        $maintenance = MaintenanceIbs::find($id);
-
         $datetime = new Datetime();
 
-        $customer = Customer::SearchByIdentification($maintenance->cliident)->first();
+        $ids = explode(',', $request->ids);
 
-        if ($maintenance->typecore == 'ibs') {
-            $customer->cusna2 = $maintenance->ibsstreet;
-            $customer->cusna4 = $maintenance->ibsbuhounu;
-            $customer->cusctr = $maintenance->ibscountry;
-            $customer->cusste = $maintenance->ibsprovinc;
-            $customer->cusuc8 = $maintenance->ibscityc;
-            $customer->cusuc7 = $maintenance->ibssectorc;
-            $customer->cuspob = $maintenance->ibsposmail;
-            $customer->cuszpc = $maintenance->ibszipcode;
-            $customer->cusiad = $maintenance->ibsmail;
-            $customer->cushpn = $maintenance->ibshouphon;
-            $customer->cusphn = $maintenance->ibsoffipho;
-            $customer->cusfax = $maintenance->ibsfaxphon;
-            $customer->cusph1 = $maintenance->ibsmovipho;
+        $maintenances = MaintenanceIbs::whereIn('id', $ids)->get();
 
-            $customer->save();
+        foreach ($maintenances as $maintenance) {
+            $customer = Customer::SearchByIdentification($maintenance->cliident)->first();
+
+            if ($maintenance->typecore == 'ibs') {
+                $customer->cusna2 = $maintenance->ibsstreet;
+                $customer->cusna4 = $maintenance->ibsbuhounu;
+                $customer->cusctr = $maintenance->ibscountry;
+                $customer->cusste = $maintenance->ibsprovinc;
+                $customer->cusuc8 = $maintenance->ibscityc;
+                $customer->cusuc7 = $maintenance->ibssectorc;
+                $customer->cuspob = $maintenance->ibsposmail;
+                $customer->cuszpc = $maintenance->ibszipcode;
+                $customer->cusiad = $maintenance->ibsmail;
+                $customer->cushpn = $maintenance->ibshouphon;
+                $customer->cusphn = $maintenance->ibsoffipho;
+                $customer->cusfax = $maintenance->ibsfaxphon;
+                $customer->cusph1 = $maintenance->ibsmovipho;
+
+                $customer->save();
+            }
+
+            if ($maintenance->typecore == 'itc') {
+
+                $this->save_address_one($maintenance, $customer, $datetime);
+
+                $this->save_address_two($maintenance, $customer, $datetime);
+
+            }
+
+            $maintenance->isapprov = true;
+            $maintenance->approvby = session()->get('user');
+            $maintenance->approvname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+            $maintenance->approvdate = $datetime->format('Y-m-d H:i:s');
+
+            $maintenance->updated_by = $maintenance->approvby;
+            $maintenance->updatename = $maintenance->approvname;
+            $maintenance->updated_at = $maintenance->approvdate;
+
+            $maintenance->save();
+
+            do_log('Realizó Mantenimiento del cliente ( number:' . strip_tags($customer->getCode()) . ' )');
         }
 
-        if ($maintenance->typecore == 'itc') {
-
-            $this->save_address_one($maintenance, $customer, $datetime);
-
-            $this->save_address_two($maintenance, $customer, $datetime);
-
-        }
-
-        $maintenance->isapprov = true;
-        $maintenance->approvby = session()->get('user');
-        $maintenance->approvname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
-        $maintenance->approvdate = $datetime->format('Y-m-d H:i:s');
-
-        $maintenance->updated_by = $maintenance->approvby;
-        $maintenance->updatename = $maintenance->approvname;
-        $maintenance->updated_at = $maintenance->approvdate;
-
-        $maintenance->save();
-
-        do_log('Realizó Mantenimiento del cliente ( number:' . strip_tags($customer->getCode()) . ' )');
-
-        return redirect(route('customer.maintenance.create'))->with('success', 'Los cambios fueron guardados y aprobados correctamente.');
+        return redirect()->route('customer.maintenance.index')->with('success', 'Los cambios fueron guardados y aprobados correctamente.');
     }
 
     protected function getCode($value)
@@ -585,6 +590,7 @@ class MaintenanceController extends Controller
 
         $sql_search .= " IDS FROM SASRELD00 WHERE CODPA_RELD = '{$this->getCode($request->country)}' AND REGIO_RELD = '{$this->getCode($request->region)}' {$and_where} GROUP BY {$group_by}";
         $ids = collect(DB::connection('itc')->select($sql_search))->implode('ids', ',');
+        $ids = empty($ids) ? '0' : $ids;
 
         $sql = "SELECT TRIM({$field_code}) code, TRIM({$field_description}) description FROM {$table} WHERE {$field_code} IN ({$ids}) ORDER BY {$field_description}";
         $result = collect(DB::connection('itc')->select($sql));
