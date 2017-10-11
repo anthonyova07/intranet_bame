@@ -16,7 +16,7 @@ class MaintenanceIbs extends Model
 
     // protected $dates = ['approvdate'];
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     // protected $dateFormat = 'Y-m-d H:i:s';
 

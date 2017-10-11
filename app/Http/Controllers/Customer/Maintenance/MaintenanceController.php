@@ -1,6 +1,6 @@
 <?php
 
-namespace Bame\Http\Controllers\Customer;
+namespace Bame\Http\Controllers\Customer\Maintenance;
 
 use Illuminate\Http\Request;
 
@@ -18,6 +18,43 @@ use Bame\Models\Customer\Product\CreditCardAddress\{Country, City, Municipality,
 
 class MaintenanceController extends Controller
 {
+    protected $ways_sending_statements;
+
+    public function __construct()
+    {
+        $this->ways_sending_statements = Description::wherePrefix('SAS_ENVCOR')->orderByDescription()->get();
+    }
+
+    public function index(Request $request)
+    {
+        $maintenances = MaintenanceIbs::lastest();
+
+        if ($request->term) {
+            $term = cap_str($request->term);
+
+            $maintenances = $maintenances->orWhere('clinumber', 'like', '%' . $term . '%')
+                        ->orWhere('cliident', 'like', '%' . $term . '%')
+                        ->orWhere('tdcnumber', 'like', '%' . $term . '%');
+        }
+
+        if ($request->pending_approval) {
+            $maintenances->where('isapprov', false);
+        }
+
+        if ($request->date_from) {
+            $maintenances->where('created_at', '>=', $request->date_from . ' 00:00:00');
+        }
+
+        if ($request->date_to) {
+            $maintenances->where('created_at', '<=', $request->date_to . ' 23:59:59');
+        }
+
+        $maintenances = $maintenances->paginate();
+
+        return view('customer.maintenance.index')
+            ->with('maintenances', $maintenances);
+    }
+
     public function create(Request $request)
     {
         if ($request->cancel) {
@@ -79,9 +116,6 @@ class MaintenanceController extends Controller
         if (session()->has('customer_maintenance')) {
             $customer = Customer::SearchByIdentification(session('customer_maintenance'))->first();
             $core = session('customer_maintenance_core');
-        } else {
-            // $maintenances = MaintenanceIbs::lastest()->paginate();
-            $maintenances = MaintenanceIbs::onlyPendingForApprove()->paginate();
         }
 
         if ($core == 'ibs') {
@@ -164,11 +198,8 @@ class MaintenanceController extends Controller
         }
 
         $regions = Region::orderByDesc()->get();
-        $ways_sending_statements = Description::wherePrefix('SAS_ENVCOR')->orderByDescription()->get();
 
         return view('customer.maintenance.create')
-            ->with('maintenances', $maintenances)
-
             ->with('customer', $customer)
 
             ->with('countries_ibs', $countries_ibs)
@@ -195,7 +226,7 @@ class MaintenanceController extends Controller
             ->with('address_two', $address_two)
             ->with('tdc', $tdc)
             ->with('core', $core)
-            ->with('ways_sending_statements', $ways_sending_statements);
+            ->with('ways_sending_statements', $this->ways_sending_statements);
     }
 
     public function store(MaintenanceRequest $r)
@@ -721,5 +752,35 @@ class MaintenanceController extends Controller
 
             $customer->actives_creditcards->where('tcact_mtar', $maintenance->tdcnumber)->first()->address_two()->insert($address);
         }
+    }
+
+    public function excel(Request $request)
+    {
+        $maintenances = MaintenanceIbs::lastest();
+
+        if ($request->term) {
+            $term = cap_str($request->term);
+
+            $maintenances = $maintenances->orWhere('clinumber', 'like', '%' . $term . '%')
+                        ->orWhere('cliident', 'like', '%' . $term . '%')
+                        ->orWhere('tdcnumber', 'like', '%' . $term . '%');
+        }
+
+        if ($request->pending_approval) {
+            $maintenances->where('isapprov', false);
+        }
+
+        if ($request->date_from) {
+            $maintenances->where('created_at', '>=', $request->date_from . ' 00:00:00');
+        }
+
+        if ($request->date_to) {
+            $maintenances->where('created_at', '<=', $request->date_to . ' 23:59:59');
+        }
+
+        $maintenances = $maintenances->get();
+
+        return view('customer.maintenance.excel.maintenances')
+                ->with('maintenances', $maintenances);
     }
 }
