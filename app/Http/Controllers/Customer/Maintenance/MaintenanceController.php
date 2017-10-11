@@ -10,9 +10,9 @@ use Bame\Http\Controllers\Controller;
 use DB;
 use Datetime;
 use Bame\Models\Customer\Customer;
-use Bame\Models\Customer\{MaintenanceIbs, MaintenanceItc};
+use Bame\Models\Customer\Maintenance\{MaintenanceIbs, MaintenanceItc};
 use Bame\Models\Operation\Tdc\Description;
-use Bame\Http\Requests\Customer\MaintenanceRequest;
+use Bame\Http\Requests\Customer\Maintenance\MaintenanceRequest;
 use Bame\Models\Customer\Product\CreditCardAddress;
 use Bame\Models\Customer\Product\CreditCardAddress\{Country, City, Municipality, Neighborhood, Province, Region, Sector, Street};
 

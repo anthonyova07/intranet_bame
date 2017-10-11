@@ -1,6 +1,6 @@
 <?php
 
-namespace Bame\Http\Requests\Customer;
+namespace Bame\Http\Requests\Customer\Maintenance;
 
 use Bame\Http\Requests\Request;
 

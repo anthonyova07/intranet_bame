@@ -1,6 +1,6 @@
 <?php
 
-namespace Bame\Models\Customer;
+namespace Bame\Models\Customer\Maintenance;
 
 use Illuminate\Database\Eloquent\Model;
 
