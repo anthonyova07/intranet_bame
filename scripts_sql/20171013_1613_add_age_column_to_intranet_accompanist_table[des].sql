@@ -1,0 +1,1 @@
+alter table intreveaco add age varchar(3) before created_at

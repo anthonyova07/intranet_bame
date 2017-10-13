@@ -47,6 +47,7 @@
                                 <th>Nombre</th>
                                 <th>Identificación</th>
                                 <th>Relación</th>
+                                <th>Edad</th>
                                 <th>Creado</th>
                                 <th></th>
                             </tr>
@@ -57,6 +58,7 @@
                                     <td>{{ $accompanist->names . ' ' . $accompanist->last_names }}</td>
                                     <td>{{ '(' . get_identification_types($accompanist->identification_type) . ') ' . $accompanist->identification }}</td>
                                     <td>{{ get_relationship_types($accompanist->relationship) }}</td>
+                                    <td>{{ $accompanist->age }}</td>
                                     <td>{{ $accompanist->created_at }}</td>
                                     <td align="center">
                                         <a
@@ -108,7 +110,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    
+
                     {{ $accompanists->appends(Request::all())->links() }}
                 </div>
             </div>

@@ -27,6 +27,7 @@ class AccompanistRequest extends Request
             'names' => 'required|max:45',
             'last_names' => 'required|max:45',
             'identification' => 'alpha_num|max:45' . ($this->identification_type != 'NI' ? '|required' : ''),
+            'age' => 'integer|min:1|max:100',
         ];
     }
 }

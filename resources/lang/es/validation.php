@@ -239,5 +239,6 @@ return [
       'username' => 'Usuario',
       'business' => 'Empresa',
       'closing_cost' => 'Gasto de Cierre',
+      'age' => 'Edad',
     ],
 ];

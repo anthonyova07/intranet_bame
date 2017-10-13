@@ -65,6 +65,7 @@
                                     <th>Invitado</th>
                                     <th>Identificación</th>
                                     <th>Relación</th>
+                                    <th>Edad</th>
                                     <th style="width: 52px"></th>
                                 </tr>
                             </thead>
@@ -75,6 +76,7 @@
                                         <td>{{ $subscription->accompanist->names . ' ' . $subscription->accompanist->last_names }}</td>
                                         <td>{{ '(' . get_identification_types($subscription->accompanist->identification_type) . ') ' . $subscription->accompanist->identification }}</td>
                                         <td>{{ get_relationship_types($subscription->accompanist->relationship) }}</td>
+                                        <td>{{ $subscription->accompanist->age }}</td>
                                         <td align="center">
                                             <a
                                                 href="{{ route('event.unsubscribe.accompanist', ['event' => $event->id, 'user' => $subscription->owner, 'accompanist' => $subscription->accompanist_id]) }}"

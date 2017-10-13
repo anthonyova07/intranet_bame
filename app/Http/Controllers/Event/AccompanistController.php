@@ -57,6 +57,7 @@ class AccompanistController extends Controller
         $accompanist->identification_type = $request->identification_type;
         $accompanist->identification = $request->identification;
         $accompanist->relationship = $request->relationship;
+        $accompanist->age = $request->age;
 
         $accompanist->save();
 
@@ -96,6 +97,7 @@ class AccompanistController extends Controller
         $accompanist->identification_type = $request->identification_type;
         $accompanist->identification = $request->identification;
         $accompanist->relationship = $request->relationship;
+        $accompanist->age = $request->age;
 
         $accompanist->save();
 

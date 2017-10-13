@@ -85,7 +85,7 @@
                     @if ($subscription->accompanists->count())
                         @foreach ($subscription->accompanists as $index => $accompanist)
                             <tr>
-                                <td style="border-bottom: 1px solid #CCCCCC;">{{ $accompanist->accompanist->names . ' ' . $accompanist->accompanist->last_names }}</td>
+                                <td style="border-bottom: 1px solid #CCCCCC;">{{ $accompanist->accompanist->names . ' ' . $accompanist->accompanist->last_names . ($accompanist->accompanist->age ? ' (Edad ' . $accompanist->accompanist->age . ')' : '') }}</td>
                                 <td style="border-bottom: 1px solid #CCCCCC;">{{ get_relationship_types($accompanist->accompanist->relationship) }}</td>
                                 @if (!$index)
                                     <td style="border-bottom: 1px solid #CCCCCC;" align="center" rowspan="{{ $subscription->accompanists->count() }}">{{ $subscription->accompanists->count() + 1 }}</td>

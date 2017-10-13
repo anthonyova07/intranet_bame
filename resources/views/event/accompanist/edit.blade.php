@@ -55,6 +55,13 @@
                                     <span class="help-block">{{ $errors->first('relationship') }}</span>
                                 </div>
                             </div>
+                            <div class="col-xs-2">
+                                <div class="form-group{{ $errors->first('age') ? ' has-error':'' }}">
+                                    <label class="control-label">Edad</label>
+                                    <input type="number" class="form-control input-sm" name="age" value="{{ $accompanist->age }}">
+                                    <span class="help-block">{{ $errors->first('age') }}</span>
+                                </div>
+                            </div>
                         </div>
                         {{ method_field('PUT') }}
                         {{ csrf_field() }}

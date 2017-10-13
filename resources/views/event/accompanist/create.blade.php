@@ -12,14 +12,14 @@
                 <div class="panel-body">
                     <form method="post" action="{{ route('events.accompanist.store', ['event' => $event_id]) }}" id="form">
                         <div class="row">
-                            <div class="col-xs-3">
+                            <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('names') ? ' has-error':'' }}">
                                     <label class="control-label">Nombres</label>
                                     <input type="text" class="form-control input-sm" name="names" value="{{ old('names') }}">
                                     <span class="help-block">{{ $errors->first('names') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-3">
+                            <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('last_names') ? ' has-error':'' }}">
                                     <label class="control-label">Apellidos</label>
                                     <input type="text" class="form-control input-sm" name="last_names" value="{{ old('last_names') }}">
@@ -53,6 +53,13 @@
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('relationship') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div class="form-group{{ $errors->first('age') ? ' has-error':'' }}">
+                                    <label class="control-label">Edad</label>
+                                    <input type="number" class="form-control input-sm" name="age" value="{{ old('age') }}">
+                                    <span class="help-block">{{ $errors->first('age') }}</span>
                                 </div>
                             </div>
                         </div>
