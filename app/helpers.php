@@ -646,13 +646,13 @@ function calculate_year_of_service($date, $with_diff = false)
                 $str .= $diff->y == 1 ? ($diff->y . ' año '):($diff->y . ' años ');
             }
 
-            // if ($diff->m > 0) {
-            //     $str .= $diff->m == 1 ? ($diff->m . ' mes '):($diff->m .' meses ');
-            // }
+            if ($diff->m > 0) {
+                $str .= $diff->m == 1 ? ($diff->m . ' mes '):($diff->m .' meses ');
+            }
 
-            // if ($diff->d > 0) {
-            //     $str .= $diff->d == 1 ? ($diff->d . ' día '):($diff->d . ' días ');
-            // }
+            if ($diff->d > 0) {
+                $str .= $diff->d == 1 ? ($diff->d . ' día '):($diff->d . ' días ');
+            }
 
             return $str;
         }
