@@ -23,7 +23,6 @@ class InvestmentController extends Controller {
             $investment->calculate_interests();
         }
 
-        // $param_loans = Param::loans()->get();
         $param_investments = DateHistory::last()
             ->first()
             ->products()
@@ -31,7 +30,7 @@ class InvestmentController extends Controller {
             ->whereIn('content', ['R'])
             ->with(['details', 'details.ranges'])
             ->get();
-// dd($param_investments);
+
         return view('financial_calculations.investment.index')
             ->with('param_investments', $param_investments)
             ->with('investment', $investment);

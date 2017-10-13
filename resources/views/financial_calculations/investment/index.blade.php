@@ -41,8 +41,8 @@
                 <div class="panel-body text-center">
                     <form method="get" action="{{ route('financial_calculations.investment.index') }}" id="form">
 
-                        <input type="hidden" name="investment_field" value="">
-                        <input type="hidden" name="range_field" value="">
+                        <input type="hidden" name="investment_field" value="{{ old('investment_field') }}">
+                        <input type="hidden" name="range_field" value="{{ old('range_field') }}">
 
                         <div class="row">
                             <div class="col-xs-3">
@@ -51,7 +51,7 @@
                                     <select name="investment" class="form-control input-sm">
                                         <option value="">Seleccione uno</option>
                                         @foreach ($param_investments as $param_investment)
-                                            <option value="{{ $param_investment->id }}">{{ $param_investment->name }}</option>
+                                            <option value="{{ $param_investment->id }}"{{ $param_investment->id == old('investment') ? ' selected':'' }}>{{ $param_investment->name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('investment') }}</span>
@@ -62,9 +62,13 @@
                                 <div class="form-group{{ $errors->first('ranges') ? ' has-error':'' }}">
                                     <label class="control-label">Rangos</label>
                                     <select name="ranges" class="form-control input-sm">
+                                        <option value="">Seleccione uno</option>
                                         @foreach ($param_investments as $param_investment)
                                             @foreach ($param_investment->details as $detail)
-                                                <option style="display: none;" product="{{ $detail->pro_id }}" value="{{ $detail->id }}">{{ $detail->descrip }}</option>
+                                                <option
+                                                    product="{{ $detail->pro_id }}"
+                                                    {!! $detail->pro_id == old('investment') ? '':' style="display: none;"' !!}
+                                                    value="{{ $detail->id }}"{!! $detail->id == old('ranges') ? ' selected':'' !!}>{{ $detail->descrip }}</option>
                                             @endforeach
                                         @endforeach
                                     </select>
@@ -73,25 +77,31 @@
                             </div>
 
                             <div class="col-xs-2">
-                                <div class="form-group{{ $errors->first('days') ? ' has-error':'' }}">
+                                <div class="form-group{{ $errors->first('select_days') ? ' has-error':'' }}">
                                     <label class="control-label">Días</label>
-                                    <select name="days" class="form-control input-sm">
+                                    <select name="select_days" class="form-control input-sm">
+                                        <option value="">Seleccione uno</option>
                                         @foreach ($param_investments as $param_investment)
                                             @foreach ($param_investment->details as $detail)
                                                 @foreach ($param_investment->ranges() as $index => $range)
-                                                    <option days="{{ get_days_from_text($range) }}" style="display: none;" range="{{ $detail->id }}" value="{{ str_replace('%', '', $detail->ranges[$index]->value) }}">{{ $range }}</option>
+                                                    <option
+                                                        days="{{ get_days_from_text($range) }}"
+                                                        range="{{ $detail->id }}"
+                                                        {!! $detail->id == old('ranges') ? '':' style="display: none;"' !!}
+                                                        value="{{ str_replace('%', '', $detail->ranges[$index]->value) }}"
+                                                        {!! ($detail->id == old('ranges') && old('days') == get_days_from_text($range)) ? ' selected':'' !!}>{{ $range }}</option>
                                                 @endforeach
                                             @endforeach
                                         @endforeach
                                     </select>
-                                    <span class="help-block">{{ $errors->first('days') }}</span>
+                                    <span class="help-block">{{ $errors->first('select_days') }}</span>
                                 </div>
                             </div>
 
                             <div class="col-xs-1">
                                 <div class="form-group{{ $errors->first('days') ? ' has-error':'' }}">
                                     <label class="control-label">Días</label>
-                                    <input type="text" class="form-control input-sm" name="days" placeholder="0" value="{{ request('days') }}">
+                                    <input type="text" class="form-control input-sm" name="days" placeholder="0" value="{{ old('days') }}">
                                     <span class="help-block">{{ $errors->first('days') }}</span>
                                 </div>
                             </div>
@@ -99,7 +109,7 @@
                             <div class="col-xs-1">
                                 <div class="form-group{{ $errors->first('interests') ? ' has-error':'' }}">
                                     <label class="control-label">Intereses</label>
-                                    <input type="text" class="form-control input-sm text-right" name="interests" placeholder="0.00" value="{{ request('interests') }}">
+                                    <input type="text" class="form-control input-sm text-right" name="interests" placeholder="0.00" value="{{ old('interests') }}">
                                     <span class="help-block">{{ $errors->first('interests') }}</span>
                                 </div>
                             </div>
@@ -107,7 +117,7 @@
                             <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('amount') ? ' has-error':'' }}">
                                     <label class="control-label">Monto</label>
-                                    <input type="text" class="form-control input-sm text-right" name="amount" placeholder="0.00" value="{{ request('amount') }}">
+                                    <input type="text" class="form-control input-sm text-right" name="amount" placeholder="0.00" value="{{ old('amount') }}">
                                     <span class="help-block">{{ $errors->first('amount') }}</span>
                                 </div>
                             </div>
@@ -181,10 +191,10 @@
 
         var investment = $('select[name="investment"]');
         var ranges = $('select[name="ranges"]');
-        var select_days = $('select[name="days"]');
+        var select_days = $('select[name="select_days"]');
 
-        ranges.val(-1);
-        select_days.val(-1);
+        // ranges.val(-1);
+        // select_days.val(-1);
 
         investment.change(function () {
             ranges.val(-1);
