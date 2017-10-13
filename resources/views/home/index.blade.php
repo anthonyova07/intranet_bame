@@ -502,10 +502,10 @@
                                     @foreach($day_birthdays as $birthday)
                                         <tr>
                                             <td style="vertical-align: middle;">
-                                                <a style="color: #FF8849;" href="javascript:void(0)">{!! $birthday->full_name !!}</a>
+                                                <a style="color: #FF8849;" href="javascript:void(0)">{!! $birthday->name !!}</a>
                                             </td>
                                             <td class="text-center">
-                                                <img style="max-width: 100px;" src="{{ route('home') . '\files\employee_images\\' . get_employee_name_photo($birthday->code, $birthday->gender) }}">
+                                                <img style="max-width: 100px;" src="{{ route('home') . '\files\employee_images\\' . get_employee_name_photo($birthday->recordcard, $birthday->gender) }}">
                                             </td>
                                         </tr>
                                     @endforeach
@@ -529,13 +529,13 @@
                                     @foreach($day_services as $day_service)
                                         <tr>
                                             <td style="vertical-align: middle;">
-                                                <a style="color: #FF8849;" href="javascript:void(0)">{!! $day_service->full_name !!}</a>
+                                                <a style="color: #FF8849;" href="javascript:void(0)">{!! $day_service->name !!}</a>
                                             </td>
                                             <td class="text-center" style="width: 120px;font-size: 15px;letter-spacing: 1px;vertical-align: middle;">
-                                                {{ calculate_year_of_service($day_service->services_date) }}
+                                                {{ calculate_year_of_service($day_service->servicedat) }}
                                             </td>
                                             <td class="text-center">
-                                                <img style="max-width: 100px;" src="{{ route('home') . '\files\employee_images\\' . get_employee_name_photo($day_service->code, $day_service->gender) }}">
+                                                <img style="max-width: 100px;" src="{{ route('home') . '\files\employee_images\\' . get_employee_name_photo($day_service->recordcard, $day_service->gender) }}">
                                             </td>
                                         </tr>
                                     @endforeach
@@ -623,15 +623,15 @@
                 {
                     title: '',
                     start: '{{ $datetime->format('Y') .'-'. $birthdate->month_day }}',
-                    className: 'birthdate cal_icon ' + '{!! str_replace(' ', '|', $birthdates->where('month_day', $birthdate->month_day)->implode('full_name', ',')) !!}',
+                    className: 'birthdate cal_icon ' + '{!! str_replace(' ', '|', $birthdates->where('month_day', $birthdate->month_day)->implode('name', ',')) !!}',
                 },
             @endforeach
-            @foreach ($services_dates->unique('services_month_day') as $service_date)
+            @foreach ($birthdates->unique('services_month_day') as $service_date)
                 @if (isset($service_date->services_month_day))
                     {
                         title: '',
                         start: '{{ $datetime->format('Y') .'-'. $service_date->services_month_day }}',
-                        className: 'service_year cal_icon ' + '{!! str_replace(' ', '|', $services_dates->where('services_month_day', $service_date->services_month_day)->implode('full_name', ',')) !!}',
+                        className: 'service_year cal_icon ' + '{!! str_replace(' ', '|', $birthdates->where('services_month_day', $service_date->services_month_day)->implode('service_text', ',')) !!}',
                     },
                 @endif
             @endforeach

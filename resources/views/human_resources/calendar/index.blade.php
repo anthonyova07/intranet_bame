@@ -115,7 +115,7 @@
             </div>
         </div>
 
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -182,7 +182,6 @@
                                             <div class="form-group{{ $errors->first('code') ? ' has-error':'' }}">
                                                 <label class="control-label">Código</label>
                                                 <input type="text" class="form-control input-sm" name="code" value="{{ old('code') }}">
-                                                {{-- <span class="help-block">{{ $errors->first('code') }}</span> --}}
                                             </div>
                                         </div>
                                         <div class="col-xs-3">
@@ -195,29 +194,24 @@
                                                 <label>
                                                     <input type="radio" name="gender" value="Femenino"> F
                                                 </label>
-
-                                                {{-- <span class="help-block">{{ $errors->first('gender') }}</span> --}}
                                             </div>
                                         </div>
                                         <div class="col-xs-6">
                                             <div class="form-group{{ $errors->first('full_name') ? ' has-error':'' }}">
                                                 <label class="control-label">Nombre Completo</label>
                                                 <input type="text" class="form-control input-sm" name="full_name" value="{{ old('full_name') }}">
-                                                {{-- <span class="help-block">{{ $errors->first('full_name') }}</span> --}}
                                             </div>
                                         </div>
                                         <div class="col-xs-6">
                                             <div class="form-group{{ $errors->first('birthdate') ? ' has-error':'' }}">
                                                 <label class="control-label">Cumpleaño</label>
                                                 <input type="date" class="form-control input-sm" name="birthdate" value="{{ old('birthdate') }}">
-                                                {{-- <span class="help-block">{{ $errors->first('birthdate') }}</span> --}}
                                             </div>
                                         </div>
                                         <div class="col-xs-6">
                                             <div class="form-group{{ $errors->first('initial_date') ? ' has-error':'' }}">
                                                 <label class="control-label">Ingreso</label>
                                                 <input type="date" class="form-control input-sm" name="initial_date" value="{{ old('initial_date') }}">
-                                                {{-- <span class="help-block">{{ $errors->first('initial_date') }}</span> --}}
                                             </div>
                                         </div>
                                         <div class="col-xs-12">
@@ -232,7 +226,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     @endif
 
     <div class="row">
