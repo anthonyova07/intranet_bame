@@ -257,7 +257,7 @@
             <div class="row">
                 <div class="col-xs-6">
                     <div class="form-group{{ $errors->first('main_cell_area_2_itc') ? ' has-error':'' }}">
-                        <label class="control-label">Teléfono Principal Área</label>
+                        <label class="control-label">Celular Principal Área</label>
                         <input type="text" class="form-control input-sm" maxlength="3" name="main_cell_area_2_itc" value="{{ old('main_cell_area_2_itc') ? old('main_cell_area_2_itc') : ($address_two ? $address_two->getMainCellArea() : '') }}">
                         <span class="help-block">{{ $errors->first('main_cell_area_2_itc') }}</span>
                     </div>
@@ -265,7 +265,7 @@
 
                 <div class="col-xs-6">
                     <div class="form-group{{ $errors->first('main_cell_number_2_itc') ? ' has-error':'' }}">
-                        <label class="control-label">Teléfono Principal Núm.</label>
+                        <label class="control-label">Celular Principal Núm.</label>
                         <input type="text" class="form-control input-sm" maxlength="7" name="main_cell_number_2_itc" value="{{ old('main_cell_number_2_itc') ? old('main_cell_number_2_itc') : ($address_two ? $address_two->getMainCellNumber() : '') }}">
                         <span class="help-block">{{ $errors->first('main_cell_number_2_itc') }}</span>
                     </div>
