@@ -153,7 +153,7 @@
         });
 
         $('#approve_maintenances').click(function (e) {
-            var ids = '?ids=';
+            var ids = '?to_approver=1&ids=';
             var count = 0;
 
             $('.check_approve').each(function (index, check) {

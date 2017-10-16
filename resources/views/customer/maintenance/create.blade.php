@@ -90,20 +90,21 @@
     @else
 
         <div class="row">
-            <div class="col-xs-6 col-xs-offset-3">
+            <div class="col-xs-4 col-xs-offset-4">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <form method="get" action="{{ route('customer.maintenance.create') }}" id="form">
                             <input type="hidden" name="tdc" value="0">
+                            <input type="hidden" name="core" value="ibs">
                             <div class="row">
-                                <div class="col-xs-8">
+                                <div class="col-xs-12">
                                     <div class="form-group{{ $errors->first('identification') ? ' has-error':'' }}">
                                         <label class="control-label">Cédula/Pasaporte/RNC</label>
                                         <input type="text" class="form-control input-sm" name="identification" value="{{ old('identification') }}">
                                         <span class="help-block">{{ $errors->first('identification') }}</span>
                                     </div>
                                 </div>
-                                <div class="col-xs-4">
+                                {{-- <div class="col-xs-4">
                                     <div class="radio{{ $errors->first('core') ? ' has-error':'' }}">
                                         <label style="margin-top: 18px;">
                                             <input type="radio" name="core" value="ibs" {{ old('core') == 'ibs' ? 'checked' : '' }}> IBS
@@ -113,7 +114,7 @@
                                         </label>
                                         <span class="help-block">{{ $errors->first('core') }}</span>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             {{ csrf_field() }}
                             <a class="btn btn-info btn-xs" href="{{ route('customer.maintenance.index') }}"><i class="fa fa-arrow-left"></i> Atrás</a>

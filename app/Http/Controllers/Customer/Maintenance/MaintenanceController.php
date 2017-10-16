@@ -410,13 +410,23 @@ class MaintenanceController extends Controller
 
         do_log('Realizó Mantenimiento del cliente ( number:' . strip_tags($customer->getCode()) . ' )');
 
+        $idn = session('customer_maintenance');
+
         session()->forget('customer_maintenance');
         session()->forget('customer_maintenance_core');
 
         if (env('MAINTENANCE_NEED_APPROVALS') == 'true') {
-            return redirect(route('customer.maintenance.create'))->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.');
+            if ($r->core == 'ibs') {
+                return redirect()->route('customer.maintenance.create', array_merge($r->only(['tdc', 'core', '_token']), ['identification' => $idn, 'core' => 'itc']))->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.');
+            } else {
+                if ($r->tdc < ($customer->actives_creditcards->count() - 1)) {
+                    return redirect()->route('customer.maintenance.create', array_merge($r->only(['tdc', 'core', '_token']), ['identification' => $idn, 'core' => 'itc', 'tdc' => ($r->tdc + 1)]))->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.');
+                } else {
+                    return redirect()->route('customer.maintenance.create')->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.');
+                }
+            }
         } else {
-            return redirect(route('customer.maintenance.approve', ['id' => $maintenance_ibs->id]))->with('success', 'Los cambios fueron guardados y aprobados correctamente.');
+            return redirect()->route('customer.maintenance.approve', ['id' => $maintenance_ibs->id])->with('success', 'Los cambios fueron guardados y aprobados correctamente.');
         }
     }
 
@@ -473,6 +483,18 @@ class MaintenanceController extends Controller
             $maintenance->save();
 
             do_log('Realizó Mantenimiento del cliente ( number:' . strip_tags($customer->getCode()) . ' )');
+        }
+
+        if (!$request->to_approver) {
+            if ($request->core == 'ibs') {
+                return redirect()->route('customer.maintenance.create', array_merge($request->only(['tdc', 'core', '_token']), ['identification' => $maintenance->cliident,'core' => 'itc']))->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.');
+            } else {
+                if ($request->tdc < ($customer->actives_creditcards->count() - 1)) {
+                    return redirect()->route('customer.maintenance.create', array_merge($request->only(['tdc', 'core', '_token']), ['identification' => $maintenance->cliident, 'core' => 'itc', 'tdc' => ($request->tdc + 1)]))->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.');
+                } else {
+                    return redirect()->route('customer.maintenance.create')->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.');
+                }
+            }
         }
 
         return redirect()->route('customer.maintenance.index')->with('success', 'Los cambios fueron guardados y aprobados correctamente.');
