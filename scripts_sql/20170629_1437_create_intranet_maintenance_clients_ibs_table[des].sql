@@ -30,7 +30,7 @@ CREATE TABLE INTMAIIBS (
 
 /********************** ITC ********************/
 
-    TDCNUMBER VARCHAR(45),
+    TDCNUMBER VARCHAR(510),
 
 /********************** APPROVE ********************/
 

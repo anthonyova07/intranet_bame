@@ -241,7 +241,17 @@ class MaintenanceController extends Controller
         $maintenance_ibs->clinumber = $customer->getCode();
         $maintenance_ibs->cliident = session('customer_maintenance');
         $maintenance_ibs->typecore = $r->core;
-        $maintenance_ibs->tdcnumber = $customer->actives_creditcards->get($r->tdc)->getNumber();
+
+        if ($r->core == 'itc') {
+            $tdc_indexs = array_merge($r->tdc_additionals ?? [], [$r->tdc]);
+            $tdc_numbers = [];
+
+            foreach ($tdc_indexs as $key => $value) {
+                $tdc_numbers[] = $customer->actives_creditcards->get($value)->getNumber();
+            }
+
+            $maintenance_ibs->tdcnumber = implode(',', $tdc_numbers);
+        }
 
         if ($r->core == 'ibs') {
             $maintenance_ibs->ibsstreet = $r->street_ibs;
@@ -628,76 +638,80 @@ class MaintenanceController extends Controller
             return false;
         }
 
-        $address = [
-            'CODBA_MDIR' => 1, //Codigo Banco
-            'CODCI_MDIR' => 1, //Cod. Cia a Procesar
-            'NUSOL_MDIR' => 0, //Numero Solicitud
-            'TCACT_MDIR' => $maintenance->tdcnumber, //Numero de Tarjeta
-            'CODCL_MDIR' => $maintenance->clinumber, //Codigo Cliente
-            'IDDIR_MDIR' => 1, //Tipo Direccion
-            'FOREE_MDIR' => $d->waysendsta, //Forma Envio Estado
-            'SECTP_MDIR' => 0, //Secuencia Tipo/Direc
-            'CIFCL_MDIR' => '', //LLave Cif Cliente
-            'CODPA_MDIR' => $d->itccountrc, //Codigo Pais
-            'REGIO_MDIR' => $d->itcregionc, //Codigo Region
-            'PROVI_MDIR' => $d->itcprovinc, //Codigo Provincia
-            'CIUCL_MDIR' => $d->itccityc, //Codigo Ciudad
-            'MUNIC_MDIR' => $d->itcmunicic, //Codigo Municipio
-            'SECTR_MDIR' => $d->itcsectorc, //Codigo Sector
-            'BARRI_MDIR' => $d->itcneighoc, //Codigo Barrio
-            'CALCL_MDIR' => $d->itcstreetc, //Codigo Calles
-            'EDIFC_MDIR' => $d->itcbuiname, //Nombre Edificio
-            'MANZC_MDIR' => $d->itcblock, //Codigo Manzana
-            'NUMCA_MDIR' => $d->itchousnum, //No. Casa/Apartamento
-            'KILOM_MDIR' => $d->itckm, //Kilometro Si es Carr
-            'CALL1_MDIR' => $d->itcinstre1, //Entre Cuales Calle 1
-            'CALL2_MDIR' => $d->itcinstre2, //Entre Cuales Calle 2
-            'INSTD_MDIR' => $d->itcspeinst, //Instruccion Especial
-            'ZONAP_MDIR' => $d->itcposzone, //Zona Postal
-            'APOST_MDIR' => $d->itcposmail, //Apartado Postal
-            'IDTEP_MDIR' => 0, //Codigo Pais
-            'AREAP_MDIR' => $d->itcmphoare, //Area Telefono
-            'NUTEP_MDIR' => $d->itcmphonum, //Numero Telefono
-            'EXTEP_MDIR' => $d->itcmphoext, //Extension Telefono
-            'IDTES_MDIR' => 0, //Codigo Pais
-            'AREAS_MDIR' => $d->itcsphoare, //Area Telefono
-            'NUTES_MDIR' => $d->itcsphonum, //Numero Telefono
-            'EXTES_MDIR' => $d->itcsphoext, //Extension Telefono
-            'IDTCP_MDIR' => 0, //Codigo Pais
-            'ARECP_MDIR' => $d->itcmcelare, //Area Telefono
-            'NUTCP_MDIR' => $d->itcmcelnum, //Numero Telefono
-            'IDTCS_MDIR' => 0, //Codigo Pais
-            'ARECS_MDIR' => $d->itcscelare, //Area Telefono
-            'NUTCS_MDIR' => $d->itcscelnum, //Numero Telefono
-            'AREAF_MDIR' => $d->itcfaxarea, //Area Fax
-            'NUMFX_MDIR' => $d->itcfaxnumb, //Numero de Fax
-            'EMAIL_MDIR' => $d->itcmail, //Correo Electronico
-            'STSDI_MDIR' => '', //Status Direccion
-            'STSCA_MDIR' => '', //Status de Cambios
-            // 'USRDI_MDIR' => 'BADINTRANE', //Usuario Digitacion
-            // 'FECDI_MDIR' => $datetime->format('Ymd'), //Fecha Digitacion
-            // 'HORDI_MDIR' => $datetime->format('His'), //Hora Digitacion
-            // 'USRMO_MDIR' => 1, //Usuario Modificacion
-            // 'FECMO_MDIR' => 1, //Fecha Modificacion
-            // 'HORMO_MDIR' => 1, //Hora Modificacion
-        ];
+        $tdc_numbers = explode(',', $maintenance->tdcnumber);
 
-        if ($customer->actives_creditcards->where('tcact_mtar', $maintenance->tdcnumber)->first()->address_one) {
-            $address = array_merge($address, [
-                'USRMO_MDIR' => 'BADINTRANE', //Usuario Modificacion
-                'FECMO_MDIR' => $datetime->format('Ymd'), //Fecha Modificacion
-                'HORMO_MDIR' => $datetime->format('His'), //Hora Modificacion
-            ]);
+        foreach ($tdc_numbers as $key => $value) {
+            $address = [
+                'CODBA_MDIR' => 1, //Codigo Banco
+                'CODCI_MDIR' => 1, //Cod. Cia a Procesar
+                'NUSOL_MDIR' => 0, //Numero Solicitud
+                'TCACT_MDIR' => $value, //Numero de Tarjeta
+                'CODCL_MDIR' => $maintenance->clinumber, //Codigo Cliente
+                'IDDIR_MDIR' => 1, //Tipo Direccion
+                'FOREE_MDIR' => $d->waysendsta, //Forma Envio Estado
+                'SECTP_MDIR' => 0, //Secuencia Tipo/Direc
+                'CIFCL_MDIR' => '', //LLave Cif Cliente
+                'CODPA_MDIR' => $d->itccountrc, //Codigo Pais
+                'REGIO_MDIR' => $d->itcregionc, //Codigo Region
+                'PROVI_MDIR' => $d->itcprovinc, //Codigo Provincia
+                'CIUCL_MDIR' => $d->itccityc, //Codigo Ciudad
+                'MUNIC_MDIR' => $d->itcmunicic, //Codigo Municipio
+                'SECTR_MDIR' => $d->itcsectorc, //Codigo Sector
+                'BARRI_MDIR' => $d->itcneighoc, //Codigo Barrio
+                'CALCL_MDIR' => $d->itcstreetc, //Codigo Calles
+                'EDIFC_MDIR' => $d->itcbuiname, //Nombre Edificio
+                'MANZC_MDIR' => $d->itcblock, //Codigo Manzana
+                'NUMCA_MDIR' => $d->itchousnum, //No. Casa/Apartamento
+                'KILOM_MDIR' => $d->itckm, //Kilometro Si es Carr
+                'CALL1_MDIR' => $d->itcinstre1, //Entre Cuales Calle 1
+                'CALL2_MDIR' => $d->itcinstre2, //Entre Cuales Calle 2
+                'INSTD_MDIR' => $d->itcspeinst, //Instruccion Especial
+                'ZONAP_MDIR' => $d->itcposzone, //Zona Postal
+                'APOST_MDIR' => $d->itcposmail, //Apartado Postal
+                'IDTEP_MDIR' => 0, //Codigo Pais
+                'AREAP_MDIR' => $d->itcmphoare, //Area Telefono
+                'NUTEP_MDIR' => $d->itcmphonum, //Numero Telefono
+                'EXTEP_MDIR' => $d->itcmphoext, //Extension Telefono
+                'IDTES_MDIR' => 0, //Codigo Pais
+                'AREAS_MDIR' => $d->itcsphoare, //Area Telefono
+                'NUTES_MDIR' => $d->itcsphonum, //Numero Telefono
+                'EXTES_MDIR' => $d->itcsphoext, //Extension Telefono
+                'IDTCP_MDIR' => 0, //Codigo Pais
+                'ARECP_MDIR' => $d->itcmcelare, //Area Telefono
+                'NUTCP_MDIR' => $d->itcmcelnum, //Numero Telefono
+                'IDTCS_MDIR' => 0, //Codigo Pais
+                'ARECS_MDIR' => $d->itcscelare, //Area Telefono
+                'NUTCS_MDIR' => $d->itcscelnum, //Numero Telefono
+                'AREAF_MDIR' => $d->itcfaxarea, //Area Fax
+                'NUMFX_MDIR' => $d->itcfaxnumb, //Numero de Fax
+                'EMAIL_MDIR' => $d->itcmail, //Correo Electronico
+                'STSDI_MDIR' => '', //Status Direccion
+                'STSCA_MDIR' => '', //Status de Cambios
+                // 'USRDI_MDIR' => 'BADINTRANE', //Usuario Digitacion
+                // 'FECDI_MDIR' => $datetime->format('Ymd'), //Fecha Digitacion
+                // 'HORDI_MDIR' => $datetime->format('His'), //Hora Digitacion
+                // 'USRMO_MDIR' => 1, //Usuario Modificacion
+                // 'FECMO_MDIR' => 1, //Fecha Modificacion
+                // 'HORMO_MDIR' => 1, //Hora Modificacion
+            ];
 
-            $customer->actives_creditcards->where('tcact_mtar', $maintenance->tdcnumber)->first()->address_one()->update($address);
-        } else {
-            $address = array_merge($address, [
-                'USRDI_MDIR' => 'BADINTRANE', //Usuario Digitacion
-                'FECDI_MDIR' => $datetime->format('Ymd'), //Fecha Digitacion
-                'HORDI_MDIR' => $datetime->format('His'), //Hora Digitacion
-            ]);
+            if ($customer->actives_creditcards->where('tcact_mtar', $value)->first()->address_one) {
+                $address = array_merge($address, [
+                    'USRMO_MDIR' => 'BADINTRANE', //Usuario Modificacion
+                    'FECMO_MDIR' => $datetime->format('Ymd'), //Fecha Modificacion
+                    'HORMO_MDIR' => $datetime->format('His'), //Hora Modificacion
+                ]);
 
-            $customer->actives_creditcards->where('tcact_mtar', $maintenance->tdcnumber)->first()->address_one()->insert($address);
+                $customer->actives_creditcards->where('tcact_mtar', $value)->first()->address_one()->update($address);
+            } else {
+                $address = array_merge($address, [
+                    'USRDI_MDIR' => 'BADINTRANE', //Usuario Digitacion
+                    'FECDI_MDIR' => $datetime->format('Ymd'), //Fecha Digitacion
+                    'HORDI_MDIR' => $datetime->format('His'), //Hora Digitacion
+                ]);
+
+                $customer->actives_creditcards->where('tcact_mtar', $value)->first()->address_one()->insert($address);
+            }
         }
     }
 
@@ -709,76 +723,80 @@ class MaintenanceController extends Controller
             return false;
         }
 
-        $address = [
-            'CODBA_MDIR' => 1, //Codigo Banco
-            'CODCI_MDIR' => 1, //Cod. Cia a Procesar
-            'NUSOL_MDIR' => 0, //Numero Solicitud
-            'TCACT_MDIR' => $maintenance->tdcnumber, //Numero de Tarjeta
-            'CODCL_MDIR' => $maintenance->clinumber, //Codigo Cliente
-            'IDDIR_MDIR' => 2, //Tipo Direccion
-            'FOREE_MDIR' => $d->waysendsta, //Forma Envio Estado
-            'SECTP_MDIR' => 0, //Secuencia Tipo/Direc
-            'CIFCL_MDIR' => '', //LLave Cif Cliente
-            'CODPA_MDIR' => $d->itccountrc, //Codigo Pais
-            'REGIO_MDIR' => $d->itcregionc, //Codigo Region
-            'PROVI_MDIR' => $d->itcprovinc, //Codigo Provincia
-            'CIUCL_MDIR' => $d->itccityc, //Codigo Ciudad
-            'MUNIC_MDIR' => $d->itcmunicic, //Codigo Municipio
-            'SECTR_MDIR' => $d->itcsectorc, //Codigo Sector
-            'BARRI_MDIR' => $d->itcneighoc, //Codigo Barrio
-            'CALCL_MDIR' => $d->itcstreetc, //Codigo Calles
-            'EDIFC_MDIR' => $d->itcbuiname, //Nombre Edificio
-            'MANZC_MDIR' => $d->itcblock, //Codigo Manzana
-            'NUMCA_MDIR' => $d->itchousnum, //No. Casa/Apartamento
-            'KILOM_MDIR' => $d->itckm, //Kilometro Si es Carr
-            'CALL1_MDIR' => $d->itcinstre1, //Entre Cuales Calle 1
-            'CALL2_MDIR' => $d->itcinstre2, //Entre Cuales Calle 2
-            'INSTD_MDIR' => $d->itcspeinst, //Instruccion Especial
-            'ZONAP_MDIR' => $d->itcposzone, //Zona Postal
-            'APOST_MDIR' => $d->itcposmail, //Apartado Postal
-            'IDTEP_MDIR' => 0, //Codigo Pais
-            'AREAP_MDIR' => $d->itcmphoare, //Area Telefono
-            'NUTEP_MDIR' => $d->itcmphonum, //Numero Telefono
-            'EXTEP_MDIR' => $d->itcmphoext, //Extension Telefono
-            'IDTES_MDIR' => 0, //Codigo Pais
-            'AREAS_MDIR' => $d->itcsphoare, //Area Telefono
-            'NUTES_MDIR' => $d->itcsphonum, //Numero Telefono
-            'EXTES_MDIR' => $d->itcsphoext, //Extension Telefono
-            'IDTCP_MDIR' => 0, //Codigo Pais
-            'ARECP_MDIR' => $d->itcmcelare, //Area Telefono
-            'NUTCP_MDIR' => $d->itcmcelnum, //Numero Telefono
-            'IDTCS_MDIR' => 0, //Codigo Pais
-            'ARECS_MDIR' => $d->itcscelare, //Area Telefono
-            'NUTCS_MDIR' => $d->itcscelnum, //Numero Telefono
-            'AREAF_MDIR' => $d->itcfaxarea, //Area Fax
-            'NUMFX_MDIR' => $d->itcfaxnumb, //Numero de Fax
-            'EMAIL_MDIR' => $d->itcmail, //Correo Electronico
-            'STSDI_MDIR' => '', //Status Direccion
-            'STSCA_MDIR' => '', //Status de Cambios
-            // 'USRDI_MDIR' => 'BADINTRANE', //Usuario Digitacion
-            // 'FECDI_MDIR' => $datetime->format('Ymd'), //Fecha Digitacion
-            // 'HORDI_MDIR' => $datetime->format('His'), //Hora Digitacion
-            // 'USRMO_MDIR' => 1, //Usuario Modificacion
-            // 'FECMO_MDIR' => 1, //Fecha Modificacion
-            // 'HORMO_MDIR' => 1, //Hora Modificacion
-        ];
+        $tdc_numbers = explode(',', $maintenance->tdcnumber);
 
-        if ($customer->actives_creditcards->where('tcact_mtar', $maintenance->tdcnumber)->first()->address_two) {
-            $address = array_merge($address, [
-                'USRMO_MDIR' => 'BADINTRANE', //Usuario Modificacion
-                'FECMO_MDIR' => $datetime->format('Ymd'), //Fecha Modificacion
-                'HORMO_MDIR' => $datetime->format('His'), //Hora Modificacion
-            ]);
+        foreach ($tdc_numbers as $key => $value) {
+            $address = [
+                'CODBA_MDIR' => 1, //Codigo Banco
+                'CODCI_MDIR' => 1, //Cod. Cia a Procesar
+                'NUSOL_MDIR' => 0, //Numero Solicitud
+                'TCACT_MDIR' => $value, //Numero de Tarjeta
+                'CODCL_MDIR' => $maintenance->clinumber, //Codigo Cliente
+                'IDDIR_MDIR' => 2, //Tipo Direccion
+                'FOREE_MDIR' => $d->waysendsta, //Forma Envio Estado
+                'SECTP_MDIR' => 0, //Secuencia Tipo/Direc
+                'CIFCL_MDIR' => '', //LLave Cif Cliente
+                'CODPA_MDIR' => $d->itccountrc, //Codigo Pais
+                'REGIO_MDIR' => $d->itcregionc, //Codigo Region
+                'PROVI_MDIR' => $d->itcprovinc, //Codigo Provincia
+                'CIUCL_MDIR' => $d->itccityc, //Codigo Ciudad
+                'MUNIC_MDIR' => $d->itcmunicic, //Codigo Municipio
+                'SECTR_MDIR' => $d->itcsectorc, //Codigo Sector
+                'BARRI_MDIR' => $d->itcneighoc, //Codigo Barrio
+                'CALCL_MDIR' => $d->itcstreetc, //Codigo Calles
+                'EDIFC_MDIR' => $d->itcbuiname, //Nombre Edificio
+                'MANZC_MDIR' => $d->itcblock, //Codigo Manzana
+                'NUMCA_MDIR' => $d->itchousnum, //No. Casa/Apartamento
+                'KILOM_MDIR' => $d->itckm, //Kilometro Si es Carr
+                'CALL1_MDIR' => $d->itcinstre1, //Entre Cuales Calle 1
+                'CALL2_MDIR' => $d->itcinstre2, //Entre Cuales Calle 2
+                'INSTD_MDIR' => $d->itcspeinst, //Instruccion Especial
+                'ZONAP_MDIR' => $d->itcposzone, //Zona Postal
+                'APOST_MDIR' => $d->itcposmail, //Apartado Postal
+                'IDTEP_MDIR' => 0, //Codigo Pais
+                'AREAP_MDIR' => $d->itcmphoare, //Area Telefono
+                'NUTEP_MDIR' => $d->itcmphonum, //Numero Telefono
+                'EXTEP_MDIR' => $d->itcmphoext, //Extension Telefono
+                'IDTES_MDIR' => 0, //Codigo Pais
+                'AREAS_MDIR' => $d->itcsphoare, //Area Telefono
+                'NUTES_MDIR' => $d->itcsphonum, //Numero Telefono
+                'EXTES_MDIR' => $d->itcsphoext, //Extension Telefono
+                'IDTCP_MDIR' => 0, //Codigo Pais
+                'ARECP_MDIR' => $d->itcmcelare, //Area Telefono
+                'NUTCP_MDIR' => $d->itcmcelnum, //Numero Telefono
+                'IDTCS_MDIR' => 0, //Codigo Pais
+                'ARECS_MDIR' => $d->itcscelare, //Area Telefono
+                'NUTCS_MDIR' => $d->itcscelnum, //Numero Telefono
+                'AREAF_MDIR' => $d->itcfaxarea, //Area Fax
+                'NUMFX_MDIR' => $d->itcfaxnumb, //Numero de Fax
+                'EMAIL_MDIR' => $d->itcmail, //Correo Electronico
+                'STSDI_MDIR' => '', //Status Direccion
+                'STSCA_MDIR' => '', //Status de Cambios
+                // 'USRDI_MDIR' => 'BADINTRANE', //Usuario Digitacion
+                // 'FECDI_MDIR' => $datetime->format('Ymd'), //Fecha Digitacion
+                // 'HORDI_MDIR' => $datetime->format('His'), //Hora Digitacion
+                // 'USRMO_MDIR' => 1, //Usuario Modificacion
+                // 'FECMO_MDIR' => 1, //Fecha Modificacion
+                // 'HORMO_MDIR' => 1, //Hora Modificacion
+            ];
 
-            $customer->actives_creditcards->where('tcact_mtar', $maintenance->tdcnumber)->first()->address_two()->update($address);
-        } else {
-            $address = array_merge($address, [
-                'USRDI_MDIR' => 'BADINTRANE', //Usuario Digitacion
-                'FECDI_MDIR' => $datetime->format('Ymd'), //Fecha Digitacion
-                'HORDI_MDIR' => $datetime->format('His'), //Hora Digitacion
-            ]);
+            if ($customer->actives_creditcards->where('tcact_mtar', $value)->first()->address_two) {
+                $address = array_merge($address, [
+                    'USRMO_MDIR' => 'BADINTRANE', //Usuario Modificacion
+                    'FECMO_MDIR' => $datetime->format('Ymd'), //Fecha Modificacion
+                    'HORMO_MDIR' => $datetime->format('His'), //Hora Modificacion
+                ]);
 
-            $customer->actives_creditcards->where('tcact_mtar', $maintenance->tdcnumber)->first()->address_two()->insert($address);
+                $customer->actives_creditcards->where('tcact_mtar', $value)->first()->address_two()->update($address);
+            } else {
+                $address = array_merge($address, [
+                    'USRDI_MDIR' => 'BADINTRANE', //Usuario Digitacion
+                    'FECDI_MDIR' => $datetime->format('Ymd'), //Fecha Digitacion
+                    'HORDI_MDIR' => $datetime->format('His'), //Hora Digitacion
+                ]);
+
+                $customer->actives_creditcards->where('tcact_mtar', $value)->first()->address_two()->insert($address);
+            }
         }
     }
 

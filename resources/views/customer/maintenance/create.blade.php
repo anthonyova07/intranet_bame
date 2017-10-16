@@ -69,6 +69,27 @@
 
                     @include('customer.maintenance.partials._tdc_2')
 
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Copiar Dirección a las tarjetas</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    @foreach ($customer->actives_creditcards as $key => $creditcard)
+                                        @if ($key != request('tdc'))
+                                            <div class="col-xs-6">
+                                                <label>
+                                                    <input type="checkbox" name="tdc_additionals[]" value="{{ $key }}"> Tarjeta ( {{ $creditcard->product->getDescription() }} ) ( {{ $creditcard->getMaskedNumber() }} )
+                                                </label>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 @endif
 
                 <div class="col-xs-4 col-xs-offset-4">

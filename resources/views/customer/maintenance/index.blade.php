@@ -119,7 +119,7 @@
                                         <td align="center">
                                             @if (!$m->isapprov)
                                                 <a
-                                                    href="{{ route('customer.maintenance.approve', array_merge(['ids' => $m->id], Request::only('page'))) }}"
+                                                    href="{{ route('customer.maintenance.approve', array_merge(['to_approver' => 1, 'ids' => $m->id], Request::only('page'))) }}"
                                                     class="verde link_approv"
                                                     onclick="approve(this)"
                                                     data-toggle="tooltip"
