@@ -47,7 +47,7 @@ class QueryController extends Controller {
                     ON ACMBRN = BRNNUM
                 INNER JOIN CUMST
                     ON CUSCUN = ACMCUN
-                WHERE ACMPRO IN('H201','H202', 'H251')");
+                WHERE ACMPRO IN('H201','H202', 'H251') AND ACMAST = 'A'");
 
         do_log('Generó el Reporte de RRHH  ( reporte:Reporte Cuentas tipo H201/H202/H251 )');
 
@@ -218,7 +218,7 @@ class QueryController extends Controller {
             INNER JOIN CNOFC
                 ON CNOCFL = '15'
                 AND CNORCD = CUSOFC
-            WHERE DEAACD = '10'");
+            WHERE DEAACD = '10' AND DEASTS <> 'C'");
 
         do_log('Generó el Reporte de RRHH  ( reporte:Reporte de prestamos empleados )');
 
