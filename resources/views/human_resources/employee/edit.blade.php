@@ -18,14 +18,14 @@
                 <div class="panel-body">
                     <form method="post" action="{{ route('human_resources.employee.update', ['id' => $employee->id]) }}" id="form" enctype="multipart/form-data">
                         <div class="row">
-                            <div class="col-xs-3">
+                            <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('recordcard') ? ' has-error':'' }}">
                                     <label class="control-label">Código</label>
                                     <input type="text" class="form-control input-sm" name="recordcard" value="{{ $employee->recordcard }}">
                                     <span class="help-block">{{ $errors->first('recordcard') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-3">
+                            <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('identification') ? ' has-error':'' }}">
                                     <label class="control-label">Identificación</label>
                                     <input type="text" class="form-control input-sm" name="identification" value="{{ $employee->identifica }}">
@@ -47,6 +47,21 @@
                                     <label class="control-label">Correo</label>
                                     <input type="text" class="form-control input-sm" name="mail" value="{{ $employee->mail }}">
                                     <span class="help-block">{{ $errors->first('mail') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div class="form-group">
+                                    <label class="control-label">Mostrar en</label>
+                                    <div class="checkbox" style="margin-top: -6px;">
+                                        <label>
+                                            <input type="checkbox" name="show_birth"{{ $employee->show_birth ? ' checked':'' }}> Cumpleaños
+                                        </label>
+                                    </div>
+                                    <div class="checkbox" style="margin-top: -14px;">
+                                        <label>
+                                            <input type="checkbox" name="show_servi"{{ $employee->show_servi ? ' checked':'' }}> Aniversario
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             {{-- <div class="col-xs-3">
@@ -71,7 +86,7 @@
                                     <span class="help-block">{{ $errors->first('name') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-3">
+                            <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('name_2') ? ' has-error':'' }}">
                                     <label class="control-label">Segundo Nombre</label>
                                     <input type="text" class="form-control input-sm" name="name_2" value="{{ $employee->name_2 }}">
@@ -85,11 +100,21 @@
                                     <span class="help-block">{{ $errors->first('lastname') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-3">
+                            <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('lastname_2') ? ' has-error':'' }}">
                                     <label class="control-label">Segundo Apellido</label>
                                     <input type="text" class="form-control input-sm" name="lastname_2" value="{{ $employee->lastname_2 }}">
                                     <span class="help-block">{{ $errors->first('lastname_2') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div class="form-group">
+                                    <label class="control-label">Estado</label>
+                                    <div class="checkbox" style="margin-top: 0px;">
+                                        <label>
+                                            <input type="checkbox" name="is_active"{{ $employee->is_active ? ' checked':'' }}> Activo
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             {{-- <div class="col-xs-3">

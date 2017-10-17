@@ -18,14 +18,14 @@
                 <div class="panel-body">
                     <form method="post" action="{{ route('human_resources.employee.store') }}" id="form" enctype="multipart/form-data">
                         <div class="row">
-                            <div class="col-xs-3">
+                            <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('recordcard') ? ' has-error':'' }}">
                                     <label class="control-label">Código</label>
                                     <input type="text" class="form-control input-sm" name="recordcard" value="{{ old('recordcard') }}">
                                     <span class="help-block">{{ $errors->first('recordcard') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-3">
+                            <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('identification') ? ' has-error':'' }}">
                                     <label class="control-label">Identificación</label>
                                     <input type="text" class="form-control input-sm" name="identification" value="{{ old('identification') }}">
@@ -47,6 +47,21 @@
                                     <label class="control-label">Correo</label>
                                     <input type="text" class="form-control input-sm" name="mail" value="{{ old('mail') }}">
                                     <span class="help-block">{{ $errors->first('mail') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <div class="form-group">
+                                    <label class="control-label">Mostrar en</label>
+                                    <div class="checkbox" style="margin-top: -6px;">
+                                        <label>
+                                            <input type="checkbox" name="show_birth"{{ old('show_birth') ? ' checked':'' }}> Cumpleaños
+                                        </label>
+                                    </div>
+                                    <div class="checkbox" style="margin-top: -14px;">
+                                        <label>
+                                            <input type="checkbox" name="show_servi"{{ old('show_servi') ? ' checked':'' }}> Aniversario
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             {{-- <div class="col-xs-3">

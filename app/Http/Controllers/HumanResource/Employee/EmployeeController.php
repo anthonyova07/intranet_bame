@@ -96,6 +96,8 @@ class EmployeeController extends Controller
         $employee->servicedat = $request->servicedat;
         $employee->gender = $request->gender;
         $employee->is_active = true;
+        $employee->show_birth = $request->show_birth ? true : false;
+        $employee->show_servi = $request->show_servi ? true : false;
 
         $employee->id_pos = $request->position;
         $employee->id_dep = $request->department;
@@ -149,6 +151,8 @@ class EmployeeController extends Controller
         $employee->servicedat = $request->servicedat;
         $employee->gender = $request->gender;
         $employee->is_active = $request->is_active ? true : false;
+        $employee->show_birth = $request->show_birth ? true : false;
+        $employee->show_servi = $request->show_servi ? true : false;
 
         $employee->id_pos = $request->position;
         $employee->id_dep = $request->department;
