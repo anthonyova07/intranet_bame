@@ -63,7 +63,7 @@ class PayrollController extends Controller
                     $payroll->identifica = trim($parts[6]);
 
                     if ($employee) {
-                        $payroll->name = $employee->name;
+                        $payroll->name = $employee->full_name;
                         $payroll->position = $employee->position->name;
                         $payroll->department = $employee->department->name;
 

@@ -240,5 +240,8 @@ return [
       'business' => 'Empresa',
       'closing_cost' => 'Gasto de Cierre',
       'age' => 'Edad',
+      'name_2' => 'Segundo Nombre',
+      'lastname' => 'Apellido',
+      'lastname_2' => 'Segundo Apellido',
     ],
 ];

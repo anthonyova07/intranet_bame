@@ -18,21 +18,21 @@
                 <div class="panel-body">
                     <form method="post" action="{{ route('human_resources.employee.update', ['id' => $employee->id]) }}" id="form" enctype="multipart/form-data">
                         <div class="row">
-                            <div class="col-xs-2">
+                            <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('recordcard') ? ' has-error':'' }}">
                                     <label class="control-label">Código</label>
                                     <input type="text" class="form-control input-sm" name="recordcard" value="{{ $employee->recordcard }}">
                                     <span class="help-block">{{ $errors->first('recordcard') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-2">
+                            <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('identification') ? ' has-error':'' }}">
                                     <label class="control-label">Identificación</label>
                                     <input type="text" class="form-control input-sm" name="identification" value="{{ $employee->identifica }}">
                                     <span class="help-block">{{ $errors->first('identification') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-2">
+                            <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('gender') ? ' has-error':'' }}">
                                     <label class="control-label">Género</label>
                                     <select name="gender" class="form-control input-sm">
@@ -49,18 +49,61 @@
                                     <span class="help-block">{{ $errors->first('mail') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-3">
+                            {{-- <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('name') ? ' has-error':'' }}">
                                     <label class="control-label">Nombre Completo</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control input-sm" name="name" value="{{ $employee->name }}">
+                                        <input type="text" class="form-control input-sm" name="name" value="{{ $employee->full_name }}">
                                         <span class="input-group-addon">
                                             <input type="checkbox" name="is_active" data-toggle="tooltip" title="Activo"{{ $employee->is_active ? ' checked':'' }}>
                                         </span>
                                     </div>
                                     <span class="help-block">{{ $errors->first('name') }}</span>
                                 </div>
+                            </div> --}}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="form-group{{ $errors->first('name') ? ' has-error':'' }}">
+                                    <label class="control-label">Nombre</label>
+                                    <input type="text" class="form-control input-sm" name="name" value="{{ $employee->name }}">
+                                    <span class="help-block">{{ $errors->first('name') }}</span>
+                                </div>
                             </div>
+                            <div class="col-xs-3">
+                                <div class="form-group{{ $errors->first('name_2') ? ' has-error':'' }}">
+                                    <label class="control-label">Segundo Nombre</label>
+                                    <input type="text" class="form-control input-sm" name="name_2" value="{{ $employee->name_2 }}">
+                                    <span class="help-block">{{ $errors->first('name_2') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group{{ $errors->first('lastname') ? ' has-error':'' }}">
+                                    <label class="control-label">Apellido</label>
+                                    <input type="text" class="form-control input-sm" name="lastname" value="{{ $employee->lastname }}">
+                                    <span class="help-block">{{ $errors->first('lastname') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group{{ $errors->first('lastname_2') ? ' has-error':'' }}">
+                                    <label class="control-label">Segundo Apellido</label>
+                                    <input type="text" class="form-control input-sm" name="lastname_2" value="{{ $employee->lastname_2 }}">
+                                    <span class="help-block">{{ $errors->first('lastname_2') }}</span>
+                                </div>
+                            </div>
+                            {{-- <div class="col-xs-3">
+                                <div class="form-group{{ $errors->first('name') ? ' has-error':'' }}">
+                                    <label class="control-label">Nombre Completo</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control input-sm" name="name" value="{{ $employee->full_name }}">
+                                        <span class="input-group-addon">
+                                            <input type="checkbox" name="is_active" data-toggle="tooltip" title="Activo"{{ $employee->is_active ? ' checked':'' }}>
+                                        </span>
+                                    </div>
+                                    <span class="help-block">{{ $errors->first('name') }}</span>
+                                </div>
+                            </div> --}}
                         </div>
 
                         <div class="row">

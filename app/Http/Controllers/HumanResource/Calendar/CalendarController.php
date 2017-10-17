@@ -21,11 +21,11 @@ class CalendarController extends Controller
     {
         $groups = Group::get();
         $dates = Date::get();
-        $birthdates = Birthdate::getFile();
+        // $birthdates = Birthdate::getFile();
 
         return view('human_resources.calendar.index')
             ->with('groups', $groups)
-            ->with('dates', $dates)
-            ->with('birthdates', $birthdates);
+            ->with('dates', $dates);
+            // ->with('birthdates', $birthdates);
     }
 }

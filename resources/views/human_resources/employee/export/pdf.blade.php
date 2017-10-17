@@ -100,7 +100,7 @@
                 @foreach ($employees as $employee)
                     <tr>
                         <td align="center" style="border-bottom: 1px solid #CCCCCC;">{{ $employee->recordcard }}</td>
-                        <td align="left" style="border-bottom: 1px solid #CCCCCC;">{{ $employee->name }}</td>
+                        <td align="left" style="border-bottom: 1px solid #CCCCCC;">{{ $employee->full_name }}</td>
                         <td align="left" style="border-bottom: 1px solid #CCCCCC;">{{ $employee->identifica }}</td>
                         <td align="left" style="border-bottom: 1px solid #CCCCCC;">{{ $employee->mail }}</td>
                         <td align="left" style="border-bottom: 1px solid #CCCCCC;">{{ $employee->position->name }}</td>

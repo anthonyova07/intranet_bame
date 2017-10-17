@@ -18,6 +18,11 @@ class Employee extends Model
 
     protected $dates = [];
 
+    public function getFullNameAttribute($value)
+    {
+        return $this->name . ' ' .$this->name_2 . ' ' . $this->lastname . ' ' . $this->lastname_2;
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);

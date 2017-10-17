@@ -137,7 +137,7 @@ class HomeController extends Controller {
                 $day_services->push($employee);
             }
 
-            $employee->service_text = $employee->name . ' cumple ' . calculate_year_of_service($employee->servicedat);
+            $employee->service_text = $employee->full_name . ' cumple ' . calculate_year_of_service($employee->servicedat);
             $employee->month_day = $birthdate->format('m-d');
             $employee->services_month_day = $servicedat->format('m-d');
         });

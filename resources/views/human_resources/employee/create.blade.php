@@ -13,26 +13,26 @@
 @section('contents')
 
     <div class="row">
-        <div class="col-xs-10 col-xs-offset-1">
+        <div class="col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form method="post" action="{{ route('human_resources.employee.store') }}" id="form" enctype="multipart/form-data">
                         <div class="row">
-                            <div class="col-xs-2">
+                            <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('recordcard') ? ' has-error':'' }}">
                                     <label class="control-label">Código</label>
                                     <input type="text" class="form-control input-sm" name="recordcard" value="{{ old('recordcard') }}">
                                     <span class="help-block">{{ $errors->first('recordcard') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-2">
+                            <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('identification') ? ' has-error':'' }}">
                                     <label class="control-label">Identificación</label>
                                     <input type="text" class="form-control input-sm" name="identification" value="{{ old('identification') }}">
                                     <span class="help-block">{{ $errors->first('identification') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-2">
+                            <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('gender') ? ' has-error':'' }}">
                                     <label class="control-label">Género</label>
                                     <select name="gender" class="form-control input-sm">
@@ -49,13 +49,51 @@
                                     <span class="help-block">{{ $errors->first('mail') }}</span>
                                 </div>
                             </div>
-                            <div class="col-xs-3">
+                            {{-- <div class="col-xs-3">
                                 <div class="form-group{{ $errors->first('name') ? ' has-error':'' }}">
                                     <label class="control-label">Nombre Completo</label>
                                     <input type="text" class="form-control input-sm" name="name" value="{{ old('name') }}">
                                     <span class="help-block">{{ $errors->first('name') }}</span>
                                 </div>
+                            </div> --}}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <div class="form-group{{ $errors->first('name') ? ' has-error':'' }}">
+                                    <label class="control-label">Nombre</label>
+                                    <input type="text" class="form-control input-sm" name="name" value="{{ old('name') }}">
+                                    <span class="help-block">{{ $errors->first('name') }}</span>
+                                </div>
                             </div>
+                            <div class="col-xs-3">
+                                <div class="form-group{{ $errors->first('name_2') ? ' has-error':'' }}">
+                                    <label class="control-label">Segundo Nombre</label>
+                                    <input type="text" class="form-control input-sm" name="name_2" value="{{ old('name_2') }}">
+                                    <span class="help-block">{{ $errors->first('name_2') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group{{ $errors->first('lastname') ? ' has-error':'' }}">
+                                    <label class="control-label">Apellido</label>
+                                    <input type="text" class="form-control input-sm" name="lastname" value="{{ old('lastname') }}">
+                                    <span class="help-block">{{ $errors->first('lastname') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="form-group{{ $errors->first('lastname_2') ? ' has-error':'' }}">
+                                    <label class="control-label">Segundo Apellido</label>
+                                    <input type="text" class="form-control input-sm" name="lastname_2" value="{{ old('lastname_2') }}">
+                                    <span class="help-block">{{ $errors->first('lastname_2') }}</span>
+                                </div>
+                            </div>
+                            {{-- <div class="col-xs-3">
+                                <div class="form-group{{ $errors->first('name') ? ' has-error':'' }}">
+                                    <label class="control-label">Nombre Completo</label>
+                                    <input type="text" class="form-control input-sm" name="name" value="{{ old('name') }}">
+                                    <span class="help-block">{{ $errors->first('name') }}</span>
+                                </div>
+                            </div> --}}
                         </div>
 
                         <div class="row">
@@ -89,7 +127,7 @@
                                     <select name="supervisor" class="form-control input-sm">
                                         <option value="">Ninguno</option>
                                         @foreach ($employees as $employee)
-                                            <option department="{{ $employee->position->dep_id }}" value="{{ $employee->position->id }}"{{ old('supervisor') == $employee->position->id ? ' selected':'' }}>{{ $employee->position->name . ' - ' . $employee->name }}</option>
+                                            <option department="{{ $employee->position->dep_id }}" value="{{ $employee->position->id }}"{{ old('supervisor') == $employee->position->id ? ' selected':'' }}>{{ $employee->position->name . ' - ' . $employee->full_name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('supervisor') }}</span>
