@@ -22,10 +22,19 @@ class EmployeeController extends Controller
         $params = Param::get();
 
         if ($request->term) {
-            $term = "%{$request->term}%";
-            $employees->where(function ($query) use ($request, $term) {
+            $term = '%'.clear_str($request->term).'%';
+            $term2 = '%'.ucwords(clear_str($request->term)).'%';
+
+            $employees->where(function ($query) use ($request, $term, $term2) {
                 $query->where('recordcard', 'like', $term)
                     ->orWhere('name', 'like', $term)
+                    ->orWhere('name', 'like', $term2)
+                    ->orWhere('name_2', 'like', $term)
+                    ->orWhere('name_2', 'like', $term2)
+                    ->orWhere('lastname', 'like', $term)
+                    ->orWhere('lastname', 'like', $term2)
+                    ->orWhere('lastname_2', 'like', $term)
+                    ->orWhere('lastname_2', 'like', $term2)
                     ->orWhere('identifica', 'like', $term)
                     ->orWhere('useremp', 'like', $term)
                     ->orWhere('mail', 'like', $term);
@@ -77,6 +86,9 @@ class EmployeeController extends Controller
         $employee->id = uniqid(true);
         $employee->recordcard = $request->recordcard;
         $employee->name = $request->name;
+        $employee->name_2 = $request->name_2;
+        $employee->lastname = $request->lastname;
+        $employee->lastname_2 = $request->lastname_2;
         $employee->identifica = $request->identification;
         $employee->useremp = explode('@', $request->mail)[0];
         $employee->mail = $request->mail;
@@ -84,6 +96,8 @@ class EmployeeController extends Controller
         $employee->servicedat = $request->servicedat;
         $employee->gender = $request->gender;
         $employee->is_active = true;
+        $employee->show_birth = $request->show_birth ? true : false;
+        $employee->show_servi = $request->show_servi ? true : false;
 
         $employee->id_pos = $request->position;
         $employee->id_dep = $request->department;
@@ -93,7 +107,7 @@ class EmployeeController extends Controller
 
         $employee->save();
 
-        do_log('Creó un Empleado ( código:' . $employee->recordcard . ', nombre:' . $employee->name . ', correo:' . $employee->mail . ' )');
+        do_log('Creó un Empleado ( código:' . $employee->recordcard . ', nombre:' . $employee->full_name . ', correo:' . $employee->mail . ' )');
 
         return redirect(route('human_resources.employee.index'))->with('success', ($employee->gender == 'f' ? 'La empleada fue creada ':'El empleado fue creado') . ' correctamente.');
 
@@ -127,6 +141,9 @@ class EmployeeController extends Controller
 
         $employee->recordcard = $request->recordcard;
         $employee->name = $request->name;
+        $employee->name_2 = $request->name_2;
+        $employee->lastname = $request->lastname;
+        $employee->lastname_2 = $request->lastname_2;
         $employee->identifica = $request->identification;
         $employee->useremp = explode('@', $request->mail)[0];
         $employee->mail = $request->mail;
@@ -134,6 +151,8 @@ class EmployeeController extends Controller
         $employee->servicedat = $request->servicedat;
         $employee->gender = $request->gender;
         $employee->is_active = $request->is_active ? true : false;
+        $employee->show_birth = $request->show_birth ? true : false;
+        $employee->show_servi = $request->show_servi ? true : false;
 
         $employee->id_pos = $request->position;
         $employee->id_dep = $request->department;
@@ -143,7 +162,7 @@ class EmployeeController extends Controller
 
         $employee->save();
 
-        do_log('Editó un Empleado ( código:' . $employee->recordcard . ', nombre:' . $employee->name . ', correo:' . $employee->mail . ' )');
+        do_log('Editó un Empleado ( código:' . $employee->recordcard . ', nombre:' . $employee->full_name . ', correo:' . $employee->mail . ' )');
 
         return redirect(route('human_resources.employee.index'))->with('success', ($employee->gender == 'f' ? 'La empleada fue modificada ':'El empleado fue modificado') . ' correctamente.');
     }
@@ -234,10 +253,19 @@ class EmployeeController extends Controller
             $employees = Employee::orderBy('recordcard');
 
             if ($request->term) {
-                $term = "%{$request->term}%";
-                $employees->where(function ($query) use ($request, $term) {
+                $term = '%'.clear_str($request->term).'%';
+                $term2 = '%'.ucwords(clear_str($request->term)).'%';
+
+                $employees->where(function ($query) use ($request, $term, $term2) {
                     $query->where('recordcard', 'like', $term)
                         ->orWhere('name', 'like', $term)
+                        ->orWhere('name', 'like', $term2)
+                        ->orWhere('name_2', 'like', $term)
+                        ->orWhere('name_2', 'like', $term2)
+                        ->orWhere('lastname', 'like', $term)
+                        ->orWhere('lastname', 'like', $term2)
+                        ->orWhere('lastname_2', 'like', $term)
+                        ->orWhere('lastname_2', 'like', $term2)
                         ->orWhere('identifica', 'like', $term)
                         ->orWhere('useremp', 'like', $term)
                         ->orWhere('mail', 'like', $term);

@@ -502,7 +502,7 @@
                                     @foreach($day_birthdays as $birthday)
                                         <tr>
                                             <td style="vertical-align: middle;">
-                                                <a style="color: #FF8849;" href="javascript:void(0)">{!! $birthday->name !!}</a>
+                                                <a style="color: #FF8849;" href="javascript:void(0)">{!! $birthday->full_name !!}</a>
                                             </td>
                                             <td class="text-center">
                                                 <img style="max-width: 100px;" src="{{ route('home') . '\files\employee_images\\' . get_employee_name_photo($birthday->recordcard, $birthday->gender) }}">
@@ -529,7 +529,7 @@
                                     @foreach($day_services as $day_service)
                                         <tr>
                                             <td style="vertical-align: middle;">
-                                                <a style="color: #FF8849;" href="javascript:void(0)">{!! $day_service->name !!}</a>
+                                                <a style="color: #FF8849;" href="javascript:void(0)">{!! $day_service->full_name !!}</a>
                                             </td>
                                             <td class="text-center" style="width: 120px;font-size: 15px;letter-spacing: 1px;vertical-align: middle;">
                                                 {{ calculate_year_of_service($day_service->servicedat) }}
@@ -623,7 +623,7 @@
                 {
                     title: '',
                     start: '{{ $datetime->format('Y') .'-'. $birthdate->month_day }}',
-                    className: 'birthdate cal_icon ' + '{!! str_replace(' ', '|', $birthdates->where('month_day', $birthdate->month_day)->implode('name', ',')) !!}',
+                    className: 'birthdate cal_icon ' + '{!! str_replace(' ', '|', $birthdates->where('month_day', $birthdate->month_day)->implode('full_name', ',')) !!}',
                 },
             @endforeach
             @foreach ($birthdates->unique('services_month_day') as $service_date)

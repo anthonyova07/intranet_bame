@@ -118,7 +118,7 @@
                                         @endif
                                     </td>
                                     <td>{{ $employee->recordcard }}</td>
-                                    <td>{{ $employee->name }}</td>
+                                    <td>{{ $employee->full_name }}</td>
                                     <td>{{ $employee->identifica }}</td>
                                     <td data-toggle="tooltip" data-container="body" title="{{ $employee->mail }}">
                                         @if (trim($employee->mail))

@@ -24,7 +24,7 @@
                 @foreach ($employees as $employee)
                     <tr>
                         <td>{{ $employee->recordcard }}</td>
-                        <td>{{ $employee->name }}</td>
+                        <td>{{ $employee->full_name }}</td>
                         <td>{{ $employee->identifica }}</td>
                         <td>{{ $employee->mail }}</td>
                         <td>{{ $employee->position->name }}</td>

@@ -129,15 +129,15 @@ class HomeController extends Controller {
             $birthdate = date_create($employee->birthdate);
             $servicedat = date_create($employee->servicedat);
 
-            if ($birthdate->format('m-d') == $current_md) {
+            if ($birthdate->format('m-d') == $current_md && $employee->show_birth) {
                 $day_birthdays->push($employee);
             }
 
-            if ($servicedat->format('m-d') == $current_md) {
+            if ($servicedat->format('m-d') == $current_md && $employee->show_servi) {
                 $day_services->push($employee);
             }
 
-            $employee->service_text = $employee->name . ' cumple ' . calculate_year_of_service($employee->servicedat);
+            $employee->service_text = $employee->full_name . ' cumple ' . calculate_year_of_service($employee->servicedat);
             $employee->month_day = $birthdate->format('m-d');
             $employee->services_month_day = $servicedat->format('m-d');
         });

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Employee {{ $employee->name . ' ( ' . $employee->recordcard . ' )' }}</title>
+    <title>Employee {{ $employee->full_name . ' ( ' . $employee->recordcard . ' )' }}</title>
     <style>
         body {
             font-family: 'Juhl';
@@ -53,7 +53,7 @@
                         <img src="{{ route('home') . '/images/logo.jpg' }}" style="width: 220px;">
                     </td>
                     <td align="right" width="408">
-                        <b style="font-size: 14px;font-style: italic;">Empleado {{ $employee->name . ' ( ' . $employee->recordcard . ' )' }}</b>
+                        <b style="font-size: 14px;font-style: italic;">Empleado {{ $employee->full_name . ' ( ' . $employee->recordcard . ' )' }}</b>
                     </td>
                 </tr>
                 <tr align="right">
@@ -76,7 +76,7 @@
                     Código: <span>{{ $employee->recordcard }}</span>
                 </li>
                 <li>
-                    Nombre: <span>{{ $employee->name }}</span>
+                    Nombre: <span>{{ $employee->full_name }}</span>
                 </li>
                 <li>
                     Identificación: <span>{{ $employee->identifica }}</span>
