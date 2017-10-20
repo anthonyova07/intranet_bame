@@ -224,6 +224,41 @@
     <div class="row">
 
         <div class="col-xs-4" style="margin-top: -8px;">
+            <div class="row">
+                <div class="col-xs-6">
+                    <a href="{{ route('financial_calculations.loan.index') }}">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="row text-center">
+                                    <div class="col-xs-12">
+                                        <i class="fa fa-calculator fa-4x"></i>
+                                    </div>
+                                    <div class="col-xs-12" style="font-size: 20px;">
+                                        Préstamos
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-xs-6">
+                    <a href="{{ route('financial_calculations.investment.index') }}">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="row text-center">
+                                    <div class="col-xs-12">
+                                        <i class="fa fa-calculator fa-4x"></i>
+                                    </div>
+                                    <div class="col-xs-12" style="font-size: 20px;">
+                                        Inversiones
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
             <div class="panel panel-default" style="margin-top: 8px;">
 
                 <div class="panel-body text-center">

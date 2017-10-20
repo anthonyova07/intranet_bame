@@ -18,7 +18,7 @@ class ProductHistory extends Model
 
     public function details()
     {
-        return $this->hasMany(ProductDetailHistory::class, 'pro_id', 'id');
+        return $this->hasMany(ProductDetailHistory::class, 'pro_id', 'id')->orderBy('sequence', 'ASC');
     }
 
     public function ranges()

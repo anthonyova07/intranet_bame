@@ -656,9 +656,13 @@ function calculate_year_of_service($date, $with_diff = false)
     }
 }
 
-function datetime()
+function datetime($date = null)
 {
-    return new \DateTime;
+    if ($date) {
+        return new \Datetime($date);
+    }
+
+    return new \DateTime();
 }
 
 function get_employee_name_photo($code, $gender, $just_name = false)
@@ -900,4 +904,40 @@ function url_closing_cost()
     }
 
     return null;
+}
+
+function get_financial_calculation_params($param = null)
+{
+    $params = collect([
+        'PRE' => 'Préstamos',
+        'INV' => 'Inversiones',
+    ]);
+
+    if (!$param) {
+        return $params;
+    }
+
+    return $params->get($param);
+}
+
+function get_days_from_text($text)
+{
+    $days = 0;
+    $text = trim($text);
+
+    foreach (explode(' ', $text) as $value) {
+        $float = floatval($value);
+
+        if ($float != 0) {
+            if (str_contains($text, 'año')) {
+                $days = $float * 360;
+            }
+
+            if (str_contains($text, 'día') || str_contains($text, 'dia')) {
+                $days = $float;
+            }
+        }
+    }
+
+    return $days;
 }
