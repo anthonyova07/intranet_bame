@@ -44,6 +44,7 @@
                         <input type="hidden" name="investment_field" value="{{ old('investment_field') }}">
                         <input type="hidden" name="range_field" value="{{ old('range_field') }}">
                         <input type="hidden" name="content_field" value="{{ old('content_field') }}">
+                        <input type="hidden" name="values_field" value="{{ old('values_field') }}">
 
                         <div class="row">
                             <div class="col-xs-3">
@@ -60,8 +61,27 @@
                             </div>
 
                             <div class="col-xs-3">
+                                <div class="form-group{{ $errors->first('values') ? ' has-error':'' }}" style="display: none;">
+                                    <label class="control-label">Valores</label>
+                                    <select name="values" class="form-control input-sm">
+                                        <option value="">Seleccione uno</option>
+                                        @foreach ($param_investments as $param_investment)
+                                            @if ($param_investment->content == 'V')
+                                                @foreach ($param_investment->details as $detail)
+                                                    <option
+                                                        product="{{ $detail->pro_id }}"
+                                                        rate="{{ str_replace('%', '', $detail->value) }}"
+                                                        {!! $detail->pro_id == old('investment') ? '':' style="display: none;"' !!}
+                                                        value="{{ $detail->id }}"{!! $detail->id == old('values') ? ' selected':'' !!}>{{ $detail->descrip }}</option>
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                    <span class="help-block">{{ $errors->first('ranges') }}</span>
+                                </div>
+
                                 <div class="form-group{{ $errors->first('ranges') ? ' has-error':'' }}">
-                                    <label class="control-label">Rangos <span class="small">(Aplica en Certificados)</span></label>
+                                    <label class="control-label">Rangos</label>
                                     <select name="ranges" class="form-control input-sm">
                                         <option value="">Seleccione uno</option>
                                         @foreach ($param_investments as $param_investment)
@@ -81,7 +101,7 @@
 
                             <div class="col-xs-2">
                                 <div class="form-group{{ $errors->first('select_days') ? ' has-error':'' }}">
-                                    <label class="control-label">Días <span class="small">(Aplica en Certificados)</span></label>
+                                    <label class="control-label">Días</label>
                                     <select name="select_days" class="form-control input-sm">
                                         <option value="">Seleccione uno</option>
                                         @foreach ($param_investments as $param_investment)
@@ -193,16 +213,19 @@
         var investment_field = $('input[name="investment_field"]');
         var range_field = $('input[name="range_field"]');
         var content_field = $('input[name="content_field"]');
+        var values_field = $('input[name="values_field"]');
 
         var interests = $('input[name="interests"]');
         var days = $('input[name="days"]');
 
         var investment = $('select[name="investment"]');
         var ranges = $('select[name="ranges"]');
+        var values = $('select[name="values"]');
         var select_days = $('select[name="select_days"]');
 
         investment.change(function () {
             ranges.val(-1);
+            values.val(-1);
             select_days.val(-1);
 
             investment_field.val(investment.find("option:selected").text());
@@ -220,7 +243,27 @@
                 });
             }
 
+            if (content_field.val() == 'V') {
+                ranges.parent().hide();
+                select_days.parent().hide();
+                values.parent().show();
+
+                values.children().each(function (index, option) {
+                    var option = $(option);
+
+                    if (option.attr('product') == investment.val()) {
+                        option.show();
+                    } else {
+                        option.hide();
+                    }
+                });
+            }
+
             if (content_field.val() == 'U') {
+                ranges.parent().hide();
+                values.parent().hide();
+                select_days.parent().hide();
+
                 ranges.children().each(function (index, option) {
                     var option = $(option).hide();
                 });
@@ -230,6 +273,12 @@
                 });
 
                 interests.val(investment.find("option:selected").attr('rate'));
+            }
+
+            if (content_field.val() == 'R') {
+                ranges.parent().show();
+                values.parent().hide();
+                select_days.parent().show();
             }
         });
 
@@ -247,6 +296,14 @@
                     option.hide();
                 }
             });
+        });
+
+        values.change(function () {
+            select_days.val(-1);
+
+            values_field.val(values.find("option:selected").text());
+
+            interests.val(values.find("option:selected").attr('rate'));
         });
 
         select_days.change(function () {

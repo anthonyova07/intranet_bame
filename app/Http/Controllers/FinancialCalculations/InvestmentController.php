@@ -27,7 +27,11 @@ class InvestmentController extends Controller {
             ->first()
             ->products()
             ->passiveRates()
-            ->whereIn('content', ['U', 'R'])
+            ->whereIn('content', ['U', 'V', 'R'])
+            ->where(function ($query) {
+                $query->where('name', 'like', '%Ahorro%')
+                    ->orWhere('name', 'like', '%Plazo%');
+            })
             ->with(['details', 'details.ranges'])
             ->get();
 

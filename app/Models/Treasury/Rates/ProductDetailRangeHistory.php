@@ -14,5 +14,5 @@ class ProductDetailRangeHistory extends Model
 
     public $incrementing = false;
 
-    public $timestamps = false;    
+    public $timestamps = false;
 }
