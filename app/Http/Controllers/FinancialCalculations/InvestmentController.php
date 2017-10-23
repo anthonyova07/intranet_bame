@@ -27,7 +27,7 @@ class InvestmentController extends Controller {
             ->first()
             ->products()
             ->passiveRates()
-            ->whereIn('content', ['R'])
+            ->whereIn('content', ['U', 'R'])
             ->with(['details', 'details.ranges'])
             ->get();
 
@@ -38,17 +38,22 @@ class InvestmentController extends Controller {
 
     public function validateRequest(Request $request)
     {
-        $min_max = Investment::min_max($request->range_field);
+        $min = null;
+        $max = null;
 
-        $min = $min_max['min'];
-        $max = $min_max['max'];
+        if ($request->content_field == 'R') {
+            $min_max = Investment::min_max($request->range_field);
+
+            $min = $min_max['min'];
+            $max = $min_max['max'];
+        }
 
         $this->validate($request, [
             'amount' => 'required|numeric' . ($min ? ('|min:' . $min) : '') . ($max ? ('|max:' . $max) : ''),
             'days' => 'required|integer',
             'interests' => 'required|numeric',
         ], [
-            'amount.*' => 'Debe indicar un monto, debe ser numérico y dentro del rango seleccionado.',
+            'amount.*' => 'Debe indicar un monto, debe ser numérico' . ($request->content_field == 'R' ? ' y dentro del rango seleccionado.' : '.'),
             'days.*' => 'Debe indicar un plazo y debe ser un número entero.',
             'interests.*' => 'Debe indicar un interés y debe ser numérico.',
         ]);
