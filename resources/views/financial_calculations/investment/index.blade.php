@@ -36,69 +36,96 @@
 @section('contents')
 
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-6 col-xs-offset-3">
             <div class="panel panel-default">
                 <div class="panel-body text-center">
                     <form method="get" action="{{ route('financial_calculations.investment.index') }}" id="form">
 
                         <input type="hidden" name="investment_field" value="{{ old('investment_field') }}">
                         <input type="hidden" name="range_field" value="{{ old('range_field') }}">
+                        <input type="hidden" name="content_field" value="{{ old('content_field') }}">
+                        <input type="hidden" name="values_field" value="{{ old('values_field') }}">
 
                         <div class="row">
-                            <div class="col-xs-3">
+                            <div class="col-xs-12">
                                 <div class="form-group{{ $errors->first('investment') ? ' has-error':'' }}">
                                     <label class="control-label">Tipo de Inversión</label>
                                     <select name="investment" class="form-control input-sm">
                                         <option value="">Seleccione uno</option>
                                         @foreach ($param_investments as $param_investment)
-                                            <option value="{{ $param_investment->id }}"{{ $param_investment->id == old('investment') ? ' selected':'' }}>{{ $param_investment->name }}</option>
+                                            <option rate="{{ str_replace('%', '', $param_investment->details->get(0)->value) }}" content="{{ $param_investment->content }}" value="{{ $param_investment->id }}"{{ $param_investment->id == old('investment') ? ' selected':'' }}>{{ $param_investment->name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('investment') }}</span>
                                 </div>
                             </div>
 
-                            <div class="col-xs-3">
-                                <div class="form-group{{ $errors->first('ranges') ? ' has-error':'' }}">
-                                    <label class="control-label">Rangos</label>
-                                    <select name="ranges" class="form-control input-sm">
+                            <div class="col-xs-12" style="display: none;">
+                                <div class="form-group{{ $errors->first('values') ? ' has-error':'' }}">
+                                    <label class="control-label">Valores</label>
+                                    <select name="values" class="form-control input-sm">
                                         <option value="">Seleccione uno</option>
                                         @foreach ($param_investments as $param_investment)
-                                            @foreach ($param_investment->details as $detail)
-                                                <option
-                                                    product="{{ $detail->pro_id }}"
-                                                    {!! $detail->pro_id == old('investment') ? '':' style="display: none;"' !!}
-                                                    value="{{ $detail->id }}"{!! $detail->id == old('ranges') ? ' selected':'' !!}>{{ $detail->descrip }}</option>
-                                            @endforeach
+                                            @if ($param_investment->content == 'V')
+                                                @foreach ($param_investment->details as $detail)
+                                                    <option
+                                                        product="{{ $detail->pro_id }}"
+                                                        rate="{{ str_replace('%', '', $detail->value) }}"
+                                                        {!! $detail->pro_id == old('investment') ? '':' style="display: none;"' !!}
+                                                        value="{{ $detail->id }}"{{ $detail->id == old('values') ? ' selected':'' }}>{{ $detail->descrip }}</option>
+                                                @endforeach
+                                            @endif
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('ranges') }}</span>
                                 </div>
                             </div>
 
-                            <div class="col-xs-2">
+                            <div class="col-xs-12">
+                                <div class="form-group{{ $errors->first('ranges') ? ' has-error':'' }}">
+                                    <label class="control-label">Rangos</label>
+                                    <select name="ranges" class="form-control input-sm">
+                                        <option value="">Seleccione uno</option>
+                                        @foreach ($param_investments as $param_investment)
+                                            @if ($param_investment->content == 'R')
+                                                @foreach ($param_investment->details as $detail)
+                                                    <option
+                                                        product="{{ $detail->pro_id }}"
+                                                        {!! $detail->pro_id == old('investment') ? '':' style="display: none;"' !!}
+                                                        value="{{ $detail->id }}"{!! $detail->id == old('ranges') ? ' selected':'' !!}>{{ $detail->descrip }}</option>
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                    <span class="help-block">{{ $errors->first('ranges') }}</span>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12">
                                 <div class="form-group{{ $errors->first('select_days') ? ' has-error':'' }}">
                                     <label class="control-label">Días</label>
                                     <select name="select_days" class="form-control input-sm">
                                         <option value="">Seleccione uno</option>
                                         @foreach ($param_investments as $param_investment)
-                                            @foreach ($param_investment->details as $detail)
-                                                @foreach ($param_investment->ranges() as $index => $range)
-                                                    <option
-                                                        days="{{ get_days_from_text($range) }}"
-                                                        range="{{ $detail->id }}"
-                                                        {!! $detail->id == old('ranges') ? '':' style="display: none;"' !!}
-                                                        value="{{ str_replace('%', '', $detail->ranges[$index]->value) }}"
-                                                        {!! ($detail->id == old('ranges') && old('days') == get_days_from_text($range)) ? ' selected':'' !!}>{{ $range }}</option>
+                                            @if ($param_investment->content == 'R')
+                                                @foreach ($param_investment->details as $detail)
+                                                    @foreach ($param_investment->ranges() as $index => $range)
+                                                        <option
+                                                            days="{{ get_days_from_text($range) }}"
+                                                            range="{{ $detail->id }}"
+                                                            {!! $detail->id == old('ranges') ? '':' style="display: none;"' !!}
+                                                            value="{{ str_replace('%', '', $detail->ranges[$index]->value) }}"
+                                                            {!! ($detail->id == old('ranges') && old('days') == get_days_from_text($range)) ? ' selected':'' !!}>{{ $range }}</option>
+                                                    @endforeach
                                                 @endforeach
-                                            @endforeach
+                                            @endif
                                         @endforeach
                                     </select>
                                     <span class="help-block">{{ $errors->first('select_days') }}</span>
                                 </div>
                             </div>
 
-                            <div class="col-xs-1">
+                            <div class="col-xs-4">
                                 <div class="form-group{{ $errors->first('days') ? ' has-error':'' }}">
                                     <label class="control-label">Días</label>
                                     <input type="text" class="form-control input-sm" name="days" placeholder="0" value="{{ old('days') }}">
@@ -106,7 +133,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-xs-1">
+                            <div class="col-xs-4">
                                 <div class="form-group{{ $errors->first('interests') ? ' has-error':'' }}">
                                     <label class="control-label">Intereses</label>
                                     <input type="text" class="form-control input-sm text-right" name="interests" placeholder="0.00" value="{{ old('interests') }}">
@@ -114,7 +141,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-xs-2">
+                            <div class="col-xs-4">
                                 <div class="form-group{{ $errors->first('amount') ? ' has-error':'' }}">
                                     <label class="control-label">Monto</label>
                                     <input type="text" class="form-control input-sm text-right" name="amount" placeholder="0.00" value="{{ old('amount') }}">
@@ -132,8 +159,8 @@
         </div>
     </div>
 
-    @if ($investment)
-        <div class="row">
+    @if ($investment && !$errors->count())
+        <div class="row" id="detail_row">
             <div class="col-xs-6 col-xs-offset-3">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -146,10 +173,12 @@
                                     <td><b>Tipo de Inversión:</b></td>
                                     <td>{{ request('investment_field') }}</td>
                                 </tr>
-                                <tr>
-                                    <td><b>Rangos:</b></td>
-                                    <td>{{ request('range_field') }}</td>
-                                </tr>
+                                @if (request('content_field') == 'R')
+                                    <tr>
+                                        <td><b>Rangos:</b></td>
+                                        <td>{{ request('range_field') }}</td>
+                                    </tr>
+                                @endif
                                 <tr>
                                     <td><b>Monto:</b></td>
                                     <td>{{ number_format($investment->amount, 2) }}</td>
@@ -185,32 +214,79 @@
 
         var investment_field = $('input[name="investment_field"]');
         var range_field = $('input[name="range_field"]');
+        var content_field = $('input[name="content_field"]');
+        var values_field = $('input[name="values_field"]');
+
+        var detail_row = $('#detail_row');
 
         var interests = $('input[name="interests"]');
         var days = $('input[name="days"]');
 
         var investment = $('select[name="investment"]');
-        var ranges = $('select[name="ranges"]');
-        var select_days = $('select[name="select_days"]');
 
-        // ranges.val(-1);
-        // select_days.val(-1);
+        var ranges = $('select[name="ranges"]');
+        var values = $('select[name="values"]');
+        var select_days = $('select[name="select_days"]');
 
         investment.change(function () {
             ranges.val(-1);
+            values.val(-1);
             select_days.val(-1);
 
+            detail_row.slideUp('slow');
+
             investment_field.val(investment.find("option:selected").text());
+            content_field.val(investment.find("option:selected").attr('content'));
 
-            ranges.children().each(function (index, option) {
-                var option = $(option);
+            if (content_field.val() == 'R') {
+                ranges.children().each(function (index, option) {
+                    var option = $(option);
 
-                if (option.attr('product') == investment.val()) {
-                    option.show();
-                } else {
-                    option.hide();
-                }
-            });
+                    if (option.attr('product') == investment.val()) {
+                        option.show();
+                    } else {
+                        option.hide();
+                    }
+                });
+            }
+
+            if (content_field.val() == 'V') {
+                ranges.parent().parent().hide();
+                select_days.parent().parent().hide();
+                values.parent().parent().show();
+
+                values.children().each(function (index, option) {
+                    var option = $(option);
+
+                    if (option.attr('product') == investment.val()) {
+                        option.show();
+                    } else {
+                        option.hide();
+                    }
+                });
+            }
+
+            if (content_field.val() == 'U') {
+                ranges.parent().parent().hide();
+                values.parent().parent().hide();
+                select_days.parent().parent().hide();
+
+                ranges.children().each(function (index, option) {
+                    var option = $(option).hide();
+                });
+
+                select_days.children().each(function (index, option) {
+                    var option = $(option).hide();
+                });
+
+                interests.val(investment.find("option:selected").attr('rate'));
+            }
+
+            if (content_field.val() == 'R') {
+                ranges.parent().parent().show();
+                values.parent().parent().hide();
+                select_days.parent().parent().show();
+            }
         });
 
         ranges.change(function () {
@@ -229,6 +305,14 @@
             });
         });
 
+        values.change(function () {
+            select_days.val(-1);
+
+            values_field.val(values.find("option:selected").text());
+
+            interests.val(values.find("option:selected").attr('rate'));
+        });
+
         select_days.change(function () {
             var option = select_days.find("option:selected");
 
@@ -239,6 +323,24 @@
                 days.val(0);
             }
         });
+
+        setTimeout(function () {
+            if (content_field.val() == 'V') {
+                ranges.parent().parent().hide();
+                select_days.parent().parent().hide();
+                values.parent().parent().show();
+
+                values.children().each(function (index, option) {
+                    var option = $(option);
+
+                    if (option.attr('product') == investment.val()) {
+                        option.show();
+                    } else {
+                        option.hide();
+                    }
+                });
+            }
+        }, 500);
 
         // var investment = $('select[name="investment"]');
         // var interests = $('input[name="interests"]');
