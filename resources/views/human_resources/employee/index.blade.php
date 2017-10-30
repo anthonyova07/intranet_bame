@@ -84,7 +84,7 @@
         <div class="col-xs-{{ $bulk_load == 'true' ? '10' : '12' }}">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <a class="btn btn-danger btn-xs" href="{{ route('human_resources.employee.create') }}">Nueva</a>
+                    <a class="btn btn-danger btn-xs" href="{{ route('human_resources.employee.create') }}">Crear Empleado</a>
 
                     <a style="font-size: 13px;margin: 0 4px;" class="label btn-danger pull-right" target="__blank" href="{{ route('human_resources.employee.export', array_merge(request()->except(['page']), ['type' => 'pdf'])) }}">Exportar PDF</a>
 
@@ -92,7 +92,7 @@
 
                     <br>
                     <br>
-                    <table class="table table-striped table-bordered table-hover table-condensed" order-by='2|desc'>
+                    <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='1|asc'>
                         <thead>
                             <tr>
                                 <th></th>
@@ -106,7 +106,7 @@
                                 <th>Fecha Ingreso</th>
                                 <th>Género</th>
                                 {{-- <th>Activo</th> --}}
-                                <th style="width: 50px;"></th>
+                                <th style="width: 20px;"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -172,7 +172,7 @@
                         </tbody>
                     </table>
 
-                    {{ $employees->links() }}
+                    {{-- {{ $employees->links() }} --}}
                 </div>
             </div>
         </div>

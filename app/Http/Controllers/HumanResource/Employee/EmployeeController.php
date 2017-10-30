@@ -59,7 +59,8 @@ class EmployeeController extends Controller
             $employees->where('servicedat', '<=', $request->date_to);
         }
 
-        $employees = $employees->paginate();
+        // $employees = $employees->paginate();
+        $employees = $employees->get();
 
         $bulk_load = config('bame.employee.bulk_load');
 
