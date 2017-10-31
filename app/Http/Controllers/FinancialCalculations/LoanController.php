@@ -41,7 +41,7 @@ class LoanController extends Controller {
     {
         $this->validate($request, [
             'amount' => 'required|numeric',
-            'year' => 'required|integer',
+            // 'year' => 'required|integer',
             'month' => 'required|integer',
             'interests' => 'required|numeric',
             'extraordinary' => 'numeric',
@@ -49,7 +49,7 @@ class LoanController extends Controller {
             'start_date' => 'date_format:Y-m-d',
         ], [
             'amount.*' => 'Debe indicar un monto y debe ser numérico',
-            'year.*' => 'Debe indicar un plazo y debe ser un número entero',
+            // 'year.*' => 'Debe indicar un plazo y debe ser un número entero',
             'month.*' => 'Debe indicar un plazo y debe ser un número entero',
             'interests.*' => 'Debe indicar un interés y debe ser numérico',
             'extraordinary.*' => 'El monto extraordinario debe ser numérico',
