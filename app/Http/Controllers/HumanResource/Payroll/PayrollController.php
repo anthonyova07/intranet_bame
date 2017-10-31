@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Bame\Http\Requests;
 use Bame\Http\Controllers\Controller;
 
+use DB;
 use Auth;
 use DateTime;
 use Bame\Models\HumanResource\Employee\Employee;
@@ -100,15 +101,17 @@ class PayrollController extends Controller
                     }
                 }
 
+                $recordcard = trim($parts[5]);
+
                 $payroll_detail = new PayrollDetail;
 
                 $payroll_detail->id = uniqid(true);
                 $payroll_detail->payroll_id = $payroll->id;
 
                 $payroll_detail->transdate = trim($parts[7]);
-                $payroll_detail->code = trim($parts[8]);
-                $payroll_detail->comment = trim(utf8_encode($parts[9]));
-                $payroll_detail->amount = trim($parts[10]);
+                $payroll_detail->code = en_crypt(trim($parts[8]), $recordcard);
+                $payroll_detail->comment = en_crypt(trim(utf8_encode($parts[9])), $recordcard);
+                $payroll_detail->amount = en_crypt(trim($parts[10]), $recordcard);
 
                 $payroll_detail->save();
 
@@ -156,8 +159,12 @@ class PayrollController extends Controller
             } else {
                 $last_detail = $payroll->details->pop();
 
-                $payroll->details->each(function ($detail, $index) use (&$total_discharge, &$total_ingress) {
-                    if ($detail->amount < 0) {
+                $payroll->details->each(function ($detail, $index) use ($payroll, &$total_discharge, &$total_ingress) {
+                    $detail->code = de_crypt($detail->code, $payroll->recordcard);
+                    $detail->comment = de_crypt($detail->comment, $payroll->recordcard);
+                    $detail->amount = floatval(de_crypt($detail->amount, $payroll->recordcard));
+
+                    if ($amount < 0) {
                         $total_discharge += $detail->amount;
                     } else {
                         $total_ingress += $detail->amount;
@@ -171,5 +178,32 @@ class PayrollController extends Controller
         } else {
             return view('human_resources.payroll.my', compact('payroll', 'total_ingress', 'total_discharge', 'last_detail'));
         }
+    }
+
+    public function migratePayrollDetail(Request $request)
+    {
+        dd();
+        $payroll_details = collect();
+
+        $payrolls = Payroll::get();
+
+        $payroll_detail_temp = collect(DB::connection('ibs')->table('intrhpayrd_temp')->get());
+
+        $payroll_detail_temp->each(function ($value, $index) use ($payrolls, $payroll_details) {
+            $payroll = $payrolls->where('id', $value->payroll_id)->first();
+
+            $payroll_detail = new PayrollDetail;
+
+            $payroll_detail->id = $value->id;
+            $payroll_detail->payroll_id = $value->payroll_id;
+            $payroll_detail->transdate = $value->transdate;
+            $payroll_detail->code = en_crypt($value->code, $payroll->recordcard);
+            $payroll_detail->comment = en_crypt($value->comment, $payroll->recordcard);
+            $payroll_detail->amount = en_crypt($value->amount, $payroll->recordcard);
+
+            $payroll_details->push($payroll_detail);
+        });
+
+        PayrollDetail::insert($payroll_details->toArray());
     }
 }
