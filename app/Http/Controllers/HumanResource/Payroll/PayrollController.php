@@ -182,28 +182,44 @@ class PayrollController extends Controller
 
     public function migratePayrollDetail(Request $request)
     {
-        dd();
-        $payroll_details = collect();
-
         $payrolls = Payroll::get();
 
         $payroll_detail_temp = collect(DB::connection('ibs')->table('intrhpayrd_temp')->get());
 
-        $payroll_detail_temp->each(function ($value, $index) use ($payrolls, $payroll_details) {
-            $payroll = $payrolls->where('id', $value->payroll_id)->first();
+        // $payroll_detail_temp->each(function ($value, $index) use ($payrolls, $payroll_details) {
+        //     $payroll = $payrolls->where('id', $value->payroll_id)->first();
 
-            $payroll_detail = new PayrollDetail;
+        //     $payroll_detail = new PayrollDetail;
 
-            $payroll_detail->id = $value->id;
-            $payroll_detail->payroll_id = $value->payroll_id;
-            $payroll_detail->transdate = $value->transdate;
-            $payroll_detail->code = en_crypt($value->code, $payroll->recordcard);
-            $payroll_detail->comment = en_crypt($value->comment, $payroll->recordcard);
-            $payroll_detail->amount = en_crypt($value->amount, $payroll->recordcard);
+        //     $payroll_detail->id = $value->id;
+        //     $payroll_detail->payroll_id = $value->payroll_id;
+        //     $payroll_detail->transdate = $value->transdate;
+        //     $payroll_detail->code = en_crypt($value->code, $payroll->recordcard);
+        //     $payroll_detail->comment = en_crypt($value->comment, $payroll->recordcard);
+        //     $payroll_detail->amount = en_crypt($value->amount, $payroll->recordcard);
 
-            $payroll_details->push($payroll_detail);
-        });
+        //     $payroll_details->push($payroll_detail);
+        // });
 
-        PayrollDetail::insert($payroll_details->toArray());
+        foreach ($payroll_detail_temp->chunk(500) as $details) {
+            $payroll_details = collect();
+
+            foreach ($details as $detail) {
+                $payroll = $payrolls->where('id', $detail->payroll_id)->first();
+
+                $payroll_detail = new PayrollDetail;
+
+                $payroll_detail->id = $detail->id;
+                $payroll_detail->payroll_id = $detail->payroll_id;
+                $payroll_detail->transdate = $detail->transdate;
+                $payroll_detail->code = en_crypt($detail->code, $payroll->recordcard);
+                $payroll_detail->comment = en_crypt($detail->comment, $payroll->recordcard);
+                $payroll_detail->amount = en_crypt($detail->amount, $payroll->recordcard);
+
+                $payroll_details->push($payroll_detail);
+            }
+
+            PayrollDetail::insert($payroll_details->toArray());
+        }
     }
 }
