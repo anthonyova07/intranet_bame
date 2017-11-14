@@ -25,7 +25,7 @@ class Payroll extends Model
 
     public function scopeByActualUser($query)
     {
-        return $query->where('recordcard', session('user_info')->getPostalCode())->orderBy('payroldate', 'desc');
+        return $query->where('recordcard', session('employee')->recordcard)->orderBy('payroldate', 'desc');
     }
 
     public function scopeDate($query, $date)
