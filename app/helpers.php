@@ -941,3 +941,26 @@ function get_days_from_text($text)
 
     return $days;
 }
+
+function get_risk_event_params($param = null)
+{
+    $params = collect([
+        'LN' => 'Linea de Negocio',
+        'TE' => 'Tipo de Evento',
+        'TD' => 'Tipo de Divisa',
+        'TP' => 'Tipo de Perdida',
+        'SU' => 'Sucursal',
+        'AD' => 'Área o Departamento',
+        'RV' => 'Riesgo Vinculado',
+        'CD' => 'Canal de Distribución',
+        'FR' => 'Factor de Riesgo',
+        'PR' => 'Proceso',
+        'SP' => 'SubProceso',
+    ]);
+
+    if (!$param) {
+        return $params;
+    }
+
+    return $params->get($param);
+}

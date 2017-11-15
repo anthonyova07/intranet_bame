@@ -428,6 +428,8 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 
+    require_once 'routes/risk.php';
+
 });
 
 // DB::listen(function ($query) {

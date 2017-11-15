@@ -243,5 +243,13 @@ return [
       'name_2' => 'Segundo Nombre',
       'lastname' => 'Apellido',
       'lastname_2' => 'Segundo Apellido',
+      'consequence' => 'Consecuencia',
+      'associated_control' => 'Control Asociado',
+      'area_department' => 'Área o Departamento',
+      'distribution_channel' => 'Canal de Distribución',
+      'branch_office' => 'Sucursal',
+      'currency_type' => 'Tipo de Divisa',
+      'event_type' => 'Tipo de Evento',
+      'business_line' => 'Linea de Negocio',
     ],
 ];
