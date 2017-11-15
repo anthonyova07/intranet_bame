@@ -2,12 +2,12 @@
 
 namespace Bame\Models\HumanResource\Calendar;
 
-use Illuminate\Database\Eloquent\Model;
-
 use File;
 use DateTime;
+use Illuminate\Database\Eloquent\Model;
+use Bame\Models\HumanResource\Employee\Employee;
 
-class Birthdate extends Model
+class Birthdate
 {
     // protected $connection = 'ibs';
 
@@ -53,14 +53,14 @@ class Birthdate extends Model
 
     public static function storeImages($files)
     {
-        $employees = self::getFile();
+        $employees = Employee::active()->get();
         $files = collect($files);
 
         $files->each(function ($file, $index) use ($employees) {
             $file_name = explode('.', $file->getClientOriginalName());
             $name = self::getName($file_name[0]);
 
-            if ($employees->contains('code', trim($name))) {
+            if ($employees->contains('recordcard', trim($name))) {
                 $path = public_path() . '\\files\\employee_images\\';
                 $file_path = $path . $name;
 
