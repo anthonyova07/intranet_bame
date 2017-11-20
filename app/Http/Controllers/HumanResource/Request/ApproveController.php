@@ -62,7 +62,7 @@ class ApproveController extends Controller
                     }
                     $human_resource_request->reasonreje = $human_resource_request->approverh ? '' : $request->reason;
                     $human_resource_request->rhuser = session('employee')->useremp;
-                    $human_resource_request->rhname = session('employee')->name;;
+                    $human_resource_request->rhname = session('employee')->full_name();
                     $human_resource_request->save();
 
                     Notification::notify('Solicitud de RH', 'Tu solicitud #' . $human_resource_request->reqnumber . ' de RH ha sido ' . ((bool) $to_approve ? 'aprobada' : 'rechazada') . ' por RRHH.', route('human_resources.request.show', ['request' => $human_resource_request->id]), $human_resource_request->created_by);

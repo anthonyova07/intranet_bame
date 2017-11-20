@@ -124,7 +124,7 @@ class RequestController extends Controller
 
             $human_resource_request->coluser = session('employee')->useremp;
             $human_resource_request->colcode = session('employee')->recordcard;
-            $human_resource_request->colname = session('employee')->name;
+            $human_resource_request->colname = session('employee')->full_name();
             $human_resource_request->colposi = session('employee')->position->name;
             $human_resource_request->coldepart = session('employee')->department->name;
             $human_resource_request->coldateadm = session('employee')->servicedat;
@@ -135,7 +135,7 @@ class RequestController extends Controller
             }
 
             $human_resource_request->colsupuser = session('employee')->supervisor_emp->useremp;
-            $human_resource_request->colsupname = session('employee')->supervisor_emp->name;
+            $human_resource_request->colsupname = session('employee')->supervisor_emp->full_name();
             $human_resource_request->colsupposi = session('employee')->supervisor_emp->position->name;
 
             if (in_array($request->type, ['PER', 'VAC'])) {
@@ -155,12 +155,12 @@ class RequestController extends Controller
 
             $human_resource_request->coluser = $subordinate->useremp;
             $human_resource_request->colcode = $subordinate->recordcard;
-            $human_resource_request->colname = $subordinate->name;
+            $human_resource_request->colname = $subordinate->full_name();
             $human_resource_request->colposi = $subordinate->position->name;
             $human_resource_request->coldepart = $subordinate->department->name;
 
             $human_resource_request->colsupuser = session('employee')->useremp;
-            $human_resource_request->colsupname = session('employee')->name;
+            $human_resource_request->colsupname = session('employee')->full_name();
             $human_resource_request->colsupposi = session('employee')->position->name;
             $human_resource_request->approvesup = 'a';
         }
@@ -295,7 +295,7 @@ class RequestController extends Controller
         }
 
         $detail->created_by = session('employee')->useremp;
-        $detail->createname = session('employee')->name;
+        $detail->createname = session('employee')->small_name();
 
         $detail->save();
 

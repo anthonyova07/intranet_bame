@@ -40,7 +40,7 @@
                                 @if (isset($human_resource_request))
                                     {{ $human_resource_request->colname }}
                                 @else
-                                    {{ session('employee')->name }}
+                                    {{ session('employee')->full_name() }}
                                 @endif
                             </p>
                             <span class="help-block">{{ $errors->first('colname') }}</span>
@@ -164,7 +164,7 @@
                                     @if (isset($human_resource_request))
                                         {{ $human_resource_request->colname }}
                                     @else
-                                        {{ session('employee')->name }}
+                                        {{ session('employee')->full_name() }}
                                     @endif
                                 </p>
                                 <span class="help-block">{{ $errors->first('colname') }}</span>
@@ -257,7 +257,7 @@
                                 <label class="control-label">Seleccionar Empleado</label>
                                 <select name="subordinate" class="form-control input-sm">
                                     @foreach (session('employee')->subordinates as $subordinate)
-                                        <option value="{{ $subordinate->useremp }}">{{ $subordinate->name }}</option>
+                                        <option value="{{ $subordinate->useremp }}">{{ $subordinate->full_name() }}</option>
                                     @endforeach
                                 </select>
                                 <span class="help-block">{{ $errors->first('subordinate') }}</span>

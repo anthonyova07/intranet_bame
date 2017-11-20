@@ -34,7 +34,7 @@
                     <div class="col-xs-8">
                         <div class="form-group">
                             <label class="control-label">Nombre</label>
-                            <p class="form-control-static">{{ isset($human_resource_request) ? $human_resource_request->colsupname : session('employee')->supervisor_emp->name }}</p>
+                            <p class="form-control-static">{{ isset($human_resource_request) ? $human_resource_request->colsupname : session('employee')->supervisor_emp->full_name() }}</p>
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                     <div class="col-xs-8">
                         <div class="form-group">
                             <label class="control-label">Nombre</label>
-                            <p class="form-control-static">{{ session('employee')->name }}</p>
+                            <p class="form-control-static">{{ session('employee')->full_name() }}</p>
                         </div>
                     </div>
                 </div>

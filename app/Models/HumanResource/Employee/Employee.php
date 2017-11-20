@@ -19,6 +19,16 @@ class Employee extends Model
 
     protected $dates = [];
 
+    public function small_name()
+    {
+        return $this->name . ' ' . $this->lastname;
+    }
+
+    public function full_name()
+    {
+        return $this->name . ' ' . $this->name_2 . ' ' . $this->lastname . ' ' . $this->lastname_2;
+    }
+
     public function department()
     {
         return $this->hasOne(Param::class, 'id', 'id_dep');

@@ -36,7 +36,7 @@
                         @elseif ($rrhh_request->detail->pertype == 'multiple_days')
                             <td>Varios días</td>
                         @endif
-                        <td>{{ $rrhh_request->detail->perdatfrom->format('d/m/Y') }}</td>
+                        <td>{{ $rrhh_request->detail->perdatfrom ? $rrhh_request->detail->perdatfrom->format('d/m/Y') : '' }}</td>
                         @if ($rrhh_request->detail->pertype == 'one_day')
                             <td></td>
                             <td>{{ $rrhh_request->detail->pertimfrom }}</td>
