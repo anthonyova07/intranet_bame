@@ -15,6 +15,49 @@
 
                 <div class="panel-body">
                     <div class="row">
+                        <div class="col-xs-4">
+                            <div class="form-group{{ $errors->first('car_package_type') ? ' has-error':'' }}">
+                                <label class="control-label">Tipo de Paquetes</label>
+                                <select name="car_package_type" class="form-control input-sm">
+                                    <option value="">Seleccione uno</option>
+                                    @foreach ($params->where('type', 'PAQ') as $packages)
+                                        <option value="{{ $packages->id }}"{{ old('car_package_type') ? ' selected' : '' }}>{{ $packages->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="help-block">{{ $errors->first('car_package_type') }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group{{ $errors->first('car_account_state_period') ? ' has-error':'' }}">
+                                <label class="control-label">Periodo</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <input data-toggle="tooltip" title="Tiene Periodo" type="checkbox" name="car_has_account_state"{{ old('car_has_account_state') ? ' checked' : '' }}>
+                                    </div>
+                                    <select name="car_account_state_period" class="form-control input-sm">
+                                        <option value="">Seleccione uno</option>
+                                        @foreach ($params->where('type', 'EDO') as $period)
+                                            <option value="{{ $period->id }}"{{ old('car_account_state_period') ? ' selected' : '' }}>{{ $period->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <span class="help-block">{{ $errors->first('car_account_state_period') }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group{{ $errors->first('car_mode_retirement') ? ' has-error':'' }}">
+                                <label class="control-label">Modo de Retiro</label>
+                                <select name="car_mode_retirement" class="form-control input-sm">
+                                    <option value="">Seleccione uno</option>
+                                    @foreach ($params->where('type', 'RET') as $retirement)
+                                        <option value="{{ $retirement->id }}"{{ old('car_mode_retirement') ? ' selected' : '' }}>{{ $retirement->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="help-block">{{ $errors->first('car_mode_retirement') }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-xs-6">
                             <div class="form-group{{ $errors->first('car_addressed_to') ? ' has-error':'' }}">
                                 <label class="control-label">Dirigido a</label>
@@ -45,5 +88,12 @@
 </form>
 
 <script type="text/javascript">
-    //
+    var checkbox = $('input[name=car_has_account_state]');
+    var select = $('select[name=car_account_state_period]');
+
+    select.prop('disabled', !checkbox.is(':checked'));
+
+    checkbox.change(function (e) {
+        select.prop('disabled', !checkbox.is(':checked'));
+    });
 </script>

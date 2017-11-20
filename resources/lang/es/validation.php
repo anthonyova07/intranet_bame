@@ -269,5 +269,7 @@ return [
       'car_addressed_to' => 'Dirigido a',
       'car_comments' => 'Comentarios',
       'vac_additional_days' => 'Días Adicionales',
+      'car_package_type' => 'Tipo de Paquetes',
+      'car_account_state_period' => 'Periodo',
     ],
 ];

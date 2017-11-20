@@ -405,12 +405,19 @@ class RequestController extends Controller
     {
         $user_info = session()->get('user_info');
 
+        $params = Param::whereIn('id', array_values($request->only(['car_package_type', 'car_account_state_period', 'car_mode_retirement'])))->get();
+
         $detail = new Detail;
 
         $detail->id = uniqid(true);
         $detail->req_id = $requestId;
         $detail->caraddreto = $request->car_addressed_to;
         $detail->carcomment = $request->car_comments;
+
+        $detail->carpackage = $params->where('id', $request->car_package_type)->first()->name;
+        $detail->caredoacco = (bool) $request->car_has_account_state;
+        $detail->caredoperi = $detail->caredoacco ? $params->where('id', $request->car_account_state_period)->first()->name : null;
+        $detail->carmodreti = $params->where('id', $request->car_mode_retirement)->first()->name;
 
         $detail->created_by = session()->get('user');
         $detail->createname = $user_info->getFirstName() . ' ' . $user_info->getLastName();

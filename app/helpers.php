@@ -971,8 +971,10 @@ function rh_req_types($rh_req_type = null)
 function rh_req_params($rh_req_param = null)
 {
     $rh_req_params = collect([
-        'PER' => 'Permisos',
-        'EST' => 'Estatus',
+        'PER' => 'Permisos Predefinidos',
+        'PAQ' => 'Tipos de Paquetes',
+        'RET' => 'Modos de Retiros',
+        'EDO' => 'Periodos de Estado de Cuenta',
     ]);
 
     if (!$rh_req_param) {

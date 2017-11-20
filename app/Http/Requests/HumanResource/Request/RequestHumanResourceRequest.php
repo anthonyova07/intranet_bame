@@ -79,6 +79,9 @@ class RequestHumanResourceRequest extends Request
             $v = array_merge($v, [
                 'car_addressed_to' => 'required|max:200',
                 'car_comments' => 'required|max:300',
+                'car_package_type' => 'required|max:100',
+                'car_account_state_period' => 'required_if:car_has_account_state,on|max:300',
+                'car_mode_retirement' => 'required|max:100',
             ]);
         }
 
@@ -90,6 +93,7 @@ class RequestHumanResourceRequest extends Request
             'permission_type.required' => 'Debe seleccionar un tipo de permiso',
             'per.required' => 'Debe seleccionar una razón de la ausencia',
             'per_reason.required_if' => 'Debe especificar el motivo de la ausencia.',
+            'car_account_state_period.required_if' => 'Debe especificar el periodo.',
         ];
     }
 }

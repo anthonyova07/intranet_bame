@@ -29,6 +29,26 @@
 
             <div class="panel-body">
                 <div class="row">
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">Tipo de Paquetes</label>
+                            <p class="form-control-static">{{ $human_resource_request->detail->carpackage }}</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">Periodo</label>
+                            <p class="form-control-static">{{ $human_resource_request->detail->caredoperi }}</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="control-label">Modo de Retiro</label>
+                            <p class="form-control-static">{{ $human_resource_request->detail->carmodreti }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-xs-6">
                         <div class="form-group">
                             <label class="control-label">Dirigido a</label>

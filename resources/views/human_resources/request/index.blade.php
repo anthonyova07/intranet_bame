@@ -144,93 +144,53 @@
             <h1 style="margin: 0;text-align: center;">Mantenimientos de Parámetros</h1>
         </div>
 
-        <div class="row">
-
-            <div class="col-xs-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Permisos Predefinidos</h3>
+        @foreach (rh_req_params()->chunk(2) as $chunks)
+            <div class="row">
+                @foreach ($chunks as $code => $param)
+                    <div class="col-xs-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{ $param }}</h3>
+                            </div>
+                            <div class="panel-body">
+                                <a class="btn btn-danger btn-xs" href="{{ route('human_resources.request.{type}.param.create', array_merge(['type' => $code], request()->only('access'))) }}">Nuevo</a>
+                                <br>
+                                <br>
+                                <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 36px;">Código</th>
+                                            <th>Nombre</th>
+                                            <th style="width: 36px;">Activo</th>
+                                            <th style="width: 2px"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($params->where('type', $code) as $per)
+                                            <tr>
+                                                <td>{{ $per->code }}</td>
+                                                <td>{{ $per->name }}</td>
+                                                <td>{{ $per->is_active ? 'Si':'No' }}</td>
+                                                <td align="center">
+                                                    <a
+                                                        href="{{ route('human_resources.request.{type}.param.edit', ['type' => $code, 'param' => $per->id]) }}"
+                                                        data-toggle="tooltip"
+                                                        data-placement="top"
+                                                        title="Editar"
+                                                        class="naranja">
+                                                        <i class="fa fa-edit fa-fw"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                    <div class="panel-body">
-                        <a class="btn btn-danger btn-xs" href="{{ route('human_resources.request.{type}.param.create', array_merge(['type' => 'PER'], request()->only('access'))) }}">Nuevo</a>
-                        <br>
-                        <br>
-                        <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
-                            <thead>
-                                <tr>
-                                    <th style="width: 36px;">Código</th>
-                                    <th>Nombre</th>
-                                    <th style="width: 36px;">Activo</th>
-                                    <th style="width: 2px"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($params->where('type', 'PER') as $per)
-                                    <tr>
-                                        <td>{{ $per->code }}</td>
-                                        <td>{{ $per->name }}</td>
-                                        <td>{{ $per->is_active ? 'Si':'No' }}</td>
-                                        <td align="center">
-                                            <a
-                                                href="{{ route('human_resources.request.{type}.param.edit', ['type' => 'PER', 'param' => $per->id]) }}"
-                                                data-toggle="tooltip"
-                                                data-placement="top"
-                                                title="Editar"
-                                                class="naranja">
-                                                <i class="fa fa-edit fa-fw"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                @endforeach
             </div>
-
-            {{-- <div class="col-xs-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Estatus</h3>
-                    </div>
-                    <div class="panel-body">
-                        <a class="btn btn-danger btn-xs" href="{{ route('human_resources.request.{type}.param.create', ['type' => 'EST']) }}">Nuevo</a>
-                        <br>
-                        <br>
-                        <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|desc'>
-                            <thead>
-                                <tr>
-                                    <th style="width: 36px;">Código</th>
-                                    <th>Nombre</th>
-                                    <th style="width: 36px;">Activo</th>
-                                    <th style="width: 2px"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($params->where('type', 'EST') as $est)
-                                    <tr>
-                                        <td>{{ $est->code }}</td>
-                                        <td>{{ $est->name }}</td>
-                                        <td>{{ $est->is_active ? 'Si':'No' }}</td>
-                                        <td align="center">
-                                            <a
-                                                href="{{ route('human_resources.request.{type}.param.edit', ['type' => 'EST', 'param' => $est->id]) }}"
-                                                data-toggle="tooltip"
-                                                data-placement="top"
-                                                title="Editar"
-                                                class="naranja">
-                                                <i class="fa fa-edit fa-fw"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div> --}}
-
-        </div>
+        @endforeach
 
     @endif
 
