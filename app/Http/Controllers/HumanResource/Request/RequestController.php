@@ -340,8 +340,10 @@ class RequestController extends Controller
             return back()->withInput()->with('error', 'La fecha de inicio seleccionada tiene conflicto con otra solicitud de vacaciones realizada.');
         }
 
-        if (!HumanResourceRequest::isBetweenXDays($request->vac_date_from)) {
-            return back()->withInput()->with('error', 'Las vacaciones debe ser solicitado al menos con 5 días laborables de anticipación');
+        $days = 20;
+
+        if (!HumanResourceRequest::isBetweenXDays($request->vac_date_from, $days)) {
+            return back()->withInput()->with('error', 'Las vacaciones debe ser solicitado al menos con '.$days.' días laborables de anticipación');
         }
 
         // aplicar bono colocar dias correspondientes para aplicar el bono

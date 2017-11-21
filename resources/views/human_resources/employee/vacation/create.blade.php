@@ -18,11 +18,18 @@
                 <div class="panel-body">
                     <form method="post" action="{{ route('human_resources.employee.vacation.store') }}" id="form" enctype="multipart/form-data">
                         <div class="row">
-                            <div class="col-xs-12">
-                                <div class="form-group{{ $errors->first('year') ? ' has-error':'' }}">
-                                    <label class="control-label">Año a Generar</label>
-                                    <input type="text" class="form-control input-sm" name="year" value="{{ datetime()->format('Y') }}">
-                                    <span class="help-block">{{ $errors->first('year') }}</span>
+                            <div class="col-xs-6">
+                                <div class="form-group{{ $errors->first('startyear') ? ' has-error':'' }}">
+                                    <label class="control-label">Año Desde a Generar</label>
+                                    <input type="text" class="form-control input-sm" name="startyear" value="{{ old('startyear') }}">
+                                    <span class="help-block">{{ $errors->first('startyear') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-group{{ $errors->first('endyear') ? ' has-error':'' }}">
+                                    <label class="control-label">Año Hasta a Generar</label>
+                                    <input type="text" class="form-control input-sm" name="endyear" value="{{ old('endyear') }}">
+                                    <span class="help-block">{{ $errors->first('endyear') }}</span>
                                 </div>
                             </div>
                         </div>

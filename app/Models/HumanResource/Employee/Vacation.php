@@ -21,14 +21,18 @@ class Vacation extends Model
         return $query->where('recordcard', $code);
     }
 
-    public function scopeExist($query, $year)
+    public function scopeExist($query, $startyear, $endyear)
     {
-        return $query->where('year', $year);
+        return $query->where('startyear', $startyear)->where('endyear', $endyear);
     }
 
     public static function reduceVacationDaysForYear($year, $day_took)
     {
-        $query = self::where('recordcard', session('employee')->recordcard)->where('year', $year);
+        $parts = explode('-', $year);
+
+        $query = self::where('recordcard', session('employee')->recordcard)
+                    ->where('startyear', $parts[0])
+                    ->where('endyear', $parts[1]);
 
         $vacation = $query->first();
 

@@ -28,7 +28,7 @@
                                 <select name="vacation_year" class="form-control input-sm">
                                     <option value=""></option>
                                     @foreach ($vacations as $vacation)
-                                        <option value="{{ $vacation->year }}" remaining="{{ $vacation->remaining }}"{{ old('vacation_year') == $vacation->year ? 'selected' : '' }}>{{ $vacation->year }}</option>
+                                        <option value="{{ $vacation->startyear }}-{{ $vacation->endyear }}" remaining="{{ $vacation->remaining }}"{{ old('vacation_year') == ($vacation->startyear . '-' . $vacation->endyear) ? 'selected' : '' }}>{{ $vacation->startyear . ' - ' . $vacation->endyear }}</option>
                                     @endforeach
                                 </select>
                                 <span class="help-block">{{ $errors->first('vacation_year') }}</span>
@@ -128,7 +128,9 @@
             total_days.append('<option value="'+i+'">'+i+'</option>');
         }
 
-        if ((new Date).getFullYear() == vacation_year.val()) {
+        var parts = vacation_year.val().split('-');
+
+        if ((new Date).getFullYear() == parts[0]) {
             add_days.html('<option value="0">0</option>');
 
             for (var i = 1; i <= 2; i++) {

@@ -43,7 +43,7 @@
                         </div>
                         <div class="col-xs-3">
                             <div class="form-group{{ $errors->first('bonusrea') ? ' has-error':'' }}">
-                                <label class="control-label">Motivo si Aplica Bono Vacacional</label>
+                                <label class="control-label">Motivo si no Aplica Bono Vacacional</label>
                                 <input type="text" class="form-control input-sm" name="bonusrea" value="{{ $human_resource_request->detail->bonusrea }}">
                                 <span class="help-block">{{ $errors->first('bonusrea') }}</span>
                             </div>

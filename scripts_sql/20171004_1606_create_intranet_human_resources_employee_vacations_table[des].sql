@@ -1,6 +1,7 @@
 --intranet employee vacations
 create table intempvacs (
     recordcard varchar(45),
-    year integer(4),
-    remaining integer(2),
+    startyear numeric(4),
+    endyear numeric(4),
+    remaining numeric(2),
 )
