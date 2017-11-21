@@ -58,8 +58,15 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <div class="alert alert-info">
+                            <div class="well" style="background-color: #ffeb3b;">
                                 En caso de que por cualquier razón terminara la relación laboral que actualmente mantengo con <b>Banco Múltiple de las Américas, S.A.</b>, autorizo a dicha institución a descontar de cualesquiera, prestaciones o derechos adquiridos, en virtud de la relación laboral mantenida con la misma, la cantidad adeudada por concepto de <b>anticipo de salario</b>, para que proceda al pago de la misma, comprometiéndome a pagar cualquier diferencia que no pueda cubrirse con los valores correspondientes a las prestaciones o derechos adquiridos.
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="accept"> Acepto los Términos y Condiciones de esta solicitud
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -96,4 +103,16 @@
     function calculate(amount, dues) {
         $('input[name=ant_due_amount]').val((amount / dues).toFixed(2));
     }
+
+    var accept = $('#accept');
+    var btn_submit = $('#btn_submit');
+    btn_submit.hide('fast');
+
+    accept.change(function () {
+        if (accept.is(':checked')) {
+            btn_submit.show('fast');
+        } else {
+            btn_submit.hide('fast');
+        }
+    });
 </script>

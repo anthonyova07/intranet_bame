@@ -226,7 +226,7 @@ class Customer extends Model
 
     public function payroll_account()
     {
-        return $this->hasMany(Account::class, 'acmcun')->where('acmacd', '04')->where('acmast', 'A')->whereIn('acmpro', ['H201', 'V201']);
+        return $this->hasMany(Account::class, 'acmcun')->where('acmacd', '04')->where('acmast', 'A')->whereIn('acmpro', ['H201']);
     }
 
     public function accounts_dda()
