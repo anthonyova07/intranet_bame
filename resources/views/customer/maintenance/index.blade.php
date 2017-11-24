@@ -127,6 +127,17 @@
                                                     title="Aprobar">
                                                     <i class="fa fa-check fa-fw"></i>
                                                 </a>
+                                                <a
+                                                    href="{{ route('customer.maintenance.print', $m->id) }}"
+                                                    class=""
+                                                    style="color: #ffa500;"
+                                                    onclick="approve(this)"
+                                                    data-toggle="tooltip"
+                                                    data-placement="top"
+                                                    target="__blank"
+                                                    title="Imprimir">
+                                                    <i class="fa fa-print fa-fw"></i>
+                                                </a>
                                             @endif
                                         </td>
                                         <td align="center">

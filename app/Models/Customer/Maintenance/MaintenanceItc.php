@@ -21,4 +21,29 @@ class MaintenanceItc extends Model
     public $timestamps = false;
 
     protected $dateFormat = 'Y-m-d H:i:s';
+
+    public function getMainPhone()
+    {
+        return '(' . $this->itcmphoare . ') ' . $this->itcmphonum . '-' . $this->itcmphoext;
+    }
+
+    public function getSecundaryPhone()
+    {
+        return '(' . $this->itcsphoare . ') ' . $this->itcsphonum . '-' . $this->itcsphoext;
+    }
+
+    public function getMainCel()
+    {
+        return '(' . $this->itcmcelare . ') ' . $this->itcmcelnum;
+    }
+
+    public function getSecundaryCel()
+    {
+        return '(' . $this->itcscelare . ') ' . $this->itcscelnum;
+    }
+
+    public function getFax()
+    {
+        return '(' . $this->itcfaxarea . ') ' . $this->itcfaxnumb;
+    }
 }

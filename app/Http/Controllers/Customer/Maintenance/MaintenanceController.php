@@ -492,7 +492,7 @@ class MaintenanceController extends Controller
 
             $maintenance->save();
 
-            do_log('Realizó Mantenimiento del cliente ( number:' . strip_tags($customer->getCode()) . ' )');
+            do_log('Realizó Mantenimiento del cliente ( numero:' . strip_tags($customer->getCode()) . ' )');
         }
 
         if (!$request->to_approver) {
@@ -828,5 +828,20 @@ class MaintenanceController extends Controller
 
         return view('customer.maintenance.excel.maintenances')
                 ->with('maintenances', $maintenances);
+    }
+
+    public function print($id)
+    {
+        $m = MaintenanceIbs::find($id);
+
+        if ($m->isapprov) {
+            return back()->with('error', 'Este mantenimiento ha sido aprobado, no es posible imprimirlo.');
+        }
+
+        do_log('Imprimió el Mantenimiento ( cliente:' . strip_tags($m->clinumber) . ' )');
+
+        return view('customer.maintenance.print.maintenance')
+            ->with('datetime', new DateTime)
+            ->with('m', $m);
     }
 }
