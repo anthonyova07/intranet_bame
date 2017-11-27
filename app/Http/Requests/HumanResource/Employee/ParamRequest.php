@@ -25,6 +25,7 @@ class ParamRequest extends Request
     {
         return [
             'name' => 'required|unique:ibs.intrhemppa,name,' . $this->param,
+            'level' => 'integer',
         ];
     }
 }

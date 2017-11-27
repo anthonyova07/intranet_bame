@@ -15,11 +15,13 @@ class ParamController extends Controller
 {
     public function create($type)
     {
-        $departments = Param::where('type', 'DEP')->get();
+        $view = view('human_resources.employee.param.create');
 
-        return view('human_resources.employee.param.create')
-            ->with('departments', $departments)
-            ->with('type', $type);
+        if (in_array($type, ['POS'])) {
+            $view->with('departments', Param::where('type', 'DEP')->get());
+        }
+
+        return $view->with('type', $type);
     }
 
     public function store(ParamRequest $request, $type)
@@ -30,6 +32,7 @@ class ParamController extends Controller
 
         $param->type = $type;
         $param->name = $request->name;
+        $param->level = $request->level;
         $param->dep_id = $request->department;
 
         $param->created_by = session()->get('user');
@@ -38,23 +41,25 @@ class ParamController extends Controller
 
         do_log('Creó el ' . get_employee_params($type) . ' de Empleados ( nombre:' . $param->name . ' )');
 
-        return redirect(route('human_resources.employee.index'))->with('success', 'El ' . get_employee_params($type) . ' fue creado correctamente.');
+        return redirect()->route('human_resources.employee.index')->with('success', 'El ' . get_employee_params($type) . ' fue creado correctamente.');
 
     }
 
     public function edit($type, $param)
     {
-        $departments = Param::where('type', 'DEP')->get();
         $param = Param::where('type', $type)->find($param);
 
         if (!$param) {
             return back()->with('warning', 'Este empleado no existe!');
         }
 
-        return view('human_resources.employee.param.edit')
-            ->with('type', $type)
-            ->with('departments', $departments)
-            ->with('param', $param);
+        $view = view('human_resources.employee.param.edit');
+
+        if (in_array($type, ['POS'])) {
+            $view->with('departments', Param::where('type', 'DEP')->get());
+        }
+
+        return $view->with('type', $type)->with('param', $param);
     }
 
     public function update(ParamRequest $request, $type, $param)
@@ -63,6 +68,7 @@ class ParamController extends Controller
 
         $param->type = $type;
         $param->name = $request->name;
+        $param->level = $request->level;
         $param->dep_id = $request->department;
 
         $param->updated_by = session()->get('user');
@@ -71,7 +77,7 @@ class ParamController extends Controller
 
         do_log('Editó el ' . get_employee_params($type) . ' de Empleados ( nombre:' . $param->name . ' )');
 
-        return redirect(route('human_resources.employee.index'))->with('success', 'El ' . get_employee_params($type) . ' fue creado correctamente.');
+        return redirect()->route('human_resources.employee.index')->with('success', 'El ' . get_employee_params($type) . ' fue creado correctamente.');
     }
 
     public function loadparams(Request $request, $type)
@@ -88,6 +94,24 @@ class ParamController extends Controller
                 }
 
                 $parts = explode(',', $line);
+
+                if ($type == 'LEVPOS') {
+                    if (isset($parts[0]) && !empty($parts[0])) {
+                        $param = [];
+
+                        $param['id'] = uniqid(true) . rand(0, 9);
+                        $param['type'] = $type;
+                        $param['name'] = utf8_encode(trim($parts[0]));
+                        $param['level'] = is_int((int) trim($parts[1])) ? trim($parts[1]) : 0;
+                        $param['created_by'] = session()->get('user');
+                        $param['created_at'] = $time;
+                        $param['updated_at'] = $time;
+
+                        $params->push($param);
+                    }
+
+                    continue;
+                }
 
                 if (isset($parts[1]) && !empty($parts[1])) {
                     $param = [];

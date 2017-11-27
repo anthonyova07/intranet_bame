@@ -29,13 +29,22 @@
                                     <span class="help-block">{{ $errors->first('department') }}</span>
                                 </div>
                             @endif
-                            <div class="col-xs-12">
+                            <div class="col-xs-{{ in_array($type, ['POS', 'LEVPOS']) ? '6' : '12' }}">
                                 <div class="form-group{{ $errors->first('name') ? ' has-error':'' }}">
                                     <label class="control-label">Nombre</label>
                                     <input type="text" class="form-control input-sm" name="name" value="{{ $param->name }}">
                                     <span class="help-block">{{ $errors->first('name') }}</span>
                                 </div>
                             </div>
+                            @if ($type == 'LEVPOS')
+                                <div class="col-xs-6">
+                                    <div class="form-group{{ $errors->first('level') ? ' has-error':'' }}">
+                                        <label class="control-label">Nivel</label>
+                                        <input type="text" class="form-control input-sm" name="level" value="{{ $param->level }}">
+                                        <span class="help-block">{{ $errors->first('level') }}</span>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                         {{ method_field('PUT') }}
                         {{ csrf_field() }}

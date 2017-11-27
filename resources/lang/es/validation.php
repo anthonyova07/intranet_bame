@@ -271,5 +271,6 @@ return [
       'vac_additional_days' => 'Días Adicionales',
       'car_package_type' => 'Tipo de Paquetes',
       'car_account_state_period' => 'Periodo',
+      'level' => 'Nivel',
     ],
 ];
