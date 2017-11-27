@@ -18,7 +18,8 @@ class ParamController extends Controller
         $view = view('human_resources.employee.param.create');
 
         if (in_array($type, ['POS'])) {
-            $view->with('departments', Param::where('type', 'DEP')->get());
+            $view->with('departments', Param::dep()->get());
+            $view->with('levels', Param::lev()->get());
         }
 
         return $view->with('type', $type);
@@ -56,7 +57,8 @@ class ParamController extends Controller
         $view = view('human_resources.employee.param.edit');
 
         if (in_array($type, ['POS'])) {
-            $view->with('departments', Param::where('type', 'DEP')->get());
+            $view->with('departments', Param::dep()->get());
+            $view->with('levels', Param::lev()->get());
         }
 
         return $view->with('type', $type)->with('param', $param);
@@ -68,7 +70,15 @@ class ParamController extends Controller
 
         $param->type = $type;
         $param->name = $request->name;
-        $param->level = $request->level;
+
+        if (in_array($type, ['POS'])) {
+            $param->level_id = $request->level;
+        }
+
+        if (in_array($type, ['LEVPOS'])) {
+            $param->level = $request->level;
+        }
+
         $param->dep_id = $request->department;
 
         $param->updated_by = session()->get('user');

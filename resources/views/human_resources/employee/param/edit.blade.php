@@ -13,13 +13,13 @@
 @section('contents')
 
     <div class="row">
-        <div class="col-xs-6 col-xs-offset-3">
+        <div class="col-xs-8 col-xs-offset-2">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <form method="post" action="{{ route('human_resources.employee.{type}.param.update', ['type' => $type, 'param' => $param->id]) }}" id="form" enctype="multipart/form-data">
                         <div class="row">
                             @if ($type == 'POS')
-                                <div class="col-xs-6">
+                                <div class="col-xs-4">
                                     <label class="control-label">Departamento</label>
                                     <select name="department" class="form-control input-sm">
                                         @foreach ($departments as $department)
@@ -28,8 +28,17 @@
                                     </select>
                                     <span class="help-block">{{ $errors->first('department') }}</span>
                                 </div>
+                                <div class="col-xs-4">
+                                    <label class="control-label">Nivel</label>
+                                    <select name="level" class="form-control input-sm">
+                                        @foreach ($levels as $level)
+                                            <option value="{{ $level->id }}"{{ $param->level_id == $level->id ? ' selected':'' }}>{{ $level->name }}({{ $level->level }})</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="help-block">{{ $errors->first('level') }}</span>
+                                </div>
                             @endif
-                            <div class="col-xs-{{ in_array($type, ['POS', 'LEVPOS']) ? '6' : '12' }}">
+                            <div class="col-xs-{{ in_array($type, ['POS', 'LEVPOS']) ? '4' : '12' }}">
                                 <div class="form-group{{ $errors->first('name') ? ' has-error':'' }}">
                                     <label class="control-label">Nombre</label>
                                     <input type="text" class="form-control input-sm" name="name" value="{{ $param->name }}">
@@ -37,7 +46,7 @@
                                 </div>
                             </div>
                             @if ($type == 'LEVPOS')
-                                <div class="col-xs-6">
+                                <div class="col-xs-4">
                                     <div class="form-group{{ $errors->first('level') ? ' has-error':'' }}">
                                         <label class="control-label">Nivel</label>
                                         <input type="text" class="form-control input-sm" name="level" value="{{ $param->level }}">
