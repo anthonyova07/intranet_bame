@@ -425,7 +425,7 @@ class MaintenanceController extends Controller
         session()->forget('customer_maintenance');
         session()->forget('customer_maintenance_core');
 
-        if (env('MAINTENANCE_NEED_APPROVALS') == 'true') {
+        if (config('bame.mantenance_need_approvals') == 'true') {
             if ($r->core == 'ibs') {
                 return redirect()->route('customer.maintenance.create', array_merge($r->only(['tdc', 'core', '_token']), ['identification' => $idn, 'core' => 'itc']))->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.');
             } else {
@@ -436,7 +436,7 @@ class MaintenanceController extends Controller
                 }
             }
         } else {
-            return redirect()->route('customer.maintenance.approve', ['id' => $maintenance_ibs->id])->with('success', 'Los cambios fueron guardados y aprobados correctamente.');
+            return redirect()->route('customer.maintenance.approve', ['ids' => $maintenance_ibs->id])->with('success', 'Los cambios fueron guardados y aprobados correctamente.');
         }
     }
 
@@ -499,10 +499,18 @@ class MaintenanceController extends Controller
             if ($request->core == 'ibs') {
                 return redirect()->route('customer.maintenance.create', array_merge($request->only(['tdc', 'core', '_token']), ['identification' => $maintenance->cliident,'core' => 'itc']))->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.');
             } else {
+                $msg = 'Los cambios fueron guardados correctamente';
+
+                if (config('bame.mantenance_need_approvals') == 'true') {
+                    $msg .= ', en espera de aprobación';
+                }
+
+                $msg .= '.';
+
                 if ($request->tdc < ($customer->actives_creditcards->count() - 1)) {
-                    return redirect()->route('customer.maintenance.create', array_merge($request->only(['tdc', 'core', '_token']), ['identification' => $maintenance->cliident, 'core' => 'itc', 'tdc' => ($request->tdc + 1)]))->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.');
+                    return redirect()->route('customer.maintenance.create', array_merge($request->only(['tdc', 'core', '_token']), ['identification' => $maintenance->cliident, 'core' => 'itc', 'tdc' => ($request->tdc ?: 0)]))->with('success', $msg);
                 } else {
-                    return redirect()->route('customer.maintenance.create')->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.');
+                    return redirect()->route('customer.maintenance.create')->with('success', $msg);
                 }
             }
         }
