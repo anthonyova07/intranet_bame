@@ -525,16 +525,16 @@ class MaintenanceController extends Controller
             $msg .= '.';
 
             if ($maintenance->typecore == 'ibs') {
-                return redirect()->route('customer.maintenance.create', array_merge($request->only(['tdc', 'core', '_token']), ['identification' => $maintenance->cliident, 'core' => 'itc']))->with('success', $msg);
+                return redirect()->route('customer.maintenance.create', array_merge($request->only(['tdc', 'core', '_token']), ['identification' => $maintenance->cliident, 'core' => 'itc']))->with('success', $msg)->with('link', route('customer.maintenance.print', $maintenances->get(0)->id));
             } else if ($maintenance->typecore == 'itc') {
                 if (session('tdc_numbers')->count() == $customer->actives_creditcards->count()) {
                     session()->forget('tdc_numbers');
 
-                    return redirect()->route('customer.maintenance.create')->with('success', $msg);
+                    return redirect()->route('customer.maintenance.create')->with('success', $msg)->with('link', route('customer.maintenance.print', $maintenances->get(0)->id));
                 } else {
                     foreach ($customer->actives_creditcards as $index => $actives_creditcard) {
                         if (!session('tdc_numbers')->contains($actives_creditcard->getNumber())) {
-                            return redirect()->route('customer.maintenance.create', array_merge($request->only(['tdc', 'core', '_token']), ['identification' => $maintenance->cliident, 'core' => 'itc', 'tdc' => $index]))->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.');
+                            return redirect()->route('customer.maintenance.create', array_merge($request->only(['tdc', 'core', '_token']), ['identification' => $maintenance->cliident, 'core' => 'itc', 'tdc' => $index]))->with('success', $msg)->with('link', route('customer.maintenance.print', $maintenances->get(0)->id));
                         }
                     }
                 }
@@ -868,9 +868,9 @@ class MaintenanceController extends Controller
     {
         $m = MaintenanceIbs::find($id);
 
-        if ($m->isapprov) {
-            return back()->with('error', 'Este mantenimiento ha sido aprobado, no es posible imprimirlo.');
-        }
+        // if ($m->isapprov) {
+        //     return back()->with('error', 'Este mantenimiento ha sido aprobado, no es posible imprimirlo.');
+        // }
 
         do_log('Imprimió el Mantenimiento ( cliente:' . strip_tags($m->clinumber) . ' )');
 
