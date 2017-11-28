@@ -200,6 +200,12 @@ class MaintenanceController extends Controller
 
         $regions = Region::orderByDesc()->get();
 
+        $no_more_tdc = false;
+
+        if (session('tdc_numbers')) {
+            $no_more_tdc = session('tdc_numbers')->count() == ($customer->actives_creditcards->count() - 1);
+        }
+
         return view('customer.maintenance.create')
             ->with('customer', $customer)
 
@@ -227,6 +233,7 @@ class MaintenanceController extends Controller
             ->with('address_two', $address_two)
             ->with('tdc', $tdc)
             ->with('core', $core)
+            ->with('no_more_tdc', $no_more_tdc)
             ->with('ways_sending_statements', $this->ways_sending_statements);
     }
 
