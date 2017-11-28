@@ -34,7 +34,13 @@
                                             {{-- <label class="control-label">Tarjetas</label> --}}
                                             <select onchange="$('#actives_creditcards_form').submit();" class="form-control input-sm" name="tdc" data-toggle="tooltip" title="Tarjetas del Cliente" style="border-color: #ff0000;outline: 0;box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255,0,0,.6);">
                                                 @foreach ($customer->actives_creditcards as $key => $creditcard)
-                                                    <option type="tdc" value="{{ $key }}" {{ $tdc == $key ? 'selected':'' }}>Tarjeta ( {{ $creditcard->product->getDescription() }} ) ( {{ $creditcard->getMaskedNumber() }} )</option>
+                                                    @if (session('tdc_numbers'))
+                                                        @if (!session('tdc_numbers')->contains($creditcard->getNumber()))
+                                                            <option type="tdc" value="{{ $key }}" {{ $tdc == $key ? 'selected':'' }}>Tarjeta ( {{ $creditcard->product->getDescription() }} ) ( {{ $creditcard->getMaskedNumber() }} )</option>
+                                                        @endif
+                                                    @else
+                                                        <option type="tdc" value="{{ $key }}" {{ $tdc == $key ? 'selected':'' }}>Tarjeta ( {{ $creditcard->product->getDescription() }} ) ( {{ $creditcard->getMaskedNumber() }} )</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                             {{-- <span class="help-block">{{ $errors->first('tdc') }}</span> --}}
@@ -53,7 +59,7 @@
 
         <form method="post" action="{{ route('customer.maintenance.store') }}" id="form">
             {{ csrf_field() }}
-            <input type="hidden" name="tdc" value="{{ request('tdc') }}">
+            <input type="hidden" name="tdc" value="{{ $tdc }}">
             <input type="hidden" name="core" value="{{ request('core') }}">
 
             <div class="row">
@@ -78,11 +84,21 @@
                                 <div class="row">
                                     @foreach ($customer->actives_creditcards as $key => $creditcard)
                                         @if ($key != request('tdc'))
-                                            <div class="col-xs-6">
-                                                <label>
-                                                    <input type="checkbox" name="tdc_additionals[]" value="{{ $key }}"> Tarjeta ( {{ $creditcard->product->getDescription() }} ) ( {{ $creditcard->getMaskedNumber() }} )
-                                                </label>
-                                            </div>
+                                            @if (session('tdc_numbers'))
+                                                @if (!session('tdc_numbers')->contains($creditcard->getNumber()))
+                                                    <div class="col-xs-6">
+                                                        <label>
+                                                            <input type="checkbox" name="tdc_additionals[]" value="{{ $key }}"> Tarjeta ( {{ $creditcard->product->getDescription() }} ) ( {{ $creditcard->getMaskedNumber() }} )
+                                                        </label>
+                                                    </div>
+                                                @endif
+                                            @else
+                                                <div class="col-xs-6">
+                                                    <label>
+                                                        <input type="checkbox" name="tdc_additionals[]" value="{{ $key }}"> Tarjeta ( {{ $creditcard->product->getDescription() }} ) ( {{ $creditcard->getMaskedNumber() }} )
+                                                    </label>
+                                                </div>
+                                            @endif
                                         @endif
                                     @endforeach
                                 </div>
