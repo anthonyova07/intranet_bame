@@ -127,6 +127,8 @@
                                                     title="Aprobar">
                                                     <i class="fa fa-check fa-fw"></i>
                                                 </a>
+                                            @endif
+                                            @if (!can_not_do('customer_maintenance_print'))
                                                 <a
                                                     href="{{ route('customer.maintenance.print', $m->id) }}"
                                                     class=""
