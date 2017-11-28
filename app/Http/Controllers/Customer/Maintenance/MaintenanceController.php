@@ -441,22 +441,22 @@ class MaintenanceController extends Controller
 
         if (config('bame.mantenance_need_approvals') == 'true') {
             if ($r->core == 'ibs') {
-                return redirect()->route('customer.maintenance.create', array_merge($r->only(['tdc', 'core', '_token']), ['identification' => $idn, 'core' => 'itc']))->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.');
+                return redirect()->route('customer.maintenance.create', array_merge($r->only(['tdc', 'core', '_token']), ['identification' => $idn, 'core' => 'itc']))->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.')->with('link', route('customer.maintenance.print', $maintenance_ibs->id));
             } else if ($r->core == 'itc') {
                 if (session('tdc_numbers')->count() == $customer->actives_creditcards->count()) {
                     session()->forget('tdc_numbers');
 
-                    return redirect()->route('customer.maintenance.create')->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.');
+                    return redirect()->route('customer.maintenance.create')->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.')->with('link', route('customer.maintenance.print', $maintenance_ibs->id));
                 } else {
                     foreach ($customer->actives_creditcards as $index => $actives_creditcard) {
                         if (!session('tdc_numbers')->contains($actives_creditcard->getNumber())) {
-                            return redirect()->route('customer.maintenance.create', array_merge($r->only(['tdc', 'core', '_token']), ['identification' => $idn, 'core' => 'itc', 'tdc' => $index]))->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.');
+                            return redirect()->route('customer.maintenance.create', array_merge($r->only(['tdc', 'core', '_token']), ['identification' => $idn, 'core' => 'itc', 'tdc' => $index]))->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.')->with('link', route('customer.maintenance.print', $maintenance_ibs->id));
                         }
                     }
                 }
             }
         } else {
-            return redirect()->route('customer.maintenance.approve', ['ids' => $maintenance_ibs->id])->with('success', 'Los cambios fueron guardados y aprobados correctamente.');
+            return redirect()->route('customer.maintenance.approve', ['ids' => $maintenance_ibs->id])->with('success', 'Los cambios fueron guardados y aprobados correctamente.')->with('link', route('customer.maintenance.print', $maintenance_ibs->id));
         }
     }
 
