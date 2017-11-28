@@ -109,7 +109,7 @@ return [
     |
     */
 
-    'cookie' => 'bame_intranet_session',
+    'cookie' => 'bameintranetsession',
 
     /*
     |--------------------------------------------------------------------------
