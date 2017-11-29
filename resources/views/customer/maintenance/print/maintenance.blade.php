@@ -55,7 +55,7 @@
                     <td class="table_td" align="right" width="408" style="border: 0;">
                         <b style="font-size: 14px;font-style: italic;">Mantenimiento del Cliente. {{ $m->clinumber }}</b>
                         <br>
-                        <div style="color: #777777;font-size: 12px;">Emitido por Bancamérica 101-11784-2</div>
+                        <div style="color: #777777;font-size: 12px;">Realizado por {{ $m->createname }}</div>
                     </td>
                 </tr>
                 <tr align="right">

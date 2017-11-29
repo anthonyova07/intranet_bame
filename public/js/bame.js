@@ -147,19 +147,21 @@ $(document).ready(function() {
     headerPage.animateCSS('slideInLeft');
 
     $('a.btn, .pagination>li>a, .nav-second-level>li>a, .naranja, button[type=submit], .fa-share, a.link_noticias, a.list-group-item').click(function () {
-        headerBar.animateCSS('slideOutUp', function () {
-            $(this).remove();
-        });
-        panel.animateCSS(animateNameOut, function () {
-            $(this).remove();
-        });
-        news.animateCSS(animateNameOut, function () {
-            $(this).remove();
-        });
-        headerPage.animateCSS('slideOutRight', function () {
-            $(this).remove();
-        });
-        alert.animateCSS('bounceOutUp');
+        if (!$(this).hasClass('no-effect')) {
+            headerBar.animateCSS('slideOutUp', function () {
+                $(this).remove();
+            });
+            panel.animateCSS(animateNameOut, function () {
+                $(this).remove();
+            });
+            news.animateCSS(animateNameOut, function () {
+                $(this).remove();
+            });
+            headerPage.animateCSS('slideOutRight', function () {
+                $(this).remove();
+            });
+            alert.animateCSS('bounceOutUp');
+        }
     });
 
     $('.alert').click(function () {

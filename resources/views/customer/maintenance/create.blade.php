@@ -16,6 +16,18 @@
 
 @section('contents')
 
+    @if (session('modal_msg'))
+        <div id="maintenance_print" class="modal fade" tabindex="-1">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <a href="{{ session('modal_link') }}" id="btn_print" target="__blank" class="btn btn-warning btn-block no-effect">Imprimir Matenimiento</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     @if (session()->has('customer_maintenance'))
 
         @if ($core == 'itc')
@@ -656,6 +668,18 @@
                     radio.attr('checked', true);
                 }
             });
+        });
+
+        var modal = $('#maintenance_print');
+        var btn_print = $('#btn_print');
+
+        modal.modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+
+        btn_print.click(function () {
+            modal.modal('hide');
         });
     </script>
 

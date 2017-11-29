@@ -140,6 +140,8 @@ class MaintenanceController extends Controller
                 session()->forget('customer_maintenance');
                 session()->forget('customer_maintenance_core');
 
+                session()->reflash();
+
                 return redirect()->route('customer.maintenance.create')->with('warning', 'Este Cliente no posee tarjeta de crédito en el sistema.');
             }
 
@@ -441,22 +443,22 @@ class MaintenanceController extends Controller
 
         if (config('bame.mantenance_need_approvals') == 'true') {
             if ($r->core == 'ibs') {
-                return redirect()->route('customer.maintenance.create', array_merge($r->only(['tdc', 'core', '_token']), ['identification' => $idn, 'core' => 'itc']))->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.')->with('link', route('customer.maintenance.print', $maintenance_ibs->id));
+                return redirect()->route('customer.maintenance.create', array_merge($r->only(['tdc', 'core', '_token']), ['identification' => $idn, 'core' => 'itc']))->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.')->with('modal_link', route('customer.maintenance.print', $maintenance_ibs->id))->with('modal_msg', true);
             } else if ($r->core == 'itc') {
                 if (session('tdc_numbers')->count() == $customer->actives_creditcards->count()) {
                     session()->forget('tdc_numbers');
 
-                    return redirect()->route('customer.maintenance.create')->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.')->with('link', route('customer.maintenance.print', $maintenance_ibs->id));
+                    return redirect()->route('customer.maintenance.create')->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.')->with('modal_link', route('customer.maintenance.print', $maintenance_ibs->id))->with('modal_msg', true);
                 } else {
                     foreach ($customer->actives_creditcards as $index => $actives_creditcard) {
                         if (!session('tdc_numbers')->contains($actives_creditcard->getNumber())) {
-                            return redirect()->route('customer.maintenance.create', array_merge($r->only(['tdc', 'core', '_token']), ['identification' => $idn, 'core' => 'itc', 'tdc' => $index]))->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.')->with('link', route('customer.maintenance.print', $maintenance_ibs->id));
+                            return redirect()->route('customer.maintenance.create', array_merge($r->only(['tdc', 'core', '_token']), ['identification' => $idn, 'core' => 'itc', 'tdc' => $index]))->with('success', 'Los cambios fueron guardados correctamente, en espera de aprobación.')->with('modal_link', route('customer.maintenance.print', $maintenance_ibs->id))->with('modal_msg', true);
                         }
                     }
                 }
             }
         } else {
-            return redirect()->route('customer.maintenance.approve', ['ids' => $maintenance_ibs->id])->with('success', 'Los cambios fueron guardados y aprobados correctamente.')->with('link', route('customer.maintenance.print', $maintenance_ibs->id));
+            return redirect()->route('customer.maintenance.approve', ['ids' => $maintenance_ibs->id])->with('success', 'Los cambios fueron guardados y aprobados correctamente.')->with('modal_link', route('customer.maintenance.print', $maintenance_ibs->id))->with('modal_msg', true);
         }
     }
 
@@ -525,16 +527,16 @@ class MaintenanceController extends Controller
             $msg .= '.';
 
             if ($maintenance->typecore == 'ibs') {
-                return redirect()->route('customer.maintenance.create', array_merge($request->only(['tdc', 'core', '_token']), ['identification' => $maintenance->cliident, 'core' => 'itc']))->with('success', $msg)->with('link', route('customer.maintenance.print', $maintenances->get(0)->id));
+                return redirect()->route('customer.maintenance.create', array_merge($request->only(['tdc', 'core', '_token']), ['identification' => $maintenance->cliident, 'core' => 'itc']))->with('success', $msg)->with('modal_link', route('customer.maintenance.print', $maintenances->get(0)->id))->with('modal_msg', true);
             } else if ($maintenance->typecore == 'itc') {
                 if (session('tdc_numbers')->count() == $customer->actives_creditcards->count()) {
                     session()->forget('tdc_numbers');
 
-                    return redirect()->route('customer.maintenance.create')->with('success', $msg)->with('link', route('customer.maintenance.print', $maintenances->get(0)->id));
+                    return redirect()->route('customer.maintenance.create')->with('success', $msg)->with('modal_link', route('customer.maintenance.print', $maintenances->get(0)->id))->with('modal_msg', true);
                 } else {
                     foreach ($customer->actives_creditcards as $index => $actives_creditcard) {
                         if (!session('tdc_numbers')->contains($actives_creditcard->getNumber())) {
-                            return redirect()->route('customer.maintenance.create', array_merge($request->only(['tdc', 'core', '_token']), ['identification' => $maintenance->cliident, 'core' => 'itc', 'tdc' => $index]))->with('success', $msg)->with('link', route('customer.maintenance.print', $maintenances->get(0)->id));
+                            return redirect()->route('customer.maintenance.create', array_merge($request->only(['tdc', 'core', '_token']), ['identification' => $maintenance->cliident, 'core' => 'itc', 'tdc' => $index]))->with('success', $msg)->with('modal_link', route('customer.maintenance.print', $maintenances->get(0)->id))->with('modal_msg', true);
                         }
                     }
                 }
