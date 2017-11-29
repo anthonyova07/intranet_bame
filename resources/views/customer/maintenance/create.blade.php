@@ -129,6 +129,9 @@
                                 <div class="panel-body text-center">
                                     <a class="btn btn-info btn-xs" href="{{ route('customer.maintenance.create', ['cancel' => 'true']) }}">Cancelar</a>
                                     <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Guardar</button>
+                                    @if (request('core') == 'ibs')
+                                        <a class="btn btn-warning btn-xs" href="{{ route('customer.maintenance.create', ['core' => 'itc', 'identification' => request('identification')]) }}">Ir a ITC</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
