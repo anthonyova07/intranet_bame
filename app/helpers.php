@@ -920,6 +920,32 @@ function get_financial_calculation_params($param = null)
     return $params->get($param);
 }
 
+function masked_tdc_number($tdc)
+{
+    $tdc_1 = substr($tdc, 0, 6);
+    $tdc_2 = substr($tdc, 12, 4);
+
+    return substr($tdc_1, 0, 4) . '-' . substr($tdc_1, 4, 6) . '**-****-' . $tdc_2;
+}
+
+function ways_sending_statement_itc($param = null)
+{
+    $params = collect([
+        '1' => 'Casa',
+        '2' => 'Oficina',
+        '3' => 'Fax',
+        '4' => 'Sucursal',
+        '5' => 'Mensajería',
+        '6' => 'Correo Electrónico',
+    ]);
+
+    if (!$param) {
+        return $params;
+    }
+
+    return $params->get($param);
+}
+
 function get_days_from_text($text)
 {
     $days = 0;

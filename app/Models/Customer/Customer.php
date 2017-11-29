@@ -120,6 +120,21 @@ class Customer extends Model
         return cap_str($this->cusna2);
     }
 
+    public function getCountry()
+    {
+        return cap_str($this->cusctr);
+    }
+
+    public function getPostalMail()
+    {
+        return cap_str($this->cuspob);
+    }
+
+    public function getZipCode()
+    {
+        return cap_str($this->cuszpc);
+    }
+
     public function getResidentialOrBuilding()
     {
         return cap_str($this->cusna3);
@@ -128,6 +143,11 @@ class Customer extends Model
     public function getBuildingOrHouseNumber()
     {
         return cap_str($this->cusna4);
+    }
+
+    public function getProvinceCode()
+    {
+        return $this->cusste;
     }
 
     public function getProvince()
@@ -141,6 +161,11 @@ class Customer extends Model
         return cap_str($province->cnodsc);
     }
 
+    public function getCityCode()
+    {
+        return $this->cusuc8;
+    }
+
     public function getCity()
     {
         $city = DB::connection('ibs')->table('cnofc')->where('cnocfl', 'PI')->where('cnorcd', $this->cusuc8)->first();
@@ -150,6 +175,11 @@ class Customer extends Model
         }
 
         return cap_str($city->cnodsc);
+    }
+
+    public function getSectorCode()
+    {
+        return $this->cusuc7;
     }
 
     public function getSector()
@@ -183,9 +213,34 @@ class Customer extends Model
         return '(' . cod_tel($this->cusfax) . ') ' . tel($this->cusfax);
     }
 
+    public function getClearResidentialPhone()
+    {
+        return clear_str($this->cushpn);
+    }
+
+    public function getClearOfficePhone()
+    {
+        return clear_str($this->cusphn);
+    }
+
+    public function getClearCellPhone()
+    {
+        return clear_str($this->cusph1);
+    }
+
+    public function getClearFaxPhone()
+    {
+        return clear_str($this->cusfax);
+    }
+
     public function getMail()
     {
         return clear_str($this->cusiad);
+    }
+
+    public function getMailType()
+    {
+        return clear_str($this->cusmlc);
     }
 
     public static function getPhoto($identification)
@@ -232,8 +287,17 @@ class Customer extends Model
     public function creditcards()
     {
         return $this->hasMany(CreditCard::class, 'codcl_mtar');
-        // return $this->hasMany(CreditCard::class, 'codcl_mtar')->where(function ($query) {
-        //     $query->where('stsrd_mtar', 1)->orWhere('stsrd_mtar', 6);
-        // });
+    }
+
+    public function actives_creditcards()
+    {
+        return $this->hasMany(CreditCard::class, 'codcl_mtar')->where(function ($query) {
+            $query->where('stsrd_mtar', 1)->orWhere('stsrd_mtar', 6);
+        });
+    }
+
+    public function scopeSearchByIdentification($query, $identification)
+    {
+        return $query->where('cusidn', $identification)->orWhere('cusln3', $identification);
     }
 }

@@ -18,7 +18,7 @@ class Description extends Model
 
     public function getCode()
     {
-        return $this->codig_desc;
+        return clear_str($this->codig_desc);
     }
 
     public function getDescription()
@@ -29,5 +29,15 @@ class Description extends Model
     public function getProcessDate()
     {
         return cap_str($this->fecpr_atrn);
+    }
+
+    public function scopeWherePrefix($query, $prefix)
+    {
+        return $query->where('prefi_desc', $prefix);
+    }
+
+    public function scopeOrderByDescription($query)
+    {
+        return $query->orderBy('nombr_desc', 'asc');
     }
 }
