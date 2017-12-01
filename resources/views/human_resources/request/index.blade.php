@@ -14,7 +14,7 @@
 
 @section('contents')
 
-    @if (request('access') != 'admin')
+    @if (request('access') != 'admin' && in_array(request('access'), ['supervisor', 'own']) && session('employee')->isSupervisor())
         <div class="row">
             <div class="col-xs-6 col-xs-offset-3">
                 <div class="panel panel-default">
@@ -23,7 +23,7 @@
                             <a class="btn btn-danger btn-xs btn-block" href="{{ route('human_resources.request.index', array_merge(request()->all(), ['access' => 'own'])) }}">Mis Solicitudes</a>
                         @endif
 
-                        @if (request('access') == 'own')
+                        @if (request('access') == 'own' && session('employee')->isSupervisor())
                             <a class="btn btn-danger btn-xs btn-block" href="{{ route('human_resources.request.index', array_merge(request()->all(), ['access' => 'supervisor'])) }}">Solicitudes de Supervisados</a>
                         @endif
                     </div>

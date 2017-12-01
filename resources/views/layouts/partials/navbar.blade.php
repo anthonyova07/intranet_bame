@@ -182,7 +182,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="effect" href="{{ route('human_resources.request.index') }}">
+                                <a class="effect" href="{{ route('human_resources.request.index', ['access' => 'own']) }}">
                                     <i class="fa fa-wpforms fa-fw"></i>
                                     Consulta Solicitudes
                                 </a>
