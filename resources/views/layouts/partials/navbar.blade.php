@@ -188,7 +188,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="#" class="no-effect">
                                     <i class="fa fa-plus fa-fw"></i>
                                     Nuevas Solicitud
                                     <span class="fa arrow"></span>

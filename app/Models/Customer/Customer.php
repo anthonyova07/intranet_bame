@@ -310,9 +310,4 @@ class Customer extends Model
     {
         return $query->where('cusidn', $idn)->orWhere('cusln3', $idn);
     }
-
-    public function scopeByIdn($query, $idn)
-    {
-        return $query->where('cusidn', $idn)->orWhere('cusln3', $idn);
-    }
 }
