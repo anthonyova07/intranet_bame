@@ -14,6 +14,24 @@
 
 @section('contents')
 
+    @if (request('access') != 'admin')
+        <div class="row">
+            <div class="col-xs-6 col-xs-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        @if (request('access') == 'supervisor')
+                            <a class="btn btn-danger btn-xs btn-block" href="{{ route('human_resources.request.index', array_merge(request()->all(), ['access' => 'own'])) }}">Mis Solicitudes</a>
+                        @endif
+
+                        @if (request('access') == 'own')
+                            <a class="btn btn-danger btn-xs btn-block" href="{{ route('human_resources.request.index', array_merge(request()->all(), ['access' => 'supervisor'])) }}">Solicitudes de Supervisados</a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <div class="row">
 
         <div class="col-xs-12">
@@ -92,7 +110,7 @@
                     <a class="btn btn-danger btn-xs" href="{{ route('human_resources.request.create') }}">Nueva Solicitud</a>
 
                     @if (!can_not_do('human_resource_request'))
-                        <a style="font-size: 13px;" class="label btn-success pull-right" target="__blank" href="{{ route('human_resources.request.export.excel', Request::except(['term', 'page'])) }}">Exportar Excel</a>
+                        <a style="font-size: 13px;" class="btn btn-success btn-xs pull-right no-effect" target="__blank" href="{{ route('human_resources.request.export.excel', Request::except(['term', 'page'])) }}">Exportar Excel</a>
                     @endif
                     <br>
                     <br>

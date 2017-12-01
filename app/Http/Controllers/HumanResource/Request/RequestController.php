@@ -53,13 +53,19 @@ class RequestController extends Controller
         }
 
         if ($request->access != 'admin') {
-            $human_resource_requests->where(function ($query) {
-                $query->where('coluser', session()->get('user'));
+            if ($request->access == 'own') {
+                $human_resource_requests->where(function ($query) {
+                    $query->where('coluser', session()->get('user'));
+                });
+            }
 
-                if (session('employee')->isSupervisor()) {
-                    $query->orWhereIn('coluser', session('employee')->getSubordinatesUsers());
-                }
-            });
+            if ($request->access == 'supervisor') {
+                $human_resource_requests->where(function ($query) {
+                    if (session('employee')->isSupervisor()) {
+                        $query->orWhereIn('coluser', session('employee')->getSubordinatesUsers());
+                    }
+                });
+            }
         }
 
         $params = Param::orderBy('name')->get();
