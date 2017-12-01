@@ -238,13 +238,11 @@ return [
       'ref_2_phone_cel' => 'Teléfono Celular',
       'username' => 'Usuario',
       'business' => 'Empresa',
-<<<<<<< HEAD
       'closing_cost' => 'Gasto de Cierre',
       'age' => 'Edad',
       'name_2' => 'Segundo Nombre',
       'lastname' => 'Apellido',
       'lastname_2' => 'Segundo Apellido',
-=======
       'position ' => 'Posición',
       'colsupuser' => 'Usuario de Supervisor',
       'permission_type' => 'Tipo de Permiso',
@@ -279,6 +277,5 @@ return [
       'car_package_type' => 'Tipo de Paquetes',
       'car_account_state_period' => 'Periodo',
       'level' => 'Nivel',
->>>>>>> a210a6416670ce2b691b1bb60749fd828d05a186
     ],
 ];
