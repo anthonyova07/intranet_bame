@@ -2,6 +2,7 @@
 
 namespace Bame\Models\HumanResource\Calendar;
 
+use Bame\Models\HumanResource\Calendar\Group;
 use Illuminate\Database\Eloquent\Model;
 
 class Date extends Model
@@ -21,5 +22,10 @@ class Date extends Model
     public function group()
     {
         return $this->belongsTo(Group::class, 'group_id', 'id');
+    }
+
+    public function scopeHolidaysDays($query)
+    {
+        $query->where('group_id', Group::where('name', 'Feriados')->first()->id);
     }
 }

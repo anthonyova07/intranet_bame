@@ -297,15 +297,68 @@
 
         @if ($bulk_load == 'true')
             <div class="col-xs-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Carga Masiva</h3>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Carga Masiva</h3>
+                    </div>
+                    <div class="panel-body" style="padding-left: 2px;">
+                        @include('human_resources.employee._loadparams', ['type' => 'POS'])
+                    </div>
                 </div>
-                <div class="panel-body" style="padding-left: 2px;">
-                    @include('human_resources.employee._loadparams', ['type' => 'POS'])
+            </div>
+        @endif
+
+        <div class="col-xs-{{ $bulk_load == 'true' ? '10' : '12' }}">
+            <div class="panel panel-default" id="panel-departamentos">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Niveles de Posiciones</h3>
+                </div>
+                <div class="panel-body">
+                    <a class="btn btn-danger btn-xs" href="{{ route('human_resources.employee.{type}.param.create', ['type' => 'LEVPOS']) }}">Nuevo</a>
+                    <br>
+                    <br>
+                    <table class="table table-striped table-bordered table-hover table-condensed datatable" order-by='0|asc'>
+                        <thead>
+                            <tr>
+                                <th>Descripción</th>
+                                <th>Nivel</th>
+                                <th style="width: 2px"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($params->where('type', 'LEVPOS') as $param)
+                                <tr>
+                                    <td>{{ $param->name }}</td>
+                                    <td>{{ $param->level }}</td>
+                                    <td align="center">
+                                        <a
+                                            href="{{ route('human_resources.employee.{type}.param.edit', ['type' => 'LEVPOS', 'param' => $param->id]) }}"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="Editar"
+                                            class="naranja">
+                                            <i class="fa fa-edit fa-fw"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+
+        @if ($bulk_load == 'true')
+            <div class="col-xs-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Carga Masiva</h3>
+                    </div>
+                    <div class="panel-body" style="padding-left: 2px;">
+                        @include('human_resources.employee._loadparams', ['type' => 'LEVPOS'])
+                    </div>
+                </div>
+            </div>
         @endif
     </div>
 

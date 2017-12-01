@@ -127,10 +127,10 @@
                         <div class="col-xs-12">
                             <div class="panel panel-default">
                                 <div class="panel-body text-center">
-                                    <a class="btn btn-info btn-xs" href="{{ route('customer.maintenance.create', ['cancel' => 'true']) }}">Cancelar</a>
+                                    <a class="btn btn-info btn-xs no-effect" id="btn_cancelar" href="{{ route('customer.maintenance.create', ['cancel' => 'true']) }}">Cancelar</a>
                                     <button type="submit" class="btn btn-danger btn-xs" id="btn_submit" data-loading-text="Guardando...">Guardar</button>
                                     @if (request('core') == 'ibs')
-                                        <a class="btn btn-warning btn-xs" href="{{ route('customer.maintenance.create', ['core' => 'itc', 'identification' => request('identification')]) }}">Ir a ITC</a>
+                                        <a class="btn btn-warning btn-xs no-effect" id="btn_itc" href="{{ route('customer.maintenance.create', ['core' => 'itc', 'identification' => request('identification')]) }}">Ir a ITC</a>
                                     @endif
                                 </div>
                             </div>
@@ -187,6 +187,21 @@
                 $(link).remove();
             });
         }
+
+        var btn_cancelar = $('#btn_cancelar');
+        var btn_itc = $('#btn_itc');
+
+        btn_cancelar.click(function (e) {
+            if (!confirm('Usted no ha realizado ninguna modificación o no le ha dado guardar, está seguro de cancelar con el proceso?')) {
+                e.preventDefault();
+            }
+        });
+
+        btn_itc.click(function (e) {
+            if (!confirm('Usted no ha realizado ninguna modificación o no le ha dado guardar, está seguro de continuar con el proceso?')) {
+                e.preventDefault();
+            }
+        });
 
         //--------------------------------------------
         $('#form').submit(function (event) {

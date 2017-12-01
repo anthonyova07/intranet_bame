@@ -22,4 +22,19 @@ class Param extends Model
     {
         return $this->belongsTo(Param::class, 'dep_id', 'id')->where('type', 'DEP');
     }
+
+    public function level()
+    {
+        return $this->hasOne(Param::class, 'level_id', 'id')->where('type', 'LEVPOS');
+    }
+
+    public function scopeDep($query)
+    {
+        return $query->where('type', 'DEP');
+    }
+
+    public function scopeLev($query)
+    {
+        return $query->where('type', 'LEVPOS')->orderBy('level');
+    }
 }

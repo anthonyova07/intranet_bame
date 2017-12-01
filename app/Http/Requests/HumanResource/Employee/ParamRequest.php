@@ -23,8 +23,18 @@ class ParamRequest extends Request
      */
     public function rules()
     {
-        return [
+        $v = [
             'name' => 'required|unique:ibs.intrhemppa,name,' . $this->param,
         ];
+
+        if ($this->type == 'LEVPOS') {
+            $v = array_merge($v, ['level' => 'required|integer']);
+        }
+
+        if ($this->type == 'POS') {
+            $v = array_merge($v, ['level' => 'required']);
+        }
+
+        return $v;
     }
 }
