@@ -61,9 +61,13 @@ class RequestController extends Controller
 
             if ($request->access == 'supervisor') {
                 $human_resource_requests->where(function ($query) {
-                    if (session('employee')->isSupervisor()) {
-                        $query->orWhereIn('coluser', session('employee')->getSubordinatesUsers());
-                    }
+                    $query->orWhereIn('coluser', session('employee')->getSubordinatesUsers());
+                });
+            }
+
+            if ($request->access == 'super_supervisor') {
+                $human_resource_requests->where(function ($query) {
+                    $query->orWhereIn('coluser', session('employee')->getSubSubordinatesUsers());
                 });
             }
         }

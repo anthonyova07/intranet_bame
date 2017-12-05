@@ -2,7 +2,13 @@
 
 @section('title', 'Recursos Humanos -> Solicitudes')
 
-@section('page_title', 'Solicitudes de Recursos Humanos')
+@if (request('access') == 'own')
+    @section('page_title', 'Solicitudes de Recursos Humanos (Mis Solicitudes)')
+@elseif (request('access') == 'supervisor')
+    @section('page_title', 'Solicitudes de Recursos Humanos (Solicitudes de Supervisados)')
+@elseif (request('access') == 'super_supervisor')
+    @section('page_title', 'Solicitudes de Recursos Humanos (Solicitudes de Supervisados de Supervisados)')
+@endif
 
 @if (request('access') == 'admin')
     @if (can_not_do('human_resource_request'))
@@ -14,17 +20,22 @@
 
 @section('contents')
 
-    @if (request('access') != 'admin' && in_array(request('access'), ['supervisor', 'own']) && session('employee')->isSupervisor())
+    @if (request('access') != 'admin' && in_array(request('access'), ['super_supervisor', 'supervisor', 'own']) && session('employee')->isSupervisor())
         <div class="row">
-            <div class="col-xs-6 col-xs-offset-3">
+            <div class="col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        @if (request('access') == 'supervisor')
+                        <div class="col-xs-{{ session('employee')->isSupervisor() ? '4':'12' }}">
                             <a class="btn btn-danger btn-xs btn-block" href="{{ route('human_resources.request.index', array_merge(request()->all(), ['access' => 'own'])) }}">Mis Solicitudes</a>
-                        @endif
+                        </div>
 
-                        @if (request('access') == 'own' && session('employee')->isSupervisor())
-                            <a class="btn btn-danger btn-xs btn-block" href="{{ route('human_resources.request.index', array_merge(request()->all(), ['access' => 'supervisor'])) }}">Solicitudes de Supervisados</a>
+                        @if (session('employee')->isSupervisor())
+                            <div class="col-xs-4">
+                                <a class="btn btn-danger btn-xs btn-block" href="{{ route('human_resources.request.index', array_merge(request()->all(), ['access' => 'supervisor'])) }}">Solicitudes de Supervisados</a>
+                            </div>
+                            <div class="col-xs-4">
+                                <a class="btn btn-warning btn-xs btn-block" href="{{ route('human_resources.request.index', array_merge(request()->all(), ['access' => 'super_supervisor'])) }}">Solicitudes de Supervisados de Supervisados</a>
+                            </div>
                         @endif
                     </div>
                 </div>

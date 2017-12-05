@@ -22,7 +22,7 @@
                         <a class="btn btn-info btn-xs" href="{{ route('human_resources.request.index', Request::all()) }}"><i class="fa fa-arrow-left"></i> Atrás</a>
                     </div>
 
-                    <div class="col-xs-10 text-right" style="padding: 5px 2px;">
+                    <div class="col-xs-10 text-right">
 
                         @if (!$human_resource_request->cancelled)
 
@@ -113,7 +113,7 @@
 
                             @endif
 
-                            @if ($human_resource_request->colsupuser == session()->get('user') && $human_resource_request->approvesup == 'p')
+                            @if (($human_resource_request->colsupuser == session()->get('user') || in_array($human_resource_request->colsupuser, session('employee')->getSubordinatesUsers())) && $human_resource_request->approvesup == 'p')
                                 <a class="btn btn-success btn-xs" href="{{ route('human_resources.request.approve', ['request_id' => $human_resource_request->id, 'to_approve' => 'a', 'type' => 'sup']) }}"><i class="fa fa-check"></i> Aprobar</a>
                                 <a class="btn btn-danger btn-xs" href="{{ route('human_resources.request.approve', ['request_id' => $human_resource_request->id, 'to_approve' => 'r', 'type' => 'sup']) }}"><i class="fa fa-close"></i> Rechazar</a>
                             @endif

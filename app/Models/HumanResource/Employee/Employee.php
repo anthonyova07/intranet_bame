@@ -130,7 +130,25 @@ class Employee extends Model
 
     public function getSubordinatesUsers()
     {
-        return $this->subordinates->pluck('useremp')->toArray();
+        if (session('employee')->isSupervisor()) {
+            return $this->subordinates->pluck('useremp')->toArray();
+        }
+
+        return [];
+    }
+
+    public function getSubSubordinatesUsers() {
+        if (session('employee')->isSupervisor()) {
+            $subordinates_users = collect();
+
+            foreach (session('employee')->subordinates as $subordinate) {
+                $subordinates_users = $subordinates_users->merge($subordinate->getSubordinatesUsers());
+            }
+
+            return $subordinates_users->toArray();
+        }
+
+        return [];
     }
 
     public function getMaxDayTakeVac($min = 1)
