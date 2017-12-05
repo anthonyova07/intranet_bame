@@ -23,9 +23,9 @@ class Param extends Model
         return $this->belongsTo(Param::class, 'dep_id', 'id')->where('type', 'DEP');
     }
 
-    public function level()
+    public function tier()
     {
-        return $this->hasOne(Param::class, 'level_id', 'id')->where('type', 'LEVPOS');
+        return $this->hasOne(Param::class, 'id', 'level_id')->where('type', 'LEVPOS');
     }
 
     public function scopeDep($query)

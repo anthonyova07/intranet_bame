@@ -87,7 +87,7 @@ class ParamController extends Controller
 
         do_log('Editó el ' . get_employee_params($type) . ' de Empleados ( nombre:' . $param->name . ' )');
 
-        return redirect()->route('human_resources.employee.index')->with('success', 'El ' . get_employee_params($type) . ' fue creado correctamente.');
+        return redirect()->route('human_resources.employee.index')->with('success', 'El ' . get_employee_params($type) . ' fue modificado correctamente.');
     }
 
     public function loadparams(Request $request, $type)
