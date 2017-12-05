@@ -212,6 +212,6 @@ class Employee extends Model
             return $customer->payroll_account;
         }
 
-        return null;
+        return [];
     }
 }
