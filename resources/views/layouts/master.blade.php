@@ -65,7 +65,7 @@
                 });
 
                 setTimeout(check_notifications, 3000);
-                setInterval(check_notifications, {{ config('bame.notificaciones.internvalo') }});
+                {{-- setInterval(check_notifications, {{ config('bame.notificaciones.internvalo') }}); --}}
             </script>
         @endif
     </body>
