@@ -967,3 +967,33 @@ function get_days_from_text($text)
 
     return $days;
 }
+
+function en_crypt($data, $key = null)
+{
+    $algorithm = MCRYPT_BLOWFISH;
+    $mode = MCRYPT_MODE_CBC;
+
+    if (!$key) {
+        $key = config('app.key');
+    }
+
+    $iv = mcrypt_create_iv(mcrypt_get_iv_size($algorithm, $mode), MCRYPT_DEV_URANDOM);
+
+    return base64_encode(mcrypt_encrypt($algorithm, $key, $data, $mode, $iv)) . '|' . base64_encode($iv);
+}
+
+function de_crypt($data, $key = null)
+{
+    $algorithm = MCRYPT_BLOWFISH;
+    $mode = MCRYPT_MODE_CBC;
+
+    if (!$key) {
+        $key = config('app.key');
+    }
+
+    $key = trim($key);
+
+    $parts = explode('|', $data);
+
+    return mcrypt_decrypt($algorithm, $key, base64_decode($parts[0]), $mode, base64_decode($parts[1]));
+}
