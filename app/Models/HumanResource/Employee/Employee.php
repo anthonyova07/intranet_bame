@@ -2,6 +2,7 @@
 
 namespace Bame\Models\HumanResource\Employee;
 
+use Bame\Models\Customer\Customer;
 use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
@@ -28,6 +29,16 @@ class Employee extends Model
         return $query->where('is_active', true);
     }
 
+    public function small_name()
+    {
+        return $this->name . ' ' . $this->lastname;
+    }
+
+    public function full_name()
+    {
+        return $this->name . ' ' . $this->name_2 . ' ' . $this->lastname . ' ' . $this->lastname_2;
+    }
+
     public function department()
     {
         return $this->hasOne(Param::class, 'id', 'id_dep');
@@ -41,6 +52,16 @@ class Employee extends Model
     public function supervisor()
     {
         return $this->hasOne(Param::class, 'id', 'id_sup');
+    }
+
+    public function supervisor_emp()
+    {
+        return $this->hasOne(Employee::class, 'id_pos', 'id_sup');
+    }
+
+    public function subordinates()
+    {
+        return $this->hasMany(Employee::class, 'id_sup', 'id_pos');
     }
 
     public function scopeByUser($query, $user = null)
@@ -100,5 +121,97 @@ class Employee extends Model
         }
 
         return $description ? 'Call Center Externo':'CCE';
+    }
+
+    public function isSupervisor()
+    {
+        return (bool) $this->subordinates->count();
+    }
+
+    public function getSubordinatesUsers()
+    {
+        if (session('employee')->isSupervisor()) {
+            return $this->subordinates->pluck('useremp')->toArray();
+        }
+
+        return [];
+    }
+
+    public function getSubSubordinatesUsers() {
+        if (session('employee')->isSupervisor()) {
+            $subordinates_users = collect();
+
+            foreach (session('employee')->subordinates as $subordinate) {
+                $subordinates_users = $subordinates_users->merge($subordinate->getSubordinatesUsers());
+            }
+
+            return $subordinates_users->toArray();
+        }
+
+        return [];
+    }
+
+    public function getMaxDayTakeVac($min = 1)
+    {
+        $years = get_year_of_service($this->servicedat);
+
+        if ($years >= $min && $years < 5) {
+            return 14;
+        }
+
+        if ($years >= 5) {
+            return 18;
+        }
+
+        return 0;
+    }
+
+    public function applyBonus($days)
+    {
+        $years = get_year_of_service($this->servicedat);
+
+        if ($years >= 1 && $years <= 5) {
+            return $days >= 8;
+        }
+
+        if ($years > 5) {
+            return $days >= 10;
+        }
+
+        return false;
+    }
+
+    public function hasMonth($month)
+    {
+        $months = get_month_of_service($this->servicedat);
+
+        return $months > $month;
+    }
+
+    public function noHasMonth($month)
+    {
+        return !$this->hasMonth($month);
+    }
+
+    public function accounts_sav()
+    {
+        $customer = Customer::byIdn(remove_dashes($this->identifica))->first();
+
+        if ($customer) {
+            return $customer->accounts_sav;
+        }
+
+        return collect();
+    }
+
+    public function payroll_account()
+    {
+        $customer = Customer::byIdn(remove_dashes($this->identifica))->first();
+
+        if ($customer) {
+            return $customer->payroll_account;
+        }
+
+        return [];
     }
 }

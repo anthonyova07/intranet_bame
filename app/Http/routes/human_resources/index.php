@@ -16,4 +16,6 @@ Route::group(['prefix' => 'human_resources'], function () {
     require_once 'queries.php';
 
     require_once 'payroll.php';
+
+    require_once 'request.php';
 });

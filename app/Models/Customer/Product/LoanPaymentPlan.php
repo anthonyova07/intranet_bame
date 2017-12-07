@@ -40,7 +40,12 @@ class LoanPaymentPlan extends Model
         $day = $this->dlppdd;
 
         $payment_day = new DateTime($year . '-' . $month . '-' . $day);
-        
+
         return $payment_day->diff(new DateTime)->days;
+    }
+
+    public function getDate()
+    {
+        return '20' . $this->dlppdy . '-' . $this->dlppdm . '-' . $this->dlppdd;
     }
 }

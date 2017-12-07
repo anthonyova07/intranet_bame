@@ -138,6 +138,23 @@ class EmployeeController extends Controller
 
     public function update(EmployeeRequest $request, $id)
     {
+        $params = Param::with('tier')->whereIn('id', [$request->position, $request->supervisor])->get();
+
+        $position = $params->where('id', $request->position)->first();
+        $supervisor = $params->where('id', $request->supervisor)->first();
+
+        if (!$position->tier) {
+            return back()->with('error', 'La posición seleccionada no tiene un nivel asignado.');
+        }
+
+        if (!$supervisor->tier) {
+            return back()->with('error', 'La posición del supervisor seleccionado no tiene un nivel asignado.');
+        }
+
+        if ($position->tier->level <= $supervisor->tier->level) {
+            return back()->with('error', 'La posición seleccionado no puede ser de nivel mayor o igual a la del supervisor.');
+        }
+
         $employee = Employee::find($id);
 
         $employee->recordcard = $request->recordcard;

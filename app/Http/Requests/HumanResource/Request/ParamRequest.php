@@ -1,6 +1,6 @@
 <?php
 
-namespace Bame\Http\Requests\HumanResource\Employee;
+namespace Bame\Http\Requests\HumanResource\Request;
 
 use Bame\Http\Requests\Request;
 
@@ -23,18 +23,9 @@ class ParamRequest extends Request
      */
     public function rules()
     {
-        $v = [
-            'name' => 'required|unique:ibs.intrhemppa,name,' . $this->param,
+        return [
+            'code' => 'required|max:45',
+            'name' => 'required|max:100',
         ];
-
-        if ($this->type == 'LEVPOS') {
-            $v = array_merge($v, ['level' => 'required|integer']);
-        }
-
-        if ($this->type == 'POS') {
-            $v = array_merge($v, ['level' => 'required']);
-        }
-
-        return $v;
     }
 }
