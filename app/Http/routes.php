@@ -33,6 +33,8 @@ Route::group(['middleware' => 'auth'], function () {
     require_once 'routes/extranet.php';
 
     require_once 'routes/financial_calculations.php';
+
+    require_once 'routes/risk/event.php';
 });
 
 // DB::listen(function ($query) {
