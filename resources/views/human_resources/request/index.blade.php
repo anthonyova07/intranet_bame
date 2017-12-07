@@ -22,7 +22,7 @@
 
     @if (request('access') != 'admin' && in_array(request('access'), ['super_supervisor', 'supervisor', 'own']) && session('employee')->isSupervisor())
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-8 col-xs-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="col-xs-{{ session('employee')->isSupervisor() ? '4':'12' }}">
@@ -31,10 +31,10 @@
 
                         @if (session('employee')->isSupervisor())
                             <div class="col-xs-4">
-                                <a class="btn btn-danger btn-xs btn-block" href="{{ route('human_resources.request.index', array_merge(request()->all(), ['access' => 'supervisor'])) }}">Solicitudes de Supervisados</a>
+                                <a class="btn btn-danger btn-xs btn-block" href="{{ route('human_resources.request.index', array_merge(request()->all(), ['access' => 'supervisor'])) }}">Solicitudes Directas</a>
                             </div>
                             <div class="col-xs-4">
-                                <a class="btn btn-warning btn-xs btn-block" href="{{ route('human_resources.request.index', array_merge(request()->all(), ['access' => 'super_supervisor'])) }}">Solicitudes de Supervisados de Supervisados</a>
+                                <a class="btn btn-warning btn-xs btn-block" href="{{ route('human_resources.request.index', array_merge(request()->all(), ['access' => 'super_supervisor'])) }}">Solicitudes Indirectas</a>
                             </div>
                         @endif
                     </div>
