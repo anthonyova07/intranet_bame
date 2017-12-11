@@ -339,7 +339,7 @@
             </div>
 
             <div class="panel-body text-center">
-                <a href="javascript:void(0)" class="pull-right label label-primary copy_info" style="font-size: 16px;">Copiar <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="javascript:void(0)" class="pull-right btn btn-primary copy_info no-effect">Copiar <i class="fa fa-arrow-circle-right"></i></a>
             </div>
 
         </div>

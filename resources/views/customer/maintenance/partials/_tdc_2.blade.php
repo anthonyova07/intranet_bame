@@ -337,6 +337,10 @@
                 </div>
             </div>
 
+            <div class="panel-body text-center">
+                <a href="javascript:void(0)" class="pull-left btn btn-primary copy_info_2 no-effect"><i class="fa fa-arrow-circle-left"></i> Copiar</a>
+            </div>
+
         </div>
 
     </div>

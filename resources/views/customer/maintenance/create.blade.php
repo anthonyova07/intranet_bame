@@ -688,6 +688,54 @@
             });
         });
 
+        $('.copy_info_2').click(function () {
+            $('select[name=country_itc]').html($('select[name=country_2_itc]').html());
+            $('select[name=country_itc]').val($('select[name=country_2_itc]').val());
+            $('select[name=region_itc]').html($('select[name=region_2_itc]').html());
+            $('select[name=region_itc]').val($('select[name=region_2_itc]').val());
+            $('select[name=province_itc]').html($('select[name=province_2_itc]').html());
+            $('select[name=province_itc]').val($('select[name=province_2_itc]').val());
+            $('select[name=city_itc]').html($('select[name=city_2_itc]').html());
+            $('select[name=city_itc]').val($('select[name=city_2_itc]').val());
+            $('select[name=municipality_itc]').html($('select[name=municipality_2_itc]').html());
+            $('select[name=municipality_itc]').val($('select[name=municipality_2_itc]').val());
+            $('select[name=sector_itc]').html($('select[name=sector_2_itc]').html());
+            $('select[name=sector_itc]').val($('select[name=sector_2_itc]').val());
+            $('select[name=neighborhood_itc]').html($('select[name=neighborhood_2_itc]').html());
+            $('select[name=neighborhood_itc]').val($('select[name=neighborhood_2_itc]').val());
+            $('select[name=street_itc]').html($('select[name=street_2_itc]').html());
+            $('select[name=street_itc]').val($('select[name=street_2_itc]').val());
+            $('input[name=building_name_itc]').val($('input[name=building_name_2_itc]').val());
+            $('input[name=block_itc]').val($('input[name=block_2_itc]').val());
+            $('input[name=house_number_itc]').val($('input[name=house_number_2_itc]').val());
+            $('input[name=km_itc]').val($('input[name=km_2_itc]').val());
+            $('input[name=postal_zone_itc]').val($('input[name=postal_zone_2_itc]').val());
+            $('input[name=postal_mail_itc]').val($('input[name=postal_mail_2_itc]').val());
+            $('input[name=in_street_1_itc]').val($('input[name=in_street_1_2_itc]').val());
+            $('input[name=in_street_2_itc]').val($('input[name=in_street_2_2_itc]').val());
+            $('input[name=special_instruction_itc]').val($('input[name=special_instruction_2_itc]').val());
+            $('input[name=main_phone_area_itc]').val($('input[name=main_phone_area_2_itc]').val());
+            $('input[name=main_phone_number_itc]').val($('input[name=main_phone_number_2_itc]').val());
+            $('input[name=main_phone_ext_itc]').val($('input[name=main_phone_ext_2_itc]').val());
+            $('input[name=secundary_phone_area_itc]').val($('input[name=secundary_phone_area_2_itc]').val());
+            $('input[name=secundary_phone_number_itc]').val($('input[name=secundary_phone_number_2_itc]').val());
+            $('input[name=secundary_phone_ext_itc]').val($('input[name=secundary_phone_ext_2_itc]').val());
+            $('input[name=main_cell_area_itc]').val($('input[name=main_cell_area_2_itc]').val());
+            $('input[name=main_cell_number_itc]').val($('input[name=main_cell_number_2_itc]').val());
+            $('input[name=secundary_cell_area_itc]').val($('input[name=secundary_cell_area_2_itc]').val());
+            $('input[name=secundary_cell_number_itc]').val($('input[name=secundary_cell_number_2_itc]').val());
+            $('input[name=fax_area_itc]').val($('input[name=fax_area_2_itc]').val());
+            $('input[name=fax_number_itc]').val($('input[name=fax_number_2_itc]').val());
+            $('input[name=mail_itc]').val($('input[name=mail_2_itc]').val());
+
+            $('input[name=ways_sending_statement_itc]').each(function (index, radio) {
+                var radio = $(radio);
+                if ($('input[name=ways_sending_statement_2_itc]:checked').val() == radio.val()) {
+                    radio.attr('checked', true);
+                }
+            });
+        });
+
         var modal = $('#maintenance_print');
         var btn_print = $('#btn_print');
 
