@@ -2,6 +2,7 @@
 
 namespace Bame\Http\Controllers\Risk\Event;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Bame\Models\Risk\Event\Param;
 use Bame\Http\Controllers\Controller;
@@ -81,7 +82,7 @@ class RiskEventController extends Controller
 
         do_log('Creó el Evento de Riesgo Operacional ( número:' . $risk_event->id . ' )');
 
-        return redirect()->route('risk.event.show', ['request' => $risk_event->id])->with('success', 'La solicitud ha sido creada correctamente.');
+        return redirect()->route('risk.event.show', ['request' => $risk_event->id])->with('success', 'El evento ha sido creado correctamente.');
 
     }
 
@@ -95,225 +96,106 @@ class RiskEventController extends Controller
 
         do_log('Consultó el Evento de Riesgo Operacional ( número:' . $risk_event->id . ' )');
 
+        $params = Param::activeOnly()->get();
+
         return view('risk.event.show', [
             'risk_event' => $risk_event,
+            'params' => $params,
         ]);
     }
 
-    public function addusers(Request $request, $process_request)
+    public function mark_event(Request $request, $risk_event, $is_event)
+    {
+        $risk_event = RiskEvent::find($risk_event);
+
+        if (!$risk_event) {
+            return back()->with('warning', 'El evento no existe.');
+        }
+
+        if ($risk_event->is_event != null) {
+            return back()->with('warning', 'El evento ya ha sido marcado.');
+        }
+
+        $risk_event->is_event = $is_event == '1';
+
+        if ($risk_event->is_event) {
+            $risk_event->event_code = get_next_risk_event_number();
+        }
+
+        $risk_event->save();
+
+        do_log('Marcó el Evento de Riesgo Operacional ( id:'.$risk_event->id.', codigo:'.$risk_event->event_code.', como:' . ($risk_event->is_event ? 'es evento' : ' no es evento') . ' )');
+
+        return back()->with('success', 'El evento ha sido marcado como '.($risk_event->is_event ? 'evento' : ' no evento').' correctamente.');
+    }
+
+    public function save_evaluation(Request $request, $risk_event)
     {
         $this->validate($request, [
-            'users' => 'required'
+            'loss_type' => 'required',
+            'risk_link' => 'required',
+            'risk_factor' => 'required',
+            'event_start' => 'required',
+            'event_end' => 'required',
+            'event_disc' => 'required',
         ]);
 
-        $process_request = ProcessRequest::find($process_request);
+        $risk_event = RiskEvent::find($risk_event);
 
-        if (!$process_request) {
-            return redirect(route('process.request.index'));
+        if (!$risk_event) {
+            return back()->with('warning', 'El evento no existe.');
         }
 
-        $approvals = $process_request->approvals;
+        $risk_event->loss_type = $request->loss_type;
+        $risk_event->risk_link = $request->risk_link;
+        $risk_event->risk_facto = $request->risk_factor;
+        $risk_event->event_star = $request->event_start;
+        $risk_event->event_end = $request->event_end;
+        $risk_event->event_disc = $request->event_disc;
 
-        $arr_users = collect(explode(' ', trim($request->users)));
+        $risk_event->rcreatedby = session()->get('user');
+        $risk_event->rcreatenam = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+        $risk_event->rcreatedat = $datetime = (new Carbon);
 
-        $users = collect();
+        $risk_event->save();
 
-        foreach ($arr_users->unique() as $index => $user) {
-            if ($approvals->contains('userapprov', $user)) {
-                continue;
-            }
+        do_log('Guardó Información de Evaluacion del Evento de Riesgo Operacional ( id:'.$risk_event->id.', codigo:'.$risk_event->event_code.', como:' . ($risk_event->is_event ? 'es evento' : ' no es evento') . ' )');
 
-            $approval = new Approval;
-
-            $approval->id = uniqid(true);
-            $approval->userapprov = $user;
-            $approval->approved = '';
-            $approval->approvdate = null;
-
-            $approval->created_by = session()->get('user');
-            $approval->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
-
-            $users->push($approval);
-
-            Notification::notify('Solicitud de Procesos', "Usted ha sido colocado como usuario para aprobar la solicitud {$process_request->reqnumber}.", route('process.request.show', ['request' => $process_request->id]), $user);
-        }
-
-        $process_request->approvals()->saveMany($users);
-
-        do_log('Agregó Usuarios de Aprobación a la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' usuarios:' . str_replace(' ', ',',  trim($request->users)).' )');
-
-        return redirect(route('process.request.show', ['request' => $process_request->id]))->with('success', 'Los usuarios han sido agregados correctamente.');
-
+        return back()->with('success', 'La información de evaluación del evento ha sido modificada correctamente.');
     }
 
-    public function approval(Request $request, $process_request)
-    {
-        if (can_not_do('process_request_approval')) {
-            return redirect(route('process.request.show', ['request' => $process_request]))->with('error', 'Usted no tiene permiso para ejecutar esta acción.');
-        }
-
-        $process_request = ProcessRequest::find($process_request);
-
-        if (!$process_request) {
-            return redirect(route('process.request.index'));
-        }
-
-        $approval = $process_request->approvals()->where('userapprov', session()->get('user'))->update([
-            'approved' => $request->a == '1',
-            'approvdate' => new \DateTime,
-            'username' => session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName(),
-            'title' => session()->get('user_info')->getTitle(),
-            'comment' => $request->comment,
-        ]);
-
-        $status = $process_request->getStatus();
-
-        if ($status == '1') {
-            $process_request->reqstatus = 'Aprobada';
-        }
-
-        if ($status == '0') {
-            $process_request->reqstatus = 'Rechazada';
-        }
-
-        if ($status == '1' || $status == '0') {
-            $process_request->save();
-            $process_request->createStatus($process_request->reqstatus, 'Solicitud ' . $process_request->reqstatus);
-        }
-
-        do_log($request->a == '1' ? 'Aprobó':'Rechazó' . ' la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' )');
-
-        return redirect(route('process.request.show', ['request' => $process_request->id]))->with('success', 'Su aprobación ha sido procesada correctamente.');
-    }
-
-    public function deleteuser(Request $request, $process_request)
-    {
-        if (can_not_do('process_request_admin')) {
-            return redirect(route('process.request.show', ['request' => $process_request]))->with('error', 'Usted no tiene permiso para ejecutar esta acción.');
-        }
-
-        $process_request = ProcessRequest::find($process_request);
-
-        if (!$process_request) {
-            return redirect(route('process.request.index'));
-        }
-
-        $approval = $process_request->approvals()->where('userapprov', $request->u)->delete();
-
-        Notification::notify('Solicitud de Procesos', "Usted ha sido removido de los usuarios que pueden aprobar la solicitud {$process_request->reqnumber}.", route('process.request.show', ['request' => $process_request->id]), $request->u);
-
-        do_log('Elimino el usuario de Aprobación a la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' usuario:' . $request->u . ' )');
-
-        return redirect(route('process.request.show', ['request' => $process_request->id]))->with('success', 'El usuario ha sido eliminado correctamente.');
-    }
-
-    public function addstatus(Request $request, $process_request)
+    public function save_accounting(Request $request, $risk_event)
     {
         $this->validate($request, [
-            'status' => 'required',
-            'comment' => 'required|max:1000',
+            'post_date' => 'required',
+            'account' => 'required|numeric',
+            'amount_nac' => 'required|numeric',
+            'amount_ori' => 'required|numeric',
+            'amount_ins' => 'required|numeric',
+            'amount_rec' => 'required|numeric',
         ]);
 
-        $process_request = ProcessRequest::find($process_request);
-        $status = Param::where('type', 'EST')->find($request->status);
+        $risk_event = RiskEvent::find($risk_event);
 
-        if (!$process_request || !$status) {
-            return redirect(route('process.request.index'));
+        if (!$risk_event) {
+            return back()->with('warning', 'El evento no existe.');
         }
 
-        $process_request->createStatus($status->note, $request->comment);
+        $risk_event->post_date = $request->post_date;
+        $risk_event->account = $request->account;
+        $risk_event->amount_nac = $request->amount_nac;
+        $risk_event->amount_ori = $request->amount_ori;
+        $risk_event->amount_ins = $request->amount_ins;
+        $risk_event->amount_rec = $request->amount_rec;
 
-        $process_request->reqstatus = $status->note;
+        $risk_event->ccreatedby = session()->get('user');
+        $risk_event->ccreatenam = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
+        $risk_event->ccreatedat = $datetime = (new Carbon);
 
-        $process_request->save();
+        $risk_event->save();
 
-        Notification::notify('Solicitud de Procesos', "La solicitud {$process_request->reqnumber} ha cambiado al estatus {$status->note}", route('process.request.show', ['request' => $process_request->id]), $process_request->created_by);
+        do_log('Guardó Información de Contabilización del Evento de Riesgo Operacional ( id:'.$risk_event->id.', codigo:'.$risk_event->event_code.' )');
 
-        do_log('Agregó un Estatus a la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' estatus:' . $status->note . ' )');
-
-        return redirect(route('process.request.show', ['request' => $process_request->id]))->with('success', 'El estatus sido agregado correctamente.');
-
-    }
-
-    public function addattach(Request $request, $process_request)
-    {
-        {
-            $process_request = ProcessRequest::find($process_request);
-
-            if (!$process_request) {
-                return redirect(route('process.request.index'));
-            }
-
-            if ($request->hasFile('files')) {
-                $files = collect($request->file('files'));
-
-                $path = storage_path('app\\process_request\\attaches\\' . $process_request->id . '\\');
-
-                $files->each(function ($file, $index) use ($path, $process_request) {
-                    $file_name_destination = str_replace(' ', '_', $file->getClientOriginalName());
-
-                    $file_name_destination = remove_accents($file_name_destination);
-
-                    $file->move($path, $file_name_destination);
-
-                    $attach = new Attach;
-
-                    $attach->id = uniqid(true);
-                    $attach->file = $file_name_destination;
-
-                    $attach->created_by = session()->get('user');
-                    $attach->createname = session()->get('user_info')->getFirstName() . ' ' . session()->get('user_info')->getLastName();
-
-                    $process_request->attaches()->save($attach);
-                });
-
-                do_log('Adjuntó archivos a la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' )');
-            }
-
-            return back()->with('success', 'Los archivos han sido cargados correctamente.');
-        }
-    }
-
-    public function downloadattach(Request $request, $process_request)
-    {
-        $process_request = ProcessRequest::find($process_request);
-
-        if (!$process_request) {
-            return redirect(route('process.request.index'));
-        }
-
-        $attach = $process_request->attaches()->where('id', $request->attach)->first();
-
-        if (!$attach) {
-            return back()->with('warning', 'Este adjunto no existe!');
-        }
-
-        $path = storage_path('app\\process_request\\attaches\\' . $process_request->id . '\\' . $attach->file);
-
-        do_log('Descargó archivo de la Solicitud de Procesos ( número:' . strip_tags($process_request->reqnumber) . ' archivo:' . $attach->file . ' )');
-
-        return response()->download($path);
-    }
-
-    public function deleteattach(Request $request, $process_request)
-    {
-        $process_request = ProcessRequest::find($process_request);
-
-        if (!$process_request) {
-            return redirect(route('process.request.index'));
-        }
-
-        $attach = $process_request->attaches()->where('id', $request->attach)->first();
-
-        if (!$attach) {
-            return back()->with('warning', 'Este adjunto no existe!');
-        }
-
-        do_log('Eliminó archivo de la Reclamación ( número:' . strip_tags($process_request->reqnumber) . ' archivo:' . $attach->file . ' )');
-
-        $attach->delete_attach();
-        $attach->delete();
-
-        return back()->with('success', 'El adjunto ha sido eliminado correctamente!');
+        return back()->with('success', 'La información de evaluación del evento ha sido modificada correctamente.');
     }
 }

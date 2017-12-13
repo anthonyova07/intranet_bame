@@ -990,3 +990,32 @@ function get_risk_event_params($param = null)
 
     return $params->get($param);
 }
+
+function get_next_risk_event_number()
+{
+    $date = null;
+
+    $last_process_request = \Bame\Models\Risk\Event\RiskEvent::orderBy('created_at', 'desc')->first();
+    $last_request_number = $last_process_request ? $last_process_request->reqnumber : null;
+
+    if ($last_request_number) {
+        $parts = explode('-', $last_request_number);
+
+        $year = $parts[0];
+        $month = $parts[1];
+        $day = $parts[2];
+        $sequence = $parts[3];
+
+        $date = $year . '-' . $month . '-' . $day;
+    }
+
+    $date_current = (new \DateTime)->format('Y-m-d');
+
+    if ($date == $date_current) {
+        $number = $date_current . '-' . (str_pad((intval($sequence) + 1), 4, '0', STR_PAD_LEFT));
+    } else {
+        $number = $date_current . '-0001';
+    }
+
+    return $number;
+}

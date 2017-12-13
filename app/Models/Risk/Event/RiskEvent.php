@@ -66,4 +66,14 @@ class RiskEvent extends Model
     {
         return $this->belongsTo(Param::class, 'loss_type');
     }
+
+    public function risklink()
+    {
+        return $this->belongsTo(Param::class, 'risk_link');
+    }
+
+    public function riskfactor()
+    {
+        return $this->belongsTo(Param::class, 'risk_facto');
+    }
 }
