@@ -32,8 +32,8 @@ class RiskEventRequest extends Request
             'distribution_channel' => 'required',
             'process' => 'required',
             'subprocess' => 'required',
-            'description' => 'required|max:1000',
-            'consequence' => 'required|max:1000',
+            'description' => 'required|max:60',
+            'consequence' => 'required|max:60',
             'associated_control' => 'required|max:1000',
         ];
     }

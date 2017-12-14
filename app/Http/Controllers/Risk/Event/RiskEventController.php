@@ -14,34 +14,33 @@ class RiskEventController extends Controller
 {
     public function index(Request $request)
     {
-        // $risk_events = RiskEvent::lastestFirst();
+        $risk_events = RiskEvent::eventsOnly()->lastestFirst();
 
-        // if ($request->term) {
-        //     $term = cap_str($request->term);
-        // }
+        if ($request->term) {
+            $term = $request->term;
 
-        // if ($request->request_type) {
-        //     $risk_events->where('reqtype', $request->request_type);
-        // }
+            $risk_events = $risk_events->where(function ($query) use ($term) {
+                $query->orWhere('event_code', 'like', '%' . $term . '%')
+                    ->orWhere('descriptio', 'like', '%' . $term . '%')
+                    ->orWhere('consequenc', 'like', '%' . $term . '%')
+                    ->orWhere('assoc_cont', 'like', '%' . $term . '%');
+            });
+        }
 
-        // if ($request->process) {
-        //     $risk_events->where('process', $request->process);
-        // }
+        if ($request->date_from) {
+            $risk_events->where('created_at', '>=', $request->date_from . ' 00:00:00');
+        }
 
-        // if ($request->date_from) {
-        //     $risk_events->where('created_at', '>=', $request->date_from . ' 00:00:00');
-        // }
+        if ($request->date_to) {
+            $risk_events->where('created_at', '<=', $request->date_to . ' 23:59:59');
+        }
 
-        // if ($request->date_to) {
-        //     $risk_events->where('created_at', '<=', $request->date_to . ' 23:59:59');
-        // }
-
-        // $risk_events = $risk_events->paginate();
+        $risk_events = $risk_events->paginate();
 
         $params = Param::get();
 
         return view('risk.event.index', [
-            // 'risk_events' => $risk_events,
+            'risk_events' => $risk_events,
             'params' => $params,
         ]);
     }
@@ -197,5 +196,22 @@ class RiskEventController extends Controller
         do_log('Guardó Información de Contabilización del Evento de Riesgo Operacional ( id:'.$risk_event->id.', codigo:'.$risk_event->event_code.' )');
 
         return back()->with('success', 'La información de evaluación del evento ha sido modificada correctamente.');
+    }
+
+    public function excel(Request $request, $report)
+    {
+        $risk_events = RiskEvent::eventsOnly()->lastestFirst();
+
+        if ($request->date_from) {
+            $risk_events->where('created_at', '>=', $request->date_from . ' 00:00:00');
+        }
+
+        if ($request->date_to) {
+            $risk_events->where('created_at', '<=', $request->date_to . ' 23:59:59');
+        }
+
+        $risk_events = $risk_events->get();
+
+        return view('risk.event.excel.'.$report, compact('risk_events'));
     }
 }

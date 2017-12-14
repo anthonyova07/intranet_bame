@@ -982,6 +982,7 @@ function get_risk_event_params($param = null)
         'FR' => 'Factor de Riesgo',
         'PR' => 'Proceso',
         'SP' => 'SubProceso',
+        'PS' => 'Productos y Servicios',
     ]);
 
     if (!$param) {

@@ -10,6 +10,10 @@ Route::group(['prefix' => 'risk', 'namespace' => 'Risk\Event'], function () {
 
         Route::post('save_evaluation/{risk_event}', 'RiskEventController@save_evaluation')->name('risk.event.save_evaluation');
         Route::post('save_accounting/{risk_event}', 'RiskEventController@save_accounting')->name('risk.event.save_accounting');
+
+        Route::group(['prefix' => 'excel'], function () {
+            Route::get('{report}', 'RiskEventController@excel')->name('risk.event.excel');
+        });
     });
 
     Route::resource('event', 'RiskEventController', ['only' => [

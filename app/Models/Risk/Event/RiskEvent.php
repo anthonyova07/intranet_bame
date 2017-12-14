@@ -22,6 +22,11 @@ class RiskEvent extends Model
         return $query->orderBy('created_at', 'desc');
     }
 
+    public function scopeEventsOnly($query)
+    {
+        return $query->where('is_event', true);
+    }
+
     public function business_line()
     {
         return $this->belongsTo(Param::class, 'busineline');

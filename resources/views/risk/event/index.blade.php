@@ -17,10 +17,10 @@
         <div class="col-xs-8 col-xs-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Búscar Solicitud</h3>
+                    <h3 class="panel-title">Búscar Evento de Riesgo</h3>
                 </div>
                 <div class="panel-body">
-                    <form method="get" action="{{ route('process.request.index') }}" id="form">
+                    <form method="get" action="{{ route('risk.event.index') }}" id="form">
                         <div class="row">
                             <div class="col-xs-4">
                                 <div class="form-group{{ $errors->first('term') ? ' has-error':'' }}">
@@ -62,32 +62,30 @@
                 <div class="panel-body">
                     <a class="btn btn-danger btn-xs" href="{{ route('risk.event.create') }}">Crear Evento</a>
 
+                    <a style="font-size: 13px;" class="btn btn-success btn-xs pull-right no-effect" target="__blank" href="{{ route('risk.event.excel', array_merge(request()->except(['term', 'page']), ['report' => 'ro02'])) }}">Reporte RO01</a>
+
                     <br>
                     <br>
                     <table class="table table-striped table-bordered table-hover table-condensed" order-by='2|desc'>
                         <thead>
                             <tr>
-                                <th># Solicitud</th>
-                                <th>Tipo Solicitud</th>
-                                <th>Proceso</th>
-                                <th>Estatus</th>
+                                <th style="width: 110px;"># Evento</th>
+                                <th>Descripción</th>
                                 <th style="width: 112px;">Fecha Creación</th>
                                 <th style="width: 112px;">Creado por</th>
                                 <th style="width: 52px"></th>
                             </tr>
                         </thead>
                         <tbody>
-                           {{--  @foreach ($process_requests as $process_request)
+                            @foreach ($risk_events as $risk_event)
                                 <tr>
-                                    <td>{{ $process_request->reqnumber }}</td>
-                                    <td>{{ $process_request->reqtype }}</td>
-                                    <td>{{ $process_request->process }}</td>
-                                    <td>{{ $process_request->reqstatus }}</td>
-                                    <td>{{ $process_request->created_at->format('d/m/Y H:i:s') }}</td>
-                                    <td>{{ $process_request->createname }}</td>
+                                    <td>{{ $risk_event->event_code }}</td>
+                                    <td>{{ $risk_event->descriptio }}</td>
+                                    <td>{{ $risk_event->created_at->format('d/m/Y H:i:s') }}</td>
+                                    <td>{{ $risk_event->createname }}</td>
                                     <td align="center">
                                         <a
-                                            href="{{ route('process.request.show', array_merge(['request' => $process_request->id], Request::all())) }}"
+                                            href="{{ route('risk.event.show', array_merge(['request' => $risk_event->id], Request::all())) }}"
                                             data-toggle="tooltip"
                                             data-placement="top"
                                             title="Ver Solicitud">
@@ -95,11 +93,11 @@
                                         </a>
                                     </td>
                                 </tr>
-                            @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
 
-                    {{-- {{ $process_requests->links() }} --}}
+                    {{ $risk_events->appends(request()->all())->links() }}
                 </div>
             </div>
         </div>
