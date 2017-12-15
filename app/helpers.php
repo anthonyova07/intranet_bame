@@ -967,3 +967,14 @@ function get_days_from_text($text)
 
     return $days;
 }
+
+function needs_auth($url_anterior = null)
+{
+    if (!request()->cookie('temp_auth')) {
+        session()->put('url_anterior', $url_anterior);
+
+        return view('auth.login');
+    }
+
+    return null;
+}

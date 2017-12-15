@@ -28,7 +28,6 @@ Route::get('vacant/{id}', 'HumanResource\HumanResourceController@vacant')->name(
 
 Route::get('auth/login', 'Auth\AuthController@getLogin')->name('auth.login');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
-Route::get('auth/logout', 'Auth\AuthController@getLogout')->name('auth.logout');
 
 Route::group(['prefix' => 'notification'], function () {
     Route::get('all/global', 'Notification\NotificationController@allGlobal')->name('all.global');

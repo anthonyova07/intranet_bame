@@ -141,11 +141,10 @@ class PayrollController extends Controller
         $total_discharge = 0;
         $total_ingress = 0;
 
-        if (!$request->authenticated) {
-            $request->session()->flush();
-            Auth::logout();
+        $needs_auth = needs_auth(route('human_resources.payroll.my', $request->all()));
 
-            return redirect(route('human_resources.payroll.my', array_merge($request->all(), ['authenticated' => 1])));
+        if ($needs_auth !== null) {
+            return $needs_auth;
         }
 
         if ($request->year && $request->month && $request->day) {

@@ -21,26 +21,38 @@ class AuthController extends Controller
         try {
 
             if (Auth::attempt(['username' => $request->user, 'password' => $request->password])) {
-                $request->session()->put('user', strtolower($request->user));
-                $request->session()->put('user_info', Auth::user()->getAdLDAP());
-                $request->session()->put('employee', Employee::byUser()->first());
+                session()->put('user', strtolower($request->user));
+
+                $employee = Employee::byUser()->first();
+
+                if (!$employee) {
+                    session()->forget('user');
+
+                    return back()->with('error', 'Usted no se encuentra registrado como empleado en la Intranet. Favor contactar a RRHH.');
+                }
+
+                session()->put('user_info', Auth::user()->getAdLDAP());
+                session()->put('employee', $employee);
 
                 $menus = Access::getUserAccess(clear_str($request->user));
 
                 if ($menus) {
-                    $request->session()->put('menus', $menus);
+                    session()->put('menus', $menus);
                 }
 
                 do_log('Inicio sesión');
 
-                $url_anterior = $request->session()->get('url_anterior');
-                $request->session()->forget('url_anterior');
+                $url_anterior = session()->get('url_anterior');
+
+                session()->forget('url_anterior');
+
+                $temp_auth = cookie('temp_auth', true, 1);
 
                 if (!$url_anterior) {
-                    return redirect()->route('home');
+                    return redirect()->route('home')->withCookie($temp_auth);
                 }
 
-                return redirect($url_anterior);
+                return redirect($url_anterior)->withCookie($temp_auth);
             }
 
             return back()->with('error', 'Usuario y Contraseña incorrectos!');
@@ -55,7 +67,9 @@ class AuthController extends Controller
         if (session()->has('user')) {
             do_log('Cerro sesión');
         }
-        $request->session()->flush();
+
+        session()->flush();
+
         Auth::logout();
         return redirect()->route('home');
     }

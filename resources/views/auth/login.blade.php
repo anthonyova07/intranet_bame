@@ -4,7 +4,7 @@
 
 @section('contents')
 
-    @if (!session()->has('user'))
+    @if (!session()->has('user') || !request()->cookie('temp_auth') && !str_contains(url()->current(), 'auth/login'))
         @section('page_title', 'Autenticación con el Usuario del Equipo')
 
         <div class="row">

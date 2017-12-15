@@ -4,6 +4,8 @@ require_once 'routes/home.php';
 
 Route::group(['middleware' => 'auth'], function () {
 
+    Route::get('auth/logout', 'Auth\AuthController@getLogout')->name('auth.logout');
+
     require_once 'routes/francis_rosario.php';
 
     require_once 'routes/security.php';
