@@ -42,17 +42,17 @@ class AuthController extends Controller
 
                 do_log('Inicio sesión');
 
+                $temp_auth = cookie('temp_auth', true, 1);
+
                 $url_anterior = session()->get('url_anterior');
 
                 session()->forget('url_anterior');
 
-                $temp_auth = cookie('temp_auth', true, 1);
-
-                if (!$url_anterior) {
-                    return redirect()->route('home')->withCookie($temp_auth);
+                if ($url_anterior) {
+                    return redirect($url_anterior)->withCookie($temp_auth);
                 }
 
-                return redirect($url_anterior)->withCookie($temp_auth);
+                return back()->withCookie($temp_auth);
             }
 
             return back()->with('error', 'Usuario y Contraseña incorrectos!');
