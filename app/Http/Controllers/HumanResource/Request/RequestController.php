@@ -562,18 +562,30 @@ class RequestController extends Controller
     {
         $human_resource_request = HumanResourceRequest::find($requestId);
 
-        $human_resource_request->detail()->update([
-            'dayscorres' => $request->vac_day_corresponding,
-            'daystakedm' => $request->vac_day_taken_at_moment,
-            'dayspendin' => $request->vac_day_pending,
+        $fields_update = [
             'applybonus' => (bool) $request->applybonus,
             'bonusyear' => $request->bonusyear,
             'bonusrea' => $request->bonusrea,
-            'datebonus' => $request->vac_date_bonus,
-            'datebonusd' => $request->vac_date_bonus_sd,
             'note' => $request->vac_note,
-            'vacoutdays' => $request->vac_day_pending,
-        ]);
+            'vacoutdays' => $request->vac_day_pending ?: 0,
+        ];
+
+        if ($request->vac_day_corresponding && $request->vac_day_taken_at_moment && $request->vac_day_pending) {
+            $fields_update = array_merge($fields_update, [
+                'dayscorres' => $request->vac_day_corresponding,
+                'daystakedm' => $request->vac_day_taken_at_moment,
+                'dayspendin' => $request->vac_day_pending,
+            ]);
+        }
+
+        if ($request->vac_date_bonus && $request->vac_date_bonus_sd) {
+            $fields_update = array_merge($fields_update, [
+                'datebonus' => $request->vac_date_bonus,
+                'datebonusd' => $request->vac_date_bonus_sd,
+            ]);
+        }
+
+        $human_resource_request->detail()->update($fields_update);
 
         return back()->with('success', 'Los cambios han sido guardados correctamente.');
     }
