@@ -12,6 +12,10 @@ Route::group(['prefix' => 'employee'], function () {
 
         Route::post('loadparams', 'HumanResource\Employee\ParamController@loadparams')->name('human_resources.employee.{type}.params.loadparams');
     });
+
+    Route::resource('vacation', 'HumanResource\Employee\VacationController', ['only' => [
+        'create', 'store'
+    ]]);
 });
 
 Route::resource('employee', 'HumanResource\Employee\EmployeeController');
