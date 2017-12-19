@@ -186,6 +186,14 @@
                                                 </a>
                                             </li>
                                         @endif
+                                        @if ($submenu->sub_coduni == 'customer_link_cash' && !can_not_do('customer_link_cash'))
+                                            <li>
+                                                <a href="{{ $submenu->sub_link }}" target="_blank" class="no-effect">
+                                                    <i class="fa fa-unlock-alt fa-fw"></i>
+                                                    {{ $submenu->sub_descri }}
+                                                </a>
+                                            </li>
+                                        @endif
                                     @endforeach
                                 </ul>
                             @endif
